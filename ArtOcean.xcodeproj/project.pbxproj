@@ -1,0 +1,893 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 55;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		EF8B0631283BEAC10050E726 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF8B0630283BEAC10050E726 /* AppDelegate.swift */; };
+		EF8B0635283BEAC10050E726 /* MainTabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF8B0634283BEAC10050E726 /* MainTabViewController.swift */; };
+		EF8B0638283BEAC10050E726 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EF8B0636283BEAC10050E726 /* Main.storyboard */; };
+		EF8B063A283BEAC10050E726 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EF8B0639283BEAC10050E726 /* Assets.xcassets */; };
+		EF8B063D283BEAC10050E726 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EF8B063B283BEAC10050E726 /* LaunchScreen.storyboard */; };
+		EF8B0648283BEAC10050E726 /* ArtOceanTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF8B0647283BEAC10050E726 /* ArtOceanTests.swift */; };
+		EF8B0652283BEAC20050E726 /* ArtOceanUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF8B0651283BEAC20050E726 /* ArtOceanUITests.swift */; };
+		EF8B0654283BEAC20050E726 /* ArtOceanUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF8B0653283BEAC20050E726 /* ArtOceanUITestsLaunchTests.swift */; };
+		EF8B0665283BED350050E726 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF8B0664283BED350050E726 /* HomeViewController.swift */; };
+		EF8B0668283BEF250050E726 /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF8B0667283BEF250050E726 /* UIColor.swift */; };
+		EF8B066A283BEFB90050E726 /* TabBarModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF8B0669283BEFB90050E726 /* TabBarModel.swift */; };
+		EF8B066C283BF0E70050E726 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF8B066B283BF0E70050E726 /* ProfileViewController.swift */; };
+		EF8B066E283BF0F10050E726 /* StatisticsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF8B066D283BF0F10050E726 /* StatisticsViewController.swift */; };
+		EF8B0670283BF0FE0050E726 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF8B066F283BF0FE0050E726 /* SearchViewController.swift */; };
+		EF8B0672283BFA6D0050E726 /* NFTLiveBiddingCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF8B0671283BFA6D0050E726 /* NFTLiveBiddingCollectionView.swift */; };
+		EF8B0675283BFA900050E726 /* NFTLiveBidCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF8B0674283BFA900050E726 /* NFTLiveBidCollectionViewCell.swift */; };
+		EF8B0677283C20820050E726 /* UIImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF8B0676283C20820050E726 /* UIImageView.swift */; };
+		EF8B067A283C26120050E726 /* ImageDownloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF8B0679283C26120050E726 /* ImageDownloader.swift */; };
+		EF8B067D283C27020050E726 /* AlchemyAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF8B067C283C27020050E726 /* AlchemyAPI.swift */; };
+		EF8B067F283C28960050E726 /* DataError.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF8B067E283C28960050E726 /* DataError.swift */; };
+		EF8B0681283C2A180050E726 /* DataCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF8B0680283C2A180050E726 /* DataCache.swift */; };
+		EF8B0683283C2CA10050E726 /* AlchemyNFTDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF8B0682283C2CA10050E726 /* AlchemyNFTDataModel.swift */; };
+		EF8B0685283C31560050E726 /* UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF8B0684283C31560050E726 /* UIView.swift */; };
+		EF8B0688283CCD4F0050E726 /* nft.json in Resources */ = {isa = PBXBuildFile; fileRef = EF8B0687283CCD4F0050E726 /* nft.json */; };
+		EF8B06AC283D0C710050E726 /* Satoshi-BoldItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = EF8B06A2283D0C700050E726 /* Satoshi-BoldItalic.otf */; };
+		EF8B06AD283D0C710050E726 /* Satoshi-BoldItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = EF8B06A2283D0C700050E726 /* Satoshi-BoldItalic.otf */; };
+		EF8B06AE283D0C710050E726 /* Satoshi-BoldItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = EF8B06A2283D0C700050E726 /* Satoshi-BoldItalic.otf */; };
+		EF8B06AF283D0C710050E726 /* Satoshi-Black.otf in Resources */ = {isa = PBXBuildFile; fileRef = EF8B06A3283D0C700050E726 /* Satoshi-Black.otf */; };
+		EF8B06B0283D0C710050E726 /* Satoshi-Black.otf in Resources */ = {isa = PBXBuildFile; fileRef = EF8B06A3283D0C700050E726 /* Satoshi-Black.otf */; };
+		EF8B06B1283D0C710050E726 /* Satoshi-Black.otf in Resources */ = {isa = PBXBuildFile; fileRef = EF8B06A3283D0C700050E726 /* Satoshi-Black.otf */; };
+		EF8B06B2283D0C710050E726 /* Satoshi-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = EF8B06A4283D0C700050E726 /* Satoshi-Medium.otf */; };
+		EF8B06B3283D0C710050E726 /* Satoshi-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = EF8B06A4283D0C700050E726 /* Satoshi-Medium.otf */; };
+		EF8B06B4283D0C710050E726 /* Satoshi-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = EF8B06A4283D0C700050E726 /* Satoshi-Medium.otf */; };
+		EF8B06B5283D0C710050E726 /* Satoshi-LightItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = EF8B06A5283D0C700050E726 /* Satoshi-LightItalic.otf */; };
+		EF8B06B6283D0C710050E726 /* Satoshi-LightItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = EF8B06A5283D0C700050E726 /* Satoshi-LightItalic.otf */; };
+		EF8B06B7283D0C710050E726 /* Satoshi-LightItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = EF8B06A5283D0C700050E726 /* Satoshi-LightItalic.otf */; };
+		EF8B06B8283D0C710050E726 /* Satoshi-MediumItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = EF8B06A6283D0C710050E726 /* Satoshi-MediumItalic.otf */; };
+		EF8B06B9283D0C710050E726 /* Satoshi-MediumItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = EF8B06A6283D0C710050E726 /* Satoshi-MediumItalic.otf */; };
+		EF8B06BA283D0C710050E726 /* Satoshi-MediumItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = EF8B06A6283D0C710050E726 /* Satoshi-MediumItalic.otf */; };
+		EF8B06BB283D0C710050E726 /* Satoshi-BlackItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = EF8B06A7283D0C710050E726 /* Satoshi-BlackItalic.otf */; };
+		EF8B06BC283D0C710050E726 /* Satoshi-BlackItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = EF8B06A7283D0C710050E726 /* Satoshi-BlackItalic.otf */; };
+		EF8B06BD283D0C710050E726 /* Satoshi-BlackItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = EF8B06A7283D0C710050E726 /* Satoshi-BlackItalic.otf */; };
+		EF8B06BE283D0C710050E726 /* Satoshi-Italic.otf in Resources */ = {isa = PBXBuildFile; fileRef = EF8B06A8283D0C710050E726 /* Satoshi-Italic.otf */; };
+		EF8B06BF283D0C710050E726 /* Satoshi-Italic.otf in Resources */ = {isa = PBXBuildFile; fileRef = EF8B06A8283D0C710050E726 /* Satoshi-Italic.otf */; };
+		EF8B06C0283D0C710050E726 /* Satoshi-Italic.otf in Resources */ = {isa = PBXBuildFile; fileRef = EF8B06A8283D0C710050E726 /* Satoshi-Italic.otf */; };
+		EF8B06C1283D0C710050E726 /* Satoshi-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = EF8B06A9283D0C710050E726 /* Satoshi-Regular.otf */; };
+		EF8B06C2283D0C710050E726 /* Satoshi-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = EF8B06A9283D0C710050E726 /* Satoshi-Regular.otf */; };
+		EF8B06C3283D0C710050E726 /* Satoshi-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = EF8B06A9283D0C710050E726 /* Satoshi-Regular.otf */; };
+		EF8B06C4283D0C710050E726 /* Satoshi-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = EF8B06AA283D0C710050E726 /* Satoshi-Bold.otf */; };
+		EF8B06C5283D0C710050E726 /* Satoshi-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = EF8B06AA283D0C710050E726 /* Satoshi-Bold.otf */; };
+		EF8B06C6283D0C710050E726 /* Satoshi-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = EF8B06AA283D0C710050E726 /* Satoshi-Bold.otf */; };
+		EF8B06C7283D0C710050E726 /* Satoshi-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = EF8B06AB283D0C710050E726 /* Satoshi-Light.otf */; };
+		EF8B06C8283D0C710050E726 /* Satoshi-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = EF8B06AB283D0C710050E726 /* Satoshi-Light.otf */; };
+		EF8B06C9283D0C710050E726 /* Satoshi-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = EF8B06AB283D0C710050E726 /* Satoshi-Light.otf */; };
+		EF8B06CC283D5B4C0050E726 /* TopCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF8B06CB283D5B4C0050E726 /* TopCollectionView.swift */; };
+		EF8B06CD283D5B4C0050E726 /* TopCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF8B06CB283D5B4C0050E726 /* TopCollectionView.swift */; };
+		EF8B06CE283D5B4C0050E726 /* TopCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF8B06CB283D5B4C0050E726 /* TopCollectionView.swift */; };
+		EF8B06D0283D60EC0050E726 /* TopCollectionTableCellViewTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF8B06CF283D60EC0050E726 /* TopCollectionTableCellViewTableViewCell.swift */; };
+		EF8B06D1283D60EC0050E726 /* TopCollectionTableCellViewTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF8B06CF283D60EC0050E726 /* TopCollectionTableCellViewTableViewCell.swift */; };
+		EF8B06D2283D60EC0050E726 /* TopCollectionTableCellViewTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF8B06CF283D60EC0050E726 /* TopCollectionTableCellViewTableViewCell.swift */; };
+		EF8B06D5283E3A4B0050E726 /* LiveBidDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF8B06D4283E3A4B0050E726 /* LiveBidDetailView.swift */; };
+		EF8B06D6283E3A4B0050E726 /* LiveBidDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF8B06D4283E3A4B0050E726 /* LiveBidDetailView.swift */; };
+		EF8B06D7283E3A4B0050E726 /* LiveBidDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF8B06D4283E3A4B0050E726 /* LiveBidDetailView.swift */; };
+		EF8B06DA283E77AA0050E726 /* ContainerHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF8B06D9283E77AA0050E726 /* ContainerHeaderView.swift */; };
+		EF8B06DB283E77AA0050E726 /* ContainerHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF8B06D9283E77AA0050E726 /* ContainerHeaderView.swift */; };
+		EF8B06DC283E77AA0050E726 /* ContainerHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF8B06D9283E77AA0050E726 /* ContainerHeaderView.swift */; };
+		EF8B06DE283E7C2C0050E726 /* Container.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF8B06DD283E7C2C0050E726 /* Container.swift */; };
+		EF8B06DF283E7C2C0050E726 /* Container.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF8B06DD283E7C2C0050E726 /* Container.swift */; };
+		EF8B06E0283E7C2C0050E726 /* Container.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF8B06DD283E7C2C0050E726 /* Container.swift */; };
+		EF8B07462840A8150050E726 /* UIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF8B07452840A8150050E726 /* UIViewController.swift */; };
+		EF8B07472840A8150050E726 /* UIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF8B07452840A8150050E726 /* UIViewController.swift */; };
+		EF8B07482840A8150050E726 /* UIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF8B07452840A8150050E726 /* UIViewController.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		EF8B0644283BEAC10050E726 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = EF8B0625283BEAC10050E726 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = EF8B062C283BEAC10050E726;
+			remoteInfo = ArtOcean;
+		};
+		EF8B064E283BEAC20050E726 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = EF8B0625283BEAC10050E726 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = EF8B062C283BEAC10050E726;
+			remoteInfo = ArtOcean;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		EF8B062D283BEAC10050E726 /* ArtOcean.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ArtOcean.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		EF8B0630283BEAC10050E726 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		EF8B0634283BEAC10050E726 /* MainTabViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabViewController.swift; sourceTree = "<group>"; };
+		EF8B0637283BEAC10050E726 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		EF8B0639283BEAC10050E726 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		EF8B063C283BEAC10050E726 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		EF8B063E283BEAC10050E726 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		EF8B0643283BEAC10050E726 /* ArtOceanTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ArtOceanTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		EF8B0647283BEAC10050E726 /* ArtOceanTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtOceanTests.swift; sourceTree = "<group>"; };
+		EF8B064D283BEAC20050E726 /* ArtOceanUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ArtOceanUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		EF8B0651283BEAC20050E726 /* ArtOceanUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtOceanUITests.swift; sourceTree = "<group>"; };
+		EF8B0653283BEAC20050E726 /* ArtOceanUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtOceanUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		EF8B0664283BED350050E726 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
+		EF8B0667283BEF250050E726 /* UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
+		EF8B0669283BEFB90050E726 /* TabBarModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarModel.swift; sourceTree = "<group>"; };
+		EF8B066B283BF0E70050E726 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		EF8B066D283BF0F10050E726 /* StatisticsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsViewController.swift; sourceTree = "<group>"; };
+		EF8B066F283BF0FE0050E726 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
+		EF8B0671283BFA6D0050E726 /* NFTLiveBiddingCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NFTLiveBiddingCollectionView.swift; sourceTree = "<group>"; };
+		EF8B0674283BFA900050E726 /* NFTLiveBidCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NFTLiveBidCollectionViewCell.swift; sourceTree = "<group>"; };
+		EF8B0676283C20820050E726 /* UIImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImageView.swift; sourceTree = "<group>"; };
+		EF8B0679283C26120050E726 /* ImageDownloader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageDownloader.swift; sourceTree = "<group>"; };
+		EF8B067C283C27020050E726 /* AlchemyAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlchemyAPI.swift; sourceTree = "<group>"; };
+		EF8B067E283C28960050E726 /* DataError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataError.swift; sourceTree = "<group>"; };
+		EF8B0680283C2A180050E726 /* DataCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataCache.swift; sourceTree = "<group>"; };
+		EF8B0682283C2CA10050E726 /* AlchemyNFTDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlchemyNFTDataModel.swift; sourceTree = "<group>"; };
+		EF8B0684283C31560050E726 /* UIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIView.swift; sourceTree = "<group>"; };
+		EF8B0687283CCD4F0050E726 /* nft.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = nft.json; sourceTree = "<group>"; };
+		EF8B06A2283D0C700050E726 /* Satoshi-BoldItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Satoshi-BoldItalic.otf"; sourceTree = "<group>"; };
+		EF8B06A3283D0C700050E726 /* Satoshi-Black.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Satoshi-Black.otf"; sourceTree = "<group>"; };
+		EF8B06A4283D0C700050E726 /* Satoshi-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Satoshi-Medium.otf"; sourceTree = "<group>"; };
+		EF8B06A5283D0C700050E726 /* Satoshi-LightItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Satoshi-LightItalic.otf"; sourceTree = "<group>"; };
+		EF8B06A6283D0C710050E726 /* Satoshi-MediumItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Satoshi-MediumItalic.otf"; sourceTree = "<group>"; };
+		EF8B06A7283D0C710050E726 /* Satoshi-BlackItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Satoshi-BlackItalic.otf"; sourceTree = "<group>"; };
+		EF8B06A8283D0C710050E726 /* Satoshi-Italic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Satoshi-Italic.otf"; sourceTree = "<group>"; };
+		EF8B06A9283D0C710050E726 /* Satoshi-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Satoshi-Regular.otf"; sourceTree = "<group>"; };
+		EF8B06AA283D0C710050E726 /* Satoshi-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Satoshi-Bold.otf"; sourceTree = "<group>"; };
+		EF8B06AB283D0C710050E726 /* Satoshi-Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Satoshi-Light.otf"; sourceTree = "<group>"; };
+		EF8B06CB283D5B4C0050E726 /* TopCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopCollectionView.swift; sourceTree = "<group>"; };
+		EF8B06CF283D60EC0050E726 /* TopCollectionTableCellViewTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopCollectionTableCellViewTableViewCell.swift; sourceTree = "<group>"; };
+		EF8B06D4283E3A4B0050E726 /* LiveBidDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveBidDetailView.swift; sourceTree = "<group>"; };
+		EF8B06D9283E77AA0050E726 /* ContainerHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContainerHeaderView.swift; sourceTree = "<group>"; };
+		EF8B06DD283E7C2C0050E726 /* Container.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Container.swift; sourceTree = "<group>"; };
+		EF8B07452840A8150050E726 /* UIViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewController.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		EF8B062A283BEAC10050E726 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EF8B0640283BEAC10050E726 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EF8B064A283BEAC20050E726 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		EF8B0624283BEAC10050E726 = {
+			isa = PBXGroup;
+			children = (
+				EF8B062F283BEAC10050E726 /* ArtOcean */,
+				EF8B0646283BEAC10050E726 /* ArtOceanTests */,
+				EF8B0650283BEAC20050E726 /* ArtOceanUITests */,
+				EF8B062E283BEAC10050E726 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		EF8B062E283BEAC10050E726 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				EF8B062D283BEAC10050E726 /* ArtOcean.app */,
+				EF8B0643283BEAC10050E726 /* ArtOceanTests.xctest */,
+				EF8B064D283BEAC20050E726 /* ArtOceanUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		EF8B062F283BEAC10050E726 /* ArtOcean */ = {
+			isa = PBXGroup;
+			children = (
+				EF8B0689283CDEC50050E726 /* Fonts */,
+				EF8B0686283CCD3D0050E726 /* StaticFiles */,
+				EF8B067B283C26F60050E726 /* API */,
+				EF8B0678283C26060050E726 /* Network */,
+				EF8B0666283BEF190050E726 /* Extensions */,
+				EF8B0663283BECEE0050E726 /* ViewModels */,
+				EF8B0662283BECE80050E726 /* Models */,
+				EF8B0661283BECE10050E726 /* Views */,
+				EF8B0660283BECD60050E726 /* ViewController */,
+				EF8B0630283BEAC10050E726 /* AppDelegate.swift */,
+				EF8B0634283BEAC10050E726 /* MainTabViewController.swift */,
+				EF8B0636283BEAC10050E726 /* Main.storyboard */,
+				EF8B0639283BEAC10050E726 /* Assets.xcassets */,
+				EF8B063B283BEAC10050E726 /* LaunchScreen.storyboard */,
+				EF8B063E283BEAC10050E726 /* Info.plist */,
+			);
+			path = ArtOcean;
+			sourceTree = "<group>";
+		};
+		EF8B0646283BEAC10050E726 /* ArtOceanTests */ = {
+			isa = PBXGroup;
+			children = (
+				EF8B0647283BEAC10050E726 /* ArtOceanTests.swift */,
+			);
+			path = ArtOceanTests;
+			sourceTree = "<group>";
+		};
+		EF8B0650283BEAC20050E726 /* ArtOceanUITests */ = {
+			isa = PBXGroup;
+			children = (
+				EF8B0651283BEAC20050E726 /* ArtOceanUITests.swift */,
+				EF8B0653283BEAC20050E726 /* ArtOceanUITestsLaunchTests.swift */,
+			);
+			path = ArtOceanUITests;
+			sourceTree = "<group>";
+		};
+		EF8B0660283BECD60050E726 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				EF8B06D3283E3A1F0050E726 /* Home */,
+				EF8B066B283BF0E70050E726 /* ProfileViewController.swift */,
+				EF8B066D283BF0F10050E726 /* StatisticsViewController.swift */,
+				EF8B066F283BF0FE0050E726 /* SearchViewController.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		EF8B0661283BECE10050E726 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				EF8B06D8283E6F120050E726 /* CommonComponents */,
+				EF8B06CA283D58F80050E726 /* TopCollection */,
+				EF8B0673283BFA740050E726 /* NFTLiveBid */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		EF8B0662283BECE80050E726 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				EF8B0682283C2CA10050E726 /* AlchemyNFTDataModel.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		EF8B0663283BECEE0050E726 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				EF8B0669283BEFB90050E726 /* TabBarModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		EF8B0666283BEF190050E726 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				EF8B0667283BEF250050E726 /* UIColor.swift */,
+				EF8B0676283C20820050E726 /* UIImageView.swift */,
+				EF8B0684283C31560050E726 /* UIView.swift */,
+				EF8B07452840A8150050E726 /* UIViewController.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		EF8B0673283BFA740050E726 /* NFTLiveBid */ = {
+			isa = PBXGroup;
+			children = (
+				EF8B0671283BFA6D0050E726 /* NFTLiveBiddingCollectionView.swift */,
+				EF8B0674283BFA900050E726 /* NFTLiveBidCollectionViewCell.swift */,
+			);
+			path = NFTLiveBid;
+			sourceTree = "<group>";
+		};
+		EF8B0678283C26060050E726 /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				EF8B0679283C26120050E726 /* ImageDownloader.swift */,
+				EF8B067E283C28960050E726 /* DataError.swift */,
+				EF8B0680283C2A180050E726 /* DataCache.swift */,
+			);
+			path = Network;
+			sourceTree = "<group>";
+		};
+		EF8B067B283C26F60050E726 /* API */ = {
+			isa = PBXGroup;
+			children = (
+				EF8B067C283C27020050E726 /* AlchemyAPI.swift */,
+			);
+			path = API;
+			sourceTree = "<group>";
+		};
+		EF8B0686283CCD3D0050E726 /* StaticFiles */ = {
+			isa = PBXGroup;
+			children = (
+				EF8B0687283CCD4F0050E726 /* nft.json */,
+			);
+			path = StaticFiles;
+			sourceTree = "<group>";
+		};
+		EF8B0689283CDEC50050E726 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				EF8B06A3283D0C700050E726 /* Satoshi-Black.otf */,
+				EF8B06A7283D0C710050E726 /* Satoshi-BlackItalic.otf */,
+				EF8B06AA283D0C710050E726 /* Satoshi-Bold.otf */,
+				EF8B06A2283D0C700050E726 /* Satoshi-BoldItalic.otf */,
+				EF8B06A8283D0C710050E726 /* Satoshi-Italic.otf */,
+				EF8B06AB283D0C710050E726 /* Satoshi-Light.otf */,
+				EF8B06A5283D0C700050E726 /* Satoshi-LightItalic.otf */,
+				EF8B06A4283D0C700050E726 /* Satoshi-Medium.otf */,
+				EF8B06A6283D0C710050E726 /* Satoshi-MediumItalic.otf */,
+				EF8B06A9283D0C710050E726 /* Satoshi-Regular.otf */,
+			);
+			path = Fonts;
+			sourceTree = "<group>";
+		};
+		EF8B06CA283D58F80050E726 /* TopCollection */ = {
+			isa = PBXGroup;
+			children = (
+				EF8B06CB283D5B4C0050E726 /* TopCollectionView.swift */,
+				EF8B06CF283D60EC0050E726 /* TopCollectionTableCellViewTableViewCell.swift */,
+			);
+			path = TopCollection;
+			sourceTree = "<group>";
+		};
+		EF8B06D3283E3A1F0050E726 /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				EF8B0664283BED350050E726 /* HomeViewController.swift */,
+				EF8B06D4283E3A4B0050E726 /* LiveBidDetailView.swift */,
+			);
+			path = Home;
+			sourceTree = "<group>";
+		};
+		EF8B06D8283E6F120050E726 /* CommonComponents */ = {
+			isa = PBXGroup;
+			children = (
+				EF8B06D9283E77AA0050E726 /* ContainerHeaderView.swift */,
+				EF8B06DD283E7C2C0050E726 /* Container.swift */,
+			);
+			path = CommonComponents;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		EF8B062C283BEAC10050E726 /* ArtOcean */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = EF8B0657283BEAC20050E726 /* Build configuration list for PBXNativeTarget "ArtOcean" */;
+			buildPhases = (
+				EF8B0629283BEAC10050E726 /* Sources */,
+				EF8B062A283BEAC10050E726 /* Frameworks */,
+				EF8B062B283BEAC10050E726 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = ArtOcean;
+			productName = ArtOcean;
+			productReference = EF8B062D283BEAC10050E726 /* ArtOcean.app */;
+			productType = "com.apple.product-type.application";
+		};
+		EF8B0642283BEAC10050E726 /* ArtOceanTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = EF8B065A283BEAC20050E726 /* Build configuration list for PBXNativeTarget "ArtOceanTests" */;
+			buildPhases = (
+				EF8B063F283BEAC10050E726 /* Sources */,
+				EF8B0640283BEAC10050E726 /* Frameworks */,
+				EF8B0641283BEAC10050E726 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				EF8B0645283BEAC10050E726 /* PBXTargetDependency */,
+			);
+			name = ArtOceanTests;
+			productName = ArtOceanTests;
+			productReference = EF8B0643283BEAC10050E726 /* ArtOceanTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		EF8B064C283BEAC20050E726 /* ArtOceanUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = EF8B065D283BEAC20050E726 /* Build configuration list for PBXNativeTarget "ArtOceanUITests" */;
+			buildPhases = (
+				EF8B0649283BEAC20050E726 /* Sources */,
+				EF8B064A283BEAC20050E726 /* Frameworks */,
+				EF8B064B283BEAC20050E726 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				EF8B064F283BEAC20050E726 /* PBXTargetDependency */,
+			);
+			name = ArtOceanUITests;
+			productName = ArtOceanUITests;
+			productReference = EF8B064D283BEAC20050E726 /* ArtOceanUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		EF8B0625283BEAC10050E726 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1330;
+				LastUpgradeCheck = 1330;
+				TargetAttributes = {
+					EF8B062C283BEAC10050E726 = {
+						CreatedOnToolsVersion = 13.3.1;
+					};
+					EF8B0642283BEAC10050E726 = {
+						CreatedOnToolsVersion = 13.3.1;
+						TestTargetID = EF8B062C283BEAC10050E726;
+					};
+					EF8B064C283BEAC20050E726 = {
+						CreatedOnToolsVersion = 13.3.1;
+						TestTargetID = EF8B062C283BEAC10050E726;
+					};
+				};
+			};
+			buildConfigurationList = EF8B0628283BEAC10050E726 /* Build configuration list for PBXProject "ArtOcean" */;
+			compatibilityVersion = "Xcode 13.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = EF8B0624283BEAC10050E726;
+			productRefGroup = EF8B062E283BEAC10050E726 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				EF8B062C283BEAC10050E726 /* ArtOcean */,
+				EF8B0642283BEAC10050E726 /* ArtOceanTests */,
+				EF8B064C283BEAC20050E726 /* ArtOceanUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		EF8B062B283BEAC10050E726 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EF8B06C7283D0C710050E726 /* Satoshi-Light.otf in Resources */,
+				EF8B0688283CCD4F0050E726 /* nft.json in Resources */,
+				EF8B06AF283D0C710050E726 /* Satoshi-Black.otf in Resources */,
+				EF8B06B2283D0C710050E726 /* Satoshi-Medium.otf in Resources */,
+				EF8B06AC283D0C710050E726 /* Satoshi-BoldItalic.otf in Resources */,
+				EF8B06B5283D0C710050E726 /* Satoshi-LightItalic.otf in Resources */,
+				EF8B06BB283D0C710050E726 /* Satoshi-BlackItalic.otf in Resources */,
+				EF8B06C4283D0C710050E726 /* Satoshi-Bold.otf in Resources */,
+				EF8B063D283BEAC10050E726 /* LaunchScreen.storyboard in Resources */,
+				EF8B06B8283D0C710050E726 /* Satoshi-MediumItalic.otf in Resources */,
+				EF8B06C1283D0C710050E726 /* Satoshi-Regular.otf in Resources */,
+				EF8B06BE283D0C710050E726 /* Satoshi-Italic.otf in Resources */,
+				EF8B063A283BEAC10050E726 /* Assets.xcassets in Resources */,
+				EF8B0638283BEAC10050E726 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EF8B0641283BEAC10050E726 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EF8B06C5283D0C710050E726 /* Satoshi-Bold.otf in Resources */,
+				EF8B06B6283D0C710050E726 /* Satoshi-LightItalic.otf in Resources */,
+				EF8B06BC283D0C710050E726 /* Satoshi-BlackItalic.otf in Resources */,
+				EF8B06AD283D0C710050E726 /* Satoshi-BoldItalic.otf in Resources */,
+				EF8B06BF283D0C710050E726 /* Satoshi-Italic.otf in Resources */,
+				EF8B06C2283D0C710050E726 /* Satoshi-Regular.otf in Resources */,
+				EF8B06B9283D0C710050E726 /* Satoshi-MediumItalic.otf in Resources */,
+				EF8B06B0283D0C710050E726 /* Satoshi-Black.otf in Resources */,
+				EF8B06C8283D0C710050E726 /* Satoshi-Light.otf in Resources */,
+				EF8B06B3283D0C710050E726 /* Satoshi-Medium.otf in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EF8B064B283BEAC20050E726 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EF8B06C6283D0C710050E726 /* Satoshi-Bold.otf in Resources */,
+				EF8B06B7283D0C710050E726 /* Satoshi-LightItalic.otf in Resources */,
+				EF8B06BD283D0C710050E726 /* Satoshi-BlackItalic.otf in Resources */,
+				EF8B06AE283D0C710050E726 /* Satoshi-BoldItalic.otf in Resources */,
+				EF8B06C0283D0C710050E726 /* Satoshi-Italic.otf in Resources */,
+				EF8B06C3283D0C710050E726 /* Satoshi-Regular.otf in Resources */,
+				EF8B06BA283D0C710050E726 /* Satoshi-MediumItalic.otf in Resources */,
+				EF8B06B1283D0C710050E726 /* Satoshi-Black.otf in Resources */,
+				EF8B06C9283D0C710050E726 /* Satoshi-Light.otf in Resources */,
+				EF8B06B4283D0C710050E726 /* Satoshi-Medium.otf in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		EF8B0629283BEAC10050E726 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EF8B067F283C28960050E726 /* DataError.swift in Sources */,
+				EF8B0635283BEAC10050E726 /* MainTabViewController.swift in Sources */,
+				EF8B0631283BEAC10050E726 /* AppDelegate.swift in Sources */,
+				EF8B067A283C26120050E726 /* ImageDownloader.swift in Sources */,
+				EF8B06DA283E77AA0050E726 /* ContainerHeaderView.swift in Sources */,
+				EF8B0670283BF0FE0050E726 /* SearchViewController.swift in Sources */,
+				EF8B07462840A8150050E726 /* UIViewController.swift in Sources */,
+				EF8B0677283C20820050E726 /* UIImageView.swift in Sources */,
+				EF8B066E283BF0F10050E726 /* StatisticsViewController.swift in Sources */,
+				EF8B0681283C2A180050E726 /* DataCache.swift in Sources */,
+				EF8B0672283BFA6D0050E726 /* NFTLiveBiddingCollectionView.swift in Sources */,
+				EF8B066A283BEFB90050E726 /* TabBarModel.swift in Sources */,
+				EF8B06D5283E3A4B0050E726 /* LiveBidDetailView.swift in Sources */,
+				EF8B066C283BF0E70050E726 /* ProfileViewController.swift in Sources */,
+				EF8B067D283C27020050E726 /* AlchemyAPI.swift in Sources */,
+				EF8B06D0283D60EC0050E726 /* TopCollectionTableCellViewTableViewCell.swift in Sources */,
+				EF8B0665283BED350050E726 /* HomeViewController.swift in Sources */,
+				EF8B06CC283D5B4C0050E726 /* TopCollectionView.swift in Sources */,
+				EF8B0683283C2CA10050E726 /* AlchemyNFTDataModel.swift in Sources */,
+				EF8B06DE283E7C2C0050E726 /* Container.swift in Sources */,
+				EF8B0675283BFA900050E726 /* NFTLiveBidCollectionViewCell.swift in Sources */,
+				EF8B0685283C31560050E726 /* UIView.swift in Sources */,
+				EF8B0668283BEF250050E726 /* UIColor.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EF8B063F283BEAC10050E726 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EF8B07472840A8150050E726 /* UIViewController.swift in Sources */,
+				EF8B06CD283D5B4C0050E726 /* TopCollectionView.swift in Sources */,
+				EF8B06DF283E7C2C0050E726 /* Container.swift in Sources */,
+				EF8B06D1283D60EC0050E726 /* TopCollectionTableCellViewTableViewCell.swift in Sources */,
+				EF8B0648283BEAC10050E726 /* ArtOceanTests.swift in Sources */,
+				EF8B06D6283E3A4B0050E726 /* LiveBidDetailView.swift in Sources */,
+				EF8B06DB283E77AA0050E726 /* ContainerHeaderView.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EF8B0649283BEAC20050E726 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EF8B0654283BEAC20050E726 /* ArtOceanUITestsLaunchTests.swift in Sources */,
+				EF8B06D2283D60EC0050E726 /* TopCollectionTableCellViewTableViewCell.swift in Sources */,
+				EF8B06D7283E3A4B0050E726 /* LiveBidDetailView.swift in Sources */,
+				EF8B0652283BEAC20050E726 /* ArtOceanUITests.swift in Sources */,
+				EF8B06E0283E7C2C0050E726 /* Container.swift in Sources */,
+				EF8B06CE283D5B4C0050E726 /* TopCollectionView.swift in Sources */,
+				EF8B07482840A8150050E726 /* UIViewController.swift in Sources */,
+				EF8B06DC283E77AA0050E726 /* ContainerHeaderView.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		EF8B0645283BEAC10050E726 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = EF8B062C283BEAC10050E726 /* ArtOcean */;
+			targetProxy = EF8B0644283BEAC10050E726 /* PBXContainerItemProxy */;
+		};
+		EF8B064F283BEAC20050E726 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = EF8B062C283BEAC10050E726 /* ArtOcean */;
+			targetProxy = EF8B064E283BEAC20050E726 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		EF8B0636283BEAC10050E726 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				EF8B0637283BEAC10050E726 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		EF8B063B283BEAC10050E726 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				EF8B063C283BEAC10050E726 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		EF8B0655283BEAC20050E726 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.4;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		EF8B0656283BEAC20050E726 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.4;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		EF8B0658283BEAC20050E726 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 8T963ZW2EJ;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = ArtOcean/Info.plist;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.Krish.ArtOcean;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		EF8B0659283BEAC20050E726 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 8T963ZW2EJ;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = ArtOcean/Info.plist;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.Krish.ArtOcean;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		EF8B065B283BEAC20050E726 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.4;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.Krish.ArtOceanTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ArtOcean.app/ArtOcean";
+			};
+			name = Debug;
+		};
+		EF8B065C283BEAC20050E726 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.4;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.Krish.ArtOceanTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ArtOcean.app/ArtOcean";
+			};
+			name = Release;
+		};
+		EF8B065E283BEAC20050E726 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.Krish.ArtOceanUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = ArtOcean;
+			};
+			name = Debug;
+		};
+		EF8B065F283BEAC20050E726 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.Krish.ArtOceanUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = ArtOcean;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		EF8B0628283BEAC10050E726 /* Build configuration list for PBXProject "ArtOcean" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EF8B0655283BEAC20050E726 /* Debug */,
+				EF8B0656283BEAC20050E726 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		EF8B0657283BEAC20050E726 /* Build configuration list for PBXNativeTarget "ArtOcean" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EF8B0658283BEAC20050E726 /* Debug */,
+				EF8B0659283BEAC20050E726 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		EF8B065A283BEAC20050E726 /* Build configuration list for PBXNativeTarget "ArtOceanTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EF8B065B283BEAC20050E726 /* Debug */,
+				EF8B065C283BEAC20050E726 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		EF8B065D283BEAC20050E726 /* Build configuration list for PBXNativeTarget "ArtOceanUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EF8B065E283BEAC20050E726 /* Debug */,
+				EF8B065F283BEAC20050E726 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = EF8B0625283BEAC10050E726 /* Project object */;
+}
