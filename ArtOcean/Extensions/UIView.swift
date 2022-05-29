@@ -19,6 +19,24 @@ extension UIView{
         return gradient
     }
     
+    public func bouncyButtonClick(scaleDownTo:CGFloat = 0.95){
+        DispatchQueue.main.async {
+            UIViewPropertyAnimator(duration: 0.2, curve: .easeInOut) {
+                self.transform = CGAffineTransform.init(scaleX: scaleDownTo, y: scaleDownTo)
+                self.layoutIfNeeded()
+            }.startAnimation()
+            
+            UIViewPropertyAnimator(duration: 0.2, curve: .easeInOut) {
+                self.transform = CGAffineTransform.init(scaleX: 1, y: 1)
+                self.layoutIfNeeded()
+            }.startAnimation(afterDelay: 0.2)
+        }
+    }
+    
+    public func clearView(){
+        self.backgroundColor = .clear
+    }
+    
     public func imageView(cornerRadius:CGFloat = 10, borderColor:UIColor = .clear,borderWidth:CGFloat = 1,autoLayout:Bool = true,addGradient:Bool = false) -> UIImageView{
         let imageView = UIImageView()
         imageView.clipsToBounds = true
@@ -59,6 +77,7 @@ extension UIView{
         }
         label.textColor = color
         label.numberOfLines = numOfLines
+        label.adjustsFontSizeToFitWidth = true
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }

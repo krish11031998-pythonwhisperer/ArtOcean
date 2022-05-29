@@ -60,6 +60,10 @@ class ContainerHeaderView: UIStackView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override var intrinsicContentSize: CGSize{
+        return .init(width: .zero, height: 50)
+    }
+    
     func setupView(){
         self.axis = .horizontal
         self.spacing = 5
@@ -73,6 +77,7 @@ class ContainerHeaderView: UIStackView {
             self.rightButton.widthAnchor.constraint(equalTo: self.widthAnchor, multiplier: 0.2,constant: -5).isActive = true
             self.rightButton.titleLabel?.textAlignment = .right
         }
+        
     }
     
 

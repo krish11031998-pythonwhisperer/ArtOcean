@@ -31,10 +31,9 @@ class NFTLiveBiddingCollectionView: UIView {
         super.init(frame: .zero)
         if let layout = self.collectionView.collectionViewLayout as? UICollectionViewFlowLayout{
             layout.scrollDirection = orientation
-//            layout.sectionInset = .init(top: 10, left: 10, bottom: 10, right: 10)
-            layout.sectionInset = .init(top: 0, left: 10, bottom: 0, right: 10)
+            layout.sectionInset = .init(top: 10, left: 10, bottom: 10, right: 10)
             if orientation == .horizontal{
-                layout.itemSize = .init(width: itemSize.width, height: itemSize.height - 0)
+                layout.itemSize = .init(width: itemSize.width, height: itemSize.height - 20)
             }else{
                 layout.itemSize = .init(width: itemSize.width - 20, height: itemSize.height)
             }

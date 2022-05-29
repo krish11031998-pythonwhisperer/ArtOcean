@@ -50,18 +50,18 @@ class NFTLiveBidCollectionViewCell: UICollectionViewCell {
         label.backgroundColor = .appBlueColor.withAlphaComponent(0.15)
         label.clipsToBounds = true
         label.textAlignment = .center
-        label.bounds = label.frame.inset(by: .init(top: 5, left: 7.5, bottom: 5, right: 7.5))
+        label.frame = label.frame.inset(by: .init(top: 5, left: 7.5, bottom: 5, right: 7.5))
         return label
     }()
     
+    @objc func onTapHandler(_ recognizer:UITapGestureRecognizer){
+        self.bouncyButtonClick()
+    }
     
-    private lazy var bidButton:UILabel = {
-        var label = self.labelBuilder(text: "Place a bid", size: 12, weight: .medium, color: .white, numOfLines: 1)
-        label.backgroundColor = .init(hexString: "2281E3",alpha: 1)
-        label.layer.cornerRadius = 15
-        label.clipsToBounds = true
-        label.textAlignment = .center
-        return label
+    private lazy var bidButton:CustomButton = {
+        var button = CustomButton(title: "Place a bid", color: .white, backgroundColor: .init(hexString: "2281E3",alpha: 1))
+        button.delegate = self
+        return button
     }()
     
     private lazy var biddingStack:UIStackView = {
@@ -72,7 +72,6 @@ class NFTLiveBidCollectionViewCell: UICollectionViewCell {
         
         view.addArrangedSubview(self.timeLeftLabel)
         view.addArrangedSubview(self.bidButton)
-//        view.backgroundColor = .blue
         
         NSLayoutConstraint.activate([
             self.timeLeftLabel.widthAnchor.constraint(equalTo: view.widthAnchor,multiplier: 0.5,constant: -4),
@@ -131,6 +130,8 @@ class NFTLiveBidCollectionViewCell: UICollectionViewCell {
         self.backgroundColor = .white
         self.layer.cornerRadius = 16
         
+        self.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.onTapHandler(_:))))
+        
         self.addShadow()
     }
     
@@ -188,7 +189,6 @@ class NFTLiveBidCollectionViewCell: UICollectionViewCell {
         
         self.NFTInfo.widthAnchor.constraint(equalTo:self.widthAnchor,constant: -16).isActive = true
         self.NFTInfo.leadingAnchor.constraint(equalTo: self.leadingAnchor,constant:8).isActive = true
-//        self.NFTInfo.heightAnchor.constraint(equalTo: self.heightAnchor,multiplier: 0.4).isActive = true
         self.NFTInfo.bottomAnchor.constraint(equalTo: self.bottomAnchor,constant: -10).isActive = true
         self.NFTInfo.topAnchor.constraint(equalTo: self.imageView.bottomAnchor,constant: 10).isActive = true
     }
@@ -201,7 +201,12 @@ extension NFTLiveBidCollectionViewCell{
         super.prepareForReuse()
         
         self.imageView.image = .init(named: "placeHolder")
-//        self.title.text = ""
-//        self.owner.text = ""
+    }
+}
+
+//MARK: - CustomButtonDelegate
+extension NFTLiveBidCollectionViewCell:CustomButtonDelegate{
+    func handleTap() {
+        print("(DEBUG) Clicked on the Cell!")
     }
 }

@@ -79,6 +79,7 @@
 		EF8B07462840A8150050E726 /* UIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF8B07452840A8150050E726 /* UIViewController.swift */; };
 		EF8B07472840A8150050E726 /* UIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF8B07452840A8150050E726 /* UIViewController.swift */; };
 		EF8B07482840A8150050E726 /* UIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF8B07452840A8150050E726 /* UIViewController.swift */; };
+		EFD13C1C2843E1BD000E422E /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFD13C1B2843E1BD000E422E /* CustomButton.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -143,6 +144,7 @@
 		EF8B06D9283E77AA0050E726 /* ContainerHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContainerHeaderView.swift; sourceTree = "<group>"; };
 		EF8B06DD283E7C2C0050E726 /* Container.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Container.swift; sourceTree = "<group>"; };
 		EF8B07452840A8150050E726 /* UIViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewController.swift; sourceTree = "<group>"; };
+		EFD13C1B2843E1BD000E422E /* CustomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -352,6 +354,7 @@
 			children = (
 				EF8B06D9283E77AA0050E726 /* ContainerHeaderView.swift */,
 				EF8B06DD283E7C2C0050E726 /* Container.swift */,
+				EFD13C1B2843E1BD000E422E /* CustomButton.swift */,
 			);
 			path = CommonComponents;
 			sourceTree = "<group>";
@@ -538,6 +541,7 @@
 				EF8B06CC283D5B4C0050E726 /* TopCollectionView.swift in Sources */,
 				EF8B0683283C2CA10050E726 /* AlchemyNFTDataModel.swift in Sources */,
 				EF8B06DE283E7C2C0050E726 /* Container.swift in Sources */,
+				EFD13C1C2843E1BD000E422E /* CustomButton.swift in Sources */,
 				EF8B0675283BFA900050E726 /* NFTLiveBidCollectionViewCell.swift in Sources */,
 				EF8B0685283C31560050E726 /* UIView.swift in Sources */,
 				EF8B0668283BEF250050E726 /* UIColor.swift in Sources */,

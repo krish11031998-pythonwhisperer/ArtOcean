@@ -10,7 +10,7 @@ import UIKit
 class LiveBidDetailView: UIViewController  {
     
     private lazy var liveBidCollection:NFTLiveBiddingCollectionView = {
-        let collection = NFTLiveBiddingCollectionView(orientation: .vertical,itemSize: .init(width: UIScreen.main.bounds.width * 0.5 - 10, height: UIScreen.main.bounds.height * 0.3))
+        let collection = NFTLiveBiddingCollectionView(orientation: .vertical,itemSize: .init(width: UIScreen.main.bounds.width * 0.5, height: UIScreen.main.bounds.height * 0.3))
         return collection
     }()
 
