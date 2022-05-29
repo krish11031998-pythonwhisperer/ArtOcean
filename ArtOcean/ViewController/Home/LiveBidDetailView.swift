@@ -18,6 +18,7 @@ class LiveBidDetailView: UIViewController  {
         super.viewDidLoad()
         self.view.addSubview(self.liveBidCollection)
         self.configNavigationBar()
+        self.view.backgroundColor = .white
     }
     
     private func configNavigationBar(){
