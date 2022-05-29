@@ -38,4 +38,5 @@ extension UIColor {
     static var appGrayColor:UIColor = .init(hexString: "8D98AF")
     static var appGreenColor:UIColor = .init(hexString: "0AB27D")
     static var appBlackColor:UIColor = .init(hexString: "081131")
+    static var appWhiteBackgroundColor:UIColor = .init(hexString: "F8FAFC")
 }

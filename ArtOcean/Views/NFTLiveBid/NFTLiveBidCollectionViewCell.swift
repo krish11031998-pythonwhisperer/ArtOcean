@@ -10,7 +10,8 @@ import UIKit
 class NFTLiveBidCollectionViewCell: UICollectionViewCell {
     
     public static var identifier:String = "NFTCard"
-    
+    private var nftInfo:NFTModel? = nil
+    public var delegate:NFTLiveBidCellDelegate? = nil
     private lazy var imageView:CustomImageView = CustomImageView(cornerRadius: 16, maskedCorners: nil)
     
     private lazy var title:UILabel = {
@@ -52,10 +53,14 @@ class NFTLiveBidCollectionViewCell: UICollectionViewCell {
     
     @objc func onTapHandler(_ recognizer:UITapGestureRecognizer){
         self.bouncyButtonClick()
+        if let safeNFTData = self.nftInfo{
+            self.delegate?.viewArt(art: safeNFTData)
+        }
+        
     }
     
-    private lazy var bidButton:CustomButton = {
-        var button = CustomButton(title: "Place a bid", color: .white, backgroundColor: .init(hexString: "2281E3",alpha: 1))
+    private lazy var bidButton:CustomLabelButton = {
+        var button = CustomLabelButton(title: "Place a bid", color: .white, backgroundColor: .init(hexString: "2281E3",alpha: 1))
         button.delegate = self
         return button
     }()
@@ -151,6 +156,8 @@ class NFTLiveBidCollectionViewCell: UICollectionViewCell {
     
     public func updateUIWithNFT(_ nft:NFTModel,idx:Int? = nil){
 
+        self.nftInfo = nft
+        
         if let safeTitle = nft.title{
             DispatchQueue.main.async { [weak self] in
                 self?.title.text = safeTitle == "" ? "Title" : safeTitle
@@ -158,15 +165,6 @@ class NFTLiveBidCollectionViewCell: UICollectionViewCell {
             }
         }
         
-//        if let safeImg = nft.metadata?.image{
-//            DispatchQueue.main.async {
-//                if self.imageView.image != nil{
-//                    self.imageView.image = .init(named: "placeHolder")
-//                }
-//            }
-//
-//            self.imageView.updateImageView(url: safeImg)
-//        }
         self.imageView.updateImageView(url: nft.metadata?.image)
     }
     

@@ -8,9 +8,22 @@
 import UIKit
 
 class LiveBidDetailView: UIViewController  {
+        
+    
+    private var nfts:[NFTModel]? = nil
+    
+    init(nfts:[NFTModel]? = nil){
+        self.nfts = nfts
+        super.init(nibName: nil, bundle: nil)
+        
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     private lazy var liveBidCollection:NFTLiveBiddingCollectionView = {
-        let collection = NFTLiveBiddingCollectionView(orientation: .vertical,itemSize: .init(width: UIScreen.main.bounds.width - (UIScreen.main.bounds.width * 0.1), height: 300))
+        let collection = NFTLiveBiddingCollectionView(nfts: self.nfts,orientation: .vertical,itemSize: .init(width: UIScreen.main.bounds.width - (UIScreen.main.bounds.width * 0.1), height: 300))
         return collection
     }()
 
@@ -30,28 +43,16 @@ class LiveBidDetailView: UIViewController  {
     }
     
     private lazy var backBarButton:UIBarButtonItem = {
-        let backButton = UIBarButtonItem()
-        let backButtonView = UIView()
+        let barButton = UIBarButtonItem()
         
-    
-        backButtonView.frame = .init(origin: .zero, size: .init(width:30,height:30))
-        backButtonView.layer.borderColor = UIColor.appGrayColor.cgColor
-        backButtonView.layer.borderWidth = 1
-        backButtonView.layer.cornerRadius = 15
+        let backButton = CustomButton.backButton
+        backButton.handler = {
+            self.navigationController?.popViewController(animated: true)
+        }
         
-        let buttonView = UIImageView()
-        buttonView.image = .init(systemName: "chevron.left",withConfiguration:UIImage.SymbolConfiguration(pointSize: 12, weight: .bold))
-        buttonView.tintColor = .appBlackColor
+        barButton.customView = backButton
         
-        buttonView.frame.size = .init(width: 12, height: 12)
-        buttonView.frame.origin = .init(x: backButtonView.frame.midX - buttonView.frame.width * 0.5, y: backButtonView.frame.midY - buttonView.frame.height * 0.5)
-        
-        backButtonView.addSubview(buttonView)
-        
-        backButton.customView = backButtonView
-        backButton.customView?.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.handleBackButtonTap)))
-        
-        return backButton
+        return barButton
     }()
     
     @objc func handleBackButtonTap(){

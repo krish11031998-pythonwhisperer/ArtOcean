@@ -9,10 +9,14 @@ import UIKit
 
 class NFTLiveBiddingCollectionView: UICollectionView {
     
-    private var nfts:[NFTModel]? = nil
-    public var seeAllArt:(() -> Void)?
+    public var nfts:[NFTModel]? = nil
+    public var collectionDelegate: NFTLiveBidCollectionDelegate? = nil
     
-    init(orientation:UICollectionView.ScrollDirection = .horizontal,itemSize:CGSize = .init(width: UIScreen.main.bounds.width * 0.6, height: 245)){
+    init(
+        nfts:[NFTModel]? = nil,
+        orientation:UICollectionView.ScrollDirection = .horizontal,
+        itemSize:CGSize = .init(width: UIScreen.main.bounds.width * 0.6, height: 245)
+    ){
         
         //collectionLayout
         let layout = UICollectionViewFlowLayout()
@@ -38,7 +42,9 @@ class NFTLiveBiddingCollectionView: UICollectionView {
         self.delegate = self
         self.dataSource = self
         self.setupLayout()
-        self.fetchNFTsFromFile()
+        if self.nfts == nil{
+            self.fetchNFTsFromFile()
+        }
     }
     
     required init?(coder: NSCoder) {
@@ -87,6 +93,7 @@ class NFTLiveBiddingCollectionView: UICollectionView {
 
 }
 
+// MARK: - UICollectionDelegates
 extension NFTLiveBiddingCollectionView:UICollectionViewDelegate,UICollectionViewDataSource{
 
     func numberOfSections(in collectionView: UICollectionView) -> Int {
@@ -102,7 +109,7 @@ extension NFTLiveBiddingCollectionView:UICollectionViewDelegate,UICollectionView
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: NFTLiveBidCollectionViewCell.identifier, for: indexPath) as? NFTLiveBidCollectionViewCell else{
             return UICollectionViewCell()
         }
-        
+        cell.delegate = self
         if let safeNFTs = self.nfts, indexPath.row < safeNFTs.count{
             cell.updateUIWithNFT(safeNFTs[indexPath.row],idx: indexPath.row)
         }
@@ -111,3 +118,11 @@ extension NFTLiveBiddingCollectionView:UICollectionViewDelegate,UICollectionView
     }
     
 }
+
+// MARK: - NFTLiveBidCellDelegate
+extension NFTLiveBiddingCollectionView:NFTLiveBidCellDelegate{
+    func viewArt(art: NFTModel) {
+        self.collectionDelegate?.viewNFT(art: art)
+    }
+}
+

@@ -24,14 +24,26 @@ class HomeViewController: UIViewController {
         scrollView.backgroundColor = .clear
         return scrollView
     }()
+    
+    private lazy var liveBidCollection:NFTLiveBiddingCollectionView = {
+        let collection = NFTLiveBiddingCollectionView(orientation: .horizontal)
+        collection.collectionDelegate = self
+        return collection
+    }()
 
     private lazy var liveBidCollectionContainer:Container = {
-        let container = Container(header: "Live Bidding", rightButtonTitle: "See All", innerView: NFTLiveBiddingCollectionView(orientation: .horizontal), innerViewSize: .init(width: self.view.bounds.width, height: 250), buttonHandler: self.pushSeeAllArtVC)
+        let container = Container(header: "Live Bidding", rightButtonTitle: "See All", innerView: self.liveBidCollection, innerViewSize: .init(width: self.view.bounds.width, height: 250), buttonHandler: self.pushSeeAllArtVC)
         return container
     }()
     
+    private lazy var newDropsCollection:NFTLiveBiddingCollectionView = {
+        let collection = NFTLiveBiddingCollectionView(orientation: .horizontal)
+        collection.collectionDelegate = self
+        return collection
+    }()
+    
     private lazy var newDropsCollectionContainer:Container = {
-        let container = Container(header: "New Drop", rightButtonTitle: "See All", innerView: NFTLiveBiddingCollectionView(orientation: .horizontal), innerViewSize: .init(width: self.view.bounds.width, height: 250), buttonHandler: self.pushSeeAllArtVC)
+        let container = Container(header: "New Drop", rightButtonTitle: "See All", innerView: self.newDropsCollection, innerViewSize: .init(width: self.view.bounds.width, height: 250), buttonHandler: self.pushSeeAllArtVC)
         return container
     }()
     
@@ -85,9 +97,20 @@ class HomeViewController: UIViewController {
         self.newDropsCollectionContainer.leadingAnchor.constraint(equalTo: self.scrollView.leadingAnchor).isActive = true
         self.newDropsCollectionContainer.topAnchor.constraint(equalTo: self.topCollection.bottomAnchor,constant: 15).isActive = true
         self.newDropsCollectionContainer.widthAnchor.constraint(equalToConstant: self.view.bounds.width).isActive = true
-
         
-    
     }
     
+}
+
+//MARK: - NFTLiveBidCollectionDelegate
+extension HomeViewController:NFTLiveBidCollectionDelegate{
+    func viewAll(allArt: [NFTModel]) {
+        let liveBidVC = LiveBidDetailView(nfts: allArt)
+        self.navigationController?.pushViewController(liveBidVC, animated: true)
+    }
+    
+    func viewNFT(art: NFTModel) {
+        print("(DEBUG) selected An Art : ",art.title)
+        self.navigationController?.pushViewController(NFTDetailArtViewController(nftArt: art), animated: true)
+    }
 }
