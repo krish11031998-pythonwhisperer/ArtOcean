@@ -163,6 +163,12 @@ class NFTLiveBidCollectionViewCell: UICollectionViewCell {
         }
         
         if let safeImg = nft.metadata?.image{
+            DispatchQueue.main.async {
+                if self.imageView.image != nil{
+                    self.imageView.image = .init(named: "placeHolder")
+                }
+            }
+            
             ImageDownloader.shared.fetchImage(urlStr: safeImg) { [weak self] result in
                 switch result{
                     case .success(let image):

@@ -10,7 +10,7 @@ import UIKit
 class LiveBidDetailView: UIViewController  {
     
     private lazy var liveBidCollection:NFTLiveBiddingCollectionView = {
-        let collection = NFTLiveBiddingCollectionView(orientation: .vertical,itemSize: .init(width: UIScreen.main.bounds.width * 0.5, height: UIScreen.main.bounds.height * 0.3))
+        let collection = NFTLiveBiddingCollectionView(orientation: .vertical,itemSize: .init(width: UIScreen.main.bounds.width - (UIScreen.main.bounds.width * 0.22), height: UIScreen.main.bounds.height * 0.375))
         return collection
     }()
 
@@ -65,9 +65,9 @@ class LiveBidDetailView: UIViewController  {
     }
     
     func setupLayout(){
-        self.liveBidCollection.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor,constant: 5).isActive = true
+        self.liveBidCollection.leadingAnchor.constraint(equalTo: self.view.leadingAnchor,constant: UIScreen.main.bounds.width * 0.11).isActive = true
         self.liveBidCollection.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor,constant: 40).isActive = true
-        self.liveBidCollection.widthAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.widthAnchor,constant: -10).isActive = true
+        self.liveBidCollection.widthAnchor.constraint(equalTo: self.view.widthAnchor,constant: -(UIScreen.main.bounds.width * 0.22)).isActive = true
         self.liveBidCollection.heightAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.heightAnchor).isActive = true
 //        self.liveBidCollection.frame = self.view.frame.inset(by: .init(top: 10, left: 10, bottom: 10, right: 10))
         
