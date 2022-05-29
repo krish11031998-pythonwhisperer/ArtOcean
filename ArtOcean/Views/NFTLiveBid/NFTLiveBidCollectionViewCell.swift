@@ -11,12 +11,7 @@ class NFTLiveBidCollectionViewCell: UICollectionViewCell {
     
     public static var identifier:String = "NFTCard"
     
-//    private lazy var imageView:UIImageView = {
-//        let imageView = self.imageView(cornerRadius: 16, autoLayout: false)
-//        imageView.layer.maskedCorners = [.layerMinXMinYCorner,.layerMaxXMinYCorner]
-//        return imageView
-//    }()
-    private lazy var imageView:CustomImageView = CustomImageView(cornerRadius: 16, maskedCorners: [.layerMinXMinYCorner,.layerMaxXMinYCorner])
+    private lazy var imageView:CustomImageView = CustomImageView(cornerRadius: 16, maskedCorners: nil)
     
     private lazy var title:UILabel = {
         let label = self.labelBuilder(text: "", size: 14, weight: .bold, color: .appBlackColor, numOfLines: 1)

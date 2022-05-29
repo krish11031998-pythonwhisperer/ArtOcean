@@ -11,9 +11,9 @@ class TopCollectionTableCellViewTableViewCell: UITableViewCell {
     
     public static var identifier:String = "TopCollectionCell"
     
-    private lazy var collectionName:UILabel = self.labelBuilder(text: "Bored Apes Yacht Club", size: 16, weight: .regular, color: .appBlackColor, numOfLines: 1)
+    private lazy var collectionName:UILabel = self.labelBuilder(text: "Bored Apes Yacht Club", size: 16, weight: .bold, color: .appBlackColor, numOfLines: 1)
     
-    private lazy var priceOfCollection:UILabel = self.labelBuilder(text: "4,218", size: 16, weight: .regular, color: .appBlackColor, numOfLines: 1)
+    private lazy var priceOfCollection:UILabel = self.labelBuilder(text: "4,218", size: 16, weight: .bold, color: .appBlackColor, numOfLines: 1)
     
     private lazy var ownerLabel:UILabel = self.labelBuilder(text: "RoycoJack", size: 14, weight: .regular, color: .appGrayColor, numOfLines: 1)
     
@@ -66,8 +66,6 @@ class TopCollectionTableCellViewTableViewCell: UITableViewCell {
         view.addSubview(self.orderNumberLabel)
         
         NSLayoutConstraint.activate([
-//            self.collectionImage.topAnchor.constraint(equalTo: view.topAnchor,constant: (view.bounds.height - self.collectionImage.bounds.height) * 0.5),
-//            self.collectionImage.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             self.collectionImage.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             self.collectionImage.centerYAnchor.constraint(equalTo: view.centerYAnchor),
             self.collectionImage.widthAnchor.constraint(equalToConstant: 46),
