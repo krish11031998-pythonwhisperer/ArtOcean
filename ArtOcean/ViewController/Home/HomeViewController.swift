@@ -26,17 +26,17 @@ class HomeViewController: UIViewController {
     }()
 
     private lazy var liveBidCollectionContainer:Container = {
-        let container = Container(header: "Live Bidding", rightButtonTitle: "See All", innerView: NFTLiveBiddingCollectionView(orientation: .horizontal, itemSize: .init(width: self.view.bounds.width * 0.6, height: self.view.bounds.height * 0.3)), innerViewSize: .init(width: self.view.bounds.width, height: self.view.bounds.height * 0.3 + 10), buttonHandler: self.pushSeeAllArtVC)
+        let container = Container(header: "Live Bidding", rightButtonTitle: "See All", innerView: NFTLiveBiddingCollectionView(orientation: .horizontal), innerViewSize: .init(width: self.view.bounds.width, height: 250), buttonHandler: self.pushSeeAllArtVC)
         return container
     }()
     
     private lazy var newDropsCollectionContainer:Container = {
-        let container = Container(header: "New Drop", rightButtonTitle: "See All", innerView: NFTLiveBiddingCollectionView(orientation: .horizontal, itemSize: .init(width: self.view.bounds.width * 0.6, height: self.view.bounds.height * 0.3)), innerViewSize: .init(width: self.view.bounds.width, height: self.view.bounds.height * 0.3 + 10), buttonHandler: self.pushSeeAllArtVC)
+        let container = Container(header: "New Drop", rightButtonTitle: "See All", innerView: NFTLiveBiddingCollectionView(orientation: .horizontal), innerViewSize: .init(width: self.view.bounds.width, height: 250), buttonHandler: self.pushSeeAllArtVC)
         return container
     }()
     
     private lazy var topCollection:Container = {
-        let container = Container(header: "Top Collection", rightButtonTitle: "View All", innerView: TopCollectionView(), innerViewSize: .init(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height * 0.35),buttonHandler: self.pushSeeAllArtVC)
+        let container = Container(header: "Top Collection", rightButtonTitle: "View All", innerView: TopCollectionView(), innerViewSize: .init(width: UIScreen.main.bounds.width, height: 208),buttonHandler: self.pushSeeAllArtVC)
         return container
     }()
     
@@ -77,17 +77,14 @@ class HomeViewController: UIViewController {
         self.liveBidCollectionContainer.leadingAnchor.constraint(equalTo: self.scrollView.leadingAnchor).isActive = true
         self.liveBidCollectionContainer.topAnchor.constraint(equalTo: self.scrollView.topAnchor,constant: 50).isActive = true
         self.liveBidCollectionContainer.widthAnchor.constraint(equalToConstant: self.view.bounds.width).isActive = true
-//        self.liveBidCollectionContainer.heightAnchor.constraint(equalToConstant: self.view.bounds.height * 0.40).isActive = true
         
         self.topCollection.leadingAnchor.constraint(equalTo: self.scrollView.safeAreaLayoutGuide.leadingAnchor).isActive = true
         self.topCollection.topAnchor.constraint(equalTo: self.liveBidCollectionContainer.bottomAnchor,constant: 15).isActive = true
         self.topCollection.trailingAnchor.constraint(equalTo:self.scrollView.safeAreaLayoutGuide.trailingAnchor).isActive = true
-//        self.topCollection.heightAnchor.constraint(equalToConstant: self.view.frame.height * 0.3).isActive = true
 
         self.newDropsCollectionContainer.leadingAnchor.constraint(equalTo: self.scrollView.leadingAnchor).isActive = true
         self.newDropsCollectionContainer.topAnchor.constraint(equalTo: self.topCollection.bottomAnchor,constant: 15).isActive = true
         self.newDropsCollectionContainer.widthAnchor.constraint(equalToConstant: self.view.bounds.width).isActive = true
-//        self.newDropsCollectionContainer.heightAnchor.constraint(equalToConstant: self.view.bounds.height * 0.40).isActive = true
 
         
     

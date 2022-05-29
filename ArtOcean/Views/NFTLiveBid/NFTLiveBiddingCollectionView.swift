@@ -12,7 +12,7 @@ class NFTLiveBiddingCollectionView: UICollectionView {
     private var nfts:[NFTModel]? = nil
     public var seeAllArt:(() -> Void)?
     
-    init(orientation:UICollectionView.ScrollDirection = .horizontal,itemSize:CGSize = .init(width: UIScreen.main.bounds.width * 0.6, height: UIScreen.main.bounds.height * 0.3)){
+    init(orientation:UICollectionView.ScrollDirection = .horizontal,itemSize:CGSize = .init(width: UIScreen.main.bounds.width * 0.6, height: 245)){
         
         //collectionLayout
         let layout = UICollectionViewFlowLayout()
@@ -28,6 +28,8 @@ class NFTLiveBiddingCollectionView: UICollectionView {
         
         super.init(frame: .zero, collectionViewLayout: layout)
         
+        self.showsVerticalScrollIndicator = false
+        self.showsHorizontalScrollIndicator = false
         self.backgroundColor = .clear
         
         self.register(NFTLiveBidCollectionViewCell.self, forCellWithReuseIdentifier: NFTLiveBidCollectionViewCell.identifier)

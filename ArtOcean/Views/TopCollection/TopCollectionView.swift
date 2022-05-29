@@ -54,7 +54,7 @@ class TopCollectionView: UITableView {
 extension TopCollectionView:UITableViewDelegate,UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return self.frame.height * 0.3
+        return 64
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
