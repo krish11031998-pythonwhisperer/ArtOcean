@@ -37,11 +37,6 @@ class HomeViewController: UIViewController {
     
     private let topCollection:TopCollectionView = TopCollectionView()
     
-    
-//    private let topCollectionContainer:Container = {
-//        let container = Container(header: "Top Collection", rightButtonTitle: "View All", innerView: <#T##UIView#>, innerViewSize: <#T##CGSize#>, buttonHandler: <#T##(() -> Void)##(() -> Void)##() -> Void#>)
-//    }()
-
     override func viewDidLoad() {
         super.viewDidLoad()
         self.textLabel.frame = .init(origin: .zero, size: .init(width: 50, height: 50))
@@ -75,20 +70,18 @@ class HomeViewController: UIViewController {
     }
     
     func setupLayout(){
-        
-        self.liveBidCollectionContainer.backgroundColor = .red
+    
         self.liveBidCollectionContainer.leadingAnchor.constraint(equalTo: self.scrollView.leadingAnchor).isActive = true
         self.liveBidCollectionContainer.topAnchor.constraint(equalTo: self.scrollView.topAnchor,constant: 50).isActive = true
         self.liveBidCollectionContainer.widthAnchor.constraint(equalToConstant: self.view.bounds.width).isActive = true
-        self.liveBidCollectionContainer.heightAnchor.constraint(equalToConstant: self.view.bounds.height * 0.3 + 40).isActive = true
+        self.liveBidCollectionContainer.heightAnchor.constraint(equalToConstant: self.view.bounds.height * 0.40).isActive = true
+        self.liveBidCollectionContainer.backgroundColor = .red
         
-        self.topCollection.backgroundColor = .blue
         self.topCollection.leadingAnchor.constraint(equalTo: self.scrollView.safeAreaLayoutGuide.leadingAnchor).isActive = true
         self.topCollection.topAnchor.constraint(equalTo: self.liveBidCollectionContainer.bottomAnchor,constant: 15).isActive = true
         self.topCollection.widthAnchor.constraint(equalToConstant: self.view.bounds.width).isActive = true
         self.topCollection.heightAnchor.constraint(equalToConstant: self.view.frame.height * 0.3).isActive = true
-        
-        self.newDropsCollectionContainer.backgroundColor = .green
+
         self.newDropsCollectionContainer.leadingAnchor.constraint(equalTo: self.scrollView.leadingAnchor).isActive = true
         self.newDropsCollectionContainer.topAnchor.constraint(equalTo: self.topCollection.bottomAnchor,constant: 15).isActive = true
         self.newDropsCollectionContainer.widthAnchor.constraint(equalToConstant: self.view.bounds.width).isActive = true

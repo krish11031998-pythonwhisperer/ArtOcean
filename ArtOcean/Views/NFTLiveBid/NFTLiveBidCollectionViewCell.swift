@@ -25,26 +25,21 @@ class NFTLiveBidCollectionViewCell: UICollectionViewCell {
     private lazy var owner = self.labelBuilder(text: "", size: 12, weight: .medium, color: .appGrayColor, numOfLines: 1)
     
     private lazy var price = self.labelBuilder(text: "3 ETH", size: 12, weight: .medium, color: .appGreenColor, numOfLines: 1)
-    
-    private lazy var artPriceAndTitleStack:UIView = {
-        let view:UIView = UIView()
+
+    private lazy var artPriceAndTitleStack:UIStackView = {
+        let view:UIStackView = UIStackView()
+        view.axis = .horizontal
+        view.spacing = 5
         view.translatesAutoresizingMaskIntoConstraints = false
         
-        view.addSubview(self.title)
-        view.addSubview(self.price)
+        view.addArrangedSubview(self.title)
+        view.addArrangedSubview(self.price)
         
         self.price.textAlignment = .right
         
         NSLayoutConstraint.activate([
-            self.title.topAnchor.constraint(equalTo: view.topAnchor,constant: 5),
-            self.title.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             self.title.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.6,constant: -5),
-            self.title.bottomAnchor.constraint(equalTo: view.bottomAnchor,constant: -5),
-            
-            self.price.topAnchor.constraint(equalTo: view.topAnchor,constant: 5),
-            self.price.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             self.price.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.4),
-            self.price.bottomAnchor.constraint(equalTo: view.bottomAnchor,constant: -5),
         ])
         return view
     }()
@@ -69,66 +64,73 @@ class NFTLiveBidCollectionViewCell: UICollectionViewCell {
         return label
     }()
     
-    private lazy var biddingStack:UIView = {
-        let view:UIView = UIView()
+    private lazy var biddingStack:UIStackView = {
+        let view:UIStackView = UIStackView()
+        view.axis = .horizontal
+        view.spacing = 8
         view.translatesAutoresizingMaskIntoConstraints = false
         
-        view.addSubview(self.timeLeftLabel)
-        view.addSubview(self.bidButton)
+        view.addArrangedSubview(self.timeLeftLabel)
+        view.addArrangedSubview(self.bidButton)
+//        view.backgroundColor = .blue
         
         NSLayoutConstraint.activate([
-            self.timeLeftLabel.topAnchor.constraint(equalTo: view.topAnchor,constant: 5),
-            self.timeLeftLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             self.timeLeftLabel.widthAnchor.constraint(equalTo: view.widthAnchor,multiplier: 0.5,constant: -4),
-            self.timeLeftLabel.bottomAnchor.constraint(equalTo: view.bottomAnchor,constant: -5),
-            
-            self.bidButton.topAnchor.constraint(equalTo: view.topAnchor,constant: 5),
-            self.bidButton.leadingAnchor.constraint(equalTo: self.timeLeftLabel.trailingAnchor,constant: 8),
             self.bidButton.widthAnchor.constraint(equalTo: view.widthAnchor,multiplier: 0.5,constant: -4),
-            self.bidButton.bottomAnchor.constraint(equalTo: view.bottomAnchor,constant: -5)
         ])
         
         return view
         
     }()
     
-    private lazy var NFTInfo:UIView = {
+    private lazy var NFTInfo:UIStackView = {
         
-        let view:UIView = .init()
+        let view:UIStackView = .init()
+        
+        view.axis = .vertical
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(self.owner)
-        view.addSubview(self.artPriceAndTitleStack)
-        view.addSubview(self.biddingStack)
+        
+        view.addArrangedSubview(self.owner)
+        view.addArrangedSubview(self.artPriceAndTitleStack)
+        view.addArrangedSubview(self.biddingStack)
         
         NSLayoutConstraint.activate([
-            self.owner.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            self.owner.topAnchor.constraint(equalTo: view.topAnchor),
-            self.owner.widthAnchor.constraint(equalTo:view.widthAnchor),
             self.owner.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.2),
-            
-            self.artPriceAndTitleStack.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            self.artPriceAndTitleStack.topAnchor.constraint(equalTo: owner.bottomAnchor),
-            self.artPriceAndTitleStack.widthAnchor.constraint(equalTo:view.widthAnchor),
             self.artPriceAndTitleStack.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.4),
-            
-            self.biddingStack.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            self.biddingStack.topAnchor.constraint(equalTo: self.artPriceAndTitleStack.bottomAnchor),
-            self.biddingStack.widthAnchor.constraint(equalTo:view.widthAnchor),
             self.biddingStack.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.4),
-        
         ])
         
         return view
         
+    }()
+    
+    private lazy var card:UIStackView = {
+        let view = UIStackView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.axis = .vertical
+        view.spacing = 5
+        
+        view.addArrangedSubview(self.imageView)
+        view.addArrangedSubview(self.NFTInfo)
+        
+        NSLayoutConstraint.activate([
+            self.imageView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.6,constant: -5),
+            self.NFTInfo.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.4)
+        ])
+        
+        return view
     }()
     
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+        
         self.addSubview(self.imageView)
         self.addSubview(self.NFTInfo)
+        
         self.backgroundColor = .white
         self.layer.cornerRadius = 16
+        
         self.addShadow()
     }
     
@@ -178,7 +180,7 @@ class NFTLiveBidCollectionViewCell: UICollectionViewCell {
     }
     
     func setupLayout(){
-        
+
         self.imageView.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
         self.imageView.leadingAnchor.constraint(equalTo: self.leadingAnchor).isActive = true
         self.imageView.widthAnchor.constraint(equalTo: self.widthAnchor).isActive = true
@@ -186,7 +188,7 @@ class NFTLiveBidCollectionViewCell: UICollectionViewCell {
         
         self.NFTInfo.widthAnchor.constraint(equalTo:self.widthAnchor,constant: -16).isActive = true
         self.NFTInfo.leadingAnchor.constraint(equalTo: self.leadingAnchor,constant:8).isActive = true
-        self.NFTInfo.heightAnchor.constraint(equalTo: self.heightAnchor,multiplier: 0.4).isActive = true
+//        self.NFTInfo.heightAnchor.constraint(equalTo: self.heightAnchor,multiplier: 0.4).isActive = true
         self.NFTInfo.bottomAnchor.constraint(equalTo: self.bottomAnchor,constant: -10).isActive = true
         self.NFTInfo.topAnchor.constraint(equalTo: self.imageView.bottomAnchor,constant: 10).isActive = true
     }

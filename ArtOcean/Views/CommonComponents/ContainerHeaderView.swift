@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ContainerHeaderView: UIView {
+class ContainerHeaderView: UIStackView {
 
     private var buttonHandler:(() -> Void)? = nil
     private var includeButton:Bool = false
@@ -16,12 +16,19 @@ class ContainerHeaderView: UIView {
     
     private lazy var rightButton:UIButton = {
         let button = UIButton()
-        button.backgroundColor = .clear
         button.titleLabel?.font = .init(name: "Satoshi-Medium", size: 14)
+        button.titleLabel?.textAlignment = .left
         button.setTitleColor(UIColor.appGrayColor, for: .normal)
         button.setTitleColor(UIColor.appBlackColor, for: .selected)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: #selector(self.handlerButtonClick), for: .touchUpInside)
+        
+        
+        NSLayoutConstraint.activate([
+            button.titleLabel!.leadingAnchor.constraint(equalTo: button.leadingAnchor),
+            button.titleLabel!.trailingAnchor.constraint(equalTo: button.trailingAnchor)
+        ])
+        
         return button
     }()
     
@@ -47,47 +54,26 @@ class ContainerHeaderView: UIView {
         self.buttonHandler = buttonHandler
         
         self.setupView()
-        
-        
     }
     
-    required init?(coder: NSCoder) {
+    required init(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
     func setupView(){
-        self.addSubview(self.headerLabel)
+        self.axis = .horizontal
+        self.spacing = 5
+        self.translatesAutoresizingMaskIntoConstraints = false
+        self.addArrangedSubview(self.headerLabel)
         
+        //LayoutConstraint
+        self.headerLabel.widthAnchor.constraint(equalTo: self.widthAnchor, multiplier: self.includeButton ? 0.8 : 1).isActive = true
         if self.includeButton{
-            self.addSubview(self.rightButton)
+            self.addArrangedSubview(self.rightButton)
+            self.rightButton.widthAnchor.constraint(equalTo: self.widthAnchor, multiplier: 0.2,constant: -5).isActive = true
+            self.rightButton.titleLabel?.textAlignment = .right
         }
     }
     
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        self.setupLayout()
-    }
-    
-    func setupLayout(){
-                
-        //titleLabel
-        self.headerLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor).isActive = true
-        self.headerLabel.widthAnchor.constraint(equalToConstant: self.frame.width * 0.7).isActive = true
-        self.headerLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
-        self.headerLabel.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
-        
-    
-        //rightButton
-        if self.includeButton{
-            self.rightButton.trailingAnchor.constraint(equalTo: self.trailingAnchor).isActive = true
-            self.rightButton.widthAnchor.constraint(equalToConstant: self.frame.width * 0.2).isActive = true
-            self.rightButton.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
-            self.rightButton.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
-        }
-        
-//        //view
-        self.heightAnchor.constraint(equalToConstant: max(self.headerLabel.intrinsicContentSize.height,self.rightButton.intrinsicContentSize.height)).isActive = true
-        
-    }
 
 }
