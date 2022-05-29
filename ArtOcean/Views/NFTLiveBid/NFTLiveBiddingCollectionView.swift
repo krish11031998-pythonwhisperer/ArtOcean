@@ -7,45 +7,35 @@
 
 import UIKit
 
-class NFTLiveBiddingCollectionView: UIView {
+class NFTLiveBiddingCollectionView: UICollectionView {
     
     private var nfts:[NFTModel]? = nil
     public var seeAllArt:(() -> Void)?
     
-    private let collectionView:UICollectionView = {
+    init(orientation:UICollectionView.ScrollDirection = .horizontal,itemSize:CGSize = .init(width: UIScreen.main.bounds.width * 0.6, height: UIScreen.main.bounds.height * 0.3)){
+        
+        //collectionLayout
         let layout = UICollectionViewFlowLayout()
         layout.minimumInteritemSpacing = 5
         layout.minimumLineSpacing = 5
-        let collectionView = UICollectionView(frame: .zero,collectionViewLayout: layout)
-        collectionView.register(NFTLiveBidCollectionViewCell.self, forCellWithReuseIdentifier: NFTLiveBidCollectionViewCell.identifier)
-        collectionView.translatesAutoresizingMaskIntoConstraints = false
-        collectionView.showsHorizontalScrollIndicator = false
-        collectionView.showsVerticalScrollIndicator = false
-        collectionView.backgroundColor = UIColor.clear
-        return collectionView
-    }()
-    
-
-    
-    init(orientation:UICollectionView.ScrollDirection = .horizontal,itemSize:CGSize = .init(width: UIScreen.main.bounds.width * 0.6, height: UIScreen.main.bounds.height * 0.3)){
-        super.init(frame: .zero)
-        if let layout = self.collectionView.collectionViewLayout as? UICollectionViewFlowLayout{
-            layout.scrollDirection = orientation
-            layout.sectionInset = .init(top: 10, left: 10, bottom: 10, right: 10)
-            if orientation == .horizontal{
-                layout.itemSize = .init(width: itemSize.width, height: itemSize.height - 20)
-            }else{
-                layout.itemSize = .init(width: itemSize.width - 20, height: itemSize.height)
-            }
-            
-            self.collectionView.collectionViewLayout = layout
+        layout.scrollDirection = orientation
+        layout.sectionInset = .init(top: 10, left: 10, bottom: 10, right: 10)
+        if orientation == .horizontal{
+            layout.itemSize = .init(width: itemSize.width, height: itemSize.height - 20)
+        }else{
+            layout.itemSize = .init(width: itemSize.width - 20, height: itemSize.height)
         }
         
-        self.translatesAutoresizingMaskIntoConstraints = false
-        self.collectionView.delegate = self
-        self.collectionView.dataSource = self
-        self.addSubview(self.collectionView)
+        super.init(frame: .zero, collectionViewLayout: layout)
         
+        self.backgroundColor = .clear
+        
+        self.register(NFTLiveBidCollectionViewCell.self, forCellWithReuseIdentifier: NFTLiveBidCollectionViewCell.identifier)
+
+        self.translatesAutoresizingMaskIntoConstraints = false
+        self.delegate = self
+        self.dataSource = self
+        self.setupLayout()
         self.fetchNFTsFromFile()
     }
     
@@ -62,7 +52,7 @@ class NFTLiveBiddingCollectionView: UIView {
                 self?.nfts = (filterNFTS.count > 10 ? Array(filterNFTS[0...9]) : filterNFTS)
                 print("(DEBUG) Got Data Successffuly !")
                 DispatchQueue.main.async {
-                    self?.collectionView.reloadData()
+                    self?.reloadData()
                 }
             case .failure(let err):
                 print("(error) err : ",err.localizedDescription)
@@ -78,7 +68,7 @@ class NFTLiveBiddingCollectionView: UIView {
                 self?.nfts = (filterNFTS.count > 5 ? Array(filterNFTS[0...4]) : filterNFTS)
                 print("(DEBUG) Got Data Successffuly !")
                 DispatchQueue.main.async {
-                    self?.collectionView.reloadData()
+                    self?.reloadData()
                 }
             case .failure(let err):
                 print("(error) err : ",err.localizedDescription)
@@ -86,25 +76,17 @@ class NFTLiveBiddingCollectionView: UIView {
         }
     }
     
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        print("(DEBUG) bounds : ",self.bounds)
-        self.setupLayout()
-    }
-    
     func setupLayout(){
-        self.collectionView.leadingAnchor.constraint(equalTo: self.leadingAnchor).isActive = true
-        self.collectionView.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
-        self.collectionView.widthAnchor.constraint(equalToConstant: self.frame.width).isActive = true
-        self.collectionView.heightAnchor.constraint(equalToConstant: self.frame.height).isActive = true
+        self.leadingAnchor.constraint(equalTo: self.leadingAnchor).isActive = true
+        self.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
+        self.widthAnchor.constraint(equalTo: self.widthAnchor).isActive = true
+        self.heightAnchor.constraint(equalTo: self.heightAnchor).isActive = true
     }
 
 }
 
 extension NFTLiveBiddingCollectionView:UICollectionViewDelegate,UICollectionViewDataSource{
-    
-    
-    
+
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
     }

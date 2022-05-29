@@ -11,11 +11,12 @@ class NFTLiveBidCollectionViewCell: UICollectionViewCell {
     
     public static var identifier:String = "NFTCard"
     
-    private lazy var imageView:UIImageView = {
-        let imageView = self.imageView(cornerRadius: 16, autoLayout: false)
-        imageView.layer.maskedCorners = [.layerMinXMinYCorner,.layerMaxXMinYCorner]
-        return imageView
-    }()
+//    private lazy var imageView:UIImageView = {
+//        let imageView = self.imageView(cornerRadius: 16, autoLayout: false)
+//        imageView.layer.maskedCorners = [.layerMinXMinYCorner,.layerMaxXMinYCorner]
+//        return imageView
+//    }()
+    private lazy var imageView:CustomImageView = CustomImageView(cornerRadius: 16, maskedCorners: [.layerMinXMinYCorner,.layerMaxXMinYCorner])
     
     private lazy var title:UILabel = {
         let label = self.labelBuilder(text: "", size: 14, weight: .bold, color: .appBlackColor, numOfLines: 1)
@@ -162,28 +163,16 @@ class NFTLiveBidCollectionViewCell: UICollectionViewCell {
             }
         }
         
-        if let safeImg = nft.metadata?.image{
-            DispatchQueue.main.async {
-                if self.imageView.image != nil{
-                    self.imageView.image = .init(named: "placeHolder")
-                }
-            }
-            
-            ImageDownloader.shared.fetchImage(urlStr: safeImg) { [weak self] result in
-                switch result{
-                    case .success(let image):
-                        if let safeImageView = self?.imageView{
-                            DispatchQueue.main.async {
-                                UIView.transition(with: safeImageView,duration: 1.0, options: [.curveEaseOut, .transitionCrossDissolve]) {
-                                    safeImageView.image = image
-                                }
-                            }
-                        }
-                    case .failure(let err):
-                        print("(Error) err : ",err.localizedDescription)
-                }
-            }
-        }
+//        if let safeImg = nft.metadata?.image{
+//            DispatchQueue.main.async {
+//                if self.imageView.image != nil{
+//                    self.imageView.image = .init(named: "placeHolder")
+//                }
+//            }
+//
+//            self.imageView.updateImageView(url: safeImg)
+//        }
+        self.imageView.updateImageView(url: nft.metadata?.image)
     }
     
     func setupLayout(){

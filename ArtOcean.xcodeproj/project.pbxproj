@@ -80,6 +80,8 @@
 		EF8B07472840A8150050E726 /* UIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF8B07452840A8150050E726 /* UIViewController.swift */; };
 		EF8B07482840A8150050E726 /* UIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF8B07452840A8150050E726 /* UIViewController.swift */; };
 		EFD13C1C2843E1BD000E422E /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFD13C1B2843E1BD000E422E /* CustomButton.swift */; };
+		EFD13C1F2843EC0C000E422E /* NFTDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFD13C1E2843EC0C000E422E /* NFTDetailViewController.swift */; };
+		EFD13C212843ECB3000E422E /* CustomImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFD13C202843ECB3000E422E /* CustomImageView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -145,6 +147,8 @@
 		EF8B06DD283E7C2C0050E726 /* Container.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Container.swift; sourceTree = "<group>"; };
 		EF8B07452840A8150050E726 /* UIViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewController.swift; sourceTree = "<group>"; };
 		EFD13C1B2843E1BD000E422E /* CustomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
+		EFD13C1E2843EC0C000E422E /* NFTDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NFTDetailViewController.swift; sourceTree = "<group>"; };
+		EFD13C202843ECB3000E422E /* CustomImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomImageView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -245,6 +249,7 @@
 		EF8B0661283BECE10050E726 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				EFD13C1D2843EBF8000E422E /* NFTDetailView */,
 				EF8B06D8283E6F120050E726 /* CommonComponents */,
 				EF8B06CA283D58F80050E726 /* TopCollection */,
 				EF8B0673283BFA740050E726 /* NFTLiveBid */,
@@ -355,8 +360,17 @@
 				EF8B06D9283E77AA0050E726 /* ContainerHeaderView.swift */,
 				EF8B06DD283E7C2C0050E726 /* Container.swift */,
 				EFD13C1B2843E1BD000E422E /* CustomButton.swift */,
+				EFD13C202843ECB3000E422E /* CustomImageView.swift */,
 			);
 			path = CommonComponents;
+			sourceTree = "<group>";
+		};
+		EFD13C1D2843EBF8000E422E /* NFTDetailView */ = {
+			isa = PBXGroup;
+			children = (
+				EFD13C1E2843EC0C000E422E /* NFTDetailViewController.swift */,
+			);
+			path = NFTDetailView;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -544,7 +558,9 @@
 				EFD13C1C2843E1BD000E422E /* CustomButton.swift in Sources */,
 				EF8B0675283BFA900050E726 /* NFTLiveBidCollectionViewCell.swift in Sources */,
 				EF8B0685283C31560050E726 /* UIView.swift in Sources */,
+				EFD13C1F2843EC0C000E422E /* NFTDetailViewController.swift in Sources */,
 				EF8B0668283BEF250050E726 /* UIColor.swift in Sources */,
+				EFD13C212843ECB3000E422E /* CustomImageView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

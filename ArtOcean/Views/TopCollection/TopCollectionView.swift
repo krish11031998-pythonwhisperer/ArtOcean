@@ -7,7 +7,7 @@
 
 import UIKit
 
-class TopCollectionView: UIView {
+class TopCollectionView: UITableView {
 
     private let collection:[Any]? = nil
     
@@ -23,30 +23,18 @@ class TopCollectionView: UIView {
         return table
     }()
     
-    private lazy var titleView:UIStackView = {
-        let stack = UIStackView()
-        stack.axis = .horizontal
-        stack.alignment = .center
-        stack.distribution = .fillProportionally
-        stack.spacing = 15
+    init(frame:CGRect = .zero) {
+        super.init(frame: frame, style: .plain)
         
-        let title:UILabel = self.labelBuilder(text: "Top Collection", size: 16, weight: .bold, color: .appBlackColor, numOfLines: 1)
+        self.register(TopCollectionTableCellViewTableViewCell.self, forCellReuseIdentifier: TopCollectionTableCellViewTableViewCell.identifier)
+        self.backgroundColor = .clear
+        self.separatorStyle = .none
+        self.isScrollEnabled = false
+        self.delegate = self
+        self.dataSource = self
         
-        let seeAll:UILabel = self.labelBuilder(text: "View All", size: 14, weight: .medium, color: .appGrayColor, numOfLines: 1)
-        seeAll.textAlignment = .right
-        
-        stack.addArrangedSubview(title)
-        stack.addArrangedSubview(seeAll)
-        stack.translatesAutoresizingMaskIntoConstraints = false
-        
-        return stack
-    }()
-    
-    override init(frame: CGRect) {
-        super.init(frame: frame)
         self.translatesAutoresizingMaskIntoConstraints = false
-        self.addSubview(self.titleView)
-        self.addSubview(self.tableView)
+        self.setupLayout()
     }
     
     
@@ -54,22 +42,11 @@ class TopCollectionView: UIView {
         super.init(coder: coder)
     }
     
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        self.setupLayout()
-    }
-    
-    
     func setupLayout(){
-        self.titleView.leadingAnchor.constraint(equalTo: self.leadingAnchor,constant:15).isActive = true
-        self.titleView.widthAnchor.constraint(equalTo: self.widthAnchor, constant: -30).isActive = true
-        self.titleView.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
-        self.titleView.heightAnchor.constraint(equalToConstant: 30).isActive = true
-        
-        self.tableView.leadingAnchor.constraint(equalTo: self.leadingAnchor,constant: 15).isActive = true
-        self.tableView.topAnchor.constraint(equalTo: self.titleView.bottomAnchor,constant: 10).isActive = true
-        self.tableView.heightAnchor.constraint(equalTo: self.heightAnchor,constant: -30).isActive = true
-        self.tableView.widthAnchor.constraint(equalTo: self.widthAnchor, constant: -30).isActive = true
+        self.leadingAnchor.constraint(equalTo: self.leadingAnchor).isActive = true
+        self.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
+        self.heightAnchor.constraint(equalTo:self.heightAnchor).isActive = true
+        self.widthAnchor.constraint(equalTo: self.widthAnchor).isActive = true
     }
 
 }

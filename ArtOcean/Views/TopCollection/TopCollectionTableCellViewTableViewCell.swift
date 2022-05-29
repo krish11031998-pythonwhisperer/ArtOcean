@@ -100,17 +100,6 @@ class TopCollectionTableCellViewTableViewCell: UITableViewCell {
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
         if selected{
-//            DispatchQueue.main.async {
-//                UIViewPropertyAnimator(duration: 0.2, curve: .easeInOut) {
-//                    self.transform = CGAffineTransform.init(scaleX: 0.95, y: 0.95)
-//                    self.layoutIfNeeded()
-//                }.startAnimation()
-//
-//                UIViewPropertyAnimator(duration: 0.2, curve: .easeInOut) {
-//                    self.transform = CGAffineTransform.init(scaleX: 1, y: 1)
-//                    self.layoutIfNeeded()
-//                }.startAnimation(afterDelay: 0.2)
-//            }
             self.bouncyButtonClick()
         }
     }

@@ -35,7 +35,10 @@ class HomeViewController: UIViewController {
         return container
     }()
     
-    private let topCollection:TopCollectionView = TopCollectionView()
+    private lazy var topCollection:Container = {
+        let container = Container(header: "Top Collection", rightButtonTitle: "View All", innerView: TopCollectionView(), innerViewSize: .init(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height * 0.35),buttonHandler: self.pushSeeAllArtVC)
+        return container
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -78,8 +81,8 @@ class HomeViewController: UIViewController {
         
         self.topCollection.leadingAnchor.constraint(equalTo: self.scrollView.safeAreaLayoutGuide.leadingAnchor).isActive = true
         self.topCollection.topAnchor.constraint(equalTo: self.liveBidCollectionContainer.bottomAnchor,constant: 15).isActive = true
-        self.topCollection.widthAnchor.constraint(equalToConstant: self.view.bounds.width).isActive = true
-        self.topCollection.heightAnchor.constraint(equalToConstant: self.view.frame.height * 0.3).isActive = true
+        self.topCollection.trailingAnchor.constraint(equalTo:self.scrollView.safeAreaLayoutGuide.trailingAnchor).isActive = true
+//        self.topCollection.heightAnchor.constraint(equalToConstant: self.view.frame.height * 0.3).isActive = true
 
         self.newDropsCollectionContainer.leadingAnchor.constraint(equalTo: self.scrollView.leadingAnchor).isActive = true
         self.newDropsCollectionContainer.topAnchor.constraint(equalTo: self.topCollection.bottomAnchor,constant: 15).isActive = true

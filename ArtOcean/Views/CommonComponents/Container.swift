@@ -44,12 +44,12 @@ class Container: UIView {
         }
         
         self.addSubview(self.innerView)
-        self.innerView.frame.size = self.innerViewSize
     }
     
     func setupLayout(){
         
         if let safeHeaderView = self.headerView{
+            safeHeaderView.backgroundColor = .red
             safeHeaderView.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
             safeHeaderView.leadingAnchor.constraint(equalTo: self.leadingAnchor,constant: 10).isActive = true
             safeHeaderView.trailingAnchor.constraint(equalTo: self.trailingAnchor,constant: -10).isActive = true
@@ -58,6 +58,7 @@ class Container: UIView {
             self.innerView.trailingAnchor.constraint(equalTo: self.trailingAnchor).isActive = true
             self.innerView.widthAnchor.constraint(equalToConstant: self.innerViewSize.width).isActive = true
             self.innerView.heightAnchor.constraint(equalToConstant: self.innerViewSize.height).isActive = true
+            self.innerView.backgroundColor = .blue
         }else{
             self.innerView.topAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
             self.innerView.leadingAnchor.constraint(equalTo: self.leadingAnchor).isActive = true
