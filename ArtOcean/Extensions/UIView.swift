@@ -10,6 +10,13 @@ import UIKit
 
 
 extension UIView{
+    
+    static func clearView() -> UIView{
+        let view = UIView()
+        view.clearView()
+        return view
+    }
+    
     public func gradientLayerBuilder() -> CAGradientLayer{
         let gradient = CAGradientLayer()
         gradient.colors = [
@@ -80,5 +87,31 @@ extension UIView{
         label.adjustsFontSizeToFitWidth = true
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
+    }
+    
+    static func StackBuilder(views:[UIView],ratios:[CGFloat],spacing:CGFloat,axis:NSLayoutConstraint.Axis) -> UIStackView{
+        let stack = UIStackView()
+        stack.translatesAutoresizingMaskIntoConstraints = false
+        stack.axis = axis
+        stack.spacing = spacing
+        
+        if views.count != ratios.count{
+            print("(Error) Not Ratios and Views Count are mismatching !")
+        }
+        
+        for count in 0..<views.count{
+            let view = views[count]
+            let ratio = ratios[count]
+            
+            stack.addArrangedSubview(view)
+            
+            if axis == .vertical{
+                view.heightAnchor.constraint(equalTo: stack.heightAnchor, multiplier: ratio,constant: -(count == 0 || count == views.count - 1 ? spacing * 0.5 : spacing)).isActive = true
+            }else if axis == .horizontal{
+                view.widthAnchor.constraint(equalTo: stack.widthAnchor, multiplier: ratio,constant: -(count == 0 || count == views.count - 1 ? spacing * 0.5 : spacing)).isActive = true
+            }
+        }
+        
+        return stack
     }
 }

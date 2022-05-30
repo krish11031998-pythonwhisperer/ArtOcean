@@ -11,17 +11,17 @@ class TopCollectionView: UITableView {
 
     private let collection:[Any]? = nil
     
-    private lazy var tableView:UITableView = {
-        let table = UITableView(frame: .zero, style: .plain)
-        table.register(TopCollectionTableCellViewTableViewCell.self, forCellReuseIdentifier: TopCollectionTableCellViewTableViewCell.identifier)
-        table.backgroundColor = .clear
-        table.separatorStyle = .none
-        table.isScrollEnabled = false
-        table.translatesAutoresizingMaskIntoConstraints = false
-        table.delegate = self
-        table.dataSource = self
-        return table
-    }()
+//    private lazy var tableView:UITableView = {
+//        let table = UITableView(frame: .zero, style: .plain)
+//        table.register(TopCollectionTableCellViewTableViewCell.self, forCellReuseIdentifier: TopCollectionTableCellViewTableViewCell.identifier)
+//        table.backgroundColor = .clear
+//        table.separatorStyle = .none
+//        table.isScrollEnabled = false
+//        table.translatesAutoresizingMaskIntoConstraints = false
+//        table.delegate = self
+//        table.dataSource = self
+//        return table
+//    }()
     
     init(frame:CGRect = .zero) {
         super.init(frame: frame, style: .plain)
