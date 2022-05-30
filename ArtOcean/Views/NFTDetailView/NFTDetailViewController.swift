@@ -11,12 +11,15 @@ import UIKit
 class NFTDetailArtViewController:UIViewController{
     
     private var nftArt:NFTModel?
+    private var placeBidModalLeadingAnchor:NSLayoutConstraint? = nil
+    private let leadingOffScreen:CGFloat = 1000
+    private let leadingOnScreen:CGFloat = 24
+    
     
     init(nftArt:NFTModel) {
         self.nftArt = nftArt
         
         super.init(nibName: nil, bundle: nil)
-        
         
         self.view.backgroundColor = .white
         
@@ -47,9 +50,16 @@ class NFTDetailArtViewController:UIViewController{
     private lazy var scrollView:UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.translatesAutoresizingMaskIntoConstraints = false
-        scrollView.contentSize = .init(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height * 2)
+        scrollView.contentSize = .init(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height * 1.5)
         scrollView.showsVerticalScrollIndicator = false
         return scrollView
+    }()
+    
+    private lazy var placeBidButton:CustomLabelButton = {
+        let button = CustomLabelButton(title: "Place a Bid", color: .white, backgroundColor: .appBlueColor)
+        button.delegate = self
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
     }()
     
     private lazy var imageView:CustomImageView = CustomImageView(cornerRadius: 16)
@@ -84,59 +94,18 @@ class NFTDetailArtViewController:UIViewController{
         return stack
     }()
     
-    private lazy var priceLabelView:UILabel = self.view.labelBuilder(text: "32.06 ETH", size: 14, weight: .bold, color: .black, numOfLines: 1)
-    
-    private lazy var priceLabelStackView:UIStackView = {
-        let stack = UIStackView()
-        stack.translatesAutoresizingMaskIntoConstraints = false
-        stack.axis = .horizontal
-        stack.spacing = 12
-        
-        let ethButton = CustomButton.ethButton
-        stack.addArrangedSubview(ethButton)
-        stack.addArrangedSubview(self.priceLabelView)
-        
-        NSLayoutConstraint.activate([
-            ethButton.widthAnchor.constraint(equalTo: stack.widthAnchor, multiplier: 0.3,constant: -6),
-            self.priceLabelView.widthAnchor.constraint(equalTo: stack.widthAnchor, multiplier: 0.7,constant: -6)
-        ])
-        
-        return stack
-    }()
-
-    private lazy var biddingView:UIView = {
-        let stack = UIView()
-        stack.translatesAutoresizingMaskIntoConstraints = false
-        let plusButton = CustomButton.plusButton
-        let minusButton = CustomButton.minusButton
-        stack.addSubview(plusButton)
-        stack.addSubview(self.priceLabelStackView)
-        stack.addSubview(minusButton)
-        
-        
-        NSLayoutConstraint.activate([
-            minusButton.leadingAnchor.constraint(equalTo: stack.leadingAnchor, constant: 16),
-            minusButton.topAnchor.constraint(equalTo: stack.topAnchor, constant: 14),
-            plusButton.trailingAnchor.constraint(equalTo: stack.trailingAnchor, constant: -16),
-            plusButton.topAnchor.constraint(equalTo: stack.topAnchor, constant: 14),
-            self.priceLabelStackView.centerXAnchor.constraint(equalTo: stack.centerXAnchor),
-            self.priceLabelStackView.centerYAnchor.constraint(equalTo: stack.centerYAnchor)
-        ])
-        
-        stack.layer.borderColor = UIColor.appBlueColor.withAlphaComponent(0.125).cgColor
-        stack.layer.borderWidth = 1
-        stack.layer.cornerRadius = 16
-        
-        return stack
-    }()
     
     private lazy var offerView:Container = {
-        let container = Container(header: "Offers", rightButtonTitle: "Last 7 Days", innerView: NFTOffersTableView(), innerViewSize: .init(width: UIScreen.main.bounds.width - 80, height: 300)) {
+        let container = Container(header: "Offers", rightButtonTitle: "Last 7 Days", innerView: NFTOffersTableView(), innerViewSize: .init(width: UIScreen.main.bounds.width - 50, height: 300)) {
             print("(DEBUG) Clicked on last 7 days Button!")
         }
         return container
     }()
     
+    private lazy var placeBidModal:NFTBiddingView = {
+        let view = NFTBiddingView()
+        return view
+    }()
     
     //MARK: - View Setups
     
@@ -153,9 +122,13 @@ class NFTDetailArtViewController:UIViewController{
         
         self.scrollView.addSubview(self.artInfoSnippet)
         
-        self.scrollView.addSubview(self.biddingView)
+//        self.scrollView.addSubview(self.biddingView)
         
         self.scrollView.addSubview(self.offerView)
+        
+        self.view.addSubview(self.placeBidButton)
+
+        self.view.addSubview(self.placeBidModal)
     }
     
     func setupImageView(){
@@ -179,7 +152,7 @@ class NFTDetailArtViewController:UIViewController{
         //ImageView
         self.imageView.topAnchor.constraint(equalTo: self.scrollView.topAnchor, constant: 60).isActive = true
         self.imageView.centerXAnchor.constraint(equalTo: self.scrollView.centerXAnchor).isActive = true
-        self.imageView.widthAnchor.constraint(equalTo: self.scrollView.widthAnchor, constant: -80).isActive = true
+        self.imageView.widthAnchor.constraint(equalTo: self.scrollView.widthAnchor, constant: -50).isActive = true
         self.imageView.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.height * 0.35).isActive = true
         
         //Title
@@ -197,16 +170,31 @@ class NFTDetailArtViewController:UIViewController{
         self.artInfoSnippet.widthAnchor.constraint(equalTo: self.titleView.widthAnchor).isActive = true
         
         //BiddingController
-        self.biddingView.leadingAnchor.constraint(equalTo: self.artInfoSnippet.leadingAnchor).isActive = true
-        self.biddingView.trailingAnchor.constraint(equalTo: self.artInfoSnippet.trailingAnchor).isActive = true
-        self.biddingView.heightAnchor.constraint(equalToConstant: 60).isActive = true
-        self.biddingView.topAnchor.constraint(equalTo: self.artInfoSnippet.bottomAnchor, constant: 25).isActive = true
+//        self.biddingView.leadingAnchor.constraint(equalTo: self.artInfoSnippet.leadingAnchor).isActive = true
+//        self.biddingView.trailingAnchor.constraint(equalTo: self.artInfoSnippet.trailingAnchor).isActive = true
+//        self.biddingView.heightAnchor.constraint(equalToConstant: 60).isActive = true
+//        self.biddingView.topAnchor.constraint(equalTo: self.artInfoSnippet.bottomAnchor, constant: 25).isActive = true
         
         
         //OffersView
-        self.offerView.topAnchor.constraint(equalTo: self.biddingView.bottomAnchor, constant: 25).isActive = true
-        self.offerView.leadingAnchor.constraint(equalTo: self.biddingView.leadingAnchor).isActive = true
-        self.offerView.trailingAnchor.constraint(equalTo: self.biddingView.trailingAnchor).isActive = true
+        self.offerView.topAnchor.constraint(equalTo: self.artInfoSnippet.bottomAnchor, constant: 25).isActive = true
+        self.offerView.leadingAnchor.constraint(equalTo: self.artInfoSnippet.leadingAnchor).isActive = true
+//        self.offerView.widthAnchor.constraint(equalTo: self.imageView.widthAnchor).isActive = true
+//        self.offerView.trailingAnchor.constraint(equalTo: self.biddingView.trailingAnchor).isActive = true
+        
+        //PlaceBidButton
+        self.placeBidButton.leadingAnchor.constraint(equalTo: self.artInfoSnippet.leadingAnchor).isActive = true
+        self.placeBidButton.topAnchor.constraint(equalTo: self.offerView.bottomAnchor, constant: 20).isActive = true
+        self.placeBidButton.trailingAnchor.constraint(equalTo: self.artInfoSnippet.trailingAnchor).isActive = true
+        self.placeBidButton.heightAnchor.constraint(equalToConstant: 60).isActive = true
+        
+        //PlaceBidModal
+        self.placeBidModal.centerYAnchor.constraint(equalTo: self.view.centerYAnchor).isActive = true
+        self.placeBidModal.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width - 48).isActive = true
+        self.placeBidModal.heightAnchor.constraint(equalToConstant: 300).isActive = true
+
+        self.placeBidModalLeadingAnchor = self.placeBidModal.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: self.leadingOffScreen)
+        self.placeBidModalLeadingAnchor?.isActive = true
 
     }
 }
@@ -232,5 +220,20 @@ extension NFTDetailArtViewController{
         ])
         
         return stack
+    }
+}
+
+
+//MARK: - CustomLabelButtonDelegate
+
+extension NFTDetailArtViewController:CustomButtonDelegate{
+    func handleTap() {
+        
+        let animation = UIViewPropertyAnimator(duration: 0.5, curve: .easeInOut) {
+            self.placeBidModalLeadingAnchor?.constant = self.leadingOnScreen
+            self.view.layoutIfNeeded()
+        }
+        animation.startAnimation()
+        
     }
 }
