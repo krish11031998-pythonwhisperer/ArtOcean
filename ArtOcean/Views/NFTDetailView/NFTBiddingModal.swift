@@ -32,7 +32,7 @@ class NFTBiddingView:UIView{
     }()
     
     private lazy var closeButton:CustomButton = {
-        let button = CustomButton(systemName: "cross", handler: {
+        let button = CustomButton(systemName: "xmark", handler: {
             print("(DEBUG) Close Button closed!")
             self.delegate?.handleTap()
         }, autolayout: true)
@@ -92,8 +92,6 @@ class NFTBiddingView:UIView{
         //closeButton
         self.closeButton.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 10).isActive = true
         self.closeButton.topAnchor.constraint(equalTo: self.topAnchor, constant: 10).isActive = true
-        self.closeButton.widthAnchor.constraint(equalToConstant: 50).isActive = true
-        self.closeButton.heightAnchor.constraint(equalToConstant: 50).isActive = true
         
     }
     
