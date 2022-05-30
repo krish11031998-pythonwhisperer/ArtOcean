@@ -14,6 +14,7 @@ class NFTDetailArtViewController:UIViewController{
     private var placeBidModalLeadingAnchor:NSLayoutConstraint? = nil
     private var leadingOffScreen:CGFloat = 1000
     private let leadingOnScreen:CGFloat = 24
+    private var imageScale:CGFloat = 1
     
     
     init(nftArt:NFTModel) {
@@ -52,6 +53,7 @@ class NFTDetailArtViewController:UIViewController{
         scrollView.translatesAutoresizingMaskIntoConstraints = false
         scrollView.contentSize = .init(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height * 1.5)
         scrollView.showsVerticalScrollIndicator = false
+        scrollView.delegate = self
         return scrollView
     }()
     
@@ -244,5 +246,39 @@ extension NFTDetailArtViewController:CustomButtonDelegate{
             self.view.layoutIfNeeded()
         }
         animation.startAnimation()
+    }
+}
+
+
+//MARK: - ScrollViewDelegate
+extension NFTDetailArtViewController:UIScrollViewDelegate{
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let point = scrollView.convert(self.imageView.frame.origin, to: nil).y * self.imageScale
+//        print("(DEBUG) imageView @ \(point)")
+        UIViewPropertyAnimator(duration: 0.35, curve: .easeInOut) {
+            if point < 100{
+                self.imageView.transform = CGAffineTransform.init(scaleX: 0.75, y: 0.75)
+                self.imageScale = 0.75
+            }else if point > 100 && point < 110{
+                self.imageView.transform = CGAffineTransform.init(scaleX: 0.8, y: 0.8)
+                self.imageScale = 0.8
+            }else if point > 110 && point < 120{
+                self.imageView.transform = CGAffineTransform.init(scaleX: 0.85, y: 0.85)
+                self.imageScale = 0.85
+            }else if point > 120 && point < 130{
+                self.imageView.transform = CGAffineTransform.init(scaleX: 0.9, y: 0.9)
+                self.imageScale = 0.9
+            }else if point > 130 && point < 140{
+                self.imageView.transform = CGAffineTransform.init(scaleX: 0.95, y: 0.95)
+                self.imageScale = 0.95
+            }else if point >= 140 && self.imageScale != 1{
+                self.imageView.transform = CGAffineTransform.init(scaleX: 1, y: 1)
+                self.imageScale = 1
+            }
+            self.imageView.layoutIfNeeded()
+        }.startAnimation()
+        
+        
     }
 }
