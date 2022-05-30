@@ -71,10 +71,10 @@ class ContainerHeaderView: UIStackView {
         self.addArrangedSubview(self.headerLabel)
         
         //LayoutConstraint
-        self.headerLabel.widthAnchor.constraint(equalTo: self.widthAnchor, multiplier: self.includeButton ? 0.8 : 1).isActive = true
+        self.headerLabel.widthAnchor.constraint(equalTo: self.widthAnchor, multiplier: self.includeButton ? 0.65 : 1).isActive = true
         if self.includeButton{
             self.addArrangedSubview(self.rightButton)
-            self.rightButton.widthAnchor.constraint(equalTo: self.widthAnchor, multiplier: 0.2,constant: -5).isActive = true
+            self.rightButton.widthAnchor.constraint(equalTo: self.widthAnchor, multiplier: 0.35,constant: -5).isActive = true
             self.rightButton.titleLabel?.textAlignment = .right
         }
         

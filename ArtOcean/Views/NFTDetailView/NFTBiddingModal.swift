@@ -8,10 +8,10 @@
 import Foundation
 import UIKit
 
-class NFTBiddingView:UIView{
+class NFTBiddingModal:UIView{
    
     public var delegate:CustomButtonDelegate? = nil
-    
+    private var handler:(() -> Void)? = nil
     //MARK: - Views
     private lazy var modalTitle:UILabel = {
         let label = self.labelBuilder(text: "Place a bid", size: 18, weight: .bold, color: .black, numOfLines: 1)
@@ -34,14 +34,16 @@ class NFTBiddingView:UIView{
     private lazy var closeButton:CustomButton = {
         let button = CustomButton(systemName: "xmark", handler: {
             print("(DEBUG) Close Button closed!")
-            self.delegate?.handleTap()
+            self.handler?()
         }, autolayout: true)
         return button
     }()
     
     //MARK: - View Setup
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    init(closeHandler:@escaping (() -> Void)) {
+        super.init(frame: .zero)
+        
+        self.handler = closeHandler
         
         self.translatesAutoresizingMaskIntoConstraints = false
         
@@ -55,7 +57,9 @@ class NFTBiddingView:UIView{
         
         self.addSubview(self.closeButton)
         
-        self.backgroundColor = .yellow
+        self.backgroundColor = .white
+        self.layer.borderColor = UIColor.appBlackColor.withAlphaComponent(0.3).cgColor
+        self.layer.borderWidth = 1
         self.layer.cornerRadius = 16
         
         self.setupLayout()

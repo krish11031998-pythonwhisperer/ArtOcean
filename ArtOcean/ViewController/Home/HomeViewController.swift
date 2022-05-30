@@ -52,12 +52,17 @@ class HomeViewController: UIViewController {
         return container
     }()
     
+    private lazy var artTypes:NFTArtTypeCollectionView = {
+        return NFTArtTypeCollectionView()
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.textLabel.frame = .init(origin: .zero, size: .init(width: 50, height: 50))
         self.navigationItem.titleView = self.textLabel
         self.navigationController?.navigationBar.tintColor = .white
         self.view.addSubview(self.scrollView)
+        self.scrollView.addSubview(self.artTypes)
         self.scrollView.addSubview(self.liveBidCollectionContainer)
         self.scrollView.addSubview(self.topCollection)
         self.scrollView.addSubview(self.newDropsCollectionContainer)
@@ -86,8 +91,13 @@ class HomeViewController: UIViewController {
     
     func setupLayout(){
     
+        self.artTypes.leadingAnchor.constraint(equalTo: self.scrollView.leadingAnchor, constant: 0).isActive = true
+        self.artTypes.topAnchor.constraint(equalTo: self.scrollView.topAnchor, constant: 50).isActive = true
+        self.artTypes.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        self.artTypes.widthAnchor.constraint(equalTo:self.scrollView.widthAnchor).isActive = true
+        
         self.liveBidCollectionContainer.leadingAnchor.constraint(equalTo: self.scrollView.leadingAnchor).isActive = true
-        self.liveBidCollectionContainer.topAnchor.constraint(equalTo: self.scrollView.topAnchor,constant: 50).isActive = true
+        self.liveBidCollectionContainer.topAnchor.constraint(equalTo: self.artTypes.topAnchor,constant: 50).isActive = true
         self.liveBidCollectionContainer.widthAnchor.constraint(equalToConstant: self.view.bounds.width).isActive = true
         
         self.topCollection.leadingAnchor.constraint(equalTo: self.scrollView.safeAreaLayoutGuide.leadingAnchor).isActive = true

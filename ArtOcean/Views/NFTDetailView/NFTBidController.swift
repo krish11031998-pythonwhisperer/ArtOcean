@@ -11,7 +11,7 @@ import UIKit
 class NFTBiddingController:UIView{
     
     
-    private lazy var priceLabelView:UILabel = self.labelBuilder(text: "32.06 ETH", size: 14, weight: .bold, color: .black, numOfLines: 1)
+    private lazy var priceLabelView:UILabel = self.labelBuilder(text: "32.06 ETH", size: 24, weight: .bold, color: .black, numOfLines: 1,adjustFontSize: false)
     
     private lazy var balanceView:UILabel = self.labelBuilder(text: "Balance: 0.1345", size: 14, weight: .medium, color: .appGrayColor, numOfLines: 1)
     
@@ -26,8 +26,8 @@ class NFTBiddingController:UIView{
         stack.addArrangedSubview(self.priceLabelView)
         
         NSLayoutConstraint.activate([
-            ethButton.widthAnchor.constraint(equalTo: stack.widthAnchor, multiplier: 0.3,constant: -6),
-            self.priceLabelView.widthAnchor.constraint(equalTo: stack.widthAnchor, multiplier: 0.7,constant: -6)
+            ethButton.widthAnchor.constraint(equalTo: stack.widthAnchor, multiplier: 0.2,constant: -6),
+            self.priceLabelView.widthAnchor.constraint(equalTo: stack.widthAnchor, multiplier: 0.8,constant: -6)
         ])
         
         return stack
@@ -62,8 +62,8 @@ class NFTBiddingController:UIView{
             self.priceView.centerYAnchor.constraint(equalTo: self.centerYAnchor)
         ])
         
-        self.layer.borderColor = UIColor.appBlueColor.withAlphaComponent(0.125).cgColor
-        self.layer.borderWidth = 1
+//        self.layer.borderColor = UIColor.appBlueColor.withAlphaComponent(0.125).cgColor
+//        self.layer.borderWidth = 1
         self.layer.cornerRadius = 16
     }
     

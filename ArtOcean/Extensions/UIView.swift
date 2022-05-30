@@ -60,7 +60,7 @@ extension UIView{
         return imageView
     }
     
-    public func labelBuilder(text:String,size:CGFloat = 13,weight:UIFont.Weight = .semibold,color:UIColor,numOfLines:Int) -> UILabel{
+    public func labelBuilder(text:String,size:CGFloat = 13,weight:UIFont.Weight = .semibold,color:UIColor,numOfLines:Int,adjustFontSize:Bool = true) -> UILabel{
         let label = UILabel()
         label.text = text
         switch weight{
@@ -84,7 +84,7 @@ extension UIView{
         }
         label.textColor = color
         label.numberOfLines = numOfLines
-        label.adjustsFontSizeToFitWidth = true
+        label.adjustsFontSizeToFitWidth = adjustFontSize
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }

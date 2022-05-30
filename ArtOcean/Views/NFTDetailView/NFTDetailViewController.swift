@@ -12,7 +12,7 @@ class NFTDetailArtViewController:UIViewController{
     
     private var nftArt:NFTModel?
     private var placeBidModalLeadingAnchor:NSLayoutConstraint? = nil
-    private let leadingOffScreen:CGFloat = 1000
+    private var leadingOffScreen:CGFloat = 1000
     private let leadingOnScreen:CGFloat = 24
     
     
@@ -66,7 +66,7 @@ class NFTDetailArtViewController:UIViewController{
     
     private lazy var titleView:UILabel = self.view.labelBuilder(text: "XXXXXX", size: 18, weight: .bold, color: .black, numOfLines: 1)
     
-    private lazy var creatorLabel:UILabel = self.view.labelBuilder(text: "Pablo", size: 14, weight: .bold, color: .black, numOfLines: 1)
+    private lazy var creatorLabel:UILabel = self.view.labelBuilder(text: "Pablo", size: 14, weight: .bold, color: .appBlueColor, numOfLines: 1)
     
     private lazy var timeEndsLabel:UILabel = self.view.labelBuilder(text: "08h 34m 59s", size: 14, weight: .bold, color: .black, numOfLines: 1)
     
@@ -96,14 +96,16 @@ class NFTDetailArtViewController:UIViewController{
     
     
     private lazy var offerView:Container = {
-        let container = Container(header: "Offers", rightButtonTitle: "Last 7 Days", innerView: NFTOffersTableView(), innerViewSize: .init(width: UIScreen.main.bounds.width - 50, height: 300)) {
+        let container = Container(header: "Offers", rightButtonTitle: "Last 7 Days", innerView: NFTOffersTableView(), innerViewSize: .init(width: UIScreen.main.bounds.width - 50, height: 300),paddingToHeaderView: false) {
             print("(DEBUG) Clicked on last 7 days Button!")
         }
         return container
     }()
     
-    private lazy var placeBidModal:NFTBiddingView = {
-        let view = NFTBiddingView()
+    private lazy var placeBidModal:NFTBiddingModal = {
+        let view = NFTBiddingModal {
+            self.closeModal()
+        }
         return view
     }()
     
@@ -179,8 +181,6 @@ class NFTDetailArtViewController:UIViewController{
         //OffersView
         self.offerView.topAnchor.constraint(equalTo: self.artInfoSnippet.bottomAnchor, constant: 25).isActive = true
         self.offerView.leadingAnchor.constraint(equalTo: self.artInfoSnippet.leadingAnchor).isActive = true
-//        self.offerView.widthAnchor.constraint(equalTo: self.imageView.widthAnchor).isActive = true
-//        self.offerView.trailingAnchor.constraint(equalTo: self.biddingView.trailingAnchor).isActive = true
         
         //PlaceBidButton
         self.placeBidButton.leadingAnchor.constraint(equalTo: self.artInfoSnippet.leadingAnchor).isActive = true
@@ -228,12 +228,21 @@ extension NFTDetailArtViewController{
 
 extension NFTDetailArtViewController:CustomButtonDelegate{
     func handleTap() {
-        
         let animation = UIViewPropertyAnimator(duration: 0.5, curve: .easeInOut) {
             self.placeBidModalLeadingAnchor?.constant = self.leadingOnScreen
+            self.scrollView.isScrollEnabled = false
             self.view.layoutIfNeeded()
         }
         animation.startAnimation()
-        
+    }
+    
+    func closeModal(){
+        let animation = UIViewPropertyAnimator(duration: 0.5, curve: .easeInOut) {
+            self.placeBidModalLeadingAnchor?.constant = -self.leadingOffScreen
+            self.leadingOffScreen = -self.leadingOffScreen
+            self.scrollView.isScrollEnabled = true
+            self.view.layoutIfNeeded()
+        }
+        animation.startAnimation()
     }
 }
