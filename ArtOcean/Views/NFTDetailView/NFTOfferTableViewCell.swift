@@ -23,7 +23,7 @@ class NFTOfferTableViewCell:UITableViewCell{
         return label
     }()
     
-    private lazy var nameLabel = self.labelBuilder(text: "", size: 14, weight: .medium, color: .black, numOfLines: 1)
+    private lazy var nameLabel = self.labelBuilder(text: "", size: 14, weight: .bold, color: .black, numOfLines: 1)
     
     private lazy var expirationLabel = self.labelBuilder(text: "", size: 12, weight: .regular, color: .black, numOfLines: 1)
     
@@ -32,7 +32,7 @@ class NFTOfferTableViewCell:UITableViewCell{
     }()
     
     private lazy var priceLabel:UILabel = {
-       let label = self.labelBuilder(text: "", size: 14, weight: .medium, color: .black, numOfLines: 1)
+       let label = self.labelBuilder(text: "", size: 14, weight: .bold, color: .black, numOfLines: 1)
         label.textAlignment = .right
         return label
     }()
