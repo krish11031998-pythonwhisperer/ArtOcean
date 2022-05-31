@@ -49,7 +49,7 @@ class CustomButton:UIView{
             buttonView.image = .init(systemName: safeSystemName,withConfiguration:UIImage.SymbolConfiguration(pointSize: 12, weight: .bold))
         }else if let safeName = name{
             buttonView.image = .init(named: safeName)
-            buttonView.contentMode = .scaleAspectFit
+            buttonView.contentMode = .scaleAspectFill
         }
         
         buttonView.tintColor = .appBlackColor

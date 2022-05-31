@@ -62,8 +62,8 @@ class NFTBiddingController:UIView{
             self.priceView.centerYAnchor.constraint(equalTo: self.centerYAnchor)
         ])
         
-//        self.layer.borderColor = UIColor.appBlueColor.withAlphaComponent(0.125).cgColor
-//        self.layer.borderWidth = 1
+        self.layer.borderColor = UIColor.appBlueColor.withAlphaComponent(0.125).cgColor
+        self.layer.borderWidth = 1
         self.layer.cornerRadius = 16
     }
     

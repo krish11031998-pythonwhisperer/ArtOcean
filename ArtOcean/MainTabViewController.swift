@@ -14,11 +14,14 @@ class MainTabController: UITabBarController {
         
         self.view.backgroundColor = .init(hexString: "FFFFFF")
         self.setViewControllers(self.tabs.compactMap({self.tabViewBuilder(tab: $0)}), animated: true)
-        self.tabBar.tintColor = UIColor(hexString: "8D98AF")
         self.tabBar.layer.cornerRadius = 10
-        self.tabBar.backgroundColor = .init(hexString: "FFFFFF")
 
-        self.tabBar.standardAppearance.selectionIndicatorTintColor = UIColor(hexString: "2281E3")
+        let appearance = UITabBarAppearance()
+        appearance.backgroundColor = .appWhiteBackgroundColor
+        appearance.selectionIndicatorTintColor = .appBlueColor
+        
+        self.tabBar.standardAppearance = appearance
+        self.tabBar.scrollEdgeAppearance = appearance
         
         self.setupStatusBar()
     }

@@ -111,6 +111,8 @@ class NFTDetailArtViewController:UIViewController{
         return view
     }()
     
+    private let biddingController:NFTBiddingController = NFTBiddingController()
+
     
     //MARK: - View Setups
     
@@ -127,11 +129,11 @@ class NFTDetailArtViewController:UIViewController{
         
         self.scrollView.addSubview(self.artInfoSnippet)
         
-//        self.scrollView.addSubview(self.biddingView)
+        self.scrollView.addSubview(self.biddingController)
         
         self.scrollView.addSubview(self.offerView)
         
-        self.view.addSubview(self.placeBidButton)
+        self.scrollView.addSubview(self.placeBidButton)
 
         self.view.addSubview(self.placeBidModal)
     }
@@ -175,15 +177,17 @@ class NFTDetailArtViewController:UIViewController{
         self.artInfoSnippet.widthAnchor.constraint(equalTo: self.titleView.widthAnchor).isActive = true
         
         //BiddingController
-//        self.biddingView.leadingAnchor.constraint(equalTo: self.artInfoSnippet.leadingAnchor).isActive = true
-//        self.biddingView.trailingAnchor.constraint(equalTo: self.artInfoSnippet.trailingAnchor).isActive = true
-//        self.biddingView.heightAnchor.constraint(equalToConstant: 60).isActive = true
-//        self.biddingView.topAnchor.constraint(equalTo: self.artInfoSnippet.bottomAnchor, constant: 25).isActive = true
+        self.biddingController.leadingAnchor.constraint(equalTo: self.artInfoSnippet.leadingAnchor).isActive = true
+        self.biddingController.trailingAnchor.constraint(equalTo: self.artInfoSnippet.trailingAnchor).isActive = true
+        self.biddingController.heightAnchor.constraint(equalToConstant: 60).isActive = true
+        self.biddingController.topAnchor.constraint(equalTo: self.artInfoSnippet.bottomAnchor, constant: 25).isActive = true
         
         
         //OffersView
-        self.offerView.topAnchor.constraint(equalTo: self.artInfoSnippet.bottomAnchor, constant: 25).isActive = true
-        self.offerView.leadingAnchor.constraint(equalTo: self.artInfoSnippet.leadingAnchor).isActive = true
+//        self.offerView.topAnchor.constraint(equalTo: self.artInfoSnippet.bottomAnchor, constant: 25).isActive = true
+//        self.offerView.leadingAnchor.constraint(equalTo: self.artInfoSnippet.leadingAnchor).isActive = true
+        self.offerView.topAnchor.constraint(equalTo: self.biddingController.bottomAnchor, constant: 25).isActive = true
+        self.offerView.leadingAnchor.constraint(equalTo: self.biddingController.leadingAnchor).isActive = true
         
         //PlaceBidButton
         self.placeBidButton.leadingAnchor.constraint(equalTo: self.artInfoSnippet.leadingAnchor).isActive = true

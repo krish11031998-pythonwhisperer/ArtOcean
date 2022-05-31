@@ -20,11 +20,39 @@ class NFTBiddingModal:UIView{
         
     private lazy var balanceView:UILabel = self.labelBuilder(text: "Balance: 0.1345", size: 14, weight: .medium, color: .appGrayColor, numOfLines: 1)
     
-    private lazy var biddingView:NFTBiddingController = {
-        let biddingController = NFTBiddingController()
-        return biddingController
-    }()
+    private func plusButtonhandler(){
+        
+    }
+        
+    private func minusButtonhandler(){
+        
+    }
     
+
+    private lazy var biddingView:UIView = {
+        let plusButton = CustomButton(frame: .init(origin: .zero, size: .init(width: 28, height: 28)),name: "plus", handler: self.plusButtonhandler, autolayout: true)
+        let minuButton = CustomButton(frame: .init(origin: .zero, size: .init(width: 28, height: 28)),name: "minus",handler: self.minusButtonhandler,autolayout: true)
+        let text = self.labelBuilder(text: "32.06 ETH", size: 24, weight: .bold, color: .black, numOfLines: 1)
+        
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(plusButton)
+        view.addSubview(minuButton)
+        view.addSubview(text)
+        
+        NSLayoutConstraint.activate([
+            minuButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            minuButton.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            plusButton.trailingAnchor.constraint(equalTo: view.trailingAnchor,constant: -16),
+            plusButton.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            text.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            text.centerXAnchor.constraint(equalTo: view.centerXAnchor)
+        ])
+        
+        return view
+        
+    }()
+
     private lazy var placeBidButton:CustomLabelButton = {
         let button = CustomLabelButton(title: "Place a bid", color: .white, backgroundColor: .appBlueColor)
         button.translatesAutoresizingMaskIntoConstraints = false
