@@ -57,7 +57,7 @@ class NFTOfferTableViewCell:UITableViewCell{
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
         self.selectedBackgroundView = UIView.clearView()
-        
+        self.backgroundColor = .white
         self.setupViews()
         self.setupLayout()
     }

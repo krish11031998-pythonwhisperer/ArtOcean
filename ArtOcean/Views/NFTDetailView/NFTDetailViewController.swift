@@ -111,6 +111,7 @@ class NFTDetailArtViewController:UIViewController{
         return view
     }()
     
+    
     //MARK: - View Setups
     
     func setupView(){
@@ -233,6 +234,7 @@ extension NFTDetailArtViewController:CustomButtonDelegate{
         let animation = UIViewPropertyAnimator(duration: 0.5, curve: .easeInOut) {
             self.placeBidModalLeadingAnchor?.constant = self.leadingOnScreen
             self.scrollView.isScrollEnabled = false
+            self.scrollView.layer.opacity = 0.5
             self.view.layoutIfNeeded()
         }
         animation.startAnimation()
@@ -243,6 +245,7 @@ extension NFTDetailArtViewController:CustomButtonDelegate{
             self.placeBidModalLeadingAnchor?.constant = -self.leadingOffScreen
             self.leadingOffScreen = -self.leadingOffScreen
             self.scrollView.isScrollEnabled = true
+            self.scrollView.layer.opacity = 1
             self.view.layoutIfNeeded()
         }
         animation.startAnimation()
@@ -255,7 +258,7 @@ extension NFTDetailArtViewController:UIScrollViewDelegate{
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let point = scrollView.convert(self.imageView.frame.origin, to: nil).y * self.imageScale
-//        print("(DEBUG) imageView @ \(point)")
+
         UIViewPropertyAnimator(duration: 0.35, curve: .easeInOut) {
             if point < 100{
                 self.imageView.transform = CGAffineTransform.init(scaleX: 0.75, y: 0.75)
