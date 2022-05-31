@@ -54,7 +54,7 @@ class TopCollectionTableCellViewTableViewCell: UITableViewCell {
         self.collectionImage.layer.cornerRadius = 23
         
         self.orderNumberLabel.translatesAutoresizingMaskIntoConstraints = false
-        self.orderNumberLabel.backgroundColor = .appGreenColor
+        self.orderNumberLabel.backgroundColor = .appWhiteBackgroundColor
         self.orderNumberLabel.layer.cornerRadius = 11
         self.orderNumberLabel.textAlignment = .center
         self.orderNumberLabel.clipsToBounds = true

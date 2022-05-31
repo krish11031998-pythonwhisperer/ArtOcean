@@ -52,12 +52,3 @@ class MainTabController: UITabBarController {
     }
 
 }
-
-
-//extension MainTabController:UITabBarDelegate{
-//
-//    override func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
-//        tabBar.items?.forEach({$0.standardAppearance.color})
-//    }
-//}
-
