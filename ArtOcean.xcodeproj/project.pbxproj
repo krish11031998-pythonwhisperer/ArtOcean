@@ -14,6 +14,9 @@
 		EF00F5C7284638E7003D8683 /* NFTArtCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF00F5C6284638E7003D8683 /* NFTArtCollectionViewCell.swift */; };
 		EF00F5CA28465B6E003D8683 /* TopSellerCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF00F5C928465B6E003D8683 /* TopSellerCollectionView.swift */; };
 		EF00F5CC28465DD7003D8683 /* TopSellerCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF00F5CB28465DD7003D8683 /* TopSellerCollectionCell.swift */; };
+		EF00F5CE2846D2AB003D8683 /* NFTDetailHeroHeaderSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF00F5CD2846D2AB003D8683 /* NFTDetailHeroHeaderSection.swift */; };
+		EF00F5D02846D460003D8683 /* CustomLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF00F5CF2846D460003D8683 /* CustomLabel.swift */; };
+		EF00F5D22846D781003D8683 /* NFTArtInteractiveInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF00F5D12846D781003D8683 /* NFTArtInteractiveInfoView.swift */; };
 		EF8B0631283BEAC10050E726 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF8B0630283BEAC10050E726 /* AppDelegate.swift */; };
 		EF8B0635283BEAC10050E726 /* MainTabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF8B0634283BEAC10050E726 /* MainTabViewController.swift */; };
 		EF8B0638283BEAC10050E726 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EF8B0636283BEAC10050E726 /* Main.storyboard */; };
@@ -121,6 +124,9 @@
 		EF00F5C6284638E7003D8683 /* NFTArtCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NFTArtCollectionViewCell.swift; sourceTree = "<group>"; };
 		EF00F5C928465B6E003D8683 /* TopSellerCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopSellerCollectionView.swift; sourceTree = "<group>"; };
 		EF00F5CB28465DD7003D8683 /* TopSellerCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopSellerCollectionCell.swift; sourceTree = "<group>"; };
+		EF00F5CD2846D2AB003D8683 /* NFTDetailHeroHeaderSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NFTDetailHeroHeaderSection.swift; sourceTree = "<group>"; };
+		EF00F5CF2846D460003D8683 /* CustomLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomLabel.swift; sourceTree = "<group>"; };
+		EF00F5D12846D781003D8683 /* NFTArtInteractiveInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NFTArtInteractiveInfoView.swift; sourceTree = "<group>"; };
 		EF8B062D283BEAC10050E726 /* ArtOcean.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ArtOcean.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EF8B0630283BEAC10050E726 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		EF8B0634283BEAC10050E726 /* MainTabViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabViewController.swift; sourceTree = "<group>"; };
@@ -409,6 +415,7 @@
 				EFD13C1B2843E1BD000E422E /* CustomLabelButton.swift */,
 				EFD13C202843ECB3000E422E /* CustomImageView.swift */,
 				EFD13C2428442484000E422E /* CustomButton.swift */,
+				EF00F5CF2846D460003D8683 /* CustomLabel.swift */,
 			);
 			path = CommonComponents;
 			sourceTree = "<group>";
@@ -421,6 +428,8 @@
 				EFD13C2A2844D560000E422E /* NFTOfferTableViewCell.swift */,
 				EF00F5B62844F4A7003D8683 /* NFTBiddingModal.swift */,
 				EF00F5B82845088F003D8683 /* NFTBidController.swift */,
+				EF00F5CD2846D2AB003D8683 /* NFTDetailHeroHeaderSection.swift */,
+				EF00F5D12846D781003D8683 /* NFTArtInteractiveInfoView.swift */,
 			);
 			path = NFTDetailView;
 			sourceTree = "<group>";
@@ -606,6 +615,7 @@
 				EF8B0672283BFA6D0050E726 /* NFTArtCollection.swift in Sources */,
 				EF00F5B92845088F003D8683 /* NFTBidController.swift in Sources */,
 				EF8B066A283BEFB90050E726 /* TabBarModel.swift in Sources */,
+				EF00F5CE2846D2AB003D8683 /* NFTDetailHeroHeaderSection.swift in Sources */,
 				EF8B06D5283E3A4B0050E726 /* LiveBidDetailView.swift in Sources */,
 				EF8B066C283BF0E70050E726 /* ProfileViewController.swift in Sources */,
 				EF8B067D283C27020050E726 /* AlchemyAPI.swift in Sources */,
@@ -614,9 +624,11 @@
 				EF00F5C7284638E7003D8683 /* NFTArtCollectionViewCell.swift in Sources */,
 				EF8B06CC283D5B4C0050E726 /* TopCollectionView.swift in Sources */,
 				EF00F5CC28465DD7003D8683 /* TopSellerCollectionCell.swift in Sources */,
+				EF00F5D22846D781003D8683 /* NFTArtInteractiveInfoView.swift in Sources */,
 				EF00F5B72844F4A7003D8683 /* NFTBiddingModal.swift in Sources */,
 				EF8B0683283C2CA10050E726 /* AlchemyNFTDataModel.swift in Sources */,
 				EF8B06DE283E7C2C0050E726 /* Container.swift in Sources */,
+				EF00F5D02846D460003D8683 /* CustomLabel.swift in Sources */,
 				EFD13C1C2843E1BD000E422E /* CustomLabelButton.swift in Sources */,
 				EF8B0675283BFA900050E726 /* NFTArtCollectionLiveBidViewCell.swift in Sources */,
 				EF8B0685283C31560050E726 /* UIView.swift in Sources */,
