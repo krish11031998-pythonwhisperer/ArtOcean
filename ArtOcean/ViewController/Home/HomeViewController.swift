@@ -38,7 +38,16 @@ class HomeViewController: UIViewController {
     
     
     private lazy var hotItems:Container = {
-        let collection = Container(header: "Hot Item", rightButtonTitle: "See all", innerView: NFTArtCollection(orientation: .horizontal, itemSize: NFTArtCollection.smallCard), innerViewSize: .init(width: self.view.bounds.width, height: NFTArtCollection.smallCard.height + 20), buttonHandler: self.pushSeeAllArtVC)
+        let hotItemsCollection = NFTArtCollection(orientation: .horizontal, itemSize: NFTArtCollection.smallCard)
+        hotItemsCollection.collectionDelegate = self
+        let collection = Container(header: "Hot Item", rightButtonTitle: "See all", innerView: hotItemsCollection, innerViewSize: .init(width: self.view.bounds.width, height: NFTArtCollection.smallCard.height + 20), buttonHandler: self.pushSeeAllArtVC)
+        return collection
+    }()
+    
+    private lazy var popularItems:Container = {
+        let popularItems = NFTArtCollection(orientation: .horizontal, itemSize: NFTArtCollection.smallCard)
+        popularItems.collectionDelegate = self
+        let collection = Container(header: "Popular Item", rightButtonTitle: "See all", innerView: popularItems, innerViewSize: .init(width: self.view.bounds.width, height: NFTArtCollection.smallCard.height + 20), buttonHandler: self.pushSeeAllArtVC)
         return collection
     }()
 
@@ -62,6 +71,7 @@ class HomeViewController: UIViewController {
         self.scrollView.addSubview(self.liveBidCollectionContainer)
         self.scrollView.addSubview(self.topCollection)
         self.scrollView.addSubview(self.hotItems)
+        self.scrollView.addSubview(self.popularItems)
         
         self.hideNavigationBarLine()
         self.setupStatusBar()
@@ -121,6 +131,10 @@ class HomeViewController: UIViewController {
         self.hotItems.leadingAnchor.constraint(equalTo: self.scrollView.leadingAnchor).isActive = true
         self.hotItems.topAnchor.constraint(equalTo: self.topCollection.bottomAnchor, constant: 24).isActive = true
         self.hotItems.trailingAnchor.constraint(equalTo: self.scrollView.trailingAnchor).isActive = true
+        
+        self.popularItems.leadingAnchor.constraint(equalTo: self.scrollView.leadingAnchor).isActive = true
+        self.popularItems.topAnchor.constraint(equalTo: self.hotItems.bottomAnchor, constant: 24).isActive = true
+        self.popularItems.trailingAnchor.constraint(equalTo: self.scrollView.trailingAnchor).isActive = true
 //
 //        self.newDropsCollectionContainer.leadingAnchor.constraint(equalTo: self.scrollView.leadingAnchor).isActive = true
 //        self.newDropsCollectionContainer.topAnchor.constraint(equalTo: self.topCollection.bottomAnchor,constant: 24).isActive = true

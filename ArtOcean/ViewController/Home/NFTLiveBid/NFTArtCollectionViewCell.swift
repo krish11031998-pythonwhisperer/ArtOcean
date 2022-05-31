@@ -19,7 +19,7 @@ class NFTArtCollectionViewCell:UICollectionViewCell{
         return imgView
     }()
     
-    public var delegate:NFTLiveBidCellDelegate? = nil
+    public var delegate:NFTArtCellDelegate? = nil
     
     private lazy var artTitle:UILabel = self.labelBuilder(text: "", size: 14, weight: .bold, color: .appBlackColor, numOfLines: 1)
     
@@ -86,6 +86,10 @@ class NFTArtCollectionViewCell:UICollectionViewCell{
         self.backgroundColor = .white
         self.layer.cornerRadius = 16
         
+        self.addShadow()
+        
+        self.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.handleTap)))
+        
         self.setupLayout()
     }
     
@@ -102,9 +106,7 @@ class NFTArtCollectionViewCell:UICollectionViewCell{
     }
     
     public func updateUIWithNFT(_ nft:NFTModel,idx:Int? = nil){
-
         self.nft = nft
-        
         if let safeTitle = nft.title{
             DispatchQueue.main.async { [weak self] in
                 self?.artTitle.text = safeTitle == "" ? "Title" : safeTitle

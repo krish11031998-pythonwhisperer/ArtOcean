@@ -144,7 +144,7 @@ extension NFTArtCollection:UICollectionViewDelegate,UICollectionViewDataSource{
 }
 
 // MARK: - NFTLiveBidCellDelegate
-extension NFTArtCollection:NFTLiveBidCellDelegate{
+extension NFTArtCollection:NFTArtCellDelegate{
     func viewArt(art: NFTModel) {
         self.collectionDelegate?.viewNFT(art: art)
     }

@@ -11,7 +11,7 @@ class NFTArtCollectionLiveBidViewCell: UICollectionViewCell {
     
     public static var identifier:String = "NFTCard"
     private var nftInfo:NFTModel? = nil
-    public var delegate:NFTLiveBidCellDelegate? = nil
+    public var delegate:NFTArtCellDelegate? = nil
     private lazy var imageView:CustomImageView = CustomImageView(cornerRadius: 16, maskedCorners: [.layerMinXMinYCorner,.layerMaxXMinYCorner])
   
     private lazy var title:UILabel = {
@@ -142,14 +142,6 @@ class NFTArtCollectionLiveBidViewCell: UICollectionViewCell {
         self.addShadow()
         
         self.setupLayout()
-    }
-    
-    
-    func addShadow(){
-        self.layer.shadowColor = UIColor.black.cgColor
-        self.layer.shadowOpacity = 0.2
-        self.layer.shadowOffset = .zero
-        self.layer.shadowRadius = 2.5
     }
     
     required init?(coder: NSCoder) {
