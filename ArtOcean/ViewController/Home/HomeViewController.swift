@@ -170,13 +170,6 @@ class HomeViewController: UIViewController {
         self.popularItems.topAnchor.constraint(equalTo: self.hotItems.bottomAnchor, constant: 24).isActive = true
         self.popularItems.trailingAnchor.constraint(equalTo: self.scrollView.trailingAnchor).isActive = true
         
-//
-//        self.newDropsCollectionContainer.leadingAnchor.constraint(equalTo: self.scrollView.leadingAnchor).isActive = true
-//        self.newDropsCollectionContainer.topAnchor.constraint(equalTo: self.topCollection.bottomAnchor,constant: 24).isActive = true
-//        self.newDropsCollectionContainer.widthAnchor.constraint(equalToConstant: self.view.bounds.width).isActive = true
-        
-        
-        
     }
     
 }
