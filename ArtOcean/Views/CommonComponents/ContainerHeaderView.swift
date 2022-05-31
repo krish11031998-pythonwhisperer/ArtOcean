@@ -61,7 +61,7 @@ class ContainerHeaderView: UIStackView {
     }
     
     override var intrinsicContentSize: CGSize{
-        return .init(width: .zero, height: 50)
+        return .init(width: .zero, height: 25)
     }
     
     func setupView(){

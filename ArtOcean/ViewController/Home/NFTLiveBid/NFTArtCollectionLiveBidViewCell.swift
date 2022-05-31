@@ -7,13 +7,13 @@
 
 import UIKit
 
-class NFTLiveBidCollectionViewCell: UICollectionViewCell {
+class NFTArtCollectionLiveBidViewCell: UICollectionViewCell {
     
     public static var identifier:String = "NFTCard"
     private var nftInfo:NFTModel? = nil
     public var delegate:NFTLiveBidCellDelegate? = nil
-    private lazy var imageView:CustomImageView = CustomImageView(cornerRadius: 16, maskedCorners: nil)
-    
+    private lazy var imageView:CustomImageView = CustomImageView(cornerRadius: 16, maskedCorners: [.layerMinXMinYCorner,.layerMaxXMinYCorner])
+  
     private lazy var title:UILabel = {
         let label = self.labelBuilder(text: "", size: 14, weight: .bold, color: .appBlackColor, numOfLines: 1)
         return label
@@ -23,6 +23,10 @@ class NFTLiveBidCollectionViewCell: UICollectionViewCell {
     
     private lazy var price = self.labelBuilder(text: "3 ETH", size: 12, weight: .medium, color: .appGreenColor, numOfLines: 1)
 
+    private let shareButton:CustomButton = CustomButton(name: "share", handler: nil, autolayout: true)
+    
+    private let loveButton:CustomButton = CustomButton(name: "heart", handler: nil, autolayout: true)
+    
     private lazy var artPriceAndTitleStack:UIStackView = {
         let view:UIStackView = UIStackView()
         view.axis = .horizontal
@@ -35,8 +39,8 @@ class NFTLiveBidCollectionViewCell: UICollectionViewCell {
         self.price.textAlignment = .right
         
         NSLayoutConstraint.activate([
-            self.title.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.6,constant: -5),
-            self.price.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.4),
+            self.title.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.57,constant: -5),
+            self.price.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.43),
         ])
         return view
     }()
@@ -127,6 +131,8 @@ class NFTLiveBidCollectionViewCell: UICollectionViewCell {
         
         self.addSubview(self.imageView)
         self.addSubview(self.NFTInfo)
+        self.addSubview(self.loveButton)
+        self.addSubview(self.shareButton)
         
         self.backgroundColor = .white
         self.layer.cornerRadius = 16
@@ -134,6 +140,8 @@ class NFTLiveBidCollectionViewCell: UICollectionViewCell {
         self.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.onTapHandler(_:))))
         
         self.addShadow()
+        
+        self.setupLayout()
     }
     
     
@@ -146,11 +154,6 @@ class NFTLiveBidCollectionViewCell: UICollectionViewCell {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-    
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        self.setupLayout()
     }
     
     
@@ -179,12 +182,21 @@ class NFTLiveBidCollectionViewCell: UICollectionViewCell {
         self.NFTInfo.leadingAnchor.constraint(equalTo: self.leadingAnchor,constant:8).isActive = true
         self.NFTInfo.bottomAnchor.constraint(equalTo: self.bottomAnchor,constant: -10).isActive = true
         self.NFTInfo.topAnchor.constraint(equalTo: self.imageView.bottomAnchor,constant: 10).isActive = true
+        
+        //Lovebutton
+        self.loveButton.trailingAnchor.constraint(equalTo: self.trailingAnchor,constant: -12).isActive = true
+        self.loveButton.centerYAnchor.constraint(equalTo: self.imageView.bottomAnchor).isActive = true
+
+
+        //ShareButton
+        self.shareButton.trailingAnchor.constraint(equalTo: self.loveButton.leadingAnchor,constant: -8).isActive = true
+        self.shareButton.centerYAnchor.constraint(equalTo: self.imageView.bottomAnchor).isActive = true
     }
     
     
 }
 
-extension NFTLiveBidCollectionViewCell{
+extension NFTArtCollectionLiveBidViewCell{
     override func prepareForReuse() {
         super.prepareForReuse()
         
@@ -193,7 +205,7 @@ extension NFTLiveBidCollectionViewCell{
 }
 
 //MARK: - CustomButtonDelegate
-extension NFTLiveBidCollectionViewCell:CustomButtonDelegate{
+extension NFTArtCollectionLiveBidViewCell:CustomButtonDelegate{
     func handleTap() {
         print("(DEBUG) Clicked on the Cell!")
     }

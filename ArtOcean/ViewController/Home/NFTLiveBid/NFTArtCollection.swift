@@ -7,15 +7,22 @@
 
 import UIKit
 
-class NFTLiveBiddingCollectionView: UICollectionView {
+
+
+class NFTArtCollection: UICollectionView {
     
     public var nfts:[NFTModel]? = nil
     public var collectionDelegate: NFTLiveBidCollectionDelegate? = nil
     
+    
+    public static let smallCard:CGSize = .init(width: 176, height: 154)
+    public static let largeCard:CGSize = .init(width: 225, height: 245)
+    private var cellId:String = ""
+    
     init(
         nfts:[NFTModel]? = nil,
         orientation:UICollectionView.ScrollDirection = .horizontal,
-        itemSize:CGSize = .init(width: UIScreen.main.bounds.width * 0.6, height: 245)
+        itemSize:CGSize = NFTArtCollection.largeCard
     ){
         
         //collectionLayout
@@ -23,11 +30,13 @@ class NFTLiveBiddingCollectionView: UICollectionView {
         layout.minimumInteritemSpacing = 5
         layout.minimumLineSpacing = 5
         layout.scrollDirection = orientation
-        layout.sectionInset = .init(top: 10, left: 10, bottom: 10, right: 10)
+        
         if orientation == .horizontal{
-            layout.itemSize = .init(width: itemSize.width, height: itemSize.height - 20)
+            layout.sectionInset = .init(top: 0, left: 10, bottom: 0, right: 10)
+            layout.itemSize = .init(width: itemSize.width, height: itemSize.height)
         }else{
-            layout.itemSize = .init(width: itemSize.width - 20, height: itemSize.height)
+            layout.sectionInset = .init(top: 10, left: 0, bottom: 10, right: 0)
+            layout.itemSize = .init(width: itemSize.width, height: itemSize.height)
         }
         
         super.init(frame: .zero, collectionViewLayout: layout)
@@ -35,8 +44,16 @@ class NFTLiveBiddingCollectionView: UICollectionView {
         self.showsVerticalScrollIndicator = false
         self.showsHorizontalScrollIndicator = false
         self.backgroundColor = .clear
+    
         
-        self.register(NFTLiveBidCollectionViewCell.self, forCellWithReuseIdentifier: NFTLiveBidCollectionViewCell.identifier)
+        if itemSize == NFTArtCollection.largeCard{
+            self.cellId = NFTArtCollectionLiveBidViewCell.identifier
+            self.register(NFTArtCollectionLiveBidViewCell.self, forCellWithReuseIdentifier: NFTArtCollectionLiveBidViewCell.identifier)
+        }else{
+            self.cellId = NFTArtCollectionViewCell.identifier
+            self.register(NFTArtCollectionViewCell.self, forCellWithReuseIdentifier: NFTArtCollectionViewCell.identifier)
+        }
+        
 
         self.translatesAutoresizingMaskIntoConstraints = false
         self.delegate = self
@@ -94,7 +111,7 @@ class NFTLiveBiddingCollectionView: UICollectionView {
 }
 
 // MARK: - UICollectionDelegates
-extension NFTLiveBiddingCollectionView:UICollectionViewDelegate,UICollectionViewDataSource{
+extension NFTArtCollection:UICollectionViewDelegate,UICollectionViewDataSource{
 
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
@@ -106,21 +123,28 @@ extension NFTLiveBiddingCollectionView:UICollectionViewDelegate,UICollectionView
     
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: NFTLiveBidCollectionViewCell.identifier, for: indexPath) as? NFTLiveBidCollectionViewCell else{
+        if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: self.cellId, for: indexPath) as? NFTArtCollectionLiveBidViewCell{
+            cell.delegate = self
+            if let safeNFTs = self.nfts, indexPath.row < safeNFTs.count{
+                cell.updateUIWithNFT(safeNFTs[indexPath.row],idx: indexPath.row)
+            }
+            
+            return cell
+        } else if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: self.cellId, for: indexPath) as? NFTArtCollectionViewCell {
+            cell.delegate = self
+            if let safeNFTs = self.nfts, indexPath.row < safeNFTs.count{
+                cell.updateUIWithNFT(safeNFTs[indexPath.row], idx: indexPath.row)
+            }
+            return cell
+        }else{
             return UICollectionViewCell()
         }
-        cell.delegate = self
-        if let safeNFTs = self.nfts, indexPath.row < safeNFTs.count{
-            cell.updateUIWithNFT(safeNFTs[indexPath.row],idx: indexPath.row)
-        }
-        
-        return cell
     }
     
 }
 
 // MARK: - NFTLiveBidCellDelegate
-extension NFTLiveBiddingCollectionView:NFTLiveBidCellDelegate{
+extension NFTArtCollection:NFTLiveBidCellDelegate{
     func viewArt(art: NFTModel) {
         self.collectionDelegate?.viewNFT(art: art)
     }

@@ -11,6 +11,7 @@
 		EF00F5B92845088F003D8683 /* NFTBidController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF00F5B82845088F003D8683 /* NFTBidController.swift */; };
 		EF00F5BC284539CE003D8683 /* NFTArtTypeCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF00F5BB284539CE003D8683 /* NFTArtTypeCollection.swift */; };
 		EF00F5BE28453C30003D8683 /* NFTTypeCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF00F5BD28453C30003D8683 /* NFTTypeCollectionCell.swift */; };
+		EF00F5C7284638E7003D8683 /* NFTArtCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF00F5C6284638E7003D8683 /* NFTArtCollectionViewCell.swift */; };
 		EF8B0631283BEAC10050E726 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF8B0630283BEAC10050E726 /* AppDelegate.swift */; };
 		EF8B0635283BEAC10050E726 /* MainTabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF8B0634283BEAC10050E726 /* MainTabViewController.swift */; };
 		EF8B0638283BEAC10050E726 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EF8B0636283BEAC10050E726 /* Main.storyboard */; };
@@ -25,8 +26,8 @@
 		EF8B066C283BF0E70050E726 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF8B066B283BF0E70050E726 /* ProfileViewController.swift */; };
 		EF8B066E283BF0F10050E726 /* StatisticsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF8B066D283BF0F10050E726 /* StatisticsViewController.swift */; };
 		EF8B0670283BF0FE0050E726 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF8B066F283BF0FE0050E726 /* SearchViewController.swift */; };
-		EF8B0672283BFA6D0050E726 /* NFTLiveBiddingCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF8B0671283BFA6D0050E726 /* NFTLiveBiddingCollectionView.swift */; };
-		EF8B0675283BFA900050E726 /* NFTLiveBidCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF8B0674283BFA900050E726 /* NFTLiveBidCollectionViewCell.swift */; };
+		EF8B0672283BFA6D0050E726 /* NFTArtCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF8B0671283BFA6D0050E726 /* NFTArtCollection.swift */; };
+		EF8B0675283BFA900050E726 /* NFTArtCollectionLiveBidViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF8B0674283BFA900050E726 /* NFTArtCollectionLiveBidViewCell.swift */; };
 		EF8B0677283C20820050E726 /* UIImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF8B0676283C20820050E726 /* UIImageView.swift */; };
 		EF8B067A283C26120050E726 /* ImageDownloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF8B0679283C26120050E726 /* ImageDownloader.swift */; };
 		EF8B067D283C27020050E726 /* AlchemyAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF8B067C283C27020050E726 /* AlchemyAPI.swift */; };
@@ -115,6 +116,7 @@
 		EF00F5B82845088F003D8683 /* NFTBidController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NFTBidController.swift; sourceTree = "<group>"; };
 		EF00F5BB284539CE003D8683 /* NFTArtTypeCollection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NFTArtTypeCollection.swift; sourceTree = "<group>"; };
 		EF00F5BD28453C30003D8683 /* NFTTypeCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NFTTypeCollectionCell.swift; sourceTree = "<group>"; };
+		EF00F5C6284638E7003D8683 /* NFTArtCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NFTArtCollectionViewCell.swift; sourceTree = "<group>"; };
 		EF8B062D283BEAC10050E726 /* ArtOcean.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ArtOcean.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EF8B0630283BEAC10050E726 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		EF8B0634283BEAC10050E726 /* MainTabViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabViewController.swift; sourceTree = "<group>"; };
@@ -133,8 +135,8 @@
 		EF8B066B283BF0E70050E726 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		EF8B066D283BF0F10050E726 /* StatisticsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsViewController.swift; sourceTree = "<group>"; };
 		EF8B066F283BF0FE0050E726 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
-		EF8B0671283BFA6D0050E726 /* NFTLiveBiddingCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NFTLiveBiddingCollectionView.swift; sourceTree = "<group>"; };
-		EF8B0674283BFA900050E726 /* NFTLiveBidCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NFTLiveBidCollectionViewCell.swift; sourceTree = "<group>"; };
+		EF8B0671283BFA6D0050E726 /* NFTArtCollection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NFTArtCollection.swift; sourceTree = "<group>"; };
+		EF8B0674283BFA900050E726 /* NFTArtCollectionLiveBidViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NFTArtCollectionLiveBidViewCell.swift; sourceTree = "<group>"; };
 		EF8B0676283C20820050E726 /* UIImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImageView.swift; sourceTree = "<group>"; };
 		EF8B0679283C26120050E726 /* ImageDownloader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageDownloader.swift; sourceTree = "<group>"; };
 		EF8B067C283C27020050E726 /* AlchemyAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlchemyAPI.swift; sourceTree = "<group>"; };
@@ -279,8 +281,6 @@
 				EF00F5BA2845398C003D8683 /* NFTArtTypes */,
 				EFD13C1D2843EBF8000E422E /* NFTDetailView */,
 				EF8B06D8283E6F120050E726 /* CommonComponents */,
-				EF8B06CA283D58F80050E726 /* TopCollection */,
-				EF8B0673283BFA740050E726 /* NFTLiveBid */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -316,9 +316,10 @@
 		EF8B0673283BFA740050E726 /* NFTLiveBid */ = {
 			isa = PBXGroup;
 			children = (
-				EF8B0671283BFA6D0050E726 /* NFTLiveBiddingCollectionView.swift */,
-				EF8B0674283BFA900050E726 /* NFTLiveBidCollectionViewCell.swift */,
+				EF8B0671283BFA6D0050E726 /* NFTArtCollection.swift */,
+				EF8B0674283BFA900050E726 /* NFTArtCollectionLiveBidViewCell.swift */,
 				EFD13C222844196F000E422E /* NFTLiveBidCollectionProtocol.swift */,
+				EF00F5C6284638E7003D8683 /* NFTArtCollectionViewCell.swift */,
 			);
 			path = NFTLiveBid;
 			sourceTree = "<group>";
@@ -378,6 +379,8 @@
 		EF8B06D3283E3A1F0050E726 /* Home */ = {
 			isa = PBXGroup;
 			children = (
+				EF8B06CA283D58F80050E726 /* TopCollection */,
+				EF8B0673283BFA740050E726 /* NFTLiveBid */,
 				EF8B0664283BED350050E726 /* HomeViewController.swift */,
 				EF8B06D4283E3A4B0050E726 /* LiveBidDetailView.swift */,
 			);
@@ -585,7 +588,7 @@
 				EFD13C232844196F000E422E /* NFTLiveBidCollectionProtocol.swift in Sources */,
 				EF8B066E283BF0F10050E726 /* StatisticsViewController.swift in Sources */,
 				EF8B0681283C2A180050E726 /* DataCache.swift in Sources */,
-				EF8B0672283BFA6D0050E726 /* NFTLiveBiddingCollectionView.swift in Sources */,
+				EF8B0672283BFA6D0050E726 /* NFTArtCollection.swift in Sources */,
 				EF00F5B92845088F003D8683 /* NFTBidController.swift in Sources */,
 				EF8B066A283BEFB90050E726 /* TabBarModel.swift in Sources */,
 				EF8B06D5283E3A4B0050E726 /* LiveBidDetailView.swift in Sources */,
@@ -593,12 +596,13 @@
 				EF8B067D283C27020050E726 /* AlchemyAPI.swift in Sources */,
 				EF8B06D0283D60EC0050E726 /* TopCollectionTableCellViewTableViewCell.swift in Sources */,
 				EF8B0665283BED350050E726 /* HomeViewController.swift in Sources */,
+				EF00F5C7284638E7003D8683 /* NFTArtCollectionViewCell.swift in Sources */,
 				EF8B06CC283D5B4C0050E726 /* TopCollectionView.swift in Sources */,
 				EF00F5B72844F4A7003D8683 /* NFTBiddingModal.swift in Sources */,
 				EF8B0683283C2CA10050E726 /* AlchemyNFTDataModel.swift in Sources */,
 				EF8B06DE283E7C2C0050E726 /* Container.swift in Sources */,
 				EFD13C1C2843E1BD000E422E /* CustomLabelButton.swift in Sources */,
-				EF8B0675283BFA900050E726 /* NFTLiveBidCollectionViewCell.swift in Sources */,
+				EF8B0675283BFA900050E726 /* NFTArtCollectionLiveBidViewCell.swift in Sources */,
 				EF8B0685283C31560050E726 /* UIView.swift in Sources */,
 				EFD13C1F2843EC0C000E422E /* NFTDetailViewController.swift in Sources */,
 				EFD13C2528442484000E422E /* CustomButton.swift in Sources */,
