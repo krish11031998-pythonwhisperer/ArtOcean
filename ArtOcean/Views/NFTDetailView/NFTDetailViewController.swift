@@ -76,16 +76,18 @@ class NFTDetailArtViewController:UIViewController{
     
     private let descriptionView:CustomLabel
     
-    private lazy var creatorLabel:UILabel = self.view.labelBuilder(text: "Pablo", size: 14, weight: .bold, color: .appBlueColor, numOfLines: 1)
+    private lazy var creatorLabel:UILabel = self.view.labelBuilder(text: "Pablo", size: 14, weight: .bold, color: .appBlueColor, numOfLines: 1,adjustFontSize: false)
     
-    private lazy var timeEndsLabel:UILabel = self.view.labelBuilder(text: "08h 34m 59s", size: 14, weight: .bold, color: .black, numOfLines: 1)
+    private lazy var timeEndsLabel:UILabel = self.view.labelBuilder(text: "08h 34m 59s", size: 14, weight: .bold, color: .black, numOfLines: 1,adjustFontSize: false)
     
     private lazy var creatorView:UIStackView = {
         return self.stackBuilder(header: "Created by",alignment: .left, label: self.creatorLabel)
     }()
     
-    private lazy var timeView:UIStackView = {
-        return self.stackBuilder(header: "Ends in",alignment: .right, label: self.timeEndsLabel)
+    private let creatorImage:CustomImageView = {
+        let image = CustomImageView(cornerRadius: 16)
+        image.backgroundColor = .black
+        return image
     }()
     
     private lazy var artInfoSnippet:UIStackView = {
@@ -94,11 +96,13 @@ class NFTDetailArtViewController:UIViewController{
         stack.spacing = 8
         stack.translatesAutoresizingMaskIntoConstraints = false
         stack.addArrangedSubview(creatorView)
-        stack.addArrangedSubview(timeView)
+        stack.addArrangedSubview(self.creatorImage)
+        
+        self.creatorImage.frame.size.height = 32
         
         NSLayoutConstraint.activate([
-            creatorView.widthAnchor.constraint(equalTo: stack.widthAnchor,multiplier: 0.5, constant: -4),
-            timeView.widthAnchor.constraint(equalTo: stack.widthAnchor,multiplier: 0.5, constant: -4)
+            creatorView.widthAnchor.constraint(equalTo: stack.widthAnchor,multiplier: 1, constant: -40),
+            creatorImage.widthAnchor.constraint(equalToConstant:32),
         ])
         
         return stack
@@ -219,7 +223,7 @@ class NFTDetailArtViewController:UIViewController{
         self.artInfoSnippet.leadingAnchor.constraint(equalTo: self.artInteractiveInfoView.leadingAnchor).isActive = true
         self.artInfoSnippet.trailingAnchor.constraint(equalTo: self.artInteractiveInfoView.trailingAnchor).isActive = true
         self.artInfoSnippet.topAnchor.constraint(equalTo: self.descriptionView.bottomAnchor, constant: 12).isActive = true
-        self.artInfoSnippet.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        self.artInfoSnippet.heightAnchor.constraint(equalToConstant: 32).isActive = true
         self.artInfoSnippet.widthAnchor.constraint(equalTo: self.artInteractiveInfoView.widthAnchor).isActive = true
         
         //BiddingController
