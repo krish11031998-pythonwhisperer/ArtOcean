@@ -279,7 +279,7 @@ extension NFTDetailArtViewController:UIScrollViewDelegate{
             }else if point > 130 && point < 140{
                 self.imageView.transform = CGAffineTransform.init(scaleX: 0.95, y: 0.95)
                 self.imageScale = 0.95
-            }else if point >= 140 && self.imageScale != 1{
+            }else if point >= 140{
                 self.imageView.transform = CGAffineTransform.init(scaleX: 1, y: 1)
                 self.imageScale = 1
             }
