@@ -15,6 +15,8 @@ class NFTDetailArtViewController:UIViewController{
     private var leadingOffScreen:CGFloat = 1000
     private let leadingOnScreen:CGFloat = 24
     private var imageScale:CGFloat = 1
+    private var imageViewHeightAnchor:NSLayoutConstraint? = nil
+    private var imageViewWidthAnchor:NSLayoutConstraint? = nil
     
     init(nftArt:NFTModel) {
         self.nftArt = nftArt
@@ -211,15 +213,19 @@ class NFTDetailArtViewController:UIViewController{
         self.scrollView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor).isActive = true
         
         //ImageView
+//        self.imageView.contentMode = .scaleAspectFill
         self.imageView.topAnchor.constraint(equalTo: self.heroHeaderView.bottomAnchor, constant: -50).isActive = true
         self.imageView.centerXAnchor.constraint(equalTo: self.scrollView.centerXAnchor).isActive = true
-        self.imageView.widthAnchor.constraint(equalTo: self.scrollView.widthAnchor, constant: -50).isActive = true
-        self.imageView.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.height * 0.35).isActive = true
+        self.imageViewWidthAnchor = self.imageView.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width - 50)
+        self.imageViewWidthAnchor?.isActive = true
+        self.imageViewHeightAnchor = self.imageView.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.height * 0.35)
+        self.imageViewHeightAnchor?.isActive = true
+//        self.imageView.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.height * 0.35).isActive = true
         
         //Title
-        self.titleView.leadingAnchor.constraint(equalTo: self.imageView.leadingAnchor).isActive = true
+        self.titleView.leadingAnchor.constraint(equalTo: self.scrollView.leadingAnchor,constant: 25).isActive = true
         self.titleView.topAnchor.constraint(equalTo: self.imageView.bottomAnchor, constant: 13).isActive = true
-        self.titleView.trailingAnchor.constraint(equalTo: self.imageView.trailingAnchor).isActive = true
+        self.titleView.centerXAnchor.constraint(equalTo: self.scrollView.centerXAnchor).isActive = true
         self.titleView.heightAnchor.constraint(equalToConstant: 50).isActive = true
 
         
@@ -322,8 +328,10 @@ extension NFTDetailArtViewController:UIScrollViewDelegate{
         self.imageScale = scaleFactor > 1 ? 1 : scaleFactor < 0.5 ? 0.5 : scaleFactor
         
         UIViewPropertyAnimator(duration: 0.35, curve: .easeInOut) {
-            self.imageView.transform = CGAffineTransform.init(scaleX: self.imageScale, y: self.imageScale)
+            self.imageViewHeightAnchor?.constant = self.imageScale * (UIScreen.main.bounds.height * 0.35)
+            self.imageViewWidthAnchor?.constant = self.imageScale * (UIScreen.main.bounds.width - 50)
             self.imageView.layoutIfNeeded()
+            self.scrollView.layoutIfNeeded()
         }.startAnimation()
         
         self.navigationController?.navigationBar.transform = .init(translationX: 0, y: max(scrollView.contentOffset.y - 100,0))
