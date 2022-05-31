@@ -16,17 +16,14 @@ class NFTDetailArtViewController:UIViewController{
     private let leadingOnScreen:CGFloat = 24
     private var imageScale:CGFloat = 1
     
-    
     init(nftArt:NFTModel) {
         self.nftArt = nftArt
         
         super.init(nibName: nil, bundle: nil)
         
         self.view.backgroundColor = .white
-        
-        self.navigationItem.leftBarButtonItem = self.backBarButton
-        self.navigationItem.titleView = self.view.labelBuilder(text: nftArt.title ?? "No Name", size: 20, weight: .bold, color: .black, numOfLines: 1)
-        
+        self.navigationController?.isNavigationBarHidden = true
+        self.navigationController?.navigationBar.isTranslucent = false
         self.setupView()
         self.setupLayout()
         self.setupStatusBar()
@@ -36,7 +33,9 @@ class NFTDetailArtViewController:UIViewController{
     private lazy var backBarButton:UIBarButtonItem = {
         let barButton = UIBarButtonItem()
         
-        let backButton = CustomButton.backButton
+        let backButton = CustomButton(systemName: "chevron.left", handler: {
+            self.navigationController?.popViewController(animated: true)
+        }, autolayout: true)
         backButton.handler = {
             self.navigationController?.popViewController(animated: true)
         }
@@ -54,6 +53,7 @@ class NFTDetailArtViewController:UIViewController{
         scrollView.contentSize = .init(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height * 1.5)
         scrollView.showsVerticalScrollIndicator = false
         scrollView.delegate = self
+        scrollView.backgroundColor = .clear
         return scrollView
     }()
     
@@ -62,6 +62,40 @@ class NFTDetailArtViewController:UIViewController{
         button.delegate = self
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
+    }()
+    
+    private lazy var backgroundImageView:CustomImageView = {
+        let imageView = CustomImageView(cornerRadius: 0,gradientColors: [UIColor.white.withAlphaComponent(0.2),UIColor.white.withAlphaComponent(1)])
+        return imageView
+    }()
+    
+    private lazy var heroHeaderView:UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(self.backgroundImageView)
+        
+        let leftButton = CustomButton(systemName: "chevron.left", handler: {
+            self.navigationController?.popViewController(animated: true)
+        }, autolayout: true)
+        
+        let titleView = self.view.labelBuilder(text: self.nftArt?.title ?? "XXXXX", size: 14, weight: .black, color: .appWhiteBackgroundColor, numOfLines: 1)
+        
+        
+        view.addSubview(leftButton)
+        view.addSubview(titleView)
+        
+        NSLayoutConstraint.activate([
+            self.backgroundImageView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            self.backgroundImageView.topAnchor.constraint(equalTo: view.topAnchor),
+            self.backgroundImageView.widthAnchor.constraint(equalTo:view.widthAnchor),
+            self.backgroundImageView.heightAnchor.constraint(equalTo:view.heightAnchor),            leftButton.leadingAnchor.constraint(equalToSystemSpacingAfter: view.leadingAnchor, multiplier: 3),
+            leftButton.topAnchor.constraint(equalToSystemSpacingBelow: view.topAnchor, multiplier: 2),
+            titleView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            titleView.topAnchor.constraint(equalTo: leftButton.topAnchor),
+            titleView.centerYAnchor.constraint(equalTo: leftButton.centerYAnchor)
+        ])
+        
+        return view
     }()
     
     private lazy var imageView:CustomImageView = CustomImageView(cornerRadius: 16)
@@ -118,7 +152,11 @@ class NFTDetailArtViewController:UIViewController{
     
     func setupView(){
         
+        
+        
         self.view.addSubview(self.scrollView)
+        
+        self.scrollView.addSubview(self.heroHeaderView)
         
         self.setupImageView()
         
@@ -126,7 +164,7 @@ class NFTDetailArtViewController:UIViewController{
         if let title = self.nftArt?.title,title != ""{
             self.titleView.text = title
         }
-        
+    
         self.scrollView.addSubview(self.artInfoSnippet)
         
         self.scrollView.addSubview(self.biddingController)
@@ -141,7 +179,18 @@ class NFTDetailArtViewController:UIViewController{
     func setupImageView(){
         self.scrollView.addSubview(self.imageView)
         guard let safeImg = self.nftArt?.metadata?.image else{return}
-        self.imageView.updateImageView(url: safeImg)
+//        self.imageView.updateImageView(url: safeImg)
+        ImageDownloader.shared.fetchImage(urlStr: safeImg) { [weak self] result in
+            switch result{
+            case .success(let image):
+                DispatchQueue.main.async {
+                    self?.imageView.image = image
+                    self?.backgroundImageView.image = image
+                }
+            case .failure(let err):
+                print("(Error) Error : ",err.localizedDescription)
+            }
+        }
     }
     
     required init?(coder: NSCoder) {
@@ -151,13 +200,18 @@ class NFTDetailArtViewController:UIViewController{
     
     func setupLayout(){
         
+        self.heroHeaderView.leadingAnchor.constraint(equalTo: self.scrollView.leadingAnchor).isActive = true
+        self.heroHeaderView.topAnchor.constraint(equalTo: self.scrollView.topAnchor).isActive = true
+        self.heroHeaderView.centerXAnchor.constraint(equalTo: self.scrollView.centerXAnchor).isActive = true
+        self.heroHeaderView.heightAnchor.constraint(equalToConstant: 200).isActive = true
+        
         self.scrollView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor).isActive = true
         self.scrollView.topAnchor.constraint(equalTo: self.view.topAnchor).isActive = true
         self.scrollView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor).isActive = true
         self.scrollView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor).isActive = true
         
         //ImageView
-        self.imageView.topAnchor.constraint(equalTo: self.scrollView.topAnchor, constant: 60).isActive = true
+        self.imageView.topAnchor.constraint(equalTo: self.heroHeaderView.bottomAnchor, constant: -50).isActive = true
         self.imageView.centerXAnchor.constraint(equalTo: self.scrollView.centerXAnchor).isActive = true
         self.imageView.widthAnchor.constraint(equalTo: self.scrollView.widthAnchor, constant: -50).isActive = true
         self.imageView.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.height * 0.35).isActive = true
@@ -261,30 +315,18 @@ extension NFTDetailArtViewController:CustomButtonDelegate{
 extension NFTDetailArtViewController:UIScrollViewDelegate{
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        let point = scrollView.convert(self.imageView.frame.origin, to: nil).y * self.imageScale
-
+        let point = imageView.convert(scrollView.frame.origin, to: nil).y * imageScale
+        let maxPoint = self.imageView.frame.minY
+        let minPoint = -self.imageView.frame.height * 0.25
+        let scaleFactor =  (point - minPoint)/(maxPoint - minPoint)
+        self.imageScale = scaleFactor > 1 ? 1 : scaleFactor < 0.5 ? 0.5 : scaleFactor
+        
         UIViewPropertyAnimator(duration: 0.35, curve: .easeInOut) {
-            if point < 100{
-                self.imageView.transform = CGAffineTransform.init(scaleX: 0.75, y: 0.75)
-                self.imageScale = 0.75
-            }else if point > 100 && point < 110{
-                self.imageView.transform = CGAffineTransform.init(scaleX: 0.8, y: 0.8)
-                self.imageScale = 0.8
-            }else if point > 110 && point < 120{
-                self.imageView.transform = CGAffineTransform.init(scaleX: 0.85, y: 0.85)
-                self.imageScale = 0.85
-            }else if point > 120 && point < 130{
-                self.imageView.transform = CGAffineTransform.init(scaleX: 0.9, y: 0.9)
-                self.imageScale = 0.9
-            }else if point > 130 && point < 140{
-                self.imageView.transform = CGAffineTransform.init(scaleX: 0.95, y: 0.95)
-                self.imageScale = 0.95
-            }else if point >= 140 && self.imageScale != 1{
-                self.imageView.transform = CGAffineTransform.init(scaleX: 1, y: 1)
-                self.imageScale = 1
-            }
+            self.imageView.transform = CGAffineTransform.init(scaleX: self.imageScale, y: self.imageScale)
             self.imageView.layoutIfNeeded()
         }.startAnimation()
+        
+        self.navigationController?.navigationBar.transform = .init(translationX: 0, y: max(scrollView.contentOffset.y - 100,0))
         
         
     }

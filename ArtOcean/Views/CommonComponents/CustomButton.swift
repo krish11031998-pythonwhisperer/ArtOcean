@@ -68,8 +68,6 @@ class CustomButton:UIView{
         
     }
     
-    
-    
     @objc func handlerSelector(){
         self.handler?()
     }
