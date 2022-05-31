@@ -95,15 +95,37 @@ class HomeViewController: UIViewController {
         self.setupLayout()
     }
     
-    private var bannerImageView:UIImageView = {
+    private lazy var bannerImageView:UIImageView = {
         let imageView = UIImageView()
-        if let safeImg = UIImage(named: "Banner"){
+        if let safeImg = UIImage(named: "BannerSkeleton"){
             imageView.image = safeImg
         }
         imageView.contentMode = .scaleAspectFill
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.clipsToBounds = true
         imageView.layer.cornerRadius = 16
+        
+       
+        
+        //LearnMoreImage
+        let learnMoreBannerImage = UIImageView()
+        learnMoreBannerImage.translatesAutoresizingMaskIntoConstraints = false
+        learnMoreBannerImage.contentMode = .scaleAspectFit
+        learnMoreBannerImage.image = .init(named: "LearnMoreBannerImage")
+        imageView.addSubview(learnMoreBannerImage)
+        
+        learnMoreBannerImage.bottomAnchor.constraint(equalTo: imageView.bottomAnchor,constant: -20).isActive = true
+        learnMoreBannerImage.leadingAnchor.constraint(equalTo: imageView.leadingAnchor, constant: 24).isActive = true
+        learnMoreBannerImage.widthAnchor.constraint(equalToConstant: 100).isActive = true
+        learnMoreBannerImage.heightAnchor.constraint(equalToConstant: 20).isActive = true
+        
+        //titlView
+        let bannerTitle = self.view.labelBuilder(text: "Collect and Sell extraordinary NFTs", size: 18, weight: .bold, color: .appWhiteBackgroundColor, numOfLines: 2, adjustFontSize: false)
+        imageView.addSubview(bannerTitle)
+        bannerTitle.leadingAnchor.constraint(equalTo: learnMoreBannerImage.leadingAnchor).isActive = true
+        bannerTitle.topAnchor.constraint(equalTo: imageView.topAnchor,constant:20).isActive = true
+        bannerTitle.bottomAnchor.constraint(equalTo: learnMoreBannerImage.topAnchor, constant: -24).isActive = true
+        bannerTitle.widthAnchor.constraint(equalToConstant: 185).isActive = true
         
         return imageView
     }()
