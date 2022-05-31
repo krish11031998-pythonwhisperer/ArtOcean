@@ -60,6 +60,13 @@ class HomeViewController: UIViewController {
         return NFTArtTypeCollectionView()
     }()
     
+    private lazy var topSeller:Container = {
+        let container = Container(header: "Top Seller", rightButtonTitle: "View all", innerView: TopSellerCollectionView(), innerViewSize: .init(width: UIScreen.main.bounds.width, height: 113), buttonHandler: self.pushSeeAllArtVC)
+        print("(DEBUG) container intrinsic size : ",container.intrinsicContentSize)
+//        container.backgroundColor = .red
+        return container
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.textLabel.frame = .init(origin: .zero, size: .init(width: 50, height: 50))
@@ -71,6 +78,7 @@ class HomeViewController: UIViewController {
         self.scrollView.addSubview(self.liveBidCollectionContainer)
         self.scrollView.addSubview(self.topCollection)
         self.scrollView.addSubview(self.hotItems)
+        self.scrollView.addSubview(self.topSeller)
         self.scrollView.addSubview(self.popularItems)
         
         self.hideNavigationBarLine()
@@ -146,8 +154,12 @@ class HomeViewController: UIViewController {
         self.liveBidCollectionContainer.topAnchor.constraint(equalToSystemSpacingBelow: self.bannerImageView.bottomAnchor, multiplier: 3).isActive = true
         self.liveBidCollectionContainer.widthAnchor.constraint(equalToConstant: self.view.bounds.width).isActive = true
         
+        self.topSeller.topAnchor.constraint(equalTo: self.liveBidCollection.bottomAnchor, constant: 24).isActive = true
+        self.topSeller.leadingAnchor.constraint(equalTo: self.scrollView.safeAreaLayoutGuide.leadingAnchor).isActive = true
+        self.topSeller.trailingAnchor.constraint(equalTo: self.scrollView.safeAreaLayoutGuide.trailingAnchor).isActive = true
+        
         self.topCollection.leadingAnchor.constraint(equalTo: self.scrollView.safeAreaLayoutGuide.leadingAnchor).isActive = true
-        self.topCollection.topAnchor.constraint(equalTo: self.liveBidCollectionContainer.bottomAnchor,constant: 24).isActive = true
+        self.topCollection.topAnchor.constraint(equalTo: self.topSeller.bottomAnchor,constant: 44).isActive = true
         self.topCollection.trailingAnchor.constraint(equalTo:self.scrollView.safeAreaLayoutGuide.trailingAnchor).isActive = true
         
         self.hotItems.leadingAnchor.constraint(equalTo: self.scrollView.leadingAnchor).isActive = true
@@ -157,6 +169,7 @@ class HomeViewController: UIViewController {
         self.popularItems.leadingAnchor.constraint(equalTo: self.scrollView.leadingAnchor).isActive = true
         self.popularItems.topAnchor.constraint(equalTo: self.hotItems.bottomAnchor, constant: 24).isActive = true
         self.popularItems.trailingAnchor.constraint(equalTo: self.scrollView.trailingAnchor).isActive = true
+        
 //
 //        self.newDropsCollectionContainer.leadingAnchor.constraint(equalTo: self.scrollView.leadingAnchor).isActive = true
 //        self.newDropsCollectionContainer.topAnchor.constraint(equalTo: self.topCollection.bottomAnchor,constant: 24).isActive = true

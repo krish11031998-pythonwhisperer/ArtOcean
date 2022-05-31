@@ -58,7 +58,6 @@ class NFTArtCollection: UICollectionView {
         self.translatesAutoresizingMaskIntoConstraints = false
         self.delegate = self
         self.dataSource = self
-        self.setupLayout()
         if self.nfts == nil{
             self.fetchNFTsFromFile()
         }
@@ -101,12 +100,6 @@ class NFTArtCollection: UICollectionView {
         }
     }
     
-    func setupLayout(){
-        self.leadingAnchor.constraint(equalTo: self.leadingAnchor).isActive = true
-        self.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
-        self.widthAnchor.constraint(equalTo: self.widthAnchor).isActive = true
-        self.heightAnchor.constraint(equalTo: self.heightAnchor).isActive = true
-    }
 
 }
 
