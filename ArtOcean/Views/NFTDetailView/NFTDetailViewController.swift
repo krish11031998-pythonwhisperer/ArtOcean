@@ -23,7 +23,7 @@ class NFTDetailArtViewController:UIViewController{
         self.titleView = CustomLabel(text: nftArt.Title, size: 18, weight: .bold, color: .appBlackColor, numOfLines: 1, adjustFontSize: true)
         self.descriptionView = CustomLabel(text: nftArt.Description, size: 14, weight: .medium, color: .appGrayColor, numOfLines: 3, adjustFontSize: false)
         super.init(nibName: nil, bundle: nil)
-        self.hideNavigationBarLine()
+//        self.hideNavigationBarLine()
         self.configNavigationBar()
         self.heroHeaderView = NFTHeroHeaderView(nft: nftArt, handler: {
             self.navigationController?.popViewController(animated: true)
@@ -35,7 +35,7 @@ class NFTDetailArtViewController:UIViewController{
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.navigationController?.navigationBar.transform = .init(translationX: 0, y: -200)
+//        self.navigationController?.navigationBar.transform = .init(translationX: 0, y: -200)
     }
     
     //MARK: -  NavigationItem
@@ -209,7 +209,7 @@ class NFTDetailArtViewController:UIViewController{
         self.scrollView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor).isActive = true
         
         //ImageView
-        self.imageView.topAnchor.constraint(equalTo: self.heroHeaderView.bottomAnchor, constant: -50).isActive = true
+        self.imageView.topAnchor.constraint(equalTo: self.heroHeaderView.centerYAnchor, constant: 0).isActive = true
         self.imageView.centerXAnchor.constraint(equalTo: self.scrollView.centerXAnchor).isActive = true
         self.imageViewWidthAnchor = self.imageView.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width - 50)
         self.imageViewWidthAnchor?.isActive = true
@@ -341,6 +341,6 @@ extension NFTDetailArtViewController:UIScrollViewDelegate{
             self.scrollView.layoutIfNeeded()
         }.startAnimation()
         
-        self.navigationController?.navigationBar.transform = .init(translationX: 0, y: min(scrollView.contentOffset.y - 100,0))
+//        self.navigationController?.navigationBar.transform = .init(translationX: 0, y: min(scrollView.contentOffset.y - 100,0))
     }
 }

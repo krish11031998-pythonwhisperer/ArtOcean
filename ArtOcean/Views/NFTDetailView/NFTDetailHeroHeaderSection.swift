@@ -19,15 +19,15 @@ class NFTHeroHeaderView:UIView{
         return imageView
     }()
     
-    private let leftButton:CustomButton
-    
-    private let titleView:CustomLabel
+//    private let leftButton:CustomButton
+//
+//    private let titleView:CustomLabel
     
     //MARK: - View LifeCycle and Init
     
     init(nft:NFTModel,handler:@escaping (() -> Void)){
-        self.leftButton = CustomButton(systemName: "chevron.left", handler: handler, autolayout: true)
-        self.titleView = CustomLabel(text: nft.title ?? "XXXXX", size: 18, weight: .bold, color: .appBlackColor, numOfLines: 1)
+//        self.leftButton = CustomButton(systemName: "chevron.left", handler: handler, autolayout: true)
+//        self.titleView = CustomLabel(text: nft.title ?? "XXXXX", size: 18, weight: .bold, color: .appBlackColor, numOfLines: 1)
         self.onCloseHandler = handler
         super.init(frame:.zero)
         self.translatesAutoresizingMaskIntoConstraints = false
@@ -42,8 +42,8 @@ class NFTHeroHeaderView:UIView{
     
     private func setupViews(){
         self.addSubview(self.backgroundImageView)
-        self.addSubview(leftButton)
-        self.addSubview(titleView)
+//        self.addSubview(leftButton)
+//        self.addSubview(titleView)
     }
     
     public func updatebackgroundImage(_ img:UIImage){
@@ -58,11 +58,11 @@ class NFTHeroHeaderView:UIView{
             self.backgroundImageView.topAnchor.constraint(equalTo: self.topAnchor),
             self.backgroundImageView.widthAnchor.constraint(equalTo:self.widthAnchor),
             self.backgroundImageView.heightAnchor.constraint(equalTo:self.heightAnchor),
-            leftButton.leadingAnchor.constraint(equalToSystemSpacingAfter: self.leadingAnchor, multiplier: 3),
-            leftButton.topAnchor.constraint(equalToSystemSpacingBelow: self.topAnchor, multiplier: 2),
-            titleView.centerXAnchor.constraint(equalTo: self.centerXAnchor),
-            titleView.topAnchor.constraint(equalTo: leftButton.topAnchor),
-            titleView.centerYAnchor.constraint(equalTo: leftButton.centerYAnchor)
+//            leftButton.leadingAnchor.constraint(equalToSystemSpacingAfter: self.leadingAnchor, multiplier: 3),
+//            leftButton.topAnchor.constraint(equalToSystemSpacingBelow: self.topAnchor, multiplier: 2),
+//            titleView.centerXAnchor.constraint(equalTo: self.centerXAnchor),
+//            titleView.topAnchor.constraint(equalTo: leftButton.topAnchor),
+//            titleView.centerYAnchor.constraint(equalTo: leftButton.centerYAnchor)
         ])
     }
     

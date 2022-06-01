@@ -25,7 +25,4 @@ extension UIViewController{
         self.navigationController?.view.backgroundColor = .clear
     }
     
-    func unHideNavigationBarLine(){
-        
-    }
 }

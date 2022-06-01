@@ -81,6 +81,83 @@ class HomeViewController: UIViewController {
         
 //        self.hideNavigationBarLine()
         self.setupStatusBar()
+        self.configNavBar()
+    }
+    
+    private let logoView:UIView = {
+        let logo:UIImageView = UIImageView()
+        logo.translatesAutoresizingMaskIntoConstraints = false
+        if let safeImage = UIImage(named: "logo"){
+            logo.image = safeImage
+        }
+
+        logo.contentMode = .scaleAspectFill
+        
+        let titleView = CustomLabel(text: "NFTX", size: 20, weight: .bold, color: .appBlackColor, numOfLines: 1)
+
+        
+        let ethLogo:UIImageView = UIImageView()
+        ethLogo.translatesAutoresizingMaskIntoConstraints = false
+        if let safeImage = UIImage(named: "ethBasicLogo"){
+            ethLogo.image = safeImage
+        }
+
+        ethLogo.contentMode = .scaleAspectFill
+        
+        let balanceView = CustomLabel(text: "0.1345", size: 14, weight: .regular, color: .appWhiteBackgroundColor, numOfLines: 1)
+        balanceView.textAlignment = .right
+        
+        let bgView = UIView()
+        bgView.translatesAutoresizingMaskIntoConstraints = false
+        bgView.backgroundColor = .appPurpleColor
+        bgView.layer.cornerRadius = 16
+        bgView.addSubview(balanceView)
+        bgView.addSubview(ethLogo)
+    
+        let view = UIView()
+        view.addSubview(logo)
+        view.addSubview(titleView)
+        view.addSubview(bgView)
+        
+        view.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            logo.leadingAnchor.constraint(equalTo: view.leadingAnchor,constant: 5),
+            logo.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            logo.widthAnchor.constraint(equalToConstant: 33),
+            logo.heightAnchor.constraint(equalToConstant: 34),
+            
+            titleView.leadingAnchor.constraint(equalTo: logo.trailingAnchor, constant: 3),
+            titleView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            titleView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            
+            bgView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            bgView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            bgView.widthAnchor.constraint(equalToConstant: 80),
+            bgView.heightAnchor.constraint(equalToConstant: 30),
+            
+//            balanceView.topAnchor.constraint(equalTo: bgView,constant: 10),
+            
+            ethLogo.leadingAnchor.constraint(equalTo: bgView.leadingAnchor,constant: 12),
+            ethLogo.centerYAnchor.constraint(equalTo: bgView.centerYAnchor),
+            
+            balanceView.leadingAnchor.constraint(equalTo: ethLogo.trailingAnchor, constant: 8),
+            balanceView.centerYAnchor.constraint(equalTo: bgView.centerYAnchor),
+            balanceView.trailingAnchor.constraint(equalTo: bgView.trailingAnchor,constant: -12)
+            
+        ])
+        
+        
+        return view
+    }()
+    
+    func configNavBar(){
+        NSLayoutConstraint.activate([
+            self.logoView.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width - 20),
+            self.logoView.heightAnchor.constraint(equalToConstant: 100)
+        ])
+        
+        self.navigationItem.titleView = self.logoView
     }
     
     
