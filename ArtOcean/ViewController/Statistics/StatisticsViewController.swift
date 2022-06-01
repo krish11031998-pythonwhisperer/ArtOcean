@@ -31,7 +31,7 @@ class StatisticsViewController: UIViewController {
         self.view.addSubview(self.collectionView)
     }
     
-    private let collectionView = StatisticCollectionView()
+    private let collectionView = StatisticCollectionView(cellType: .activity)
     
     func setupLayout(){
         self.sliderView.topAnchor.constraint(equalTo: self.view.topAnchor,constant: 100).isActive = true
