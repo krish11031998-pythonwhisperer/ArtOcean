@@ -85,9 +85,10 @@ class NFTDetailArtViewController:UIViewController{
     }()
     
     private let creatorImage:CustomImageView = {
-        let image = CustomImageView(cornerRadius: 16)
-        image.backgroundColor = .black
-        return image
+        let imageView = CustomImageView(cornerRadius: 16)
+        imageView.image = .init(named: "profileImage")
+        imageView.backgroundColor = .black
+        return imageView
     }()
     
     private lazy var artInfoSnippet:UIStackView = {
