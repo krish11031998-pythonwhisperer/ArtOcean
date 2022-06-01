@@ -15,7 +15,7 @@ class NFTHeroHeaderView:UIView{
     
     //MARK: - Views
     private lazy var backgroundImageView:CustomImageView = {
-        let imageView = CustomImageView(cornerRadius: 0,gradientColors: [UIColor.white.withAlphaComponent(0.2),UIColor.white.withAlphaComponent(1)])
+        let imageView = CustomImageView(cornerRadius: 0,gradientColors: [UIColor.white.withAlphaComponent(1),UIColor.white.withAlphaComponent(0.2)])
         return imageView
     }()
     
@@ -27,7 +27,7 @@ class NFTHeroHeaderView:UIView{
     
     init(nft:NFTModel,handler:@escaping (() -> Void)){
         self.leftButton = CustomButton(systemName: "chevron.left", handler: handler, autolayout: true)
-        self.titleView = CustomLabel(text: nft.title ?? "XXXXX", size: 14, weight: .black, color: .appWhiteBackgroundColor, numOfLines: 1)
+        self.titleView = CustomLabel(text: nft.title ?? "XXXXX", size: 18, weight: .bold, color: .appBlackColor, numOfLines: 1)
         self.onCloseHandler = handler
         super.init(frame:.zero)
         self.translatesAutoresizingMaskIntoConstraints = false
@@ -57,7 +57,8 @@ class NFTHeroHeaderView:UIView{
             self.backgroundImageView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
             self.backgroundImageView.topAnchor.constraint(equalTo: self.topAnchor),
             self.backgroundImageView.widthAnchor.constraint(equalTo:self.widthAnchor),
-            self.backgroundImageView.heightAnchor.constraint(equalTo:self.heightAnchor),            leftButton.leadingAnchor.constraint(equalToSystemSpacingAfter: self.leadingAnchor, multiplier: 3),
+            self.backgroundImageView.heightAnchor.constraint(equalTo:self.heightAnchor),
+            leftButton.leadingAnchor.constraint(equalToSystemSpacingAfter: self.leadingAnchor, multiplier: 3),
             leftButton.topAnchor.constraint(equalToSystemSpacingBelow: self.topAnchor, multiplier: 2),
             titleView.centerXAnchor.constraint(equalTo: self.centerXAnchor),
             titleView.topAnchor.constraint(equalTo: leftButton.topAnchor),

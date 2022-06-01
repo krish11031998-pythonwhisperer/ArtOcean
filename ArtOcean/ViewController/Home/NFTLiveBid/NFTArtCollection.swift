@@ -46,12 +46,12 @@ class NFTArtCollection: UICollectionView {
         self.backgroundColor = .clear
     
         
-        if itemSize == NFTArtCollection.largeCard{
-            self.cellId = NFTArtCollectionLiveBidViewCell.identifier
-            self.register(NFTArtCollectionLiveBidViewCell.self, forCellWithReuseIdentifier: NFTArtCollectionLiveBidViewCell.identifier)
-        }else{
+        if itemSize == NFTArtCollection.smallCard{
             self.cellId = NFTArtCollectionViewCell.identifier
             self.register(NFTArtCollectionViewCell.self, forCellWithReuseIdentifier: NFTArtCollectionViewCell.identifier)
+        }else{
+            self.cellId = NFTArtCollectionLiveBidViewCell.identifier
+            self.register(NFTArtCollectionLiveBidViewCell.self, forCellWithReuseIdentifier: NFTArtCollectionLiveBidViewCell.identifier)
         }
         
 

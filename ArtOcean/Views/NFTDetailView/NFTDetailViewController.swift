@@ -23,6 +23,8 @@ class NFTDetailArtViewController:UIViewController{
         self.titleView = CustomLabel(text: nftArt.Title, size: 18, weight: .bold, color: .appBlackColor, numOfLines: 1, adjustFontSize: true)
         self.descriptionView = CustomLabel(text: nftArt.Description, size: 14, weight: .medium, color: .appGrayColor, numOfLines: 3, adjustFontSize: false)
         super.init(nibName: nil, bundle: nil)
+        self.hideNavigationBarLine()
+        self.configNavigationBar()
         self.heroHeaderView = NFTHeroHeaderView(nft: nftArt, handler: {
             self.navigationController?.popViewController(animated: true)
         })
@@ -31,7 +33,19 @@ class NFTDetailArtViewController:UIViewController{
         self.setupStatusBar()
     }
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        self.navigationController?.navigationBar.transform = .init(translationX: 0, y: -200)
+    }
+    
     //MARK: -  NavigationItem
+    private func configNavigationBar(){
+        self.navigationController?.navigationBar.isTranslucent = false
+        self.navigationItem.titleView = self.view.labelBuilder(text: self.nftArt?.Title ?? "", size: 18, weight: .bold, color: .appBlackColor, numOfLines: 1)
+        self.navigationItem.leftBarButtonItem = self.backBarButton
+        self.navigationController?.navigationBar.backgroundColor = .clear
+    }
+    
     private lazy var backBarButton:UIBarButtonItem = {
         let barButton = UIBarButtonItem()
         
@@ -190,7 +204,7 @@ class NFTDetailArtViewController:UIViewController{
         self.heroHeaderView.heightAnchor.constraint(equalToConstant: 200).isActive = true
         
         self.scrollView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor).isActive = true
-        self.scrollView.topAnchor.constraint(equalTo: self.view.topAnchor).isActive = true
+        self.scrollView.topAnchor.constraint(equalTo: self.view.topAnchor,constant: -self.view.safeAreaInsets.top).isActive = true
         self.scrollView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor).isActive = true
         self.scrollView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor).isActive = true
         
@@ -327,8 +341,6 @@ extension NFTDetailArtViewController:UIScrollViewDelegate{
             self.scrollView.layoutIfNeeded()
         }.startAnimation()
         
-        self.navigationController?.navigationBar.transform = .init(translationX: 0, y: max(scrollView.contentOffset.y - 100,0))
-        
-        
+        self.navigationController?.navigationBar.transform = .init(translationX: 0, y: min(scrollView.contentOffset.y - 100,0))
     }
 }

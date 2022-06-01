@@ -70,9 +70,6 @@ class HomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.textLabel.frame = .init(origin: .zero, size: .init(width: 50, height: 50))
-//        self.navigationItem.titleView = self.textLabel
-//        self.navigationController?.navigationBar.tintColor = .white
-        self.navigationController?.isNavigationBarHidden = true
         self.view.addSubview(self.scrollView)
         self.scrollView.addSubview(self.artTypes)
         self.scrollView.addSubview(self.bannerImageView)
@@ -82,7 +79,7 @@ class HomeViewController: UIViewController {
         self.scrollView.addSubview(self.topSeller)
         self.scrollView.addSubview(self.popularItems)
         
-        self.hideNavigationBarLine()
+//        self.hideNavigationBarLine()
         self.setupStatusBar()
     }
     

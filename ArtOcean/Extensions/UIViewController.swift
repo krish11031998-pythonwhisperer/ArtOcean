@@ -21,6 +21,11 @@ extension UIViewController{
         let img = UIImage()
         navigationBar.shadowImage = img
         navigationBar.setBackgroundImage(img, for: .default)
-        navigationBar.isTranslucent = false
+        navigationBar.isTranslucent = true
+        self.navigationController?.view.backgroundColor = .clear
+    }
+    
+    func unHideNavigationBarLine(){
+        
     }
 }
