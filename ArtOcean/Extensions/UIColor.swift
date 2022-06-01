@@ -43,4 +43,6 @@ extension UIColor {
     static var appRedColor:UIColor = .init(hexString: "E57434")
     static var appVioletColor:UIColor = .init(hexString: "D67F7F")
     static var appDarkGrayColor:UIColor = .init(hexString: "3C3C3C")
+    static var appPurpleColor:UIColor = .init(hexString: "5D5FEF")
+    static var appPurple50Color:UIColor = .init(hexString: "EFEFFD")
 }

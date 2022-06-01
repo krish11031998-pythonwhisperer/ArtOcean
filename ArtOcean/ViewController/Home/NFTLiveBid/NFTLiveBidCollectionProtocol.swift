@@ -13,6 +13,6 @@ protocol NFTLiveBidCollectionDelegate{
 }
 
 
-protocol NFTLiveBidCellDelegate{
+protocol NFTArtCellDelegate{
     func viewArt(art:NFTModel)
 }

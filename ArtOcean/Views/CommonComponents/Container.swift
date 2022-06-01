@@ -55,7 +55,7 @@ class Container: UIView {
             safeHeaderView.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
             safeHeaderView.leadingAnchor.constraint(equalTo: self.leadingAnchor,constant: self.paddingToHeaderView ? 10 : 0).isActive = true
             safeHeaderView.trailingAnchor.constraint(equalTo: self.trailingAnchor,constant: self.paddingToHeaderView ? -10 : 0).isActive = true
-            self.innerView.topAnchor.constraint(equalTo: safeHeaderView.bottomAnchor, constant: 5).isActive = true
+            self.innerView.topAnchor.constraint(equalTo: safeHeaderView.bottomAnchor, constant: 12).isActive = true
             self.innerView.leadingAnchor.constraint(equalTo: self.leadingAnchor).isActive = true
             self.innerView.trailingAnchor.constraint(equalTo: self.trailingAnchor).isActive = true
             self.innerView.widthAnchor.constraint(equalToConstant: self.innerViewSize.width).isActive = true

@@ -22,8 +22,8 @@ class LiveBidDetailView: UIViewController  {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private lazy var liveBidCollection:NFTLiveBiddingCollectionView = {
-        let collection = NFTLiveBiddingCollectionView(nfts: self.nfts,orientation: .vertical,itemSize: .init(width: UIScreen.main.bounds.width - (UIScreen.main.bounds.width * 0.1), height: 300))
+    private lazy var liveBidCollection:NFTArtCollection = {
+        let collection = NFTArtCollection(nfts: self.nfts,orientation: .vertical,itemSize: .init(width: UIScreen.main.bounds.width - (UIScreen.main.bounds.width * 0.1), height: 300))
         return collection
     }()
 

@@ -12,6 +12,7 @@ import UIKit
 class CustomImageView:UIImageView{
         
     private let imageDownloader:ImageDownloader = ImageDownloader()
+    private var colors:[UIColor] = []
     
     init(cornerRadius:CGFloat,maskedCorners:CACornerMask? = nil){
         super.init(frame: .zero)
@@ -19,14 +20,42 @@ class CustomImageView:UIImageView{
         if let safeMaskedCorner = maskedCorners{
             self.layer.maskedCorners = safeMaskedCorner
         }
-        self.image = .init(named: "placeHolder")
-        self.clipsToBounds = true
-        self.translatesAutoresizingMaskIntoConstraints = false
-        self.contentMode = .scaleAspectFill
+        self.setupImageView()
+    }
+    
+    init(cornerRadius:CGFloat,maskedCorners:CACornerMask? = nil,gradientColors:[UIColor]){
+        super.init(frame: .zero)
+        self.colors = gradientColors
+        self.layer.cornerRadius = cornerRadius
+        if let safeMaskedCorner = maskedCorners{
+            self.layer.maskedCorners = safeMaskedCorner
+        }
+        self.setupImageView()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        if let safeGradient = self.gradient{
+            safeGradient.frame = self.frame
+        }
+    }
+    
+    private var gradient:CAGradientLayer? = nil
+    
+    private func setupImageView(){
+        self.image = .init(named: "placeHolder")
+        self.clipsToBounds = true
+        self.translatesAutoresizingMaskIntoConstraints = false
+        self.contentMode = .scaleAspectFill
+        if !self.colors.isEmpty{
+            self.gradient = CAGradientLayer()
+            self.gradient!.colors = self.colors.compactMap({$0.cgColor})
+            self.layer.addSublayer(self.gradient!)
+        }
     }
     
     public func updateImageView(url:String?){
