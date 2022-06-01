@@ -136,7 +136,6 @@ class HomeViewController: UIViewController {
             bgView.widthAnchor.constraint(equalToConstant: 80),
             bgView.heightAnchor.constraint(equalToConstant: 30),
             
-//            balanceView.topAnchor.constraint(equalTo: bgView,constant: 10),
             
             ethLogo.leadingAnchor.constraint(equalTo: bgView.leadingAnchor,constant: 12),
             ethLogo.centerYAnchor.constraint(equalTo: bgView.centerYAnchor),

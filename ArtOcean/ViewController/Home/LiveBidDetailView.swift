@@ -30,7 +30,7 @@ class LiveBidDetailView: UIViewController  {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.addSubview(self.liveBidCollection)
-//        self.configNavigationBar()
+        self.configNavigationBar()
         self.view.backgroundColor = .white
     }
     
@@ -38,7 +38,6 @@ class LiveBidDetailView: UIViewController  {
         
         self.navigationController?.navigationBar.isTranslucent = false
         self.navigationItem.titleView = self.view.labelBuilder(text: "Live Bid", size: 18, weight: .bold, color: .appBlackColor, numOfLines: 1)
-        self.navigationItem.titleView?.backgroundColor = .red
         self.navigationController?.navigationBar.backgroundColor = .green
         self.navigationItem.leftBarButtonItem = self.backBarButton
     }
