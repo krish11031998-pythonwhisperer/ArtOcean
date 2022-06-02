@@ -8,8 +8,9 @@
 import Foundation
 import UIKit
 
-protocol CustomButtonDelegate{
-    func handleTap()
+@objc protocol CustomButtonDelegate{
+    @objc optional func handleTap()
+    @objc optional func handleTap(_ data:Any)
 }
 
 class CustomLabelButton:UIButton{
@@ -34,6 +35,6 @@ class CustomLabelButton:UIButton{
     
     @objc func tapHandler(){
         self.bouncyButtonClick()
-        self.delegate?.handleTap()
+        self.delegate?.handleTap?()
     }
 }

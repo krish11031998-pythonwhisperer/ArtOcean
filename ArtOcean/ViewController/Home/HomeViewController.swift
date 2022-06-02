@@ -20,6 +20,7 @@ class HomeViewController: UIViewController {
     
     private let scrollView:UIScrollView = {
         let scrollView = UIScrollView()
+        scrollView.contentInsetAdjustmentBehavior = .never
         scrollView.showsVerticalScrollIndicator = false
         scrollView.backgroundColor = .clear
         return scrollView
@@ -63,7 +64,6 @@ class HomeViewController: UIViewController {
     private lazy var topSeller:Container = {
         let container = Container(header: "Top Seller", rightButtonTitle: "View all", innerView: TopSellerCollectionView(), innerViewSize: .init(width: UIScreen.main.bounds.width, height: 113), buttonHandler: self.pushSeeAllArtVC)
         print("(DEBUG) container intrinsic size : ",container.intrinsicContentSize)
-//        container.backgroundColor = .red
         return container
     }()
     
@@ -78,10 +78,7 @@ class HomeViewController: UIViewController {
         self.scrollView.addSubview(self.hotItems)
         self.scrollView.addSubview(self.topSeller)
         self.scrollView.addSubview(self.popularItems)
-        
-//        self.hideNavigationBarLine()
-        self.setupStatusBar()
-        self.configNavBar()
+        self.hideNavigationBarLine()
     }
     
     private let logoView:UIView = {
@@ -187,8 +184,6 @@ class HomeViewController: UIViewController {
         imageView.clipsToBounds = true
         imageView.layer.cornerRadius = 16
         
-       
-        
         //LearnMoreImage
         let learnMoreBannerImage = UIImageView()
         learnMoreBannerImage.translatesAutoresizingMaskIntoConstraints = false
@@ -231,15 +226,15 @@ class HomeViewController: UIViewController {
         self.topSeller.topAnchor.constraint(equalTo: self.liveBidCollection.bottomAnchor, constant: 24).isActive = true
         self.topSeller.leadingAnchor.constraint(equalTo: self.scrollView.safeAreaLayoutGuide.leadingAnchor).isActive = true
         self.topSeller.trailingAnchor.constraint(equalTo: self.scrollView.safeAreaLayoutGuide.trailingAnchor).isActive = true
-        
+
         self.topCollection.leadingAnchor.constraint(equalTo: self.scrollView.safeAreaLayoutGuide.leadingAnchor).isActive = true
         self.topCollection.topAnchor.constraint(equalTo: self.topSeller.bottomAnchor,constant: 44).isActive = true
         self.topCollection.trailingAnchor.constraint(equalTo:self.scrollView.safeAreaLayoutGuide.trailingAnchor).isActive = true
-        
+
         self.hotItems.leadingAnchor.constraint(equalTo: self.scrollView.leadingAnchor).isActive = true
         self.hotItems.topAnchor.constraint(equalTo: self.topCollection.bottomAnchor, constant: 24).isActive = true
         self.hotItems.trailingAnchor.constraint(equalTo: self.scrollView.trailingAnchor).isActive = true
-        
+
         self.popularItems.leadingAnchor.constraint(equalTo: self.scrollView.leadingAnchor).isActive = true
         self.popularItems.topAnchor.constraint(equalTo: self.hotItems.bottomAnchor, constant: 24).isActive = true
         self.popularItems.trailingAnchor.constraint(equalTo: self.scrollView.trailingAnchor).isActive = true

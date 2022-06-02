@@ -23,27 +23,28 @@ class NFTDetailArtViewController:UIViewController{
         self.titleView = CustomLabel(text: nftArt.Title, size: 18, weight: .bold, color: .appBlackColor, numOfLines: 1, adjustFontSize: true)
         self.descriptionView = CustomLabel(text: nftArt.Description, size: 14, weight: .medium, color: .appGrayColor, numOfLines: 3, adjustFontSize: false)
         super.init(nibName: nil, bundle: nil)
-//        self.hideNavigationBarLine()
         self.configNavigationBar()
         self.heroHeaderView = NFTHeroHeaderView(nft: nftArt, handler: {
             self.navigationController?.popViewController(animated: true)
         })
         self.setupView()
         self.setupLayout()
-        self.setupStatusBar()
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-//        self.navigationController?.navigationBar.transform = .init(translationX: 0, y: -200)
     }
     
     //MARK: -  NavigationItem
     private func configNavigationBar(){
+        //navigationBar
         self.navigationController?.navigationBar.isTranslucent = false
         self.navigationItem.titleView = self.view.labelBuilder(text: self.nftArt?.Title ?? "", size: 18, weight: .bold, color: .appBlackColor, numOfLines: 1)
         self.navigationItem.leftBarButtonItem = self.backBarButton
-        self.navigationController?.navigationBar.backgroundColor = .clear
+        let whiteNavBar = UINavigationBarAppearance()
+        whiteNavBar.backgroundColor = .white
+        self.navigationController?.navigationBar.scrollEdgeAppearance = whiteNavBar
+        
     }
     
     private lazy var backBarButton:UIBarButtonItem = {
@@ -61,10 +62,16 @@ class NFTDetailArtViewController:UIViewController{
         return barButton
     }()
     
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        self.navigationController?.navigationBar.transform = .init(translationX: 0, y: -200)
+    }
+    
     //MARK: - Views
     
     private lazy var scrollView:UIScrollView = {
         let scrollView = UIScrollView()
+        scrollView.contentInsetAdjustmentBehavior = .never
         scrollView.translatesAutoresizingMaskIntoConstraints = false
         scrollView.contentSize = .init(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height * 1.5)
         scrollView.showsVerticalScrollIndicator = false
@@ -209,7 +216,7 @@ class NFTDetailArtViewController:UIViewController{
         self.scrollView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor).isActive = true
         
         //ImageView
-        self.imageView.topAnchor.constraint(equalTo: self.heroHeaderView.centerYAnchor, constant: 0).isActive = true
+        self.imageView.topAnchor.constraint(equalToSystemSpacingBelow: self.heroHeaderView.centerYAnchor, multiplier: 4).isActive = true
         self.imageView.centerXAnchor.constraint(equalTo: self.scrollView.centerXAnchor).isActive = true
         self.imageViewWidthAnchor = self.imageView.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width - 50)
         self.imageViewWidthAnchor?.isActive = true
@@ -341,6 +348,6 @@ extension NFTDetailArtViewController:UIScrollViewDelegate{
             self.scrollView.layoutIfNeeded()
         }.startAnimation()
         
-//        self.navigationController?.navigationBar.transform = .init(translationX: 0, y: min(scrollView.contentOffset.y - 100,0))
+        self.navigationController?.navigationBar.transform = .init(translationX: 0, y: min(scrollView.contentOffset.y - 100,0))
     }
 }

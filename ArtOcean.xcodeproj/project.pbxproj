@@ -19,6 +19,8 @@
 		EF00F5D22846D781003D8683 /* NFTArtInteractiveInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF00F5D12846D781003D8683 /* NFTArtInteractiveInfoView.swift */; };
 		EF00F5D52847A660003D8683 /* SliderSelectorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF00F5D42847A660003D8683 /* SliderSelectorView.swift */; };
 		EF00F5D7284805C1003D8683 /* StatisticCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF00F5D6284805C1003D8683 /* StatisticCollectionView.swift */; };
+		EF00F5DA2848BB6B003D8683 /* AccountsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF00F5D92848BB6B003D8683 /* AccountsViewController.swift */; };
+		EF7447AE284902A300899476 /* AccountHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF7447AD284902A300899476 /* AccountHeaderView.swift */; };
 		EF8B0631283BEAC10050E726 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF8B0630283BEAC10050E726 /* AppDelegate.swift */; };
 		EF8B0635283BEAC10050E726 /* MainTabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF8B0634283BEAC10050E726 /* MainTabViewController.swift */; };
 		EF8B0638283BEAC10050E726 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EF8B0636283BEAC10050E726 /* Main.storyboard */; };
@@ -131,6 +133,8 @@
 		EF00F5D12846D781003D8683 /* NFTArtInteractiveInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NFTArtInteractiveInfoView.swift; sourceTree = "<group>"; };
 		EF00F5D42847A660003D8683 /* SliderSelectorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SliderSelectorView.swift; sourceTree = "<group>"; };
 		EF00F5D6284805C1003D8683 /* StatisticCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticCollectionView.swift; sourceTree = "<group>"; };
+		EF00F5D92848BB6B003D8683 /* AccountsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountsViewController.swift; sourceTree = "<group>"; };
+		EF7447AD284902A300899476 /* AccountHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountHeaderView.swift; sourceTree = "<group>"; };
 		EF8B062D283BEAC10050E726 /* ArtOcean.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ArtOcean.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EF8B0630283BEAC10050E726 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		EF8B0634283BEAC10050E726 /* MainTabViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabViewController.swift; sourceTree = "<group>"; };
@@ -232,10 +236,19 @@
 			isa = PBXGroup;
 			children = (
 				EF8B066D283BF0F10050E726 /* StatisticsViewController.swift */,
-				EF00F5D42847A660003D8683 /* SliderSelectorView.swift */,
 				EF00F5D6284805C1003D8683 /* StatisticCollectionView.swift */,
+				EF00F5D42847A660003D8683 /* SliderSelectorView.swift */,
 			);
 			path = Statistics;
+			sourceTree = "<group>";
+		};
+		EF00F5D82848BB4A003D8683 /* Accounts */ = {
+			isa = PBXGroup;
+			children = (
+				EF00F5D92848BB6B003D8683 /* AccountsViewController.swift */,
+				EF7447AD284902A300899476 /* AccountHeaderView.swift */,
+			);
+			path = Accounts;
 			sourceTree = "<group>";
 		};
 		EF8B0624283BEAC10050E726 = {
@@ -311,6 +324,7 @@
 		EF8B0661283BECE10050E726 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				EF00F5D82848BB4A003D8683 /* Accounts */,
 				EF00F5BA2845398C003D8683 /* NFTArtTypes */,
 				EFD13C1D2843EBF8000E422E /* NFTDetailView */,
 				EF8B06D8283E6F120050E726 /* CommonComponents */,
@@ -633,9 +647,11 @@
 				EF00F5CE2846D2AB003D8683 /* NFTDetailHeroHeaderSection.swift in Sources */,
 				EF8B06D5283E3A4B0050E726 /* LiveBidDetailView.swift in Sources */,
 				EF8B066C283BF0E70050E726 /* ProfileViewController.swift in Sources */,
+				EF7447AE284902A300899476 /* AccountHeaderView.swift in Sources */,
 				EF8B067D283C27020050E726 /* AlchemyAPI.swift in Sources */,
 				EF8B06D0283D60EC0050E726 /* TopCollectionTableCellViewTableViewCell.swift in Sources */,
 				EF8B0665283BED350050E726 /* HomeViewController.swift in Sources */,
+				EF00F5DA2848BB6B003D8683 /* AccountsViewController.swift in Sources */,
 				EF00F5C7284638E7003D8683 /* NFTArtCollectionViewCell.swift in Sources */,
 				EF8B06CC283D5B4C0050E726 /* TopCollectionView.swift in Sources */,
 				EF00F5CC28465DD7003D8683 /* TopSellerCollectionCell.swift in Sources */,

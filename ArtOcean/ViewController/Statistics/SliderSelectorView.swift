@@ -96,7 +96,7 @@ class SliderSelector:UIView{
     func tabStackBuilder(tabs:[String]){
         let ratios = Array(repeating: CGFloat(1)/CGFloat(tabsIndicators.count), count: tabsIndicators.count)
         print("(DEBUG) ratios : ",ratios)
-        let stackView = UIView.StackBuilder(views: tabsIndicators, ratios: ratios, spacing: 1, axis: .horizontal)
+        let stackView = UIView.StackBuilder(views: tabsIndicators, ratios: [0.5,0.5], spacing: 10, axis: .horizontal)
         self.addSubview(stackView)
         
         NSLayoutConstraint.activate([

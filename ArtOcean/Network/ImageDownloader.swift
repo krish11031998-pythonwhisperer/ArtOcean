@@ -45,11 +45,20 @@ class ImageDownloader{
     
     static var shared = ImageDownloader()
 
+    private var callHandlers:[URL:[((Result<UIImage,ImageDownloaderError>) -> Void)]] = [:]
+    
     func fetchImage(urlStr:String,completion:@escaping ((Result<UIImage,ImageDownloaderError>) -> Void)){
         guard let safeURL = URL(string: urlStr) else{
             completion(.failure(.invalidURL))
             print("(Error) the url is not valid: Damaged => ")
             return
+        }
+        
+        if let _ = self.callHandlers[safeURL]{
+            self.callHandlers[safeURL]!.append(completion)
+            return
+        }else{
+            self.callHandlers[safeURL] = [completion]
         }
         
         if let image = ImageCache.cache[safeURL]{
@@ -58,13 +67,24 @@ class ImageDownloader{
             URLSession.shared.dataTask(with: safeURL) { data , response, err in
                 if let safeResponse = response as? HTTPURLResponse,safeResponse.statusCode >= 400 && safeResponse.statusCode < 500{
                     print("(Error) the response was not fetched status : ",safeResponse.statusCode)
-                    completion(.failure(.responseStatusFailed))
+                    if let handlers = self.callHandlers[safeURL]{
+                        handlers.forEach({$0(.failure(.responseStatusFailed))})
+                        self.callHandlers.removeAll()
+                    }else{
+                        completion(.failure(.responseStatusFailed))
+                    }
+                    
                     return
                 }
                 
                 guard let safeData = data,let image = UIImage(data: safeData) else {
                     if let safeError = err{
-                        completion(.failure(.dataNotFetched))
+                        if let handlers = self.callHandlers[safeURL]{
+                            handlers.forEach({$0(.failure(.dataNotFetched))})
+                            self.callHandlers.removeAll()
+                        }else{
+                            completion(.failure(.dataNotFetched))
+                        }
                         print("(Error) Error while fetching : ",safeError.localizedDescription)
                     }
                     return
@@ -72,9 +92,12 @@ class ImageDownloader{
                 
                 ImageCache.cache[safeURL] = image
                 
-                completion(.success(image))
-                
-                
+                if let handlers = self.callHandlers[safeURL]{
+                    handlers.forEach({$0(.success(image))})
+                    self.callHandlers.removeAll()
+                }else{
+                    completion(.success(image))
+                }
                 
             }.resume()
         }

@@ -18,6 +18,9 @@ class StatisticCollectionView:UICollectionView{
     
     private var data:[Any] = Array(repeating: 0, count: 100)
     private var cellName:String = ""
+    
+    public var buttonDelegate:CustomButtonDelegate? = nil
+    
     init(cellType:StatisticCollectionViewType,data:[Any]? = nil){
         let layout = UICollectionViewFlowLayout()
         layout.itemSize = .init(width: UIScreen.main.bounds.width - 48, height: 50)
@@ -49,6 +52,7 @@ class StatisticCollectionView:UICollectionView{
     
 }
 
+//MARK: - StatisticCollectionViewController UICollectionDelegate
 extension StatisticCollectionView:UICollectionViewDelegate,UICollectionViewDataSource{
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
@@ -62,8 +66,10 @@ extension StatisticCollectionView:UICollectionViewDelegate,UICollectionViewDataS
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: self.cellName, for: indexPath) as? StatisticRankingCollectionViewCell{
             cell.updateCell(idx: indexPath.row + 1)
+            cell.buttonDelegate = self.buttonDelegate
             return cell
         } else if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: self.cellName, for: indexPath) as? StatisticActivityCollectionViewCell {
+            cell.buttonDelegate = self.buttonDelegate
             return cell
         }else {
             return UICollectionViewCell()
@@ -72,12 +78,21 @@ extension StatisticCollectionView:UICollectionViewDelegate,UICollectionViewDataS
     
 }
 
+////MARK: - StatisticsViewController CustomButtonDelegate
+//extension StatisticCollectionView:CustomButtonDelegate{
+//    func handleTap(_ data: Any) {
+//        self.buttonDelegate?.handleTap?(data)
+//    }
+//}
+
 //MARK: - RankingCell
 class StatisticRankingCollectionViewCell:UICollectionViewCell{
     
     static var identifier:String = "StatisticRankingCollectionViewCell"
     
     private lazy var imageView:CustomImageView = CustomImageView(cornerRadius: 20)
+    
+    public var buttonDelegate:CustomButtonDelegate? = nil
     
     //UserInfo
     private lazy var name:UILabel = CustomLabel(text: "Shapire Cole", size: 14, weight: .medium, color: .appBlackColor, numOfLines: 1, adjustFontSize: true)
@@ -116,6 +131,8 @@ class StatisticRankingCollectionViewCell:UICollectionViewCell{
         self.addSubview(imageView)
         self.addSubview(stack)
         
+        self.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.handleTap)))
+        
         self.setupLayout()
     }
     
@@ -141,6 +158,12 @@ class StatisticRankingCollectionViewCell:UICollectionViewCell{
         self.stack.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
         self.stack.trailingAnchor.constraint(equalTo: self.trailingAnchor).isActive = true
     }
+    
+    //Handler
+    @objc func handleTap(){
+        self.bouncyButtonClick()
+        self.buttonDelegate?.handleTap?("nil")
+    }
 }
 
 //MARK: - ActivityCell
@@ -150,6 +173,8 @@ class StatisticActivityCollectionViewCell:UICollectionViewCell{
     static var identifier:String = "StatisticActivityCollectionViewCell"
     
     private lazy var imageView:CustomImageView = CustomImageView(cornerRadius: 20)
+    
+    public var buttonDelegate:CustomButtonDelegate? = nil
     
     //UserInfo
     private lazy var name:UILabel = CustomLabel(text: "Shapire Cole", size: 14, weight: .medium, color: .appBlackColor, numOfLines: 1, adjustFontSize: true)
@@ -180,6 +205,8 @@ class StatisticActivityCollectionViewCell:UICollectionViewCell{
         self.addSubview(imageView)
         self.addSubview(stack)
         
+        self.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.handleTap)))
+        
         self.setupLayout()
     }
     
@@ -202,6 +229,8 @@ class StatisticActivityCollectionViewCell:UICollectionViewCell{
         self.stack.trailingAnchor.constraint(equalTo: self.trailingAnchor).isActive = true
     }
     
-    
-    
+    @objc func handleTap(){
+        self.bouncyButtonClick()
+        self.buttonDelegate?.handleTap?()
+    }
 }

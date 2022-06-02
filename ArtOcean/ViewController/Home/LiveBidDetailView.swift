@@ -24,6 +24,7 @@ class LiveBidDetailView: UIViewController  {
     
     private lazy var liveBidCollection:NFTArtCollection = {
         let collection = NFTArtCollection(nfts: self.nfts,orientation: .vertical,itemSize: .init(width: UIScreen.main.bounds.width - (UIScreen.main.bounds.width * 0.1), height: 300))
+        collection.contentInsetAdjustmentBehavior = .never
         return collection
     }()
 
@@ -63,6 +64,7 @@ class LiveBidDetailView: UIViewController  {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         self.setupLayout()
+        self.navigationController?.navigationBar.transform = .init(translationX: 0, y: -200)
     }
     
     func setupLayout(){

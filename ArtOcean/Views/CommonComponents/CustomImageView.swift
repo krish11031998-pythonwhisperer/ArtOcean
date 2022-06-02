@@ -13,9 +13,12 @@ class CustomImageView:UIImageView{
         
     private let imageDownloader:ImageDownloader = ImageDownloader()
     private var colors:[UIColor] = []
-    
-    init(cornerRadius:CGFloat,maskedCorners:CACornerMask? = nil){
+    private var named:String? = nil
+    private var url:String? = nil
+    init(url:String? = nil,named:String? = nil,cornerRadius:CGFloat,maskedCorners:CACornerMask? = nil){
         super.init(frame: .zero)
+        self.named = named
+        self.url = url
         self.layer.cornerRadius = cornerRadius
         if let safeMaskedCorner = maskedCorners{
             self.layer.maskedCorners = safeMaskedCorner
@@ -47,7 +50,12 @@ class CustomImageView:UIImageView{
     private var gradient:CAGradientLayer? = nil
     
     private func setupImageView(){
-        self.image = .init(named: "placeHolder")
+        if let safeNamed = self.named{
+            self.image = .init(named: safeNamed)
+        }else{
+            self.image = .init(named: "placeHolder")
+        }
+        
         self.clipsToBounds = true
         self.translatesAutoresizingMaskIntoConstraints = false
         self.contentMode = .scaleAspectFill

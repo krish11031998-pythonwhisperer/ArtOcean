@@ -31,12 +31,15 @@ class StatisticsViewController: UIViewController {
         self.view.addSubview(self.collectionView)
     }
     
-    private let collectionView = StatisticCollectionView(cellType: .activity)
+    private lazy var collectionView:UICollectionView = {
+        var collection = StatisticCollectionView(cellType: .ranking)
+        collection.buttonDelegate = self
+        return collection
+    }()
     
     func setupLayout(){
         self.sliderView.topAnchor.constraint(equalTo: self.view.topAnchor,constant: 100).isActive = true
         self.sliderView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor,constant: 24).isActive = true
-        self.sliderView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor,constant: -24).isActive = true
         self.sliderView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor,constant: -24).isActive = true
         self.sliderView.heightAnchor.constraint(equalToConstant: 46).isActive = true
         
@@ -44,6 +47,18 @@ class StatisticsViewController: UIViewController {
         self.collectionView.leadingAnchor.constraint(equalToSystemSpacingAfter: self.view.leadingAnchor, multiplier: 3).isActive = true
         self.view.trailingAnchor.constraint(equalToSystemSpacingAfter: self.collectionView.trailingAnchor, multiplier: 3).isActive = true
         self.view.bottomAnchor.constraint(equalToSystemSpacingBelow: self.collectionView.bottomAnchor, multiplier: 6).isActive = true
+    }
+    
+}
+
+
+//MARK: - StatisticsViewController CustomButtonDelegate
+extension StatisticsViewController:CustomButtonDelegate{
+    
+    func handleTap(_ data: Any) {
+        print("(DEBUG) clicked on : ",data)
+//        self.setupStatusBar()
+        self.navigationController?.pushViewController(AccountViewController(), animated: true)
     }
     
 }

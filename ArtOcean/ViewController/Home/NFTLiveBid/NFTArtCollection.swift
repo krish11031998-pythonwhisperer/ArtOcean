@@ -40,7 +40,7 @@ class NFTArtCollection: UICollectionView {
         }
         
         super.init(frame: .zero, collectionViewLayout: layout)
-        
+        self.contentInsetAdjustmentBehavior = .never
         self.showsVerticalScrollIndicator = false
         self.showsHorizontalScrollIndicator = false
         self.backgroundColor = .clear
