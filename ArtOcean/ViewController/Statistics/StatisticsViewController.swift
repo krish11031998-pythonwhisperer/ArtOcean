@@ -10,34 +10,23 @@ import UIKit
 class StatisticsViewController: UIViewController {
     
     
-    private var pageVC:PageViewController!
-    private var currentVC:UIViewController? = nil
+    private var pageVC:CustomPageSelectorViewController!
     private var pages:[String:UIViewController] = .init()
-    
-    
-    private lazy var sliderView:SliderSelector = {
-        let view = SliderSelector(tabs: [.ranking,.activity])
-        view.delegate = self
-        return view
-    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.setupPages()
         self.setupPageViewController()
         self.configNavbar()
-        self.setupViews()
         self.setupLayout()
     }
     
     
     func setupPageViewController(){
         self.pageVC = .init(pages: self.pages)
-        self.pageVC.view.translatesAutoresizingMaskIntoConstraints = false
         self.addChild(self.pageVC)
+        self.view.addSubview(self.pageVC.view)
         self.pageVC.didMove(toParent: self)
-        self.pageVC.setViewControllers([self.pages.values.first!], direction: .forward, animated: true)
-        self.currentVC = self.pages.values.first
     }
     
     func setupPages(){
@@ -53,26 +42,13 @@ class StatisticsViewController: UIViewController {
         label.translatesAutoresizingMaskIntoConstraints = true
         self.navigationItem.leftBarButtonItem = .init(customView: label)
         self.navigationItem.rightBarButtonItem = .init(customView: searchButton)
-        self.setupStatusBar()
-    }
-    
-    func setupViews(){
-        self.view.addSubview(sliderView)
-        self.view.addSubview(self.pageVC!.view)
     }
     
     func setupLayout(){
-        self.sliderView.topAnchor.constraint(equalTo: self.view.topAnchor,constant: 100).isActive = true
-        self.sliderView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor,constant: 24).isActive = true
-        self.sliderView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor,constant: -24).isActive = true
-        self.sliderView.heightAnchor.constraint(equalToConstant: 46).isActive = true
-        
-        if let safePageVC = self.pageVC{
-            safePageVC.view.topAnchor.constraint(equalToSystemSpacingBelow: self.sliderView.bottomAnchor, multiplier: 4).isActive = true
-            safePageVC.view.leadingAnchor.constraint(equalToSystemSpacingAfter: self.view.leadingAnchor, multiplier: 3).isActive = true
-            self.view.trailingAnchor.constraint(equalToSystemSpacingAfter: safePageVC.view.trailingAnchor, multiplier: 3).isActive = true
-            self.view.bottomAnchor.constraint(equalToSystemSpacingBelow: safePageVC.view.bottomAnchor, multiplier: 6).isActive = true
-        }
+        self.pageVC.view.leadingAnchor.constraint(equalToSystemSpacingAfter: self.view.leadingAnchor, multiplier: 3).isActive = true
+        self.view.trailingAnchor.constraint(equalToSystemSpacingAfter: self.pageVC.view.trailingAnchor, multiplier: 3).isActive = true
+        self.pageVC.view.topAnchor.constraint(equalTo:self.view.topAnchor, constant: 100).isActive = true
+        self.view.bottomAnchor.constraint(equalToSystemSpacingBelow: self.pageVC.view.bottomAnchor, multiplier: 3).isActive = true
     }
     
 }

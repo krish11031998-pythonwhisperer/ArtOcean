@@ -35,7 +35,11 @@ public struct ImageCache:ImageDictCache{
         }
         set{
             guard let img = newValue, let url = url as? NSURL else {return}
-            self.cache.setObject(img, forKey: url)
+            if let res = self.cache.object(forKey: url){
+                self.cache.removeObject(forKey: url)
+            }else{
+                self.cache.setObject(img, forKey: url)
+            }
         }
     }
 }

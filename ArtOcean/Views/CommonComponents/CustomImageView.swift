@@ -7,6 +7,7 @@
 
 import Foundation
 import UIKit
+import SDWebImage
 
 
 class CustomImageView:UIImageView{
@@ -68,19 +69,7 @@ class CustomImageView:UIImageView{
     
     public func updateImageView(url:String?){
         guard let safeURL = url else {return}
-        self.imageDownloader.fetchImage(urlStr: safeURL) { [weak self] result in
-            switch result{
-                case .success(let image):
-                    if let safeImageView = self{
-                        DispatchQueue.main.async {
-                            UIView.transition(with: safeImageView,duration: 1.0, options: [.curveEaseOut, .transitionCrossDissolve]) {
-                                    self?.image = image
-                                }
-                        }
-                    }
-                case .failure(let err):
-                    print("(DEBUG) There was a error while fetching the image : ",err.localizedDescription)
-            }
-        }
+        self.sd_setImage(with: URL(string: safeURL), placeholderImage: UIImage(named: "placeHolder"))
+        
     }
 }

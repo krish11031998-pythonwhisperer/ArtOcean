@@ -14,6 +14,7 @@ class AccountViewController:UIViewController{
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
         self.view.backgroundColor = .white
         self.setupViews()
+        self.setupUserItemsVC()
         self.configNavbar()
         self.setupLayout()
     }
@@ -56,7 +57,7 @@ class AccountViewController:UIViewController{
         self.scrollView.addSubview(self.headingView)
         self.scrollView.addSubview(self.descriptionView)
         self.scrollView.addSubview(self.metricsBar)
-//        self.scrollView.addSubview(self.items)
+//        self.scrollView.addSubview(self.userItems)
     }
     
     func configNavbar(){
@@ -167,6 +168,25 @@ class AccountViewController:UIViewController{
 //        return view
 //    }()
     
+    private lazy var userItems:CustomPageSelectorViewController = {
+        let activityVC = StatisticCollectionView(cellType: .activity)
+        activityVC.collectionView.isScrollEnabled = false
+        let vc = CustomPageSelectorViewController(pages: ["Items":UIViewController(),"Activity":activityVC])
+        vc.view.backgroundColor = .red
+        return vc
+    }()
+    
+    func setupUserItemsVC(){
+        self.addChild(self.userItems)
+        self.view.addSubview(self.userItems.view)
+        self.userItems.didMove(toParent: self)
+//        for view in self.userItems.view.subviews{
+//            if let scrollView = view as? UIScrollView{
+//                scrollView.delegate = self
+//            }
+//        }
+    }
+    
     func setupLayout(){
         
         self.scrollView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor).isActive = true
@@ -201,13 +221,11 @@ class AccountViewController:UIViewController{
         self.metricsBar.topAnchor.constraint(equalToSystemSpacingBelow: self.descriptionView.bottomAnchor, multiplier: 3).isActive = true
         self.metricsBar.trailingAnchor.constraint(equalTo: self.view.trailingAnchor,constant: -24).isActive = true
         self.metricsBar.heightAnchor.constraint(equalToConstant: 50).isActive = true
-
         
-//        self.items.topAnchor.constraint(equalToSystemSpacingBelow: self.metricsBar.bottomAnchor, multiplier: 3).isActive = true
-//        self.items.leadingAnchor.constraint(equalTo: self.metricsBar.leadingAnchor).isActive = true
-//        self.items.trailingAnchor.constraint(equalTo: self.descriptionView.trailingAnchor).isActive = true
-////        self.view.bottomAnchor.constraint(equalToSystemSpacingBelow: self.items.bottomAnchor, multiplier: 3).isActive = true
-//        self.items.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.height * 0.65).isActive = true
+        self.userItems.view.topAnchor.constraint(equalToSystemSpacingBelow: self.metricsBar.bottomAnchor, multiplier: 3).isActive = true
+        self.userItems.view.leadingAnchor.constraint(equalTo: self.metricsBar.leadingAnchor).isActive = true
+        self.userItems.view.trailingAnchor.constraint(equalTo: self.descriptionView.trailingAnchor).isActive = true
+        self.view.bottomAnchor.constraint(equalToSystemSpacingBelow: self.userItems.view.bottomAnchor, multiplier: 3).isActive = true
         
         
     }

@@ -30,7 +30,7 @@ extension StatisticsTab{
 
 class StatisticCollectionView:UICollectionViewController{
     
-    private var data:[Any] = Array(repeating: 0, count: 10)
+    private var data:[Any] = Array(repeating: 0, count: 100)
     private var cellName:String = ""
     public var tab:StatisticsTab
     
@@ -44,7 +44,6 @@ class StatisticCollectionView:UICollectionViewController{
         self.tab = cellType
         
         super.init(collectionViewLayout: layout)
-//        self.collectionView.translatesAutoresizingMaskIntoConstraints = false
         self.collectionView.showsVerticalScrollIndicator = false
         
         if cellType == .ranking{
