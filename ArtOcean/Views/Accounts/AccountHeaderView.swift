@@ -49,7 +49,7 @@ class AccountHeaderView:UIView{
         self.headerImageView.trailingAnchor.constraint(equalTo: self.trailingAnchor).isActive = true
         
         self.backButton.leadingAnchor.constraint(equalToSystemSpacingAfter: self.leadingAnchor, multiplier: 2).isActive = true
-        self.backButton.topAnchor.constraint(equalToSystemSpacingBelow: self.topAnchor, multiplier: 4).isActive = true
+        self.backButton.topAnchor.constraint(equalToSystemSpacingBelow: self.topAnchor, multiplier: 5).isActive = true
         self.backButton.widthAnchor.constraint(equalToConstant: 30).isActive = true
         self.backButton.heightAnchor.constraint(equalToConstant: 30).isActive = true
     }

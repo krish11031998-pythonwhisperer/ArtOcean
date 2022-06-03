@@ -29,34 +29,34 @@ class SliderSelector:UIView{
         self.layer.cornerRadius = 20
         self.backgroundColor = UIColor(red: 0.953, green: 0.969, blue: 0.976, alpha: 1)
         self.tabStackBuilder(tabs: tabs)
-        self.addSubview(self.selectedHoverView)
+//        self.addSubview(self.selectedHoverView)
         
-        self.setupLayout()
+//        self.setupLayout()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private lazy var selectedHoverView:UIView = {
-        let view = UIView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.layer.cornerRadius = 18
-        view.backgroundColor = .white
-        
-        if let selectedTab = self.tabsIndicators.firstIndex(where: {$0.accessibilityIdentifier == self.selectedTabName}){
-            let tabView = self.tabsIndicators[selectedTab]
-            view.addSubview(tabView)
-            
-            NSLayoutConstraint.activate([
-                view.centerXAnchor.constraint(equalTo: tabView.centerXAnchor),
-                view.centerYAnchor.constraint(equalTo: tabView.centerYAnchor)
-            ])
-        }
-        
-        
-        return view
-    }()
+//    private lazy var selectedHoverView:UIView = {
+//        let view = UIView()
+//        view.translatesAutoresizingMaskIntoConstraints = false
+//        view.layer.cornerRadius = 18
+//        view.backgroundColor = .white
+//
+//        if let selectedTab = self.tabsIndicators.firstIndex(where: {$0.accessibilityIdentifier == self.selectedTabName}){
+//            let tabView = self.tabsIndicators[selectedTab]
+//            view.addSubview(tabView)
+//
+//            NSLayoutConstraint.activate([
+//                view.centerXAnchor.constraint(equalTo: tabView.centerXAnchor),
+//                view.centerYAnchor.constraint(equalTo: tabView.centerYAnchor)
+//            ])
+//        }
+//
+//
+//        return view
+//    }()
     
     private lazy var tabsIndicators:[UIView] = {
         let views:[UIView] = self.tabs.compactMap { tab in
@@ -112,11 +112,11 @@ class SliderSelector:UIView{
         return .init(width: UIScreen.main.bounds.width - 20, height: 50)
     }
     
-    private func setupLayout(){
-        self.selectedHoverView.leadingAnchor.constraint(equalTo: self.leadingAnchor,constant: 2).isActive = true
-        self.selectedHoverView.topAnchor.constraint(equalTo: self.topAnchor,constant: 2).isActive = true
-        self.selectedHoverView.bottomAnchor.constraint(equalTo: self.bottomAnchor,constant: -2).isActive = true
-        self.selectedHoverView.widthAnchor.constraint(equalTo: self.widthAnchor, multiplier: 0.5,constant: -4).isActive = true
-    }
+//    private func setupLayout(){
+//        self.selectedHoverView.leadingAnchor.constraint(equalTo: self.leadingAnchor,constant: 2).isActive = true
+//        self.selectedHoverView.topAnchor.constraint(equalTo: self.topAnchor,constant: 2).isActive = true
+//        self.selectedHoverView.bottomAnchor.constraint(equalTo: self.bottomAnchor,constant: -2).isActive = true
+//        self.selectedHoverView.widthAnchor.constraint(equalTo: self.widthAnchor, multiplier: 0.5,constant: -4).isActive = true
+//    }
     
 }

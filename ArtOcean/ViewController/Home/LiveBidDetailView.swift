@@ -36,7 +36,6 @@ class LiveBidDetailView: UIViewController  {
     }
     
     private func configNavigationBar(){
-        
         self.navigationController?.navigationBar.isTranslucent = false
         self.navigationItem.titleView = self.view.labelBuilder(text: "Live Bid", size: 18, weight: .bold, color: .appBlackColor, numOfLines: 1)
         self.navigationController?.navigationBar.backgroundColor = .green

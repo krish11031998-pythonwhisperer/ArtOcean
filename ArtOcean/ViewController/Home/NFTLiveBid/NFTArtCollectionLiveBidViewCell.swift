@@ -191,8 +191,8 @@ class NFTArtCollectionLiveBidViewCell: UICollectionViewCell {
 extension NFTArtCollectionLiveBidViewCell{
     override func prepareForReuse() {
         super.prepareForReuse()
-        
-        self.imageView.image = .init(named: "placeHolder")
+
+        self.imageView.image = nil
     }
 }
 

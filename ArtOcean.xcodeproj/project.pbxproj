@@ -21,6 +21,7 @@
 		EF00F5D7284805C1003D8683 /* StatisticCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF00F5D6284805C1003D8683 /* StatisticCollectionView.swift */; };
 		EF00F5DA2848BB6B003D8683 /* AccountsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF00F5D92848BB6B003D8683 /* AccountsViewController.swift */; };
 		EF7447AE284902A300899476 /* AccountHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF7447AD284902A300899476 /* AccountHeaderView.swift */; };
+		EF7447B028495A8700899476 /* AccountMetrics.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF7447AF28495A8700899476 /* AccountMetrics.swift */; };
 		EF8B0631283BEAC10050E726 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF8B0630283BEAC10050E726 /* AppDelegate.swift */; };
 		EF8B0635283BEAC10050E726 /* MainTabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF8B0634283BEAC10050E726 /* MainTabViewController.swift */; };
 		EF8B0638283BEAC10050E726 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EF8B0636283BEAC10050E726 /* Main.storyboard */; };
@@ -135,6 +136,7 @@
 		EF00F5D6284805C1003D8683 /* StatisticCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticCollectionView.swift; sourceTree = "<group>"; };
 		EF00F5D92848BB6B003D8683 /* AccountsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountsViewController.swift; sourceTree = "<group>"; };
 		EF7447AD284902A300899476 /* AccountHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountHeaderView.swift; sourceTree = "<group>"; };
+		EF7447AF28495A8700899476 /* AccountMetrics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountMetrics.swift; sourceTree = "<group>"; };
 		EF8B062D283BEAC10050E726 /* ArtOcean.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ArtOcean.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EF8B0630283BEAC10050E726 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		EF8B0634283BEAC10050E726 /* MainTabViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabViewController.swift; sourceTree = "<group>"; };
@@ -247,6 +249,7 @@
 			children = (
 				EF00F5D92848BB6B003D8683 /* AccountsViewController.swift */,
 				EF7447AD284902A300899476 /* AccountHeaderView.swift */,
+				EF7447AF28495A8700899476 /* AccountMetrics.swift */,
 			);
 			path = Accounts;
 			sourceTree = "<group>";
@@ -635,6 +638,7 @@
 				EF8B0670283BF0FE0050E726 /* SearchViewController.swift in Sources */,
 				EFD13C292844CF80000E422E /* NFTOfferModel.swift in Sources */,
 				EF8B07462840A8150050E726 /* UIViewController.swift in Sources */,
+				EF7447B028495A8700899476 /* AccountMetrics.swift in Sources */,
 				EF00F5BC284539CE003D8683 /* NFTArtTypeCollection.swift in Sources */,
 				EF00F5D7284805C1003D8683 /* StatisticCollectionView.swift in Sources */,
 				EF8B0677283C20820050E726 /* UIImageView.swift in Sources */,

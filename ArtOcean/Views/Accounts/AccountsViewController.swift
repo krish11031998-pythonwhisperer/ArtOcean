@@ -16,11 +16,20 @@ class AccountViewController:UIViewController{
         self.setupViews()
         self.configNavbar()
         self.setupLayout()
-//        self.navigationController?.isNavigationBarHidden = true
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.navigationController?.navigationBar.transform = .init(translationX: 0, y: -200)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.navigationController?.navigationBar.transform = .init(translationX: 0, y: 0)
     }
     
     private lazy var scrollView:UIScrollView = {
@@ -46,20 +55,21 @@ class AccountViewController:UIViewController{
         self.scrollView.addSubview(self.profileImageView)
         self.scrollView.addSubview(self.headingView)
         self.scrollView.addSubview(self.descriptionView)
+        self.scrollView.addSubview(self.metricsBar)
+        self.scrollView.addSubview(self.items)
     }
     
     func configNavbar(){
-        self.setupStatusBar()
-        self.navigationController?.navigationBar.shadowImage = UIImage()
-        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
-        self.navigationController?.navigationBar.isTranslucent = true
+//        self.navigationController?.navigationBar.shadowImage = UIImage()
+//        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
+//        self.navigationController?.navigationBar.isTranslucent = true
         self.navigationItem.leftBarButtonItem = self.backButton
     }
     
     private lazy var backButton:UIBarButtonItem = {
         let backButton = CustomButton.backButton
         backButton.handler = {
-            self.navigationController?.navigationBar.transform = .init(translationX: 0, y: 0)
+//            self.navigationController?.navigationBar.transform = .init(translationX: 0, y: 0)
             self.navigationController?.popViewController(animated: true)
         }
         
@@ -103,6 +113,12 @@ class AccountViewController:UIViewController{
         return imageView
     }()
     
+    
+    private lazy var metricsBar:UIView = {
+        let metrics = AccoutnMetrics(metrics: ["Items":"1.73K","Owners":"1.24K","Floor price":"0.24","Traded":"325"])
+        return metrics
+    }()
+    
     @objc func TappedTwitch(){
         print("(DEBUG) Clicked on twitch")
     }
@@ -142,15 +158,20 @@ class AccountViewController:UIViewController{
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        self.navigationController?.navigationBar.transform = .init(translationX: 0, y: -200)
+//        self.navigationController?.navigationBar.transform = .init(translationX: 0, y: -200)
     }
+    
+    private lazy var items:UIView = {
+        let view = StatisticCollectionView(cellType: .activity)
+        view.isScrollEnabled = false
+        return view
+    }()
     
     func setupLayout(){
         
         self.scrollView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor).isActive = true
         self.scrollView.topAnchor.constraint(equalTo: self.view.topAnchor).isActive = true
         self.scrollView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor).isActive = true
-        self.scrollView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
         self.scrollView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor).isActive = true
         
         self.headerBackdropView.leadingAnchor.constraint(equalTo: self.scrollView.leadingAnchor).isActive = true
@@ -174,6 +195,21 @@ class AccountViewController:UIViewController{
         self.descriptionView.leadingAnchor.constraint(equalToSystemSpacingAfter: self.scrollView.leadingAnchor, multiplier: 3).isActive = true
         self.descriptionView.topAnchor.constraint(equalToSystemSpacingBelow: self.headingView.bottomAnchor, multiplier: 1).isActive = true
         self.descriptionView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -24).isActive = true
+        
+        
+        self.metricsBar.leadingAnchor.constraint(equalToSystemSpacingAfter: self.scrollView.leadingAnchor, multiplier: 3).isActive = true
+        self.metricsBar.topAnchor.constraint(equalToSystemSpacingBelow: self.descriptionView.bottomAnchor, multiplier: 3).isActive = true
+        self.metricsBar.trailingAnchor.constraint(equalTo: self.view.trailingAnchor,constant: -24).isActive = true
+        self.metricsBar.heightAnchor.constraint(equalToConstant: 50).isActive = true
+
+        
+        self.items.topAnchor.constraint(equalToSystemSpacingBelow: self.metricsBar.bottomAnchor, multiplier: 3).isActive = true
+        self.items.leadingAnchor.constraint(equalTo: self.metricsBar.leadingAnchor).isActive = true
+        self.items.trailingAnchor.constraint(equalTo: self.descriptionView.trailingAnchor).isActive = true
+//        self.view.bottomAnchor.constraint(equalToSystemSpacingBelow: self.items.bottomAnchor, multiplier: 3).isActive = true
+        self.items.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.height * 0.65).isActive = true
+        
+        
     }
 }
 
@@ -182,7 +218,7 @@ class AccountViewController:UIViewController{
 extension AccountViewController:UIScrollViewDelegate{
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        self.navigationController?.navigationBar.transform = .init(translationX: 0, y: min(scrollView.contentOffset.y - 100,0))
+//        self.navigationController?.navigationBar.transform = .init(translationX: 0, y: min(scrollView.contentOffset.y - 100,0))
     }
     
 }

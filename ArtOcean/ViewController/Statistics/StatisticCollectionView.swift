@@ -16,7 +16,7 @@ enum StatisticCollectionViewType{
 
 class StatisticCollectionView:UICollectionView{
     
-    private var data:[Any] = Array(repeating: 0, count: 100)
+    private var data:[Any] = Array(repeating: 0, count: 10)
     private var cellName:String = ""
     
     public var buttonDelegate:CustomButtonDelegate? = nil
@@ -50,6 +50,13 @@ class StatisticCollectionView:UICollectionView{
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        
+        if let safeFlowlayout = self.collectionViewLayout as? UICollectionViewFlowLayout{
+            safeFlowlayout.itemSize = .init(width: self.frame.width, height: 50)
+        }
+    }
 }
 
 //MARK: - StatisticCollectionViewController UICollectionDelegate
@@ -77,13 +84,6 @@ extension StatisticCollectionView:UICollectionViewDelegate,UICollectionViewDataS
     }
     
 }
-
-////MARK: - StatisticsViewController CustomButtonDelegate
-//extension StatisticCollectionView:CustomButtonDelegate{
-//    func handleTap(_ data: Any) {
-//        self.buttonDelegate?.handleTap?(data)
-//    }
-//}
 
 //MARK: - RankingCell
 class StatisticRankingCollectionViewCell:UICollectionViewCell{

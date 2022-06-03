@@ -24,6 +24,7 @@ class StatisticsViewController: UIViewController {
         label.translatesAutoresizingMaskIntoConstraints = true
         self.navigationItem.leftBarButtonItem = .init(customView: label)
         self.navigationItem.rightBarButtonItem = .init(customView: searchButton)
+        self.setupStatusBar()
     }
     
     func setupViews(){
@@ -44,6 +45,7 @@ class StatisticsViewController: UIViewController {
         self.sliderView.heightAnchor.constraint(equalToConstant: 46).isActive = true
         
         self.collectionView.topAnchor.constraint(equalToSystemSpacingBelow: self.sliderView.bottomAnchor, multiplier: 4).isActive = true
+//        self.collectionView.topAnchor.constraint(equalToSystemSpacingBelow: self.view.topAnchor, multiplier: 4).isActive = true
         self.collectionView.leadingAnchor.constraint(equalToSystemSpacingAfter: self.view.leadingAnchor, multiplier: 3).isActive = true
         self.view.trailingAnchor.constraint(equalToSystemSpacingAfter: self.collectionView.trailingAnchor, multiplier: 3).isActive = true
         self.view.bottomAnchor.constraint(equalToSystemSpacingBelow: self.collectionView.bottomAnchor, multiplier: 6).isActive = true

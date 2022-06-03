@@ -79,6 +79,12 @@ class HomeViewController: UIViewController {
         self.scrollView.addSubview(self.topSeller)
         self.scrollView.addSubview(self.popularItems)
         self.hideNavigationBarLine()
+        self.setupStatusBar()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.navigationController?.setNavigationBarHidden(true, animated: animated)
     }
     
     private let logoView:UIView = {
@@ -213,7 +219,7 @@ class HomeViewController: UIViewController {
         self.artTypes.topAnchor.constraint(equalTo: self.scrollView.topAnchor, constant: 50).isActive = true
         self.artTypes.heightAnchor.constraint(equalToConstant: 50).isActive = true
         self.artTypes.widthAnchor.constraint(equalTo:self.scrollView.widthAnchor).isActive = true
-        
+
         self.bannerImageView.topAnchor.constraint(equalToSystemSpacingBelow: self.artTypes.bottomAnchor, multiplier: 3).isActive = true
         self.bannerImageView.leadingAnchor.constraint(equalTo: self.scrollView.leadingAnchor,constant: 10).isActive = true
         self.bannerImageView.heightAnchor.constraint(equalToConstant: 132).isActive = true

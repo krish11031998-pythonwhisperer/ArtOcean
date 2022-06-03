@@ -41,9 +41,9 @@ class NFTDetailArtViewController:UIViewController{
         self.navigationController?.navigationBar.isTranslucent = false
         self.navigationItem.titleView = self.view.labelBuilder(text: self.nftArt?.Title ?? "", size: 18, weight: .bold, color: .appBlackColor, numOfLines: 1)
         self.navigationItem.leftBarButtonItem = self.backBarButton
-        let whiteNavBar = UINavigationBarAppearance()
-        whiteNavBar.backgroundColor = .white
-        self.navigationController?.navigationBar.scrollEdgeAppearance = whiteNavBar
+//        let whiteNavBar = UINavigationBarAppearance()
+//        whiteNavBar.backgroundColor = .white
+//        self.navigationController?.navigationBar.scrollEdgeAppearance = whiteNavBar
         
     }
     
@@ -64,7 +64,18 @@ class NFTDetailArtViewController:UIViewController{
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.navigationController?.setNavigationBarHidden(false, animated: true)
         self.navigationController?.navigationBar.transform = .init(translationX: 0, y: -200)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.navigationController?.navigationBar.transform = .init(translationX: 0, y: 0)
+        self.navigationController?.setNavigationBarHidden(true, animated: true)
     }
     
     //MARK: - Views
