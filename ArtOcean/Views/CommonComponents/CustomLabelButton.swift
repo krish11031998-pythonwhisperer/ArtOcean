@@ -34,7 +34,8 @@ class CustomLabelButton:UIButton{
     }
     
     @objc func tapHandler(){
-        self.bouncyButtonClick()
-        self.delegate?.handleTap?()
+        self.bouncyButtonClick {
+            self.delegate?.handleTap?()
+        }
     }
 }

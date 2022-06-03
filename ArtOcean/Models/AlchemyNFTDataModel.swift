@@ -37,10 +37,7 @@ struct NFTModel:Codable{
     let balance: String?
     let title: String?
     let description: String?
-//    let tokenUri: TokenURI?
-//    let media: [TokenURI]?
     let metadata: Metadata?
-//    let timeLastUpdated: String?
     
     var Description:String{
         return "Space the domain of settings and surroundings of events, characters, and objects in literary narrative, along with other domains like story, character, time and ideology, constitutes a fictional universe."

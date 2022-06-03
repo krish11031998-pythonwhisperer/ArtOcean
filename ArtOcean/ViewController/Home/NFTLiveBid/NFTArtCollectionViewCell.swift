@@ -98,11 +98,11 @@ class NFTArtCollectionViewCell:UICollectionViewCell{
     }
     
     @objc func handleTap(){
-        self.bouncyButtonClick()
-        if let safeNFT = self.nft{
-            self.delegate?.viewArt(art: safeNFT)
+        self.bouncyButtonClick {
+            if let safeNFT = self.nft{
+                self.delegate?.viewArt(art: safeNFT)
+            }
         }
-        
     }
     
     public func updateUIWithNFT(_ nft:NFTModel,idx:Int? = nil){

@@ -26,7 +26,7 @@ extension UIView{
         return gradient
     }
     
-    public func bouncyButtonClick(scaleDownTo:CGFloat = 0.95){
+    public func bouncyButtonClick(scaleDownTo:CGFloat = 0.95,completion:(() -> Void)? = nil){
         DispatchQueue.main.async {
             UIViewPropertyAnimator(duration: 0.2, curve: .easeInOut) {
                 self.transform = CGAffineTransform.init(scaleX: scaleDownTo, y: scaleDownTo)
@@ -37,6 +37,10 @@ extension UIView{
                 self.transform = CGAffineTransform.init(scaleX: 1, y: 1)
                 self.layoutIfNeeded()
             }.startAnimation(afterDelay: 0.2)
+        }
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(40)) {
+            completion?()
         }
     }
     

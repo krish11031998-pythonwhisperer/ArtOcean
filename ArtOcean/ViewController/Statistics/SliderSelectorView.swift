@@ -8,27 +8,23 @@
 import Foundation
 import UIKit
 
+protocol SlideSelectorDelegate{
+    func handleSelect(_ id:String)
+}
 
 class SliderSelector:UIView{
     
-    private var selectedTabName:String
+    public var delegate:SlideSelectorDelegate? = nil
     private var hoverViewCenterX:NSLayoutConstraint? = nil
-    private var tabs:[String]
+    private var tabs:[StatisticsTab]
     
-    init(tabs:[String]){
+    init(tabs:[StatisticsTab]){
         self.tabs = tabs
-        
-        if let firstTabName = tabs.first{
-            self.selectedTabName = firstTabName
-        }else{
-            self.selectedTabName = ""
-        }
-        
         super.init(frame: .zero)
         self.translatesAutoresizingMaskIntoConstraints = false
         self.layer.cornerRadius = 20
         self.backgroundColor = UIColor(red: 0.953, green: 0.969, blue: 0.976, alpha: 1)
-        self.tabStackBuilder(tabs: tabs)
+        self.tabStackBuilder()
 //        self.addSubview(self.selectedHoverView)
         
 //        self.setupLayout()
@@ -44,7 +40,7 @@ class SliderSelector:UIView{
 //        view.layer.cornerRadius = 18
 //        view.backgroundColor = .white
 //
-//        if let selectedTab = self.tabsIndicators.firstIndex(where: {$0.accessibilityIdentifier == self.selectedTabName}){
+//        if let selectedTab = self.tabsIndicators.firstIndex(where: {$0.accessibilityIdentifier == self.selectedTabName.rawValue}){
 //            let tabView = self.tabsIndicators[selectedTab]
 //            view.addSubview(tabView)
 //
@@ -61,16 +57,17 @@ class SliderSelector:UIView{
     private lazy var tabsIndicators:[UIView] = {
         let views:[UIView] = self.tabs.compactMap { tab in
             let view = UIView()
-            let imageView = UIImageView(image: .init(named: tab.lowercased()))
+            let imageView = UIImageView(image: .init(named: tab.rawValue.lowercased()))
             
-            view.accessibilityIdentifier = tab
+            view.accessibilityIdentifier = tab.rawValue
             
             imageView.translatesAutoresizingMaskIntoConstraints = false
             imageView.tintColor = .appPurpleColor
             imageView.contentMode = .scaleAspectFit
             
-            let label = CustomLabel(text: tab, size: 14, weight: .regular, color: .appGrayColor, numOfLines: 1, adjustFontSize: true)
-            
+            let label = CustomLabel(text: tab.rawValue.capitalized, size: 14, weight: .regular, color: .appGrayColor, numOfLines: 1, adjustFontSize: true)
+            let tapGesture = UITapGestureRecognizer(target: self, action: #selector(self.tapHandler(_:)))
+        
             label.textAlignment = .left
             
             view.addSubview(imageView)
@@ -87,13 +84,21 @@ class SliderSelector:UIView{
                 label.centerYAnchor.constraint(equalTo: view.centerYAnchor)
             ])
             
+            view.addGestureRecognizer(tapGesture)
+            
             return view
         }
         return views
     }()
+    
+    @objc func tapHandler(_ recognizer:UITapGestureRecognizer){
+        guard let id = recognizer.view?.accessibilityIdentifier else {return}
+        self.delegate?.handleSelect(id)
+        print("(DEBUG) tab : ",id)
+    }
 
     
-    func tabStackBuilder(tabs:[String]){
+    func tabStackBuilder(){
         let ratios = Array(repeating: CGFloat(1)/CGFloat(tabsIndicators.count), count: tabsIndicators.count)
         print("(DEBUG) ratios : ",ratios)
         let stackView = UIView.StackBuilder(views: tabsIndicators, ratios: [0.5,0.5], spacing: 10, axis: .horizontal)
@@ -118,5 +123,5 @@ class SliderSelector:UIView{
 //        self.selectedHoverView.bottomAnchor.constraint(equalTo: self.bottomAnchor,constant: -2).isActive = true
 //        self.selectedHoverView.widthAnchor.constraint(equalTo: self.widthAnchor, multiplier: 0.5,constant: -4).isActive = true
 //    }
-    
+//
 }

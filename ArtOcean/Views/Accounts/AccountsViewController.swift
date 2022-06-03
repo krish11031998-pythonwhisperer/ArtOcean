@@ -56,7 +56,7 @@ class AccountViewController:UIViewController{
         self.scrollView.addSubview(self.headingView)
         self.scrollView.addSubview(self.descriptionView)
         self.scrollView.addSubview(self.metricsBar)
-        self.scrollView.addSubview(self.items)
+//        self.scrollView.addSubview(self.items)
     }
     
     func configNavbar(){
@@ -161,11 +161,11 @@ class AccountViewController:UIViewController{
 //        self.navigationController?.navigationBar.transform = .init(translationX: 0, y: -200)
     }
     
-    private lazy var items:UIView = {
-        let view = StatisticCollectionView(cellType: .activity)
-        view.isScrollEnabled = false
-        return view
-    }()
+//    private lazy var items:UIViewController = {
+//        let view = StatisticCollectionView(cellType: .activity)
+//        view.collectionView.isScrollEnabled = false
+//        return view
+//    }()
     
     func setupLayout(){
         
@@ -203,11 +203,11 @@ class AccountViewController:UIViewController{
         self.metricsBar.heightAnchor.constraint(equalToConstant: 50).isActive = true
 
         
-        self.items.topAnchor.constraint(equalToSystemSpacingBelow: self.metricsBar.bottomAnchor, multiplier: 3).isActive = true
-        self.items.leadingAnchor.constraint(equalTo: self.metricsBar.leadingAnchor).isActive = true
-        self.items.trailingAnchor.constraint(equalTo: self.descriptionView.trailingAnchor).isActive = true
-//        self.view.bottomAnchor.constraint(equalToSystemSpacingBelow: self.items.bottomAnchor, multiplier: 3).isActive = true
-        self.items.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.height * 0.65).isActive = true
+//        self.items.topAnchor.constraint(equalToSystemSpacingBelow: self.metricsBar.bottomAnchor, multiplier: 3).isActive = true
+//        self.items.leadingAnchor.constraint(equalTo: self.metricsBar.leadingAnchor).isActive = true
+//        self.items.trailingAnchor.constraint(equalTo: self.descriptionView.trailingAnchor).isActive = true
+////        self.view.bottomAnchor.constraint(equalToSystemSpacingBelow: self.items.bottomAnchor, multiplier: 3).isActive = true
+//        self.items.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.height * 0.65).isActive = true
         
         
     }

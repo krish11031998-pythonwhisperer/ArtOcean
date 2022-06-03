@@ -56,11 +56,11 @@ class NFTArtCollectionLiveBidViewCell: UICollectionViewCell {
     }()
     
     @objc func onTapHandler(_ recognizer:UITapGestureRecognizer){
-        self.bouncyButtonClick()
-        if let safeNFTData = self.nftInfo{
-            self.delegate?.viewArt(art: safeNFTData)
+        self.bouncyButtonClick {
+            if let safeNFTData = self.nftInfo{
+                self.delegate?.viewArt(art: safeNFTData)
+            }
         }
-        
     }
     
     private lazy var bidButton:CustomLabelButton = {

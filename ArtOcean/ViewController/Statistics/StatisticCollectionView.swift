@@ -9,40 +9,56 @@ import Foundation
 import UIKit
 
 
-enum StatisticCollectionViewType{
-    case ranking
-    case activity
+enum StatisticsTab:String{
+    case ranking = "Ranking"
+    case activity = "Activity"
+    case none = ""
 }
 
-class StatisticCollectionView:UICollectionView{
+extension StatisticsTab{
+    mutating func fetchEnum(value:String){
+        switch(value){
+            case "Ranking":
+                self = .ranking
+            case "Activity":
+                self = .activity
+            default:
+                self = .none
+        }
+    }
+}
+
+class StatisticCollectionView:UICollectionViewController{
     
     private var data:[Any] = Array(repeating: 0, count: 10)
     private var cellName:String = ""
+    public var tab:StatisticsTab
     
     public var buttonDelegate:CustomButtonDelegate? = nil
     
-    init(cellType:StatisticCollectionViewType,data:[Any]? = nil){
+    init(cellType:StatisticsTab,data:[Any]? = nil){
         let layout = UICollectionViewFlowLayout()
         layout.itemSize = .init(width: UIScreen.main.bounds.width - 48, height: 50)
         layout.scrollDirection = .vertical
         layout.minimumInteritemSpacing = 20
+        self.tab = cellType
         
-        super.init(frame: .zero, collectionViewLayout: layout)
-        self.translatesAutoresizingMaskIntoConstraints = false
-        self.showsVerticalScrollIndicator = false
+        super.init(collectionViewLayout: layout)
+//        self.collectionView.translatesAutoresizingMaskIntoConstraints = false
+        self.collectionView.showsVerticalScrollIndicator = false
         
         if cellType == .ranking{
             cellName = StatisticRankingCollectionViewCell.identifier
-            self.register(StatisticRankingCollectionViewCell.self, forCellWithReuseIdentifier: StatisticRankingCollectionViewCell.identifier)
+            self.collectionView.register(StatisticRankingCollectionViewCell.self, forCellWithReuseIdentifier: StatisticRankingCollectionViewCell.identifier)
         }else{
             cellName = StatisticActivityCollectionViewCell.identifier
-            self.register(StatisticActivityCollectionViewCell.self, forCellWithReuseIdentifier: StatisticActivityCollectionViewCell.identifier)
+            self.collectionView.register(StatisticActivityCollectionViewCell.self, forCellWithReuseIdentifier: StatisticActivityCollectionViewCell.identifier)
         }
         
-        self.backgroundColor = .clear
+        self.collectionView.backgroundColor = .clear
         
-        self.delegate = self
-        self.dataSource = self
+        self.collectionView.delegate = self
+        self.collectionView.dataSource = self
     
     }
     
@@ -50,27 +66,27 @@ class StatisticCollectionView:UICollectionView{
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func layoutSubviews() {
-        super.layoutSubviews()
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
         
         if let safeFlowlayout = self.collectionViewLayout as? UICollectionViewFlowLayout{
-            safeFlowlayout.itemSize = .init(width: self.frame.width, height: 50)
+            safeFlowlayout.itemSize = .init(width: self.collectionView.frame.width, height: 50)
         }
     }
 }
 
 //MARK: - StatisticCollectionViewController UICollectionDelegate
-extension StatisticCollectionView:UICollectionViewDelegate,UICollectionViewDataSource{
+extension StatisticCollectionView{
     
-    func numberOfSections(in collectionView: UICollectionView) -> Int {
+    override func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
     }
     
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return self.data.count
     }
     
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: self.cellName, for: indexPath) as? StatisticRankingCollectionViewCell{
             cell.updateCell(idx: indexPath.row + 1)
             cell.buttonDelegate = self.buttonDelegate
@@ -83,154 +99,4 @@ extension StatisticCollectionView:UICollectionViewDelegate,UICollectionViewDataS
         }
     }
     
-}
-
-//MARK: - RankingCell
-class StatisticRankingCollectionViewCell:UICollectionViewCell{
-    
-    static var identifier:String = "StatisticRankingCollectionViewCell"
-    
-    private lazy var imageView:CustomImageView = CustomImageView(cornerRadius: 20)
-    
-    public var buttonDelegate:CustomButtonDelegate? = nil
-    
-    //UserInfo
-    private lazy var name:UILabel = CustomLabel(text: "Shapire Cole", size: 14, weight: .medium, color: .appBlackColor, numOfLines: 1, adjustFontSize: true)
-    
-    private lazy var userName:UILabel = CustomLabel(text: "@shpre", size: 12, weight: .medium, color: .appGrayColor, numOfLines: 1, adjustFontSize: true)
-    
-    private lazy var userInfoView:UIStackView = UIView.StackBuilder(views: [name,userName], ratios: [0.5,0.5], spacing: 5, axis: .vertical)
-    
-    //PricePercentInfo
-    private lazy var priceLabel:UILabel = CustomLabel(text: "316,836 ETH", size: 14, weight: .medium, color: .appBlackColor, numOfLines: 1, adjustFontSize: true)
-    
-    private lazy var percentLabel:UILabel = CustomLabel(text: "+23.35", size: 12, weight: .medium, color: .appGreenColor, numOfLines: 1, adjustFontSize: true)
-    
-    private lazy var pricePercentLabel:UIStackView = UIView.StackBuilder(views: [priceLabel,percentLabel], ratios: [0.5,0.5], spacing: 5, axis: .vertical)
-    
-    //NumberLabel
-    private let numberLabel:UILabel = CustomLabel(text: "1", size: 14, weight: .medium, color: .appBlackColor, numOfLines: 1, adjustFontSize: false)
-    
-    public func updateCell(idx:Int){
-        self.numberLabel.text = "\(idx)"
-    }
-    
-    //MainStackView
-    private lazy var stack:UIStackView = {
-        let stack = UIView.StackBuilder(views: [userInfoView,pricePercentLabel], ratios: [0.5,0.5], spacing: 10, axis: .horizontal)
-        return stack
-    }()
-    
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        
-        self.priceLabel.textAlignment = .right
-        self.percentLabel.textAlignment = .right
-        
-        self.addSubview(self.numberLabel)
-        self.addSubview(imageView)
-        self.addSubview(stack)
-        
-        self.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.handleTap)))
-        
-        self.setupLayout()
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    func setupLayout(){
-        
-        self.numberLabel.widthAnchor.constraint(equalToConstant: 20).isActive = true
-        self.numberLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor).isActive = true
-        self.numberLabel.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
-        
-        self.imageView.heightAnchor.constraint(equalToConstant: 40).isActive = true
-        self.imageView.widthAnchor.constraint(equalToConstant: 40).isActive = true
-        self.imageView.leadingAnchor.constraint(equalTo: self.numberLabel.trailingAnchor,constant: 10).isActive = true
-        self.imageView.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
-        self.imageView.backgroundColor = .black
-        self.imageView.layer.cornerRadius = 20
-        
-        self.stack.leadingAnchor.constraint(equalToSystemSpacingAfter: self.imageView.trailingAnchor, multiplier: 1.5).isActive = true
-        self.stack.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
-        self.stack.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
-        self.stack.trailingAnchor.constraint(equalTo: self.trailingAnchor).isActive = true
-    }
-    
-    //Handler
-    @objc func handleTap(){
-        self.bouncyButtonClick()
-        self.buttonDelegate?.handleTap?("nil")
-    }
-}
-
-//MARK: - ActivityCell
-
-class StatisticActivityCollectionViewCell:UICollectionViewCell{
-    
-    static var identifier:String = "StatisticActivityCollectionViewCell"
-    
-    private lazy var imageView:CustomImageView = CustomImageView(cornerRadius: 20)
-    
-    public var buttonDelegate:CustomButtonDelegate? = nil
-    
-    //UserInfo
-    private lazy var name:UILabel = CustomLabel(text: "Shapire Cole", size: 14, weight: .medium, color: .appBlackColor, numOfLines: 1, adjustFontSize: true)
-    
-    private lazy var userName:UILabel = CustomLabel(text: "@shpre", size: 12, weight: .medium, color: .appGrayColor, numOfLines: 1, adjustFontSize: true)
-    
-    private lazy var userInfoView:UIStackView = UIView.StackBuilder(views: [name,userName], ratios: [0.5,0.5], spacing: 5, axis: .vertical)
-    
-    //PricePercentInfo
-    private lazy var transactionTypeLabel:UILabel = CustomLabel(text: "Sale", size: 14, weight: .medium, color: .appGreenColor, numOfLines: 1, adjustFontSize: true)
-    
-    private lazy var transactionTimeLabel:UILabel = CustomLabel(text: "2 minutes ago", size: 12, weight: .medium, color: .appGrayColor, numOfLines: 1, adjustFontSize: true)
-    
-    private lazy var transactionLabel:UIStackView = UIView.StackBuilder(views: [transactionTypeLabel,transactionTimeLabel], ratios: [0.5,0.5], spacing: 5, axis: .vertical)
-    
-    //MainStackView
-    private lazy var stack:UIStackView = {
-        let stack = UIView.StackBuilder(views: [userInfoView,transactionLabel], ratios: [0.5,0.5], spacing: 10, axis: .horizontal)
-        return stack
-    }()
-    
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        
-        self.transactionTypeLabel.textAlignment = .right
-        self.transactionTimeLabel.textAlignment = .right
-        
-        self.addSubview(imageView)
-        self.addSubview(stack)
-        
-        self.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.handleTap)))
-        
-        self.setupLayout()
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    func setupLayout(){
-        
-        self.imageView.heightAnchor.constraint(equalToConstant: 40).isActive = true
-        self.imageView.widthAnchor.constraint(equalToConstant: 40).isActive = true
-        self.imageView.leadingAnchor.constraint(equalTo: self.leadingAnchor).isActive = true
-        self.imageView.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
-        self.imageView.backgroundColor = .black
-        self.imageView.layer.cornerRadius = 8
-        
-        self.stack.leadingAnchor.constraint(equalToSystemSpacingAfter: self.imageView.trailingAnchor, multiplier: 1.5).isActive = true
-        self.stack.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
-        self.stack.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
-        self.stack.trailingAnchor.constraint(equalTo: self.trailingAnchor).isActive = true
-    }
-    
-    @objc func handleTap(){
-        self.bouncyButtonClick()
-        self.buttonDelegate?.handleTap?()
-    }
 }
