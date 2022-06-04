@@ -31,7 +31,7 @@ struct NFTDataResponse:Codable{
 }
 
 // MARK: - OwnedNft
-struct NFTModel:Codable{
+struct NFTModel:Codable,Hashable{
     let contract: Contract?
     let id: ID?
     let balance: String?
@@ -53,37 +53,37 @@ struct NFTModel:Codable{
 }
 
 // MARK: - Contract
-struct Contract:Codable{
+struct Contract:Codable,Hashable{
     let address: String?
 }
 
-enum AlchemyError:String,Codable {
+enum AlchemyError:String,Codable,Hashable {
     case failedToGetTokenURI = "failedToGetTokenURI"
 }
 
 // MARK: - ID
-struct ID:Codable {
+struct ID:Codable,Hashable {
     let tokenId: String?
     let tokenMetadata: TokenMetadata?
 }
 
 // MARK: - TokenMetadata
-struct TokenMetadata:Codable{
+struct TokenMetadata:Codable,Hashable{
     let tokenType: String?
 }
 
-enum TokenType:String,Codable{
+enum TokenType:String,Codable,Hashable{
     case erc1155 = "erc1155"
     case erc721 = "erc721"
 }
 
 // MARK: - TokenURI
-struct TokenURI:Codable {
+struct TokenURI:Codable,Hashable {
     let raw, gateway: String?
 }
 
 // MARK: - Metadata
-struct Metadata:Codable{
+struct Metadata:Codable,Hashable {
 //    var name: String?
     var description: String?
     var image: String?

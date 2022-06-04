@@ -6,7 +6,7 @@
 //
 
 import Foundation
-class User:Decodable{
+struct User:Codable,Hashable{
     var name:String?
     var username:String?
     var worthValue:Float?

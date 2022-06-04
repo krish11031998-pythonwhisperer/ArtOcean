@@ -39,11 +39,6 @@ class CustomPageSelectorViewController:UIViewController{
         if let firstPage = self.pages.first?.value{
             self.pageVC.setViewControllers([firstPage], direction: .forward, animated: true)
         }
-//        for view in self.pageVC.view.subviews{
-//            if let scrollView = view as? UIScrollView{
-//                scrollView.isScrollEnabled = false
-//            }
-//        }
     }
     
     required init?(coder: NSCoder) {
