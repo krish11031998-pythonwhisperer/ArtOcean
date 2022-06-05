@@ -14,8 +14,6 @@ class AccountViewController:UIViewController{
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
         self.view.backgroundColor = .white
         self.setupViews()
-//        self.setupUserItemsVC()
-//        self.setupUserItemsAndActivity()
         self.configNavbar()
         self.setupLayout()
     }
@@ -44,7 +42,7 @@ class AccountViewController:UIViewController{
         return scrollView
     }()
     
-    private lazy var headerBackdropView:UIView = {
+    private lazy var headerBackdropView:AccountHeaderView = {
         let view =  AccountHeaderView {
             self.navigationController?.popViewController(animated: true)
         }
@@ -168,7 +166,6 @@ class AccountViewController:UIViewController{
     private lazy var selectorCollectionView:CustomSelectorCollectionView = {
         let collection = CustomSelectorCollectionView(sections: [NFTArtSection,UserSection], layoutForSections: [NFTArtSection.type!:.standardVerticalTwoByTwoGrid,UserSection.type!:.standardVerticalStackLayout])
         collection.collectionDelegate = self
-//        collection.setupCollectionView()
         return collection
     }()
     func setupLayout(){
@@ -181,6 +178,8 @@ class AccountViewController:UIViewController{
         self.headerBackdropView.leadingAnchor.constraint(equalTo: self.scrollView.leadingAnchor).isActive = true
         self.headerBackdropView.topAnchor.constraint(equalTo: self.scrollView.topAnchor).isActive = true
         self.headerBackdropView.centerXAnchor.constraint(equalTo: self.scrollView.centerXAnchor).isActive = true
+//        self.headerBackdropViewHeightAnchor = self.headingView.heightAnchor.constraint(equalToConstant: 200)
+//        self.headerBackdropViewHeightAnchor?.isActive = true
         self.headerBackdropView.heightAnchor.constraint(equalToConstant: 200).isActive = true
         
         
@@ -220,7 +219,7 @@ class AccountViewController:UIViewController{
 extension AccountViewController:UIScrollViewDelegate{
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-//        self.navigationController?.navigationBar.transform = .init(translationX: 0, y: min(scrollView.contentOffset.y - 100,0))
+        self.headerBackdropView.viewAnimationWithScroll(scrollView)
     }
     
 }

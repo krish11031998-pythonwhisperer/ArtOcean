@@ -11,6 +11,9 @@ import UIKit
 class AccountHeaderView:UIView{
     
     private var handler:(() -> Void)? = nil
+    private var imgHeightConstraint:NSLayoutConstraint? = nil
+    private var imgTopAnchor:NSLayoutConstraint? = nil
+    private var height:CGFloat = .zero
     
     private let headerImageView:CustomImageView = {
         let image = CustomImageView(named: "CustomProfileImage", cornerRadius: 0, maskedCorners: nil)
@@ -24,7 +27,8 @@ class AccountHeaderView:UIView{
     }()
     
     
-    init(handler:@escaping (() -> Void)) {
+    init(height:CGFloat = 200,handler:@escaping (() -> Void)) {
+        self.height = height
         super.init(frame: .zero)
         self.handler = handler
         self.translatesAutoresizingMaskIntoConstraints = false
@@ -44,13 +48,25 @@ class AccountHeaderView:UIView{
     
     func setupLayout(){
         self.headerImageView.leadingAnchor.constraint(equalTo: self.leadingAnchor).isActive = true
-        self.headerImageView.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
-        self.headerImageView.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
         self.headerImageView.trailingAnchor.constraint(equalTo: self.trailingAnchor).isActive = true
+        self.imgTopAnchor = self.headerImageView.topAnchor.constraint(equalTo: self.topAnchor)
+        self.imgTopAnchor?.isActive = true
+        self.imgHeightConstraint = self.headerImageView.heightAnchor.constraint(equalToConstant: self.height)
+        self.imgHeightConstraint?.isActive = true
         
         self.backButton.leadingAnchor.constraint(equalToSystemSpacingAfter: self.leadingAnchor, multiplier: 2).isActive = true
         self.backButton.topAnchor.constraint(equalToSystemSpacingBelow: self.topAnchor, multiplier: 5).isActive = true
         self.backButton.widthAnchor.constraint(equalToConstant: 30).isActive = true
         self.backButton.heightAnchor.constraint(equalToConstant: 30).isActive = true
+    }
+    
+    public func viewAnimationWithScroll(_ scrollView:UIScrollView){
+        print("(DEBUG) scrollViewOffset : ",scrollView.contentOffset,scrollView.contentInset)
+        if scrollView.contentOffset.y < 0 {
+            self.headerImageView.clipsToBounds = false
+            self.imgTopAnchor?.constant = scrollView.contentOffset.y
+            self.imgHeightConstraint?.constant = max(self.height - scrollView.contentOffset.y,height)
+            
+        }
     }
 }

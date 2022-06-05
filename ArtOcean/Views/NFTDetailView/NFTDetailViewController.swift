@@ -41,9 +41,6 @@ class NFTDetailArtViewController:UIViewController{
         self.navigationController?.navigationBar.isTranslucent = false
         self.navigationItem.titleView = self.view.labelBuilder(text: self.nftArt?.Title ?? "", size: 18, weight: .bold, color: .appBlackColor, numOfLines: 1)
         self.navigationItem.leftBarButtonItem = self.backBarButton
-//        let whiteNavBar = UINavigationBarAppearance()
-//        whiteNavBar.backgroundColor = .white
-//        self.navigationController?.navigationBar.scrollEdgeAppearance = whiteNavBar
         
     }
     
