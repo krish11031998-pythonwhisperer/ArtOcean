@@ -24,7 +24,7 @@ class NFTDetailArtViewController:UIViewController{
         self.descriptionView = CustomLabel(text: nftArt.Description, size: 14, weight: .medium, color: .appGrayColor, numOfLines: 3, adjustFontSize: false)
         super.init(nibName: nil, bundle: nil)
         self.configNavigationBar()
-        self.heroHeaderView = NFTHeroHeaderView(nft: nftArt, handler: {
+        self.heroHeaderView = NFTHeroHeaderView(nft: nftArt,height: 200, handler: {
             self.navigationController?.popViewController(animated: true)
         })
         self.setupView()
@@ -357,5 +357,9 @@ extension NFTDetailArtViewController:UIScrollViewDelegate{
         }.startAnimation()
         
         self.navigationController?.navigationBar.transform = .init(translationX: 0, y: min(scrollView.contentOffset.y - 100,0))
+        
+        if let safeHeaderView = self.heroHeaderView as? NFTHeroHeaderView{
+            safeHeaderView.headerViewScrolled(scrollView)
+        }
     }
 }

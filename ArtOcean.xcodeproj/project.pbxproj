@@ -20,6 +20,7 @@
 		EF00F5D52847A660003D8683 /* SliderSelectorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF00F5D42847A660003D8683 /* SliderSelectorView.swift */; };
 		EF00F5D7284805C1003D8683 /* StatisticCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF00F5D6284805C1003D8683 /* StatisticCollectionView.swift */; };
 		EF00F5DA2848BB6B003D8683 /* AccountsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF00F5D92848BB6B003D8683 /* AccountsViewController.swift */; };
+		EF358377284D371C00783D75 /* StretchyHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF358376284D371C00783D75 /* StretchyHeaderView.swift */; };
 		EF527441284AC53A008C77EC /* SDWebImage in Frameworks */ = {isa = PBXBuildFile; productRef = EF527440284AC53A008C77EC /* SDWebImage */; };
 		EF527443284AC53A008C77EC /* SDWebImageMapKit in Frameworks */ = {isa = PBXBuildFile; productRef = EF527442284AC53A008C77EC /* SDWebImageMapKit */; };
 		EF527492284BA4BD008C77EC /* SectionbasedData.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF527491284BA4BD008C77EC /* SectionbasedData.swift */; };
@@ -149,6 +150,7 @@
 		EF00F5D42847A660003D8683 /* SliderSelectorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SliderSelectorView.swift; sourceTree = "<group>"; };
 		EF00F5D6284805C1003D8683 /* StatisticCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticCollectionView.swift; sourceTree = "<group>"; };
 		EF00F5D92848BB6B003D8683 /* AccountsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountsViewController.swift; sourceTree = "<group>"; };
+		EF358376284D371C00783D75 /* StretchyHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StretchyHeaderView.swift; sourceTree = "<group>"; };
 		EF527491284BA4BD008C77EC /* SectionbasedData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionbasedData.swift; sourceTree = "<group>"; };
 		EF527493284BECF4008C77EC /* Bundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bundle.swift; sourceTree = "<group>"; };
 		EF527495284C0608008C77EC /* CustomComplexCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomComplexCollectionView.swift; sourceTree = "<group>"; };
@@ -487,6 +489,7 @@
 				EF7447BD284A5B2600899476 /* CustomPageSelectorViewController.swift */,
 				EF527495284C0608008C77EC /* CustomComplexCollectionView.swift */,
 				EF924CF4284CA454009E9C2A /* CustomSelectorCollectionView.swift */,
+				EF358376284D371C00783D75 /* StretchyHeaderView.swift */,
 			);
 			path = CommonComponents;
 			sourceTree = "<group>";
@@ -696,6 +699,7 @@
 				EFD13C232844196F000E422E /* NFTLiveBidCollectionProtocol.swift in Sources */,
 				EF8B066E283BF0F10050E726 /* StatisticsViewController.swift in Sources */,
 				EF527494284BECF4008C77EC /* Bundle.swift in Sources */,
+				EF358377284D371C00783D75 /* StretchyHeaderView.swift in Sources */,
 				EF8B0681283C2A180050E726 /* DataCache.swift in Sources */,
 				EF8B0672283BFA6D0050E726 /* NFTArtCollection.swift in Sources */,
 				EF00F5B92845088F003D8683 /* NFTBidController.swift in Sources */,

@@ -16,7 +16,10 @@ class CustomImageView:UIImageView{
     private var colors:[UIColor] = []
     private var named:String? = nil
     private var url:String? = nil
-    init(url:String? = nil,named:String? = nil,cornerRadius:CGFloat,maskedCorners:CACornerMask? = nil){
+    init(url:String? = nil,
+         named:String? = nil,
+         cornerRadius:CGFloat,
+         maskedCorners:CACornerMask? = nil){
         super.init(frame: .zero)
         self.named = named
         self.url = url
@@ -27,7 +30,12 @@ class CustomImageView:UIImageView{
         self.setupImageView()
     }
     
-    init(cornerRadius:CGFloat,maskedCorners:CACornerMask? = nil,gradientColors:[UIColor]){
+    
+    init(
+        cornerRadius:CGFloat,
+        maskedCorners:CACornerMask? = nil,
+        gradientColors:[UIColor]
+    ){
         super.init(frame: .zero)
         self.colors = gradientColors
         self.layer.cornerRadius = cornerRadius
@@ -61,10 +69,30 @@ class CustomImageView:UIImageView{
         self.translatesAutoresizingMaskIntoConstraints = false
         self.contentMode = .scaleAspectFill
         if !self.colors.isEmpty{
+            self.gradientView = UIView()
             self.gradient = CAGradientLayer()
             self.gradient!.colors = self.colors.compactMap({$0.cgColor})
-            self.layer.addSublayer(self.gradient!)
+//            self.layer.addSublayer(self.gradient!)
+            self.buildGradientView()
         }
+    }
+    
+    private var gradientView:UIView? = nil
+    
+    
+    func buildGradientView(){
+        self.gradientView = UIView()
+        self.gradientView!.translatesAutoresizingMaskIntoConstraints = false
+        self.gradientView!.layer.addSublayer(gradient!)
+        
+        self.addSubview(self.gradientView!)
+        
+        NSLayoutConstraint.activate([
+            self.gradientView!.topAnchor.constraint(equalTo: self.topAnchor),
+            self.gradientView!.bottomAnchor.constraint(equalTo: self.bottomAnchor),
+            self.gradientView!.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+            self.gradientView!.trailingAnchor.constraint(equalTo: self.trailingAnchor)
+        ])
     }
     
     public func updateImageView(url:String?){

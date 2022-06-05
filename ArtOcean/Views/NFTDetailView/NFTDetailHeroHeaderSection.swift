@@ -12,20 +12,25 @@ class NFTHeroHeaderView:UIView{
     
     //MARK: - View Properties
     private var onCloseHandler:(() -> Void)
+    private var height:CGFloat
     
     //MARK: - Views
     private lazy var backgroundImageView:CustomImageView = {
-        let imageView = CustomImageView(cornerRadius: 0,gradientColors: [UIColor.white.withAlphaComponent(0.2),UIColor.white.withAlphaComponent(1)])
+        let imageView = CustomImageView(cornerRadius: 0)
+        imageView.contentMode = .scaleAspectFill
         return imageView
     }()
+    
+    private lazy var heroHeaderView:StreachyHeaderView = StreachyHeaderView(height: self.height, innerView: backgroundImageView)
     
     private let leftButton:CustomButton
 
     
     //MARK: - View LifeCycle and Init
     
-    init(nft:NFTModel,handler:@escaping (() -> Void)){
+    init(nft:NFTModel,height:CGFloat,handler:@escaping (() -> Void)){
         self.leftButton = CustomButton(systemName: "chevron.left", handler: handler, autolayout: true)
+        self.height = height
         self.onCloseHandler = handler
         super.init(frame:.zero)
         self.translatesAutoresizingMaskIntoConstraints = false
@@ -39,7 +44,7 @@ class NFTHeroHeaderView:UIView{
     }
     
     private func setupViews(){
-        self.addSubview(self.backgroundImageView)
+        self.addSubview(self.heroHeaderView)
         self.addSubview(leftButton)
     }
     
@@ -49,12 +54,16 @@ class NFTHeroHeaderView:UIView{
         }
     }
     
+    public func headerViewScrolled(_ scrollView:UIScrollView){
+        self.heroHeaderView.StretchOnScroll(scrollView)
+    }
+    
     private func setupLayout(){
         NSLayoutConstraint.activate([
-            self.backgroundImageView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
-            self.backgroundImageView.topAnchor.constraint(equalTo: self.topAnchor),
-            self.backgroundImageView.widthAnchor.constraint(equalTo:self.widthAnchor),
-            self.backgroundImageView.heightAnchor.constraint(equalTo:self.heightAnchor),
+            self.heroHeaderView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+            self.heroHeaderView.topAnchor.constraint(equalTo: self.topAnchor),
+            self.heroHeaderView.widthAnchor.constraint(equalTo:self.widthAnchor),
+            self.heroHeaderView.heightAnchor.constraint(equalToConstant: self.height),
             leftButton.leadingAnchor.constraint(equalToSystemSpacingAfter: self.leadingAnchor, multiplier: 3),
             leftButton.topAnchor.constraint(equalToSystemSpacingBelow: self.topAnchor, multiplier: 5),
         ])

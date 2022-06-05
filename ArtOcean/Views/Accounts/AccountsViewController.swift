@@ -221,7 +221,6 @@ extension AccountViewController:UIScrollViewDelegate,UICollectionViewDelegate{
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         
         if scrollView == self.selectorCollectionView.customCollectionView{
-            print("(DEBUG) scrollView Offset : ",scrollView.contentOffset)
             if scrollView.contentOffset.y < 0{
                 self.scrollView.setContentOffset(.init(x: 0, y: self.scrollView.contentOffset.y + scrollView.contentOffset.y), animated: false)
                 scrollView.isScrollEnabled = false
@@ -230,7 +229,6 @@ extension AccountViewController:UIScrollViewDelegate,UICollectionViewDelegate{
         }else{
             self.headerBackdropView.viewAnimationWithScroll(scrollView)
             let selectorPosition = self.selectorCollectionView.convert(scrollView.frame.origin, to: nil)
-            print("(DEBUG) selectorPosition : ",selectorPosition.y)
             if selectorPosition.y <= self.view.safeAreaInsets.top{
                 scrollView.setContentOffset(.init(x: scrollView.contentOffset.x, y: self.selectorCollectionView.frame.origin.y - self.view.safeAreaInsets.top), animated: false)
                 self.scrollView.isScrollEnabled = false
