@@ -35,7 +35,7 @@ extension NSCollectionLayoutSection{
         let itemSize = NSCollectionLayoutItem(layoutSize: .init(widthDimension: .fractionalWidth(0.5), heightDimension: .fractionalHeight(1)))
         itemSize.contentInsets = .init(top: 0, leading: 5, bottom: 0, trailing: 5)
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .absolute(180)), subitems: [itemSize])
-        group.contentInsets = .init(top: 10, leading: 0, bottom: 0, trailing: 10)
+        group.contentInsets = .init(top: 10, leading: 0, bottom: 10, trailing: 0)
         let layout = NSCollectionLayoutSection(group: group)
     
         return layout

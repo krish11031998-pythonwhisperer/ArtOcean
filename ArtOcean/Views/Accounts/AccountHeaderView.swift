@@ -61,7 +61,6 @@ class AccountHeaderView:UIView{
     }
     
     public func viewAnimationWithScroll(_ scrollView:UIScrollView){
-        print("(DEBUG) scrollViewOffset : ",scrollView.contentOffset,scrollView.contentInset)
         if scrollView.contentOffset.y < 0 {
             self.headerImageView.clipsToBounds = false
             self.imgTopAnchor?.constant = scrollView.contentOffset.y

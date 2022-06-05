@@ -166,6 +166,8 @@ class AccountViewController:UIViewController{
     private lazy var selectorCollectionView:CustomSelectorCollectionView = {
         let collection = CustomSelectorCollectionView(sections: [NFTArtSection,UserSection], layoutForSections: [NFTArtSection.type!:.standardVerticalTwoByTwoGrid,UserSection.type!:.standardVerticalStackLayout])
         collection.collectionDelegate = self
+        collection.customCollectionView.delegate = self
+        collection.customCollectionView.isScrollEnabled = false
         return collection
     }()
     func setupLayout(){
@@ -178,8 +180,6 @@ class AccountViewController:UIViewController{
         self.headerBackdropView.leadingAnchor.constraint(equalTo: self.scrollView.leadingAnchor).isActive = true
         self.headerBackdropView.topAnchor.constraint(equalTo: self.scrollView.topAnchor).isActive = true
         self.headerBackdropView.centerXAnchor.constraint(equalTo: self.scrollView.centerXAnchor).isActive = true
-//        self.headerBackdropViewHeightAnchor = self.headingView.heightAnchor.constraint(equalToConstant: 200)
-//        self.headerBackdropViewHeightAnchor?.isActive = true
         self.headerBackdropView.heightAnchor.constraint(equalToConstant: 200).isActive = true
         
         
@@ -216,12 +216,30 @@ class AccountViewController:UIViewController{
 
 //MARK: - AccountViewController
 
-extension AccountViewController:UIScrollViewDelegate{
+extension AccountViewController:UIScrollViewDelegate,UICollectionViewDelegate{
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        self.headerBackdropView.viewAnimationWithScroll(scrollView)
+        
+        if scrollView == self.selectorCollectionView.customCollectionView{
+            print("(DEBUG) scrollView Offset : ",scrollView.contentOffset)
+            if scrollView.contentOffset.y < 0{
+                self.scrollView.setContentOffset(.init(x: 0, y: self.scrollView.contentOffset.y + scrollView.contentOffset.y), animated: false)
+                scrollView.isScrollEnabled = false
+                self.scrollView.isScrollEnabled = true
+            }
+        }else{
+            self.headerBackdropView.viewAnimationWithScroll(scrollView)
+            let selectorPosition = self.selectorCollectionView.convert(scrollView.frame.origin, to: nil)
+            print("(DEBUG) selectorPosition : ",selectorPosition.y)
+            if selectorPosition.y <= self.view.safeAreaInsets.top{
+                scrollView.setContentOffset(.init(x: scrollView.contentOffset.x, y: self.selectorCollectionView.frame.origin.y - self.view.safeAreaInsets.top), animated: false)
+                self.scrollView.isScrollEnabled = false
+                self.selectorCollectionView.customCollectionView.isScrollEnabled = true
+            }
+        }
+        
+        
     }
-    
 }
 
 

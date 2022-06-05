@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-class NFTArtCollectionViewCell:UICollectionViewCell,ConfirgurableCell{
+class NFTArtCollectionViewCell:UICollectionViewCell{
     
     private var nft:NFTModel? = nil
     
@@ -22,9 +22,10 @@ class NFTArtCollectionViewCell:UICollectionViewCell,ConfirgurableCell{
     public var delegate:NFTArtCellDelegate? = nil
     
     private lazy var artTitle:UILabel = self.labelBuilder(text: "", size: 14, weight: .bold, color: .appBlackColor, numOfLines: 1)
+   
+    private lazy var priceLabel:UILabel = CustomLabel(text: "0.47 ETH", size: 12, weight: .medium, color: .black, numOfLines: 1)
     
     private lazy var priceView:UIView = {
-        let priceLabel = self.labelBuilder(text: "0.47 ETH", size: 12, weight: .medium, color: .black, numOfLines: 1)
         let currencyImg = UIImageView()
         currencyImg.translatesAutoresizingMaskIntoConstraints = false
         if let img = UIImage(named: "eth"){
@@ -49,8 +50,10 @@ class NFTArtCollectionViewCell:UICollectionViewCell,ConfirgurableCell{
     }()
     
     
+    private let likeLabel:UILabel = CustomLabel(text: "30", size: 12, weight: .medium, color: .appGrayColor, numOfLines: 1,adjustFontSize: true)
+    
     private lazy var likeView:UIView = {
-        let likeLabel = self.labelBuilder(text: "30", size: 12, weight: .medium, color: .appGrayColor, numOfLines: 1,adjustFontSize: true)
+        
         let heartImg = UIImageView()
         heartImg.translatesAutoresizingMaskIntoConstraints = false
         if let img = UIImage(named: "heart"){
@@ -105,13 +108,26 @@ class NFTArtCollectionViewCell:UICollectionViewCell,ConfirgurableCell{
         }
     }
     
+    func resetCell(){
+        self.artTitle.text = ""
+        self.priceLabel.text = ""
+        self.likeLabel.text = ""
+        self.imageView.image = .init(named: "placeHolder")
+    }
+    
     public func updateUIWithNFT(_ nft:NFTModel,idx:Int? = nil){
+        self.resetCell()
         self.nft = nft
         if let safeTitle = nft.title{
             DispatchQueue.main.async { [weak self] in
                 self?.artTitle.text = safeTitle == "" ? "Title" : safeTitle
             }
         }
+        
+        //Simulating PriceLabel Change
+        self.priceLabel.text = "0.47"
+        self.likeLabel.text = "30"
+
         
         self.imageView.updateImageView(url: nft.metadata?.image)
     }
@@ -135,8 +151,8 @@ class NFTArtCollectionViewCell:UICollectionViewCell,ConfirgurableCell{
     
 }
 
-
-extension NFTArtCollectionViewCell{
+//MARK: - Configurable Cell
+extension NFTArtCollectionViewCell:ConfirgurableCell{
     func configure(_ data: Item) {
         switch data{
         case .artData(let nftModel):

@@ -36,12 +36,12 @@ class CustomSelectorCollectionView:UIView{
         fatalError("init(coder:) has not been implemented")
     }
     
-    private lazy var customCollectionView:CustomComplexCollectionView = {
+    public lazy var customCollectionView:CustomComplexCollectionView = {
         let collectionView = CustomComplexCollectionView(sections: self.sections, layoutForSections: self.layoutForSection, singleSection: true)
         return collectionView
     }()
     
-    private lazy var selector:SliderSelector = {
+    public lazy var selector:SliderSelector = {
         let selector = SliderSelector(tabs: self.sections.compactMap({$0.type}))
         selector.delegate = self
         return selector
