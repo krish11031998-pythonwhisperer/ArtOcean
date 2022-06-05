@@ -10,7 +10,7 @@ struct User:Codable,Hashable{
     var name:String?
     var username:String?
     var worthValue:Float?
-    var worthCurrency:Float?
+    var worthCurrency:String?
     var image:String?
     var profit:Float?
     var items:Int?
@@ -18,3 +18,30 @@ struct User:Codable,Hashable{
     var floor_price:Float?
     var traded:Float?
 }
+
+
+struct UserResponse:Codable{
+    var users:[User]?
+}
+
+let testUser:[User] = {
+    var resultUsers:[User] = []
+    Bundle.main.decodable(UserResponse.self, for: "user.json", completion: { result in
+        switch result{
+        case .success(let userResp):
+            if let users = userResp.users{
+                resultUsers = users
+            }
+        case .failure(let err):
+            print("(DEBUG) err : ",err.rawValue)
+        }
+        
+    })
+    
+    return resultUsers
+}()
+
+
+let UserSection:Section = {
+    return Section(type: "USER", items: testUser.compactMap({Item.user($0)}))
+}()

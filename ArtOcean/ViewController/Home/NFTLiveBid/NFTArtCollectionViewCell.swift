@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-class NFTArtCollectionViewCell:UICollectionViewCell{
+class NFTArtCollectionViewCell:UICollectionViewCell,ConfirgurableCell{
     
     private var nft:NFTModel? = nil
     
@@ -131,6 +131,19 @@ class NFTArtCollectionViewCell:UICollectionViewCell{
         self.stackView.bottomAnchor.constraint(equalTo: self.bottomAnchor,constant: -16).isActive = true
         self.stackView.topAnchor.constraint(equalTo: self.artTitle.bottomAnchor,constant: 4).isActive = true
         self.stackView.widthAnchor.constraint(equalTo:self.widthAnchor,constant: -20).isActive = true
+    }
+    
+}
+
+
+extension NFTArtCollectionViewCell{
+    func configure(_ data: Item) {
+        switch data{
+        case .artData(let nftModel):
+            self.updateUIWithNFT(nftModel)
+        default:
+            print("(DEBUG) Data in incorrect format is provided!")
+        }
     }
     
 }

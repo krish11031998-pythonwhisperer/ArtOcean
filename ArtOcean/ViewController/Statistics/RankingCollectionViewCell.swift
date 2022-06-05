@@ -12,7 +12,7 @@ protocol UserProtocol{
     func viewUser(_ data:Any)
 }
 
-class StatisticRankingCollectionViewCell:UICollectionViewCell{
+class StatisticRankingCollectionViewCell:UICollectionViewCell,ConfirgurableCell{
 
     static var identifier:String = "StatisticRankingCollectionViewCell"
     
@@ -93,12 +93,52 @@ class StatisticRankingCollectionViewCell:UICollectionViewCell{
 
 
 ////MARK: - ReusableConfigurableCell
-//extension StatisticRankingCollectionViewCell:ReusableConfigurableCell{
-//
-//    static var reusableIdentifier: String = "StatisticRankingCollectionViewCell"
-//
-//    func configureCell(with data: Any) {
-////        if let data
-//    }
-//
-//}
+extension StatisticRankingCollectionViewCell{
+
+    func configure(_ data: Item) {
+        switch data{
+        case .user(let user):
+            self.updateCellWithData(user)
+        default:
+            print("(DEBUG) Wrong Data Type Provided!")
+        }
+    }
+
+    
+    func updateCellWithData(_ user:User){
+        if let safeImgName = user.image{
+            if let image = UIImage(named: safeImgName){
+                DispatchQueue.main.async {
+                    self.imageView.image = image
+                }
+            }else{
+                self.imageView.updateImageView(url: safeImgName)
+            }
+        }
+        
+        if let name = user.name{
+            DispatchQueue.main.async {
+                self.name.text = name
+            }
+        }
+        
+        
+        if let username = user.username{
+            DispatchQueue.main.async {
+                self.userName.text = username
+            }
+        }
+        
+        if let worth = user.worthValue{
+            DispatchQueue.main.async {
+                self.priceLabel.text = "\(worth)"
+            }
+        }
+        
+        if let percent = user.profit{
+            DispatchQueue.main.async {
+                self.percentLabel.text = "\(percent)"
+            }
+        }
+    }
+}

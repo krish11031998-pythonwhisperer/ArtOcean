@@ -1,0 +1,28 @@
+{
+    "users":[
+        {
+            "name":"Lion King",
+            "username":"l_king",
+            "image":"",
+            "worthValue":316836.0,
+            "worthCurrency":"ETH",
+            "profit":23.25,
+            "items":1730,
+            "owners":1240,
+            "floor_price":0.24,
+            "traded":325
+        },
+        {
+            "name":"Shapire Cole",
+            "username":"shpre",
+            "image":"",
+            "worthValue":361386,
+            "worthCurrency":"ETH",
+            "profit":-15.34,
+            "items":1730,
+            "owners":1240,
+            "floor_price":0.24,
+            "traded":325
+        }
+    ]
+}

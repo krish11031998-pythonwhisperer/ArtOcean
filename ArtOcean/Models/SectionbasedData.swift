@@ -6,13 +6,12 @@
 //
 
 import Foundation
+import UIKit
+
+typealias SectionType = String
 
 struct Section:Hashable{
-//    static func == (lhs: Section, rhs: Section) -> Bool {
-//        return lhs.type == rhs.type
-//    }
-    
-    var type:String?
+    var type:SectionType?
     var items:[Item]?
 }
 
@@ -21,16 +20,22 @@ enum Item:Codable,Hashable{
     case user(User)
 }
 
+protocol ConfirgurableCell:UICollectionViewCell{
+    static var identifier:String {get}
+    func configure(_ data:Item)
+}
+
 
 let NFTArtSection:Section = {
    var section = Section()
     section.type = "ART"
     
-    Bundle.main.decodable(NFTDataResponse.self, for: "nft") { result in
+    Bundle.main.decodable(NFTDataResponse.self, for: "nft.json") { result in
         switch result{
         case .success(let data):
             if let ownedNfts = data.ownedNfts{
-                section.items = ownedNfts.compactMap({Item.artData($0)})
+                let items = ownedNfts.compactMap({Item.artData($0)})
+                section.items = items.count < 50 ? items : Array(items[0..<50])
             }
             
         case .failure(let err):

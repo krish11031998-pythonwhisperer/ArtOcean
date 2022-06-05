@@ -10,8 +10,6 @@ import UIKit
 
 class StatisticActivityCollectionViewCell:UICollectionViewCell{
     
-    static var identifier:String = "StatisticActivityCollectionViewCell"
-    
     private lazy var imageView:CustomImageView = CustomImageView(cornerRadius: 20)
     
     public var buttonDelegate:CustomButtonDelegate? = nil
@@ -75,3 +73,19 @@ class StatisticActivityCollectionViewCell:UICollectionViewCell{
     }
 }
 
+
+//MARK: - ConfigurableCell
+
+extension StatisticActivityCollectionViewCell:ConfirgurableCell{
+    func configure(_ data: Item) {
+        switch data{
+            case .user(let user):
+                print("(DEBUG) user provided!")
+            default:
+                print("(DEBUG) user not provided!")
+        }
+    }
+    
+    
+    static var identifier:String = "StatisticActivityCollectionViewCell"
+}

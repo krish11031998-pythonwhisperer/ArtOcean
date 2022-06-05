@@ -15,7 +15,7 @@ class AccountViewController:UIViewController{
         self.view.backgroundColor = .white
         self.setupViews()
 //        self.setupUserItemsVC()
-        self.setupUserItemsAndActivity()
+//        self.setupUserItemsAndActivity()
         self.configNavbar()
         self.setupLayout()
     }
@@ -58,6 +58,8 @@ class AccountViewController:UIViewController{
         self.scrollView.addSubview(self.headingView)
         self.scrollView.addSubview(self.descriptionView)
         self.scrollView.addSubview(self.metricsBar)
+        self.scrollView.addSubview(self.selectorCollectionView)
+        
 //        self.scrollView.addSubview(self.userItems)
     }
     
@@ -160,66 +162,15 @@ class AccountViewController:UIViewController{
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-//        self.navigationController?.navigationBar.transform = .init(translationX: 0, y: -200)
     }
     
-//    private lazy var items:UIViewController = {
-//        let view = StatisticCollectionView(cellType: .activity)
-//        view.collectionView.isScrollEnabled = false
-//        return view
-//    }()
     
-//    private lazy var userItems:CustomPageSelectorViewController = {
-//        let activityVC = StatisticCollectionView(cellType: .activity)
-//        activityVC.collectionView.isScrollEnabled = false
-//        let vc = CustomPageSelectorViewController(pages: ["Items":UIViewController(),"Activity":activityVC])
-//        vc.view.backgroundColor = .red
-//        return vc
-//    }()
-//
-//    func setupUserItemsVC(){
-//        self.addChild(self.userItems)
-//        self.view.addSubview(self.userItems.view)
-//        self.userItems.didMove(toParent: self)
-//    }
-    
-    private var redVC:UIViewController = {
-        let vc = UIViewController()
-        vc.view.backgroundColor = .red
-        return vc
+    private lazy var selectorCollectionView:CustomSelectorCollectionView = {
+        let collection = CustomSelectorCollectionView(sections: [NFTArtSection,UserSection], layoutForSections: [NFTArtSection.type!:.standardVerticalTwoByTwoGrid,UserSection.type!:.standardVerticalStackLayout])
+        collection.collectionDelegate = self
+//        collection.setupCollectionView()
+        return collection
     }()
-    
-    private var blueVC:UIViewController = {
-        let vc = UIViewController()
-        vc.view.backgroundColor = .blue
-        return vc
-    }()
-    
-    private lazy var pageVC:UIPageViewController = {
-        let vc = UIPageViewController()
-        vc.view.translatesAutoresizingMaskIntoConstraints = false
-        return vc
-    }()
-    
-    private func setupUserItemsAndActivity(){
-        self.addChild(self.pageVC)
-        self.view.addSubview(self.pageVC.view)
-        self.pageVC.didMove(toParent: self)
-        self.pageVC.gestureRecognizers.forEach({$0.isEnabled = false})
-        self.pageVC.setViewControllers([redVC], direction: .forward, animated: true)
-        
-        for view in self.pageVC.view.subviews{
-            if let scrollView = view as? UIScrollView{
-                scrollView.isScrollEnabled = false
-                scrollView.gestureRecognizers = nil
-            }
-        }
-    }
-    
-//    private lazy var userItemsAndAcitvity:UIView = {
-//
-//    }()
-    
     func setupLayout(){
         
         self.scrollView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor).isActive = true
@@ -255,15 +206,10 @@ class AccountViewController:UIViewController{
         self.metricsBar.trailingAnchor.constraint(equalTo: self.view.trailingAnchor,constant: -24).isActive = true
         self.metricsBar.heightAnchor.constraint(equalToConstant: 50).isActive = true
         
-//        self.userItems.view.topAnchor.constraint(equalToSystemSpacingBelow: self.metricsBar.bottomAnchor, multiplier: 3).isActive = true
-//        self.userItems.view.leadingAnchor.constraint(equalTo: self.metricsBar.leadingAnchor).isActive = true
-//        self.userItems.view.trailingAnchor.constraint(equalTo: self.descriptionView.trailingAnchor).isActive = true
-//        self.view.bottomAnchor.constraint(equalToSystemSpacingBelow: self.userItems.view.bottomAnchor, multiplier: 3).isActive = true
-        
-        self.pageVC.view.topAnchor.constraint(equalToSystemSpacingBelow: self.metricsBar.bottomAnchor, multiplier: 3).isActive = true
-        self.pageVC.view.leadingAnchor.constraint(equalTo: self.metricsBar.leadingAnchor).isActive = true
-        self.pageVC.view.trailingAnchor.constraint(equalTo: self.descriptionView.trailingAnchor).isActive = true
-        self.view.bottomAnchor.constraint(equalToSystemSpacingBelow: self.pageVC.view.bottomAnchor, multiplier: 3).isActive = true
+        self.selectorCollectionView.topAnchor.constraint(equalToSystemSpacingBelow: self.metricsBar.bottomAnchor, multiplier: 3).isActive = true
+        self.selectorCollectionView.leadingAnchor.constraint(equalTo: self.metricsBar.leadingAnchor).isActive = true
+        self.selectorCollectionView.trailingAnchor.constraint(equalTo: self.descriptionView.trailingAnchor).isActive = true
+        self.view.bottomAnchor.constraint(equalToSystemSpacingBelow: self.selectorCollectionView.bottomAnchor, multiplier: 3).isActive = true
         
         
     }
@@ -275,6 +221,39 @@ extension AccountViewController:UIScrollViewDelegate{
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
 //        self.navigationController?.navigationBar.transform = .init(translationX: 0, y: min(scrollView.contentOffset.y - 100,0))
+    }
+    
+}
+
+
+//MARK: - AccountViewController
+
+extension AccountViewController:CustomComplexCollectionViewDelegate{
+    
+    func registerCellToCollection(_ collection: UICollectionView) {
+        collection.register(NFTArtCollectionViewCell.self, forCellWithReuseIdentifier: NFTArtCollectionViewCell.identifier)
+        collection.register(StatisticRankingCollectionViewCell.self, forCellWithReuseIdentifier: StatisticRankingCollectionViewCell.identifier)
+    }
+    
+    
+    func cellForCollection(_ collection:UICollectionView,_ section: SectionType, _ indexPath: IndexPath, _ item: Item) -> ConfirgurableCell? {
+        switch section{
+            case "ART":
+                guard let cell = collection.dequeueReusableCell(withReuseIdentifier: NFTArtCollectionViewCell.identifier, for: indexPath) as? NFTArtCollectionViewCell else {
+                    return nil
+                }
+                cell.configure(item)
+                return cell
+            case "USER":
+                guard let cell = collection.dequeueReusableCell(withReuseIdentifier: StatisticRankingCollectionViewCell.identifier, for: indexPath) as? StatisticRankingCollectionViewCell else {
+                    return nil
+                }
+                cell.configure(item)
+                return cell
+            default:
+                print("(DEBUG) No CellFor : ",section)
+                return nil
+        }
     }
     
 }
