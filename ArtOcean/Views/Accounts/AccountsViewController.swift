@@ -258,6 +258,7 @@ extension AccountViewController:CustomComplexCollectionViewDelegate{
                     return nil
                 }
                 cell.configure(item)
+                cell.delegate = self
                 return cell
             case "USER":
                 guard let cell = collection.dequeueReusableCell(withReuseIdentifier: StatisticRankingCollectionViewCell.identifier, for: indexPath) as? StatisticRankingCollectionViewCell else {
@@ -269,6 +270,16 @@ extension AccountViewController:CustomComplexCollectionViewDelegate{
                 print("(DEBUG) No CellFor : ",section)
                 return nil
         }
+    }
+    
+}
+
+
+//MARK: - NFTArtDelegate
+extension AccountViewController:NFTArtCellDelegate{
+    
+    func viewArt(art: NFTModel) {
+        self.navigationController?.pushViewController(NFTDetailArtViewController(nftArt: art), animated: true)
     }
     
 }

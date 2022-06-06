@@ -42,6 +42,7 @@ class StatisticsViewController: UIViewController {
         label.translatesAutoresizingMaskIntoConstraints = true
         self.navigationItem.leftBarButtonItem = .init(customView: label)
         self.navigationItem.rightBarButtonItem = .init(customView: searchButton)
+        self.setupStatusBar()
     }
     
     func setupLayout(){
