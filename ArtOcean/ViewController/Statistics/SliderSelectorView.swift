@@ -63,6 +63,10 @@ class SliderSelector:UIView{
             let tapGesture = UITapGestureRecognizer(target: self, action: #selector(self.tapHandler(_:)))
             view.addGestureRecognizer(tapGesture)
             view.layer.cornerRadius = 15
+            
+            if let firstTab = self.tabs.first, firstTab == tab{
+                view.backgroundColor = .white
+            }
             return view
         }
         return views

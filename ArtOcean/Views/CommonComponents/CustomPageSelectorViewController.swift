@@ -24,8 +24,12 @@ class CustomPageSelectorViewController:UIViewController{
         self.setupLayout()
     }
     
+    var pageKeys:[String]{
+        return self.pages.keys.sorted()
+    }
+    
     func setupSlideSelector(){
-        self.slideSelector = .init(tabs: Array(self.pages.keys))
+        self.slideSelector = .init(tabs: self.pageKeys)
         self.slideSelector.delegate = self
         self.view.addSubview(self.slideSelector)
     }
@@ -36,7 +40,7 @@ class CustomPageSelectorViewController:UIViewController{
         self.addChild(self.pageVC)
         self.view.addSubview(self.pageVC.view)
         self.pageVC.didMove(toParent: self)
-        if let firstPage = self.pages.first?.value{
+        if let firstPageKey = self.pageKeys.first,let firstPage = self.pages[firstPageKey]{
             self.pageVC.setViewControllers([firstPage], direction: .forward, animated: true)
         }
     }
@@ -62,7 +66,6 @@ class CustomPageSelectorViewController:UIViewController{
         
         self.pageVC.view.leadingAnchor.constraint(equalTo: self.view.leadingAnchor).isActive = true
         self.pageVC.view.trailingAnchor.constraint(equalTo: self.view.trailingAnchor).isActive = true
-//        self.pageVC.view.topAnchor.constraint(equalToSystemSpacingBelow: self.slideSelector.bottomAnchor, multiplier: 4).isActive = true
         self.pageVC.view.topAnchor.constraint(equalTo: self.slideSelector.bottomAnchor, constant: 24).isActive = true
         self.pageVC.view.bottomAnchor.constraint(equalTo: self.view.bottomAnchor).isActive = true
     }
