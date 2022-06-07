@@ -42,6 +42,9 @@ class StatisticCollectionView:UICollectionViewController{
         layout.scrollDirection = .vertical
         layout.minimumInteritemSpacing = 20
         self.tab = cellType
+        if let safeData = data{
+            self.data = safeData
+        }
         
         super.init(collectionViewLayout: layout)
         self.collectionView.showsVerticalScrollIndicator = false
@@ -91,6 +94,9 @@ extension StatisticCollectionView{
             cell.buttonDelegate = self.buttonDelegate
             return cell
         } else if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: self.cellName, for: indexPath) as? StatisticActivityCollectionViewCell {
+            if let item = self.data[indexPath.row] as? Item{
+                cell.configure(item)
+            }
             cell.buttonDelegate = self.buttonDelegate
             return cell
         }else {

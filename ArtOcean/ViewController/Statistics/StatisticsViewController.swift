@@ -32,7 +32,8 @@ class StatisticsViewController: UIViewController {
     func setupPages(){
         let ranking = StatisticCollectionView(cellType: .ranking)
         ranking.buttonDelegate = self
-        let activity = StatisticCollectionView(cellType: .activity)
+        let activity = StatisticCollectionView(cellType: .activity,data: NFTArtOfferSection.items)
+        activity.buttonDelegate = self
         self.pages =  [StatisticsTab.ranking.rawValue:ranking,StatisticsTab.activity.rawValue: activity]
     }
 
@@ -60,7 +61,11 @@ extension StatisticsViewController:CustomButtonDelegate{
     
     func handleTap(_ data: Any) {
         print("(DEBUG) clicked on : ",data)
-        self.navigationController?.pushViewController(AccountViewController(), animated: true)
+        if let safeArt = data as? NFTArtOffer,let nft = safeArt.nft{
+            self.navigationController?.pushViewController(NFTDetailArtViewController(nftArt: nft), animated: true)
+        }else{
+            self.navigationController?.pushViewController(AccountViewController(), animated: true)
+        }
     }
     
 }
