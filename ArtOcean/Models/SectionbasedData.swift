@@ -18,6 +18,7 @@ struct Section:Hashable{
 enum Item:Codable,Hashable{
     case artData(NFTModel)
     case user(User)
+    case offer(NFTArtOffer)
 }
 
 protocol ConfirgurableCell:UICollectionViewCell{

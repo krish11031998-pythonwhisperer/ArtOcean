@@ -20,13 +20,19 @@ class NFTDetailArtViewController:UIViewController{
     
     init(nftArt:NFTModel) {
         self.nftArt = nftArt
-        self.titleView = CustomLabel(text: nftArt.Title, size: 18, weight: .bold, color: .appBlackColor, numOfLines: 1, adjustFontSize: true)
-        self.descriptionView = CustomLabel(text: nftArt.Description, size: 14, weight: .medium, color: .appGrayColor, numOfLines: 3, adjustFontSize: false)
+        
         super.init(nibName: nil, bundle: nil)
-        self.configNavigationBar()
+        
+        //InitializeViews
+        self.titleView = CustomLabel(text: nftArt.Title, size: 18, weight: .bold, color: .appBlackColor, numOfLines: 1, adjustFontSize: true)
+        
+        self.descriptionView = CustomLabel(text: nftArt.Description, size: 14, weight: .medium, color: .appGrayColor, numOfLines: 3, adjustFontSize: false)
+        
         self.heroHeaderView = NFTHeroHeaderView(nft: nftArt,height: 200, handler: {
             self.navigationController?.popViewController(animated: true)
         })
+ 
+        self.configNavigationBar()
         self.setupView()
         self.setupLayout()
     }
@@ -77,7 +83,6 @@ class NFTDetailArtViewController:UIViewController{
     }
     
     //MARK: - Views
-    
     private lazy var scrollView:UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.contentInsetAdjustmentBehavior = .never
@@ -102,13 +107,16 @@ class NFTDetailArtViewController:UIViewController{
     
     private lazy var imageView:CustomImageView = CustomImageView(cornerRadius: 16)
     
-    private let titleView:CustomLabel
+    private var titleView:UILabel = UILabel()
     
-    private let descriptionView:CustomLabel
+    private var descriptionView:UILabel = UILabel()
     
-    private lazy var creatorLabel:UILabel = self.view.labelBuilder(text: "Pablo", size: 14, weight: .bold, color: .appBlueColor, numOfLines: 1,adjustFontSize: false)
-    
-    private lazy var timeEndsLabel:UILabel = self.view.labelBuilder(text: "08h 34m 59s", size: 14, weight: .bold, color: .black, numOfLines: 1,adjustFontSize: false)
+    private var creatorLabel:UILabel = {
+        return CustomLabel(text: "Pablo", size: 14, weight: .bold, color: .appBlueColor, numOfLines: 1,adjustFontSize: false)
+    }()
+    private var timeEndsLabel:UILabel = {
+        return CustomLabel(text: "08h 34m 59s", size: 14, weight: .bold, color: .black, numOfLines: 1, adjustFontSize: false)
+    }()
     
     private lazy var creatorView:UIStackView = {
         return self.stackBuilder(header: "Created by",alignment: .left, label: self.creatorLabel)

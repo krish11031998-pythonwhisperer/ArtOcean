@@ -57,8 +57,7 @@ class AccountViewController:UIViewController{
         self.scrollView.addSubview(self.descriptionView)
         self.scrollView.addSubview(self.metricsBar)
         self.scrollView.addSubview(self.selectorCollectionView)
-        
-//        self.scrollView.addSubview(self.userItems)
+    
     }
     
     func configNavbar(){
@@ -71,7 +70,6 @@ class AccountViewController:UIViewController{
     private lazy var backButton:UIBarButtonItem = {
         let backButton = CustomButton.backButton
         backButton.handler = {
-//            self.navigationController?.navigationBar.transform = .init(translationX: 0, y: 0)
             self.navigationController?.popViewController(animated: true)
         }
         
@@ -164,7 +162,7 @@ class AccountViewController:UIViewController{
     
     
     private lazy var selectorCollectionView:CustomSelectorCollectionView = {
-        let collection = CustomSelectorCollectionView(sections: [NFTArtSection,UserSection], layoutForSections: [NFTArtSection.type!:.standardVerticalTwoByTwoGrid,UserSection.type!:.standardVerticalStackLayout])
+        let collection = CustomSelectorCollectionView(sections: [NFTArtSection,NFTArtOfferSection], layoutForSections: [NFTArtSection.type!:.standardVerticalTwoByTwoGrid,NFTArtOfferSection.type!:.standardVerticalStackLayout])
         collection.collectionDelegate = self
         collection.customCollectionView.delegate = self
         collection.customCollectionView.isScrollEnabled = false
@@ -247,7 +245,7 @@ extension AccountViewController:CustomComplexCollectionViewDelegate{
     
     func registerCellToCollection(_ collection: UICollectionView) {
         collection.register(NFTArtCollectionViewCell.self, forCellWithReuseIdentifier: NFTArtCollectionViewCell.identifier)
-        collection.register(StatisticRankingCollectionViewCell.self, forCellWithReuseIdentifier: StatisticRankingCollectionViewCell.identifier)
+        collection.register(StatisticActivityCollectionViewCell.self, forCellWithReuseIdentifier: StatisticActivityCollectionViewCell.identifier)
     }
     
     
@@ -260,11 +258,12 @@ extension AccountViewController:CustomComplexCollectionViewDelegate{
                 cell.configure(item)
                 cell.delegate = self
                 return cell
-            case "USER":
-                guard let cell = collection.dequeueReusableCell(withReuseIdentifier: StatisticRankingCollectionViewCell.identifier, for: indexPath) as? StatisticRankingCollectionViewCell else {
+            case "OFFER":
+                guard let cell = collection.dequeueReusableCell(withReuseIdentifier: StatisticActivityCollectionViewCell.identifier, for: indexPath) as? StatisticActivityCollectionViewCell else {
                     return nil
                 }
                 cell.configure(item)
+                cell.buttonDelegate = self
                 return cell
             default:
                 print("(DEBUG) No CellFor : ",section)
@@ -282,4 +281,15 @@ extension AccountViewController:NFTArtCellDelegate{
         self.navigationController?.pushViewController(NFTDetailArtViewController(nftArt: art), animated: true)
     }
     
+}
+
+
+//MARK: - CustomButtonDelegate
+extension AccountViewController:CustomButtonDelegate{
+    
+    func handleTap(_ data: Any) {
+        if let art = data as? NFTArtOffer,let nft = art.nft{
+            self.navigationController?.pushViewController(NFTDetailArtViewController(nftArt: nft), animated: true)
+        }
+    }
 }

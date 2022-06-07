@@ -10,6 +10,8 @@ import UIKit
 
 class StatisticActivityCollectionViewCell:UICollectionViewCell{
     
+    private var offer:NFTArtOffer? = nil
+    
     private lazy var imageView:CustomImageView = CustomImageView(cornerRadius: 20)
     
     public var buttonDelegate:CustomButtonDelegate? = nil
@@ -62,14 +64,14 @@ class StatisticActivityCollectionViewCell:UICollectionViewCell{
         self.imageView.layer.cornerRadius = 8
         
         self.stack.leadingAnchor.constraint(equalToSystemSpacingAfter: self.imageView.trailingAnchor, multiplier: 1.5).isActive = true
-        self.stack.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
-        self.stack.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
+        self.stack.topAnchor.constraint(equalTo: self.topAnchor,constant: 2.5).isActive = true
+        self.stack.bottomAnchor.constraint(equalTo: self.bottomAnchor,constant: -2.5).isActive = true
         self.stack.trailingAnchor.constraint(equalTo: self.trailingAnchor).isActive = true
     }
     
     @objc func handleTap(){
 //        self.bouncyButtonClick()
-        self.buttonDelegate?.handleTap?()
+        self.buttonDelegate?.handleTap?(self.offer as Any)
     }
 }
 
@@ -79,8 +81,22 @@ class StatisticActivityCollectionViewCell:UICollectionViewCell{
 extension StatisticActivityCollectionViewCell:ConfirgurableCell{
     func configure(_ data: Item) {
         switch data{
-            case .user(let user):
-                print("(DEBUG) user provided!")
+            case .offer(let offer):
+            self.offer = offer
+            DispatchQueue.main.async {
+                if let title = offer.name,title != ""{
+                    self.name.text = title
+                }else{
+                    self.name.text = "XXXXXX"
+                }
+                if let imageURL = offer.image,imageURL != ""{
+                    self.imageView.updateImageView(url: imageURL)
+                }
+                
+                if let time = offer.time{
+                    self.transactionTimeLabel.text = "\(time) minutes ago"
+                }
+            }
             default:
                 print("(DEBUG) user not provided!")
         }
