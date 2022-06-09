@@ -37,17 +37,10 @@ class ProfileViewController: UIViewController {
         return collection
     }()
     
-//    private let favoriteButton:CustomButton = CustomButton(frame: .init(origin: .zero, size: .init(width: 40, height: 40)),cornerRadius: 20, name: "favorites", handler: nil, autolayout: true)
-//
-//    private let walletButton:CustomButton = CustomButton(frame: .init(origin: .zero, size: .init(width: 40, height: 40)),cornerRadius: 20, name: "wallet", handler: nil, autolayout: true)
-//
-//    private let draftButton:CustomButton = CustomButton(frame: .init(origin: .zero, size: .init(width: 40, height: 40)),cornerRadius: 20, name: "draft", handler: nil, autolayout: true)
-//
-//    private let profileButton:CustomButton = CustomButton(frame: .init(origin: .zero, size: .init(width: 40, height: 40)),cornerRadius: 20, name: "profile", handler: nil, autolayout: true)
-    
     private let favoriteButton:UIView = {
         let button = CustomButton(frame: .init(origin: .zero, size: .init(width: 40, height: 40)),cornerRadius: 20, name: "favorites", handler: nil, autolayout: true)
         let label = CustomLabel(text: "Favorites", size: 12, weight: .medium, color: .gray, numOfLines: 1, adjustFontSize: true, autoLayout: true)
+        label.textAlignment = .center
         let stack = UIStackView(arrangedSubviews: [button,label])
         stack.axis = .vertical
         stack.distribution = .fill
@@ -60,6 +53,7 @@ class ProfileViewController: UIViewController {
     private let walletButton:UIView = {
         let button = CustomButton(frame: .init(origin: .zero, size: .init(width: 40, height: 40)),cornerRadius: 20, name: "wallet", handler: nil, autolayout: true)
         let label = CustomLabel(text: "Wallet", size: 12, weight: .medium, color: .gray, numOfLines: 1, adjustFontSize: true, autoLayout: true)
+        label.textAlignment = .center
         let stack = UIStackView(arrangedSubviews: [button,label])
         stack.axis = .vertical
         stack.distribution = .fill
@@ -72,6 +66,7 @@ class ProfileViewController: UIViewController {
     private let draftButton:UIView = {
         let button = CustomButton(frame: .init(origin: .zero, size: .init(width: 40, height: 40)),cornerRadius: 20, name: "draft", handler: nil, autolayout: true)
         let label = CustomLabel(text: "Draft", size: 12, weight: .medium, color: .gray, numOfLines: 1, adjustFontSize: true, autoLayout: true)
+        label.textAlignment = .center
         let stack = UIStackView(arrangedSubviews: [button,label])
         stack.axis = .vertical
         stack.distribution = .fill
@@ -84,6 +79,7 @@ class ProfileViewController: UIViewController {
     private let profileButton:UIView = {
         let button = CustomButton(frame: .init(origin: .zero, size: .init(width: 40, height: 40)),cornerRadius: 20, name: "profile", handler: nil, autolayout: true)
         let label = CustomLabel(text: "Profile", size: 12, weight: .medium, color: .gray, numOfLines: 1, adjustFontSize: true, autoLayout: true)
+        label.textAlignment = .center
         let stack = UIStackView(arrangedSubviews: [button,label])
         stack.axis = .vertical
         stack.distribution = .fill
