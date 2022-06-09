@@ -37,8 +37,8 @@ class ProfileViewController: UIViewController {
         return collection
     }()
     
-    private let favoriteButton:UIView = {
-        let button = CustomButton(frame: .init(origin: .zero, size: .init(width: 40, height: 40)),cornerRadius: 20, name: "favorites", handler: nil, autolayout: true)
+    private lazy var favoriteButton:UIView = {
+        let button = CustomButton(frame: .init(origin: .zero, size: .init(width: 40, height: 40)),cornerRadius: 20, name: "favorites", handler: self.onTapFavorites, autolayout: true)
         let label = CustomLabel(text: "Favorites", size: 12, weight: .medium, color: .gray, numOfLines: 1, adjustFontSize: true, autoLayout: true)
         label.textAlignment = .center
         let stack = UIStackView(arrangedSubviews: [button,label])
@@ -252,3 +252,19 @@ extension ProfileViewController:CustomButtonDelegate{
     }
 }
 
+
+//MARK: - ButtonHandler
+extension ProfileViewController{
+    
+    func onTapFavorites(){
+        self.navigationController?.pushViewController(FavoritesViewController(art: NFTArtSection.items?.compactMap({ item in
+            switch item{
+            case .artData(let nft):
+                return nft
+            default:
+                return nil
+            }
+        }) ?? []), animated: true)
+    }
+    
+}

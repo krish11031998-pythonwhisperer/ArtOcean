@@ -28,6 +28,7 @@
 		EF527496284C0608008C77EC /* CustomComplexCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF527495284C0608008C77EC /* CustomComplexCollectionView.swift */; };
 		EF527498284C1E5B008C77EC /* NSCollectionLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF527497284C1E5B008C77EC /* NSCollectionLayout.swift */; };
 		EF69B6AA2851575700ABDADA /* UserProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF69B6A92851575700ABDADA /* UserProfileViewController.swift */; };
+		EF69B6AD28529FD000ABDADA /* FavoriteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF69B6AC28529FD000ABDADA /* FavoriteViewController.swift */; };
 		EF7447AE284902A300899476 /* AccountHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF7447AD284902A300899476 /* AccountHeaderView.swift */; };
 		EF7447B028495A8700899476 /* AccountMetrics.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF7447AF28495A8700899476 /* AccountMetrics.swift */; };
 		EF7447B2284A0F5800899476 /* RankingCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF7447B1284A0F5800899476 /* RankingCollectionViewCell.swift */; };
@@ -157,6 +158,7 @@
 		EF527495284C0608008C77EC /* CustomComplexCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomComplexCollectionView.swift; sourceTree = "<group>"; };
 		EF527497284C1E5B008C77EC /* NSCollectionLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSCollectionLayout.swift; sourceTree = "<group>"; };
 		EF69B6A92851575700ABDADA /* UserProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileViewController.swift; sourceTree = "<group>"; };
+		EF69B6AC28529FD000ABDADA /* FavoriteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteViewController.swift; sourceTree = "<group>"; };
 		EF7447AD284902A300899476 /* AccountHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountHeaderView.swift; sourceTree = "<group>"; };
 		EF7447AF28495A8700899476 /* AccountMetrics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountMetrics.swift; sourceTree = "<group>"; };
 		EF7447B1284A0F5800899476 /* RankingCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RankingCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -301,6 +303,7 @@
 			isa = PBXGroup;
 			children = (
 				EF8B066B283BF0E70050E726 /* ProfileViewController.swift */,
+				EF69B6AC28529FD000ABDADA /* FavoriteViewController.swift */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -731,6 +734,7 @@
 				EF8B06D5283E3A4B0050E726 /* LiveBidDetailView.swift in Sources */,
 				EF8B066C283BF0E70050E726 /* ProfileViewController.swift in Sources */,
 				EF7447AE284902A300899476 /* AccountHeaderView.swift in Sources */,
+				EF69B6AD28529FD000ABDADA /* FavoriteViewController.swift in Sources */,
 				EF7447B8284A109300899476 /* User.swift in Sources */,
 				EF8B067D283C27020050E726 /* AlchemyAPI.swift in Sources */,
 				EF8B06D0283D60EC0050E726 /* TopCollectionTableCellViewTableViewCell.swift in Sources */,
