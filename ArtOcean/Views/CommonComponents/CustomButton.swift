@@ -32,10 +32,10 @@ class CustomButton:UIView{
     
         self.translatesAutoresizingMaskIntoConstraints = !autolayout
         
-        if autolayout{
+//        if autolayout{
             buttonView.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
             buttonView.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
-        }
+//        }
     }
     
     required init?(coder: NSCoder) {

@@ -39,6 +39,8 @@ class CustomComplexCollectionView:UICollectionView{
         super.init(frame: .zero, collectionViewLayout: .init())
         self.collectionViewLayout = self.configureLayout()
         self.translatesAutoresizingMaskIntoConstraints = false
+        self.showsVerticalScrollIndicator = false
+        self.showsVerticalScrollIndicator = false
         self.backgroundColor = .clear
         
     }
@@ -102,7 +104,7 @@ class CustomComplexCollectionView:UICollectionView{
             
             if let safeSelectedSection = self.selectedSection{
                 guard let cell = self.configurationDelegate?.cellForCollection(collectionView,safeSelectedSection, indexPath, item) else {
-                    return nil
+                    return UICollectionViewCell()
                 }
                 return cell
             }else{

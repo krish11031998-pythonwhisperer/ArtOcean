@@ -44,6 +44,10 @@ class NFTDetailArtViewController:UIViewController{
     //MARK: -  NavigationItem
     private func configNavigationBar(){
         //navigationBar
+        let navbarAppearence = UINavigationBarAppearance()
+        navbarAppearence.backgroundColor = .white
+        self.navigationController?.navigationBar.standardAppearance = .init(barAppearance: navbarAppearence)
+        self.navigationController?.navigationBar.scrollEdgeAppearance = .init(barAppearance: navbarAppearence)
         self.navigationController?.navigationBar.isTranslucent = false
         self.navigationItem.titleView = self.view.labelBuilder(text: self.nftArt?.Title ?? "", size: 18, weight: .bold, color: .appBlackColor, numOfLines: 1)
         self.navigationItem.leftBarButtonItem = self.backBarButton

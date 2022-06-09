@@ -105,3 +105,5 @@ extension StatisticCollectionView{
     }
     
 }
+
+ 

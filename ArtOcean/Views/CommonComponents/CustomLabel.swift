@@ -15,7 +15,8 @@ class CustomLabel:UILabel{
         weight:UIFont.Weight = .semibold,
         color:UIColor,
         numOfLines:Int,
-        adjustFontSize:Bool = true
+        adjustFontSize:Bool = true,
+        autoLayout:Bool = true
     ){
         super.init(frame: .zero)
         self.text = text
@@ -41,7 +42,7 @@ class CustomLabel:UILabel{
         self.textColor = color
         self.numberOfLines = numOfLines
         self.adjustsFontSizeToFitWidth = adjustFontSize
-        self.translatesAutoresizingMaskIntoConstraints = false
+        self.translatesAutoresizingMaskIntoConstraints = !autoLayout
     }
     
     required init?(coder: NSCoder) {

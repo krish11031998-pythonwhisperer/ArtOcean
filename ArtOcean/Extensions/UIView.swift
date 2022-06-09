@@ -127,32 +127,3 @@ extension UIView{
         self.layer.shadowRadius = 2.5
     }
 }
-
-class TapableView:UIView{
-
-    var handler:() -> Void
-    
-    init(innerView:UIView,handler:@escaping () -> Void) {
-        self.handler = handler
-        super.init(frame: .zero)
-        self.translatesAutoresizingMaskIntoConstraints = false
-        self.addSubview(innerView)
-        innerView.leadingAnchor.constraint(equalTo: self.leadingAnchor).isActive = true
-        innerView.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
-        innerView.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
-        innerView.trailingAnchor.constraint(equalTo: self.trailingAnchor).isActive = true
-    }
-    
-    @objc func handleTap(){
-        self.handler()
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    func setupLayout(){
-        
-    }
-    
-}

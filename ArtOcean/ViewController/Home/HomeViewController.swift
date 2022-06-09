@@ -20,7 +20,7 @@ class HomeViewController: UIViewController {
     
     private let scrollView:UIScrollView = {
         let scrollView = UIScrollView()
-        scrollView.contentInsetAdjustmentBehavior = .never
+//        scrollView.contentInsetAdjustmentBehavior = .never
         scrollView.showsVerticalScrollIndicator = false
         scrollView.backgroundColor = .clear
         return scrollView
@@ -78,7 +78,6 @@ class HomeViewController: UIViewController {
         self.scrollView.addSubview(self.hotItems)
         self.scrollView.addSubview(self.topSeller)
         self.scrollView.addSubview(self.popularItems)
-        self.hideNavigationBarLine()
         self.setupStatusBar()
     }
     

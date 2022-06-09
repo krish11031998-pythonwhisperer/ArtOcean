@@ -9,9 +9,9 @@ import UIKit
 
 extension UIViewController{
     
-    func setupStatusBar(){
+    func setupStatusBar(color:UIColor = .white){
         let navbarAppearance = UINavigationBarAppearance()
-        navbarAppearance.backgroundColor = .white
+        navbarAppearance.backgroundColor = color
         self.navigationController?.navigationBar.standardAppearance = navbarAppearance
         self.navigationController?.navigationBar.scrollEdgeAppearance = navbarAppearance
     }
