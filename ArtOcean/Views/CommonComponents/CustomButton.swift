@@ -17,13 +17,13 @@ class CustomButton:UIView{
     static var minusButton:CustomButton = .init(frame: .init(origin: .zero, size: .init(width: 28, height: 28)),name: "minus",autolayout: true)
     static var ethButton:CustomButton = .init(frame: .init(origin: .zero, size: .init(width: 28, height: 28)),name: "eth",autolayout: true)
     
-    init(frame:CGRect = .init(origin: .zero, size: .init(width:30,height:30)),systemName:String? = nil,name:String? = nil,handler:(() -> Void)? = nil,autolayout:Bool = false){
+    init(frame:CGRect = .init(origin: .zero, size: .init(width:30,height:30)),cornerRadius:CGFloat = 15,systemName:String? = nil,name:String? = nil,handler:(() -> Void)? = nil,autolayout:Bool = false){
         
         self.handler = handler
         
         super.init(frame: frame)
         
-        self.setupView()
+        self.setupView(cornerRadius: cornerRadius)
         
         let buttonView = self.buttonViewBuilder(systemName: systemName, name: name)
         self.addSubview(buttonView)
@@ -60,10 +60,10 @@ class CustomButton:UIView{
         return buttonView
     }
     
-    func setupView(){
+    func setupView(cornerRadius:CGFloat){
         self.layer.borderColor = UIColor.appGrayColor.cgColor
         self.layer.borderWidth = 1
-        self.layer.cornerRadius = 15
+        self.layer.cornerRadius = cornerRadius
         self.backgroundColor = .appWhiteBackgroundColor
         
     }

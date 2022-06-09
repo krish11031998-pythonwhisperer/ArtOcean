@@ -297,6 +297,14 @@
 			path = UserProfileView;
 			sourceTree = "<group>";
 		};
+		EF69B6AB285299EB00ABDADA /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				EF8B066B283BF0E70050E726 /* ProfileViewController.swift */,
+			);
+			path = Profile;
+			sourceTree = "<group>";
+		};
 		EF8B0624283BEAC10050E726 = {
 			isa = PBXGroup;
 			children = (
@@ -359,9 +367,9 @@
 		EF8B0660283BECD60050E726 /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
+				EF69B6AB285299EB00ABDADA /* Profile */,
 				EF00F5D32847A544003D8683 /* Statistics */,
 				EF8B06D3283E3A1F0050E726 /* Home */,
-				EF8B066B283BF0E70050E726 /* ProfileViewController.swift */,
 				EF8B066F283BF0FE0050E726 /* SearchViewController.swift */,
 			);
 			path = ViewController;

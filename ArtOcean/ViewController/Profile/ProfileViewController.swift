@@ -14,7 +14,7 @@ class ProfileViewController: UIViewController {
     private let profileHeader:UILabel =  CustomLabel(text: "Profile", size: 22, weight: .bold, color: .white, numOfLines: 1, adjustFontSize: true,autoLayout: false)
     
     private let settingButton:UIView = {
-        let button = CustomButton(frame: .init(origin: .zero, size: .init(width: 40, height: 40)), name: "settings", handler: nil,autolayout: true)
+        let button = CustomButton(frame: .init(origin: .zero, size: .init(width: 40, height: 40)),cornerRadius: 20, name: "settings", handler: nil,autolayout: true)
         return button
     }()
     
@@ -26,7 +26,7 @@ class ProfileViewController: UIViewController {
     
     private let username:UILabel = CustomLabel(text: "@cryptoPython", size: 14, weight: .medium, color: .gray, numOfLines: 1, adjustFontSize: true)
     
-    private lazy var stackView:UIStackView = {
+    private lazy var userDetailsView:UIStackView = {
         let stack = UIView.StackBuilder(views: [self.name,self.username], ratios: [0.5,0.5], spacing: 4, axis: .vertical)
         stack.alignment = .center
         return stack
@@ -35,6 +35,72 @@ class ProfileViewController: UIViewController {
     private var assetsView:CustomSelectorCollectionView = {
         let collection = CustomSelectorCollectionView(sections: [NFTArtOfferSection,NFTArtSection], layoutForSections: [NFTArtSection.type!:.standardVerticalTwoByTwoGrid,NFTArtOfferSection.type!:.basicLayout])
         return collection
+    }()
+    
+//    private let favoriteButton:CustomButton = CustomButton(frame: .init(origin: .zero, size: .init(width: 40, height: 40)),cornerRadius: 20, name: "favorites", handler: nil, autolayout: true)
+//
+//    private let walletButton:CustomButton = CustomButton(frame: .init(origin: .zero, size: .init(width: 40, height: 40)),cornerRadius: 20, name: "wallet", handler: nil, autolayout: true)
+//
+//    private let draftButton:CustomButton = CustomButton(frame: .init(origin: .zero, size: .init(width: 40, height: 40)),cornerRadius: 20, name: "draft", handler: nil, autolayout: true)
+//
+//    private let profileButton:CustomButton = CustomButton(frame: .init(origin: .zero, size: .init(width: 40, height: 40)),cornerRadius: 20, name: "profile", handler: nil, autolayout: true)
+    
+    private let favoriteButton:UIView = {
+        let button = CustomButton(frame: .init(origin: .zero, size: .init(width: 40, height: 40)),cornerRadius: 20, name: "favorites", handler: nil, autolayout: true)
+        let label = CustomLabel(text: "Favorites", size: 12, weight: .medium, color: .gray, numOfLines: 1, adjustFontSize: true, autoLayout: true)
+        let stack = UIStackView(arrangedSubviews: [button,label])
+        stack.axis = .vertical
+        stack.distribution = .fill
+        stack.spacing = 5
+        stack.translatesAutoresizingMaskIntoConstraints = false
+        
+        return stack
+    }()
+    
+    private let walletButton:UIView = {
+        let button = CustomButton(frame: .init(origin: .zero, size: .init(width: 40, height: 40)),cornerRadius: 20, name: "wallet", handler: nil, autolayout: true)
+        let label = CustomLabel(text: "Wallet", size: 12, weight: .medium, color: .gray, numOfLines: 1, adjustFontSize: true, autoLayout: true)
+        let stack = UIStackView(arrangedSubviews: [button,label])
+        stack.axis = .vertical
+        stack.distribution = .fill
+        stack.spacing = 5
+        stack.translatesAutoresizingMaskIntoConstraints = false
+        
+        return stack
+    }()
+    
+    private let draftButton:UIView = {
+        let button = CustomButton(frame: .init(origin: .zero, size: .init(width: 40, height: 40)),cornerRadius: 20, name: "draft", handler: nil, autolayout: true)
+        let label = CustomLabel(text: "Draft", size: 12, weight: .medium, color: .gray, numOfLines: 1, adjustFontSize: true, autoLayout: true)
+        let stack = UIStackView(arrangedSubviews: [button,label])
+        stack.axis = .vertical
+        stack.distribution = .fill
+        stack.spacing = 5
+        stack.translatesAutoresizingMaskIntoConstraints = false
+        
+        return stack
+    }()
+    
+    private let profileButton:UIView = {
+        let button = CustomButton(frame: .init(origin: .zero, size: .init(width: 40, height: 40)),cornerRadius: 20, name: "profile", handler: nil, autolayout: true)
+        let label = CustomLabel(text: "Profile", size: 12, weight: .medium, color: .gray, numOfLines: 1, adjustFontSize: true, autoLayout: true)
+        let stack = UIStackView(arrangedSubviews: [button,label])
+        stack.axis = .vertical
+        stack.distribution = .fill
+        stack.spacing = 5
+        stack.translatesAutoresizingMaskIntoConstraints = false
+        
+        return stack
+    }()
+    
+    private lazy var userActionsStack:UIStackView = {
+        let stack = UIStackView(arrangedSubviews: [favoriteButton,walletButton,draftButton,profileButton])
+        stack.axis = .horizontal
+        stack.distribution = .equalSpacing
+    
+        stack.translatesAutoresizingMaskIntoConstraints = false
+        
+        return stack
     }()
     
     private lazy var headerStack:UIStackView = {
@@ -87,7 +153,9 @@ class ProfileViewController: UIViewController {
         
         self.view.addSubview(self.userProfileView)
         
-        self.view.addSubview(self.stackView)
+        self.view.addSubview(self.userActionsStack)
+        
+        self.view.addSubview(self.userDetailsView)
         
         self.assetsView.collectionDelegate = self
         
@@ -111,21 +179,24 @@ class ProfileViewController: UIViewController {
         self.view.trailingAnchor.constraint(equalToSystemSpacingAfter: self.headerStack.trailingAnchor, multiplier: 3).isActive = true
         self.headerStack.heightAnchor.constraint(equalToConstant: 40).isActive = true
         
-//        self.userProfileView.topAnchor.constraint(equalToSystemSpacingBelow: self.view.safeAreaLayoutGuide.topAnchor, multiplier: 6).isActive = true
         self.userProfileView.topAnchor.constraint(equalToSystemSpacingBelow: self.headerStack.bottomAnchor, multiplier: 6).isActive = true
         self.userProfileView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
         self.userProfileView.widthAnchor.constraint(equalToConstant: 64).isActive = true
         self.userProfileView.heightAnchor.constraint(equalToConstant: 64).isActive = true
         
     
+        self.userDetailsView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
+        self.userDetailsView.topAnchor.constraint(equalToSystemSpacingBelow: self.userProfileView.bottomAnchor, multiplier: 2).isActive = true
         
-        self.stackView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
-        self.stackView.topAnchor.constraint(equalToSystemSpacingBelow: self.userProfileView.bottomAnchor, multiplier: 2).isActive = true
+        
+        self.userActionsStack.leadingAnchor.constraint(equalTo: self.headerStack.leadingAnchor).isActive = true
+        self.userActionsStack.trailingAnchor.constraint(equalTo: self.headerStack.trailingAnchor).isActive = true
+        self.userActionsStack.topAnchor.constraint(equalToSystemSpacingBelow: self.userDetailsView.bottomAnchor, multiplier: 2).isActive = true
         
         
         self.assetsView.leadingAnchor.constraint(equalToSystemSpacingAfter: self.view.safeAreaLayoutGuide.leadingAnchor, multiplier: 3).isActive = true
         self.view.trailingAnchor.constraint(equalToSystemSpacingAfter: self.assetsView.trailingAnchor, multiplier: 3).isActive = true
-        self.assetsView.topAnchor.constraint(equalToSystemSpacingBelow: self.stackView.bottomAnchor, multiplier: 2).isActive = true
+        self.assetsView.topAnchor.constraint(equalToSystemSpacingBelow: self.userActionsStack.bottomAnchor, multiplier: 2).isActive = true
         self.view.bottomAnchor.constraint(equalToSystemSpacingBelow: self.assetsView.bottomAnchor, multiplier: 4).isActive = true
     }
     
