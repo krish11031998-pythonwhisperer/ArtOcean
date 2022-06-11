@@ -106,14 +106,18 @@ extension FavoritesViewController:CustomComplexCollectionViewDelegate{
             guard let cell = collection.dequeueReusableCell(withReuseIdentifier: NFTArtCollectionViewCell.identifier, for: indexPath) as? NFTArtCollectionViewCell else { return nil}
             
             cell.configure(item)
-            
+            cell.delegate = self
             return cell
         default:
             return nil
         }
     }
+}
+
+//MARK: - CustomComplexCollection CustomButton
+extension FavoritesViewController:NFTArtCellDelegate{
     
-    
-    
-    
+    func viewArt(art: NFTModel) {
+        self.navigationController?.pushViewController(NFTDetailArtViewController(nftArt: art), animated: true)
+    }
 }

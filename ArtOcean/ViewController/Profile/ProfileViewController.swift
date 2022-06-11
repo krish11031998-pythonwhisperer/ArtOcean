@@ -50,8 +50,8 @@ class ProfileViewController: UIViewController {
         return stack
     }()
     
-    private let walletButton:UIView = {
-        let button = CustomButton(frame: .init(origin: .zero, size: .init(width: 40, height: 40)),cornerRadius: 20, name: "wallet", handler: nil, autolayout: true)
+    private lazy var walletButton:UIView = {
+        let button = CustomButton(frame: .init(origin: .zero, size: .init(width: 40, height: 40)),cornerRadius: 20, name: "wallet", handler: self.onTapWallet, autolayout: true)
         let label = CustomLabel(text: "Wallet", size: 12, weight: .medium, color: .gray, numOfLines: 1, adjustFontSize: true, autoLayout: true)
         label.textAlignment = .center
         let stack = UIStackView(arrangedSubviews: [button,label])
@@ -267,4 +267,7 @@ extension ProfileViewController{
         }) ?? []), animated: true)
     }
     
+    func onTapWallet(){
+        self.navigationController?.pushViewController(WalletDetailView(), animated: true)
+    }
 }

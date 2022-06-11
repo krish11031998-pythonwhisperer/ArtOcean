@@ -29,6 +29,8 @@
 		EF527498284C1E5B008C77EC /* NSCollectionLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF527497284C1E5B008C77EC /* NSCollectionLayout.swift */; };
 		EF69B6AA2851575700ABDADA /* UserProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF69B6A92851575700ABDADA /* UserProfileViewController.swift */; };
 		EF69B6AD28529FD000ABDADA /* FavoriteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF69B6AC28529FD000ABDADA /* FavoriteViewController.swift */; };
+		EF69B6AF2854965400ABDADA /* WalletDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF69B6AE2854965400ABDADA /* WalletDetailView.swift */; };
+		EF69B6B12854C11E00ABDADA /* StackedButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF69B6B02854C11E00ABDADA /* StackedButtons.swift */; };
 		EF7447AE284902A300899476 /* AccountHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF7447AD284902A300899476 /* AccountHeaderView.swift */; };
 		EF7447B028495A8700899476 /* AccountMetrics.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF7447AF28495A8700899476 /* AccountMetrics.swift */; };
 		EF7447B2284A0F5800899476 /* RankingCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF7447B1284A0F5800899476 /* RankingCollectionViewCell.swift */; };
@@ -159,6 +161,8 @@
 		EF527497284C1E5B008C77EC /* NSCollectionLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSCollectionLayout.swift; sourceTree = "<group>"; };
 		EF69B6A92851575700ABDADA /* UserProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileViewController.swift; sourceTree = "<group>"; };
 		EF69B6AC28529FD000ABDADA /* FavoriteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteViewController.swift; sourceTree = "<group>"; };
+		EF69B6AE2854965400ABDADA /* WalletDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletDetailView.swift; sourceTree = "<group>"; };
+		EF69B6B02854C11E00ABDADA /* StackedButtons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StackedButtons.swift; sourceTree = "<group>"; };
 		EF7447AD284902A300899476 /* AccountHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountHeaderView.swift; sourceTree = "<group>"; };
 		EF7447AF28495A8700899476 /* AccountMetrics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountMetrics.swift; sourceTree = "<group>"; };
 		EF7447B1284A0F5800899476 /* RankingCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RankingCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -274,8 +278,6 @@
 				EF8B066D283BF0F10050E726 /* StatisticsViewController.swift */,
 				EF00F5D6284805C1003D8683 /* StatisticCollectionView.swift */,
 				EF00F5D42847A660003D8683 /* SliderSelectorView.swift */,
-				EF7447B1284A0F5800899476 /* RankingCollectionViewCell.swift */,
-				EF7447B3284A0F8000899476 /* ActivityCollectionViewCell.swift */,
 				EF7447BB284A300F00899476 /* PageViewController.swift */,
 			);
 			path = Statistics;
@@ -304,6 +306,7 @@
 			children = (
 				EF8B066B283BF0E70050E726 /* ProfileViewController.swift */,
 				EF69B6AC28529FD000ABDADA /* FavoriteViewController.swift */,
+				EF69B6AE2854965400ABDADA /* WalletDetailView.swift */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -502,6 +505,8 @@
 		EF8B06D8283E6F120050E726 /* CommonComponents */ = {
 			isa = PBXGroup;
 			children = (
+				EF7447B1284A0F5800899476 /* RankingCollectionViewCell.swift */,
+				EF7447B3284A0F8000899476 /* ActivityCollectionViewCell.swift */,
 				EF8B06D9283E77AA0050E726 /* ContainerHeaderView.swift */,
 				EF8B06DD283E7C2C0050E726 /* Container.swift */,
 				EFD13C1B2843E1BD000E422E /* CustomLabelButton.swift */,
@@ -512,6 +517,7 @@
 				EF527495284C0608008C77EC /* CustomComplexCollectionView.swift */,
 				EF924CF4284CA454009E9C2A /* CustomSelectorCollectionView.swift */,
 				EF358376284D371C00783D75 /* StretchyHeaderView.swift */,
+				EF69B6B02854C11E00ABDADA /* StackedButtons.swift */,
 			);
 			path = CommonComponents;
 			sourceTree = "<group>";
@@ -702,6 +708,7 @@
 			files = (
 				EFD13C2B2844D560000E422E /* NFTOfferTableViewCell.swift in Sources */,
 				EFD13C272844CF4F000E422E /* NFTOfferTableView.swift in Sources */,
+				EF69B6AF2854965400ABDADA /* WalletDetailView.swift in Sources */,
 				EF00F5CA28465B6E003D8683 /* TopSellerCollectionView.swift in Sources */,
 				EF8B067F283C28960050E726 /* DataError.swift in Sources */,
 				EF8B0635283BEAC10050E726 /* MainTabViewController.swift in Sources */,
@@ -716,6 +723,7 @@
 				EF69B6AA2851575700ABDADA /* UserProfileViewController.swift in Sources */,
 				EF7447BE284A5B2600899476 /* CustomPageSelectorViewController.swift in Sources */,
 				EF527498284C1E5B008C77EC /* NSCollectionLayout.swift in Sources */,
+				EF69B6B12854C11E00ABDADA /* StackedButtons.swift in Sources */,
 				EF00F5D7284805C1003D8683 /* StatisticCollectionView.swift in Sources */,
 				EF7447B4284A0F8000899476 /* ActivityCollectionViewCell.swift in Sources */,
 				EF8B0677283C20820050E726 /* UIImageView.swift in Sources */,
