@@ -10,7 +10,7 @@ import UIKit
 
 class WalletDetailView:UIViewController{
     
-    private var items:[Any] = Array.init(repeating: "Item", count: 10)
+    private var items:[TransactionModel] = txns
     
     private let backButton:CustomButton = .backButton
     
@@ -97,7 +97,7 @@ class WalletDetailView:UIViewController{
         table.setContentCompressionResistancePriority(.init(749), for: .vertical)
         table.showsVerticalScrollIndicator = false
         
-        table.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
+        table.register(TransactionViewCell.self, forCellReuseIdentifier: TransactionViewCell.identifier)
         
         table.backgroundColor = .clear
         return table
@@ -212,17 +212,24 @@ extension WalletDetailView:UITableViewDelegate,UITableViewDataSource{
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-        cell.backgroundColor = .red
-        let label = CustomLabel(text: "Item #\(indexPath.row + 1)", size: 14, weight: .bold, color: .black, numOfLines: 1, adjustFontSize: true, autoLayout: true)
-        cell.addSubview(label)
         
-        NSLayoutConstraint.activate([
-            label.centerYAnchor.constraint(equalTo: cell.centerYAnchor),
-            label.leadingAnchor.constraint(equalToSystemSpacingAfter: cell.leadingAnchor, multiplier: 1),
-            cell.trailingAnchor.constraint(equalToSystemSpacingAfter: label.trailingAnchor, multiplier: 1)
-        ])
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: TransactionViewCell.identifier, for: indexPath) as? TransactionViewCell else{
+            
+            let cell = UITableViewCell()
+            cell.backgroundColor = .red
+            let label = CustomLabel(text: "Item #\(indexPath.row + 1)", size: 14, weight: .bold, color: .black, numOfLines: 1, adjustFontSize: true, autoLayout: true)
+            cell.addSubview(label)
+            
+            NSLayoutConstraint.activate([
+                label.centerYAnchor.constraint(equalTo: cell.centerYAnchor),
+                label.leadingAnchor.constraint(equalToSystemSpacingAfter: cell.leadingAnchor, multiplier: 1),
+                cell.trailingAnchor.constraint(equalToSystemSpacingAfter: label.trailingAnchor, multiplier: 1)
+            ])
+            
+            return cell
+        }
         
+        cell.configureCell(txn: self.items[indexPath.row])
         
         return cell
     }

@@ -50,7 +50,7 @@ class StackedButtons:UIView{
 
 class StackableButton:UIStackView{
     
-    public var handleTap:() -> Void
+    public var handleTap:(() -> Void)? = nil
     
     private let imageView:UIImageView = {
         let image = UIImageView()
@@ -68,7 +68,7 @@ class StackableButton:UIStackView{
     
     private var buttonName:CustomLabel? = nil
         
-    init(buttonImage:String,buttonName:String? = nil,buttonColor:UIColor,textColor:UIColor? = nil,handleTap:@escaping () -> Void){
+    init(buttonImage:String,buttonName:String? = nil,buttonColor:UIColor,textColor:UIColor? = nil,handleTap: (() -> Void)? = nil){
         self.handleTap = handleTap
         super.init(frame: .zero)
         
@@ -117,7 +117,7 @@ class StackableButton:UIStackView{
     
     @objc func onTapHandler(){
         self.bouncyButtonClick()
-        self.handleTap()
+        self.handleTap?()
     }
 }
 
