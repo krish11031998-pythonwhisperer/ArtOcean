@@ -204,18 +204,9 @@ class NFTDetailArtViewController:UIViewController{
     func setupImageView(){
         self.scrollView.addSubview(self.imageView)
         guard let safeImg = self.nftArt?.metadata?.image else{return}
-        ImageDownloader.shared.fetchImage(urlStr: safeImg) { [weak self] result in
-            switch result{
-            case .success(let image):
-                DispatchQueue.main.async {
-                    self?.imageView.image = image
-                    if let safeHeroHeaderView = self?.heroHeaderView as? NFTHeroHeaderView{
-                        safeHeroHeaderView.updatebackgroundImage(image)
-                    }
-                }
-            case .failure(let err):
-                print("(Error) Error : ",err.localizedDescription)
-            }
+        self.imageView.updateImageView(url: safeImg)
+        if let safeHeroHeaderView = heroHeaderView as? NFTHeroHeaderView{
+            safeHeroHeaderView.updatebackgroundImage(url:safeImg)
         }
     }
     

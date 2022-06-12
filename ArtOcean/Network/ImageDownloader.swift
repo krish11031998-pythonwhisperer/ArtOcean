@@ -48,7 +48,7 @@ public struct ImageCache:ImageDictCache{
 class ImageDownloader{
     
     static var shared = ImageDownloader()
-
+    
     private var callHandlers:[URL:[((Result<UIImage,ImageDownloaderError>) -> Void)]] = [:]
     
     func fetchImage(urlStr:String,completion:@escaping ((Result<UIImage,ImageDownloaderError>) -> Void)){
@@ -66,38 +66,20 @@ class ImageDownloader{
             URLSession.shared.dataTask(with: safeURL) { data , response, err in
                 if let safeResponse = response as? HTTPURLResponse,safeResponse.statusCode >= 400 && safeResponse.statusCode < 500{
                     print("(Error) the response was not fetched status : ",safeResponse.statusCode)
-//                    if let handlers = self.callHandlers[safeURL]{
-//                        handlers.forEach({$0(.failure(.responseStatusFailed))})
-//                        self.callHandlers.removeAll()
-//                    }else{
-                        completion(.failure(.responseStatusFailed))
-//                    }
-                    
+                    completion(.failure(.responseStatusFailed))
                     return
                 }
                 
                 guard let safeData = data,let image = UIImage(data: safeData) else {
                     if let safeError = err{
-//                        if let handlers = self.callHandlers[safeURL]{
-//                            handlers.forEach({$0(.failure(.dataNotFetched))})
-//                            self.callHandlers.removeAll()
-//                        }else{
-                            completion(.failure(.dataNotFetched))
-//                        }
+                        completion(.failure(.dataNotFetched))
                         print("(Error) Error while fetching : ",safeError.localizedDescription)
                     }
                     return
                 }
                 
                 ImageCache.cache[safeURL] = image
-                
-//                if let handlers = self.callHandlers[safeURL]{
-//                    handlers.forEach({$0(.success(image))})
-//                    self.callHandlers.removeAll()
-//                }else{
-                    completion(.success(image))
-//                }
-                
+                completion(.success(image))
             }.resume()
         }
     }

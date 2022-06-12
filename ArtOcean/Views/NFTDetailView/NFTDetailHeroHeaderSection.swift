@@ -54,6 +54,10 @@ class NFTHeroHeaderView:UIView{
         }
     }
     
+    public func updatebackgroundImage(url:String){
+        backgroundImageView.updateImageView(url: url)
+    }
+    
     public func headerViewScrolled(_ scrollView:UIScrollView){
         self.heroHeaderView.StretchOnScroll(scrollView)
     }
