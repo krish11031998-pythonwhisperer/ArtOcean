@@ -67,7 +67,7 @@ class WalletDetailView:UIViewController{
     
     //MARK: - Recnt Activity Section
     private let seeAllButton:UILabel = {
-        return CustomLabel(text: "See all", size: 14, weight: .medium, color: .black, numOfLines: 1, adjustFontSize: true, autoLayout: false)
+        return CustomLabel(text: "See all", size: 14, weight: .medium, color: .appGrayColor, numOfLines: 1, adjustFontSize: true, autoLayout: false)
     }()
     
     private lazy var collectionHeader:UIView = {

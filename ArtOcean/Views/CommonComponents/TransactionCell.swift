@@ -29,14 +29,17 @@ class TransactionViewCell:UITableViewCell{
         
         NSLayoutConstraint.activate([
             txnImage.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            txnImage.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+            txnImage.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            txnImage.widthAnchor.constraint(lessThanOrEqualTo: view.widthAnchor),
+            txnImage.heightAnchor.constraint(lessThanOrEqualTo: view.heightAnchor)
         ])
 
         return view
     }()
     
     private lazy var stackView:UIStackView = {
-        let stack = UIStackView(arrangedSubviews: [txnImageBackground,txnValueInfo,txnInfoView])
+        
+        let stack = UIStackView(arrangedSubviews: [txnImageBackground,txnDetails,txnInfoView])
         stack.axis = .horizontal
         stack.spacing = 8
         stack.translatesAutoresizingMaskIntoConstraints = false
@@ -45,9 +48,23 @@ class TransactionViewCell:UITableViewCell{
     
     private let txnValueInfo:CustomLabel = {
         let label = CustomLabel(text: "", size: 14, weight: .medium, color: .black, numOfLines: 1, adjustFontSize: true, autoLayout: false)
-        label.setContentHuggingPriority(.init(249), for: .horizontal)
-        label.setContentCompressionResistancePriority(.init(749), for: .horizontal)
+//        label.setContentHuggingPriority(.init(249), for: .horizontal)
+//        label.setContentCompressionResistancePriority(.init(749), for: .horizontal)
         return label
+    }()
+    
+    private let txnUser:CustomLabel = {
+        let label = CustomLabel(text: "", size: 14, weight: .medium, color: .appGrayColor, numOfLines: 1, adjustFontSize: true, autoLayout: false)
+        return label
+    }()
+    
+    private lazy var txnDetails:UIStackView = {
+        let stack = UIStackView(arrangedSubviews: [txnValueInfo])
+        stack.axis = .vertical
+        stack.spacing = 8
+        stack.setContentCompressionResistancePriority(.init(749), for: .horizontal)
+        stack.setContentHuggingPriority(.init(249), for: .horizontal)
+        return stack
     }()
     
     private let txnType:CustomLabel = CustomLabel(text: "", size: 14, weight: .medium, color: .appBlackColor, numOfLines: 1, adjustFontSize: true)
@@ -72,6 +89,7 @@ class TransactionViewCell:UITableViewCell{
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         backgroundColor = .clear
         addSubview(stackView)
+        selectionStyle = .none
         setupLayout()
     }
     
@@ -79,6 +97,15 @@ class TransactionViewCell:UITableViewCell{
         fatalError("init(coder:) has not been implemented")
     }
 
+    override func setSelected(_ selected: Bool, animated: Bool) {
+        super.setSelected(selected, animated: animated)
+        
+        if selected{
+            bouncyButtonClick()
+            setHighlighted(false, animated: true)
+        }
+        
+    }
     
     func setupLayout(){
         
@@ -92,20 +119,46 @@ class TransactionViewCell:UITableViewCell{
     }
     
     public func configureCell(txn:TransactionModel){
+        resetCell()
         switch txn.type{
             case .receive:
                 txnImage.image = .init(named: "arrow-up")?.withTintColor(.appGreenColor)
+                txnValueInfo.text = "\(txn.value) ETH"
             case .send:
-                txnImage.image = .init(named: "arrow-up-right")?.withTintColor(.appRedColor)
-            default:
-                print("No Image")
+                txnImage.image = .init(named: "arrow-up-right")?.withTintColor(.red)
+                txnValueInfo.text = "\(txn.value) ETH"
+            case .buy,.sell:
+                if let img = txn.artModel?.metadata?.image{
+                    ImageDownloader.shared.fetchImage(urlStr: img) { result in
+                        switch result{
+                        case .success(let img):
+                            DispatchQueue.main.async { [weak self] in
+                                self?.txnImage.image = img
+                                self?.txnImage.contentMode = .scaleAspectFill
+                                self?.txnImage.clipsToBounds = true
+                                self?.txnImage.layer.cornerRadius = 8
+                            }
+                        case .failure(let err):
+                            print("(DEBUG) err : ",err.localizedDescription)
+                        }
+                    }
+                    txnImageBackground.layer.cornerRadius = 8
+                    txnValueInfo.text = txn.artModel?.title ?? "XXXXX"
+                    txnUser.text = "@krishna"
+                    txnDetails.addArrangedSubview(txnUser)
+                }
         }
         
         txnType.text = txn.type.rawValue.capitalized
         
-        timeInfo.text = txn.dayTimes + "days ago"
+        timeInfo.text = txn.dayTimes + " days ago"
         
-        txnValueInfo.text = "\(txn.value) ETH"
-        
+    }
+    
+    func resetCell(){
+        txnImage.image = nil
+        txnValueInfo.text = ""
+        txnType.text = ""
+        timeInfo.text = ""
     }
 }

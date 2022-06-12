@@ -50,6 +50,26 @@ struct NFTModel:Codable,Hashable{
             return "XXXXX"
         }
     }
+    
+    static var testsArtData:[NFTModel]? = {
+        var results:[NFTModel]? = nil
+        Bundle.main.decodable(NFTDataResponse.self, for: "nft.json") { result in
+            switch result{
+            case .success(let nftResp):
+                guard let nfts = nftResp.ownedNfts else {return}
+                results = Array(nfts.filter({ art in
+                    if let image =  art.metadata?.image,image.contains("jpeg"){
+                        return true
+                    }else{
+                        return false
+                    }
+                }))
+            case .failure(let err):
+                print("(Error) err : ",err.localizedDescription)
+            }
+        }
+        return results
+    }()
 }
 
 // MARK: - Contract
