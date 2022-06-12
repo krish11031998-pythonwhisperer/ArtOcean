@@ -44,45 +44,60 @@ public struct ImageCache:ImageDictCache{
     }
 }
 
+var callHandlers:[URL:[((Result<UIImage,ImageDownloaderError>) -> Void)]] = [:]
 
 class ImageDownloader{
     
     static var shared = ImageDownloader()
     
-    private var callHandlers:[URL:[((Result<UIImage,ImageDownloaderError>) -> Void)]] = [:]
-    
-    func fetchImage(urlStr:String,completion:@escaping ((Result<UIImage,ImageDownloaderError>) -> Void)){
+    func fetchImage(urlStr:String,imageSize:CGSize = .init(width: UIScreen.main.bounds.width, height: 300),completion:@escaping ((Result<UIImage,ImageDownloaderError>) -> Void)){
+        
         guard let safeURL = URL(string: urlStr) else{
             completion(.failure(.invalidURL))
             print("(Error) the url is not valid: Damaged => ")
             return
         }
         
+        if let _ = callHandlers[safeURL]{
+            callHandlers[safeURL]!.append(completion)
+        }else{
+            callHandlers[safeURL] = [completion]
+        }
+        
         
         if let image = ImageCache.cache[safeURL]{
             print("(DEBUG) Retrieving From Cache!!!")
-            completion(.success(image))
+            self.handleCompletion(url: safeURL, result: .success(image))
         }else{
             URLSession.shared.dataTask(with: safeURL) { data , response, err in
                 if let safeResponse = response as? HTTPURLResponse,safeResponse.statusCode >= 400 && safeResponse.statusCode < 500{
                     print("(Error) the response was not fetched status : ",safeResponse.statusCode)
-                    completion(.failure(.responseStatusFailed))
+                    self.handleCompletion(url: safeURL, result: .failure(.responseStatusFailed))
                     return
                 }
                 
-                guard let safeData = data,let image = UIImage(data: safeData) else {
+                guard let safeData = data,let image = UIImage.downsample(imageData: safeData, to: imageSize) else {
                     if let safeError = err{
-                        completion(.failure(.dataNotFetched))
+                        self.handleCompletion(url: safeURL, result: .failure(.dataNotFetched))
                         print("(Error) Error while fetching : ",safeError.localizedDescription)
                     }
                     return
                 }
                 
                 ImageCache.cache[safeURL] = image
-                completion(.success(image))
+                self.handleCompletion(url: safeURL, result: .success(image))
             }.resume()
         }
     }
     
+    
+    func handleCompletion(url:URL,result:Result<UIImage,ImageDownloaderError>){
+        if let allCompletions = callHandlers[url]{
+            for completion in allCompletions{
+                completion(result)
+            }
+        }
+        callHandlers.removeValue(forKey: url)
+    }
 }
 

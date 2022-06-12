@@ -72,7 +72,6 @@ class CustomImageView:UIImageView{
             self.gradientView = UIView()
             self.gradient = CAGradientLayer()
             self.gradient!.colors = self.colors.compactMap({$0.cgColor})
-//            self.layer.addSublayer(self.gradient!)
             self.buildGradientView()
         }
     }
@@ -97,7 +96,17 @@ class CustomImageView:UIImageView{
     
     public func updateImageView(url:String?){
         guard let safeURL = url else {return}
-        self.sd_setImage(with: URL(string: safeURL), placeholderImage: UIImage(named: "placeHolder"))
+        ImageDownloader.shared.fetchImage(urlStr: safeURL) {result in
+            switch result{
+            case .success(let image):
+                DispatchQueue.main.async { [weak self] in
+                    self?.image = image
+                }
+            case .failure(let err):
+                print("(Error) err : ",err.localizedDescription)
+
+            }
+        }
         
     }
 }

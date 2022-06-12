@@ -34,6 +34,7 @@
 		EF69B6B328550CC100ABDADA /* TransactionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF69B6B228550CC100ABDADA /* TransactionCell.swift */; };
 		EF69B6B528550D9F00ABDADA /* UITableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF69B6B428550D9F00ABDADA /* UITableViewCell.swift */; };
 		EF69B6B728550E3C00ABDADA /* TransactionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF69B6B628550E3C00ABDADA /* TransactionModel.swift */; };
+		EF69B6B928562D5700ABDADA /* CustomAnimatedImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF69B6B828562D5700ABDADA /* CustomAnimatedImage.swift */; };
 		EF7447AE284902A300899476 /* AccountHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF7447AD284902A300899476 /* AccountHeaderView.swift */; };
 		EF7447B028495A8700899476 /* AccountMetrics.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF7447AF28495A8700899476 /* AccountMetrics.swift */; };
 		EF7447B2284A0F5800899476 /* RankingCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF7447B1284A0F5800899476 /* RankingCollectionViewCell.swift */; };
@@ -169,6 +170,7 @@
 		EF69B6B228550CC100ABDADA /* TransactionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionCell.swift; sourceTree = "<group>"; };
 		EF69B6B428550D9F00ABDADA /* UITableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITableViewCell.swift; sourceTree = "<group>"; };
 		EF69B6B628550E3C00ABDADA /* TransactionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionModel.swift; sourceTree = "<group>"; };
+		EF69B6B828562D5700ABDADA /* CustomAnimatedImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAnimatedImage.swift; sourceTree = "<group>"; };
 		EF7447AD284902A300899476 /* AccountHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountHeaderView.swift; sourceTree = "<group>"; };
 		EF7447AF28495A8700899476 /* AccountMetrics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountMetrics.swift; sourceTree = "<group>"; };
 		EF7447B1284A0F5800899476 /* RankingCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RankingCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -527,6 +529,7 @@
 				EF358376284D371C00783D75 /* StretchyHeaderView.swift */,
 				EF69B6B02854C11E00ABDADA /* StackedButtons.swift */,
 				EF69B6B228550CC100ABDADA /* TransactionCell.swift */,
+				EF69B6B828562D5700ABDADA /* CustomAnimatedImage.swift */,
 			);
 			path = CommonComponents;
 			sourceTree = "<group>";
@@ -760,6 +763,7 @@
 				EF8B0665283BED350050E726 /* HomeViewController.swift in Sources */,
 				EF00F5DA2848BB6B003D8683 /* AccountsViewController.swift in Sources */,
 				EF00F5C7284638E7003D8683 /* NFTArtCollectionViewCell.swift in Sources */,
+				EF69B6B928562D5700ABDADA /* CustomAnimatedImage.swift in Sources */,
 				EF8B06CC283D5B4C0050E726 /* TopCollectionView.swift in Sources */,
 				EF527496284C0608008C77EC /* CustomComplexCollectionView.swift in Sources */,
 				EF924CF5284CA454009E9C2A /* CustomSelectorCollectionView.swift in Sources */,
