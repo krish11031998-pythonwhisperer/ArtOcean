@@ -8,11 +8,13 @@
 import Foundation
 import UIKit
 
-class FavoritesViewController:UIViewController{
+class ProfileAssetCollectionViewController:UIViewController{
     
     let art:[NFTModel]
     
     private var artCollection:CustomComplexCollectionView!
+    
+    private var pageName:String = ""
     
     private lazy var searchView:UIView = {
         let view = UIStackView()
@@ -45,8 +47,9 @@ class FavoritesViewController:UIViewController{
         return view
     }()
     
-    init(art:[NFTModel]){
+    init(art:[NFTModel],name:String){
         self.art = art
+        self.pageName = name
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -73,7 +76,7 @@ class FavoritesViewController:UIViewController{
         let leftBarItem:UIBarButtonItem = .init(customView: CustomButton(frame: .init(origin: .zero, size: .init(width: 30, height: 30)), cornerRadius: 15, systemName: "chevron.left", handler: {
             self.navigationController?.popViewController(animated: true)
         }, autolayout: false))
-        let titleView:UIView = CustomLabel(text: "Favorites", size: 18, weight: .bold, color: .black, numOfLines: 1, adjustFontSize: true, autoLayout: false)
+        let titleView:UIView = CustomLabel(text: pageName, size: 18, weight: .bold, color: .black, numOfLines: 1, adjustFontSize: true, autoLayout: false)
         
         self.navigationItem.leftBarButtonItem = leftBarItem
         self.navigationItem.titleView  = titleView
@@ -95,7 +98,7 @@ class FavoritesViewController:UIViewController{
 }
 
 //MARK: - CustomComplexCollectionViewDelegate
-extension FavoritesViewController:CustomComplexCollectionViewDelegate{
+extension ProfileAssetCollectionViewController:CustomComplexCollectionViewDelegate{
     func registerCellToCollection(_ collection: UICollectionView) {
         collection.register(NFTArtCollectionViewCell.self, forCellWithReuseIdentifier: NFTArtCollectionViewCell.identifier)
     }
@@ -115,7 +118,7 @@ extension FavoritesViewController:CustomComplexCollectionViewDelegate{
 }
 
 //MARK: - CustomComplexCollection CustomButton
-extension FavoritesViewController:NFTArtCellDelegate{
+extension ProfileAssetCollectionViewController:NFTArtCellDelegate{
     
     func viewArt(art: NFTModel) {
         self.navigationController?.pushViewController(NFTDetailArtViewController(nftArt: art), animated: true)

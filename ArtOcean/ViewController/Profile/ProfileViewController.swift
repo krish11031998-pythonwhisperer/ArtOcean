@@ -63,8 +63,8 @@ class ProfileViewController: UIViewController {
         return stack
     }()
     
-    private let draftButton:UIView = {
-        let button = CustomButton(frame: .init(origin: .zero, size: .init(width: 40, height: 40)),cornerRadius: 20, name: "draft", handler: nil, autolayout: true)
+    private lazy var draftButton:UIView = {
+        let button = CustomButton(frame: .init(origin: .zero, size: .init(width: 40, height: 40)),cornerRadius: 20, name: "draft", handler: onTapDrafts, autolayout: true)
         let label = CustomLabel(text: "Draft", size: 12, weight: .medium, color: .gray, numOfLines: 1, adjustFontSize: true, autoLayout: true)
         label.textAlignment = .center
         let stack = UIStackView(arrangedSubviews: [button,label])
@@ -257,14 +257,11 @@ extension ProfileViewController:CustomButtonDelegate{
 extension ProfileViewController{
     
     func onTapFavorites(){
-        self.navigationController?.pushViewController(FavoritesViewController(art: NFTArtSection.items?.compactMap({ item in
-            switch item{
-            case .artData(let nft):
-                return nft
-            default:
-                return nil
-            }
-        }) ?? []), animated: true)
+        self.navigationController?.pushViewController(ProfileAssetCollectionViewController(art: NFTModel.testsArtData ?? [],name: "Favorite"), animated: true)
+    }
+    
+    func onTapDrafts(){
+        self.navigationController?.pushViewController(ProfileAssetCollectionViewController(art: NFTModel.testsArtData ?? [], name: "Draft"), animated: true)
     }
     
     func onTapWallet(){

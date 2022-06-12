@@ -48,8 +48,6 @@ class TransactionViewCell:UITableViewCell{
     
     private let txnValueInfo:CustomLabel = {
         let label = CustomLabel(text: "", size: 14, weight: .medium, color: .black, numOfLines: 1, adjustFontSize: true, autoLayout: false)
-//        label.setContentHuggingPriority(.init(249), for: .horizontal)
-//        label.setContentCompressionResistancePriority(.init(749), for: .horizontal)
         return label
     }()
     
