@@ -58,7 +58,7 @@ struct NFTModel:Codable,Hashable{
             case .success(let nftResp):
                 guard let nfts = nftResp.ownedNfts else {return}
                 results = Array(nfts.filter({ art in
-                    if let image =  art.metadata?.image,image.contains("jpeg"){
+                    if let image =  art.metadata?.image,!image.contains("ipfs"){
                         return true
                     }else{
                         return false

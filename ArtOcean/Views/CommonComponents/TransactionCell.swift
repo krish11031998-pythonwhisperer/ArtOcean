@@ -160,5 +160,6 @@ class TransactionViewCell:UITableViewCell{
         txnValueInfo.text = ""
         txnType.text = ""
         timeInfo.text = ""
+        txnDetails.removeArrangedSubview(txnUser)
     }
 }
