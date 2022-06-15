@@ -11,7 +11,7 @@ import UIKit
 class NFTLiveBidCellView:UIView{
     
     private var nftInfo:NFTModel? = nil
-    
+    var largeCard:Bool = false
     private lazy var imageView:CustomImageView = CustomImageView(cornerRadius: 16, maskedCorners: [.layerMinXMinYCorner,.layerMaxXMinYCorner])
   
     private lazy var title:UILabel = {
@@ -47,7 +47,7 @@ class NFTLiveBidCellView:UIView{
     
     private lazy var timeLeftLabel:UILabel = {
         var label = self.labelBuilder(text: "3h 12m 36s left", size: 12, weight: .medium, color: .appBlueColor, numOfLines: 1)
-        label.layer.cornerRadius = 15
+        label.layer.cornerRadius = 14.5
         label.backgroundColor = .appBlueColor.withAlphaComponent(0.15)
         label.clipsToBounds = true
         label.textAlignment = .center
@@ -57,6 +57,7 @@ class NFTLiveBidCellView:UIView{
 
     private lazy var bidButton:CustomLabelButton = {
         var button = CustomLabelButton(title: "Place a bid", color: .white, backgroundColor: .init(hexString: "2281E3",alpha: 1))
+        button.layer.cornerRadius = 14.5
         button.delegate = self
         return button
     }()
@@ -67,11 +68,20 @@ class NFTLiveBidCellView:UIView{
         view.spacing = 8
         view.translatesAutoresizingMaskIntoConstraints = false
         
+        let clearSpacerView:UIView = .clearView()
         view.addArrangedSubview(self.timeLeftLabel)
+        view.addArrangedSubview(clearSpacerView)
         view.addArrangedSubview(self.bidButton)
         
+        clearSpacerView.setContentHuggingPriority(.init(249), for: .horizontal)
+        clearSpacerView.setContentCompressionResistancePriority(.init(749), for: .horizontal)
+        
+        timeLeftLabel.setContentCompressionResistancePriority(.init(1000), for: .horizontal)
+        bidButton.setContentCompressionResistancePriority(.init(1000), for: .horizontal)
+        
         NSLayoutConstraint.activate([
-            self.bidButton.widthAnchor.constraint(equalTo: timeLeftLabel.widthAnchor),
+            self.timeLeftLabel.widthAnchor.constraint(equalToConstant: 109),
+            self.bidButton.widthAnchor.constraint(equalToConstant: 109)
         ])
         
         return view
@@ -129,6 +139,7 @@ class NFTLiveBidCellView:UIView{
         self.addSubview(self.shareButton)
         
         if largeCard{
+            self.largeCard = largeCard
             title.font = .init(name: title.font.fontName, size: 18)
             price.font = .init(name: price.font.fontName, size: 14)
         }
@@ -173,8 +184,9 @@ class NFTLiveBidCellView:UIView{
         self.imageView.widthAnchor.constraint(equalTo: self.widthAnchor).isActive = true
         self.imageView.heightAnchor.constraint(equalTo: self.heightAnchor, multiplier: 0.57).isActive = true
         
-        self.NFTInfo.widthAnchor.constraint(equalTo:self.widthAnchor,constant: -16).isActive = true
-        self.NFTInfo.leadingAnchor.constraint(equalTo: self.leadingAnchor,constant:8).isActive = true
+//        self.NFTInfo.widthAnchor.constraint(equalTo:self.widthAnchor,constant: -16).isActive = true
+        self.NFTInfo.leadingAnchor.constraint(equalToSystemSpacingAfter: leadingAnchor, multiplier: largeCard ? 2 : 1.5).isActive = true
+        trailingAnchor.constraint(equalToSystemSpacingAfter: NFTInfo.trailingAnchor, multiplier: largeCard ? 2 : 1.5).isActive = true
         self.NFTInfo.bottomAnchor.constraint(equalTo: self.bottomAnchor,constant: -10).isActive = true
         self.NFTInfo.topAnchor.constraint(equalTo: self.imageView.bottomAnchor,constant: 16).isActive = true
         
