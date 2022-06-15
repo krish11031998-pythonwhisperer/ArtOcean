@@ -32,10 +32,10 @@ class NFTArtCollection: UICollectionView {
         layout.scrollDirection = orientation
         
         if orientation == .horizontal{
-            layout.sectionInset = .init(top: 0, left: 10, bottom: 0, right: 10)
+            layout.sectionInset = .init(top: 0, left: 8, bottom: 0, right: 8)
             layout.itemSize = .init(width: itemSize.width, height: itemSize.height)
         }else{
-            layout.sectionInset = .init(top: 10, left: 0, bottom: 10, right: 0)
+            layout.sectionInset = .init(top: 8, left: 0, bottom: 8, right: 0)
             layout.itemSize = .init(width: itemSize.width, height: itemSize.height)
         }
         

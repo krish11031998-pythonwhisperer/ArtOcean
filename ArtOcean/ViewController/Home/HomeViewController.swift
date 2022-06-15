@@ -20,9 +20,9 @@ class HomeViewController: UIViewController {
     
     private let scrollView:UIScrollView = {
         let scrollView = UIScrollView()
-//        scrollView.contentInsetAdjustmentBehavior = .never
         scrollView.showsVerticalScrollIndicator = false
         scrollView.backgroundColor = .clear
+        scrollView.translatesAutoresizingMaskIntoConstraints = false
         return scrollView
     }()
     
@@ -71,13 +71,16 @@ class HomeViewController: UIViewController {
         super.viewDidLoad()
         self.textLabel.frame = .init(origin: .zero, size: .init(width: 50, height: 50))
         self.view.addSubview(self.scrollView)
-        self.scrollView.addSubview(self.artTypes)
-        self.scrollView.addSubview(self.bannerImageView)
-        self.scrollView.addSubview(self.liveBidCollectionContainer)
-        self.scrollView.addSubview(self.topCollection)
-        self.scrollView.addSubview(self.hotItems)
-        self.scrollView.addSubview(self.topSeller)
-        self.scrollView.addSubview(self.popularItems)
+        self.scrollView.addSubview(self.stackView)
+        
+        stackView.addArrangedSubview(artTypes)
+        stackView.addArrangedSubview(bannerImageView)
+        stackView.addArrangedSubview(liveBidCollectionContainer)
+        stackView.addArrangedSubview(topCollection)
+        stackView.addArrangedSubview(hotItems)
+        stackView.addArrangedSubview(topSeller)
+        stackView.addArrangedSubview(popularItems)
+        
         self.setupStatusBar()
     }
     
@@ -174,8 +177,6 @@ class HomeViewController: UIViewController {
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        self.scrollView.frame = self.view.bounds
-        self.scrollView.contentSize = .init(width: self.view.frame.width, height: self.view.frame.height * 5)
         self.setupLayout()
     }
     
@@ -212,37 +213,28 @@ class HomeViewController: UIViewController {
         return imageView
     }()
     
-    func setupLayout(){
+    private var stackView:UIStackView = {
+        let stackView = UIStackView()
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.axis = .vertical
+        stackView.spacing = 24
+        return stackView
+    }()
     
-        self.artTypes.leadingAnchor.constraint(equalTo: self.scrollView.leadingAnchor, constant: 0).isActive = true
-        self.artTypes.topAnchor.constraint(equalTo: self.scrollView.topAnchor, constant: 50).isActive = true
+    func setupLayout(){
+        
+        scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+        scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+        scrollView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+        scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+        
+        stackView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor,constant: 0).isActive = true
+        stackView.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 0).isActive = true
+        stackView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor,constant: 0).isActive = true
+        scrollView.bottomAnchor.constraint(equalToSystemSpacingBelow: stackView.bottomAnchor, multiplier: 3).isActive = true
+    
         self.artTypes.heightAnchor.constraint(equalToConstant: 50).isActive = true
-        self.artTypes.widthAnchor.constraint(equalTo:self.scrollView.widthAnchor).isActive = true
-
-        self.bannerImageView.topAnchor.constraint(equalToSystemSpacingBelow: self.artTypes.bottomAnchor, multiplier: 3).isActive = true
-        self.bannerImageView.leadingAnchor.constraint(equalTo: self.scrollView.leadingAnchor,constant: 10).isActive = true
         self.bannerImageView.heightAnchor.constraint(equalToConstant: 132).isActive = true
-        self.bannerImageView.widthAnchor.constraint(equalTo: self.scrollView.widthAnchor,constant: -20).isActive = true
-        
-        self.liveBidCollectionContainer.leadingAnchor.constraint(equalTo: self.scrollView.leadingAnchor).isActive = true
-        self.liveBidCollectionContainer.topAnchor.constraint(equalToSystemSpacingBelow: self.bannerImageView.bottomAnchor, multiplier: 3).isActive = true
-        self.liveBidCollectionContainer.widthAnchor.constraint(equalToConstant: self.view.bounds.width).isActive = true
-        
-        self.topSeller.topAnchor.constraint(equalTo: self.liveBidCollection.bottomAnchor, constant: 24).isActive = true
-        self.topSeller.leadingAnchor.constraint(equalTo: self.scrollView.safeAreaLayoutGuide.leadingAnchor).isActive = true
-        self.topSeller.trailingAnchor.constraint(equalTo: self.scrollView.safeAreaLayoutGuide.trailingAnchor).isActive = true
-
-        self.topCollection.leadingAnchor.constraint(equalTo: self.scrollView.safeAreaLayoutGuide.leadingAnchor).isActive = true
-        self.topCollection.topAnchor.constraint(equalTo: self.topSeller.bottomAnchor,constant: 44).isActive = true
-        self.topCollection.trailingAnchor.constraint(equalTo:self.scrollView.safeAreaLayoutGuide.trailingAnchor).isActive = true
-
-        self.hotItems.leadingAnchor.constraint(equalTo: self.scrollView.leadingAnchor).isActive = true
-        self.hotItems.topAnchor.constraint(equalTo: self.topCollection.bottomAnchor, constant: 24).isActive = true
-        self.hotItems.trailingAnchor.constraint(equalTo: self.scrollView.trailingAnchor).isActive = true
-
-        self.popularItems.leadingAnchor.constraint(equalTo: self.scrollView.leadingAnchor).isActive = true
-        self.popularItems.topAnchor.constraint(equalTo: self.hotItems.bottomAnchor, constant: 24).isActive = true
-        self.popularItems.trailingAnchor.constraint(equalTo: self.scrollView.trailingAnchor).isActive = true
         
     }
     

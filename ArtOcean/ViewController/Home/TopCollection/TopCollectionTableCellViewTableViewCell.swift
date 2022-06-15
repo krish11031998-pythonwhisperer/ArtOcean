@@ -11,15 +11,15 @@ class TopCollectionTableCellViewTableViewCell: UITableViewCell {
     
     public static var identifier:String = "TopCollectionCell"
     
-    private lazy var collectionName:UILabel = self.labelBuilder(text: "Bored Apes Yacht Club", size: 16, weight: .bold, color: .appBlackColor, numOfLines: 1)
+    private lazy var collectionName:UILabel = CustomLabel(text: "Bored Apes Yacht Club", size: 16, weight: .bold, color: .appBlackColor, numOfLines: 1)
     
-    private lazy var priceOfCollection:UILabel = self.labelBuilder(text: "4,218", size: 16, weight: .bold, color: .appBlackColor, numOfLines: 1)
+    private lazy var priceOfCollection:UILabel = CustomLabel(text: "4,218", size: 16, weight: .bold, color: .appBlackColor, numOfLines: 1)
     
-    private lazy var ownerLabel:UILabel = self.labelBuilder(text: "RoycoJack", size: 14, weight: .regular, color: .appGrayColor, numOfLines: 1)
+    private lazy var ownerLabel:UILabel = CustomLabel(text: "RoycoJack", size: 14, weight: .regular, color: .appGrayColor, numOfLines: 1)
     
-    private lazy var percentageLabel:UILabel = self.labelBuilder(text: "-32.01", size: 14, weight: .regular, color: .appGreenColor, numOfLines: 1)
+    private lazy var percentageLabel:UILabel = CustomLabel(text: "-32.01", size: 14, weight: .regular, color: .appGreenColor, numOfLines: 1)
     
-    private lazy var orderNumberLabel:UILabel = self.labelBuilder(text: "1", size: 12, weight: .bold, color: .appBlackColor, numOfLines: 1)
+    private lazy var orderNumberLabel:UILabel = CustomLabel(text: "1", size: 12, weight: .bold, color: .appBlackColor, numOfLines: 1)
     
     private lazy var collectionImage:UIImageView = {
         let image = self.imageView(cornerRadius: 15, autoLayout: false)
@@ -27,12 +27,23 @@ class TopCollectionTableCellViewTableViewCell: UITableViewCell {
         return image
     }()
     
+    private let mainStack:UIStackView = {
+        let stack = UIStackView()
+        stack.spacing = 15
+        stack.translatesAutoresizingMaskIntoConstraints = false
+//        stack.alignment = .center
+        return stack
+    }()
     
     private lazy var collectionNameAndOwnerStack:UIStackView = {
         let stack = UIStackView(arrangedSubviews: [self.collectionName,self.ownerLabel])
         stack.axis = .vertical
         stack.alignment = .leading
-        stack.distribution = .fillProportionally
+        stack.distribution = .fill
+        stack.spacing = 5
+        
+        stack.setContentHuggingPriority(.init(249), for: .horizontal)
+        stack.setContentCompressionResistancePriority(.init(749), for: .horizontal)
         
         stack.translatesAutoresizingMaskIntoConstraints = false
         return stack
@@ -43,9 +54,16 @@ class TopCollectionTableCellViewTableViewCell: UITableViewCell {
         let stack = UIStackView(arrangedSubviews: [self.priceOfCollection,self.percentageLabel])
         stack.axis = .vertical
         stack.alignment = .leading
-        stack.distribution = .fillProportionally
+        stack.distribution = .fill
+        stack.spacing = 5
         
+        
+        self.priceOfCollection.setContentHuggingPriority(.init(249), for: .vertical)
+        self.priceOfCollection.setContentCompressionResistancePriority(.init(749), for: .vertical)
+
         stack.translatesAutoresizingMaskIntoConstraints = false
+        
+        
         return stack
     }()
     
@@ -66,26 +84,36 @@ class TopCollectionTableCellViewTableViewCell: UITableViewCell {
         view.addSubview(self.orderNumberLabel)
         
         NSLayoutConstraint.activate([
-            self.collectionImage.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            self.collectionImage.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-            self.collectionImage.widthAnchor.constraint(equalToConstant: 46),
-            self.collectionImage.heightAnchor.constraint(equalToConstant: 46),
+            collectionImage.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            collectionImage.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            collectionImage.widthAnchor.constraint(equalToConstant: 46),
+            collectionImage.heightAnchor.constraint(equalToConstant: 46),
+            collectionImage.centerYAnchor.constraint(equalTo: view.centerYAnchor),
             
-            self.orderNumberLabel.centerXAnchor.constraint(equalTo: self.collectionImage.trailingAnchor, constant: -2.5),
-            self.orderNumberLabel.bottomAnchor.constraint(equalTo: self.collectionImage.bottomAnchor),
-            self.orderNumberLabel.widthAnchor.constraint(equalToConstant: 22),
-            self.orderNumberLabel.heightAnchor.constraint(equalToConstant: 22)
+            orderNumberLabel.centerXAnchor.constraint(equalTo: collectionImage.trailingAnchor, constant: -2.5),
+            orderNumberLabel.bottomAnchor.constraint(equalTo: collectionImage.bottomAnchor),
+            orderNumberLabel.widthAnchor.constraint(equalToConstant: 22),
+            orderNumberLabel.heightAnchor.constraint(equalToConstant: 22)
         ])
-        
+
         return view
     }()
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         self.backgroundColor = .clear
-        self.addSubview(self.imageAndGroupIcon)
-        self.addSubview(self.collectionPriceInfo)
-        self.addSubview(self.collectionNameAndOwnerStack)
+        
+        addSubview(mainStack)
+        mainStack.addArrangedSubview(imageAndGroupIcon)
+        mainStack.addArrangedSubview(collectionNameAndOwnerStack)
+        mainStack.addArrangedSubview(collectionPriceInfo)
+                
+        NSLayoutConstraint.activate([
+            imageAndGroupIcon.centerYAnchor.constraint(equalTo: mainStack.centerYAnchor),
+            collectionNameAndOwnerStack.centerYAnchor.constraint(equalTo: mainStack.centerYAnchor),
+            collectionPriceInfo.centerYAnchor.constraint(equalTo: mainStack.centerYAnchor)
+        ])
+        
         self.selectedBackgroundView = UIView()
         selectedBackgroundView?.clearView()
     }
@@ -112,16 +140,10 @@ class TopCollectionTableCellViewTableViewCell: UITableViewCell {
     
     func setupLayout(){
         
-        self.imageAndGroupIcon.leadingAnchor.constraint(equalTo: self.leadingAnchor).isActive = true
-        self.imageAndGroupIcon.widthAnchor.constraint(equalToConstant: 70).isActive = true
-        self.imageAndGroupIcon.heightAnchor.constraint(equalToConstant: self.bounds.height).isActive = true
-        
-        self.collectionNameAndOwnerStack.leadingAnchor.constraint(equalTo: self.imageAndGroupIcon.trailingAnchor,constant: 10).isActive = true
-        self.collectionNameAndOwnerStack.heightAnchor.constraint(equalToConstant: self.bounds.height).isActive = true
-        self.collectionNameAndOwnerStack.widthAnchor.constraint(equalToConstant: self.bounds.width * 0.5).isActive = true
-        
-        self.collectionPriceInfo.trailingAnchor.constraint(equalTo: self.trailingAnchor,constant: -10).isActive = true
-        self.collectionPriceInfo.heightAnchor.constraint(equalToConstant: self.bounds.height).isActive = true
+        mainStack.leadingAnchor.constraint(equalTo: leadingAnchor,constant: 8).isActive = true
+        mainStack.trailingAnchor.constraint(equalTo: trailingAnchor,constant: -8).isActive = true
+        mainStack.topAnchor.constraint(equalTo: topAnchor,constant: 5).isActive = true
+        mainStack.bottomAnchor.constraint(equalTo: bottomAnchor,constant: -5).isActive = true
     }
     
     

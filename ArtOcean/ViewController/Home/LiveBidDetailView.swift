@@ -12,7 +12,7 @@ class LiveBidDetailView: UIViewController  {
     
     private var nfts:[NFTModel]? = nil
     
-    init(nfts:[NFTModel]? = nil){
+    init(nfts:[NFTModel]? = NFTModel.testsArtData){
         self.nfts = nfts
         super.init(nibName: nil, bundle: nil)
         
@@ -22,23 +22,64 @@ class LiveBidDetailView: UIViewController  {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private lazy var liveBidCollection:NFTArtCollection = {
-        let collection = NFTArtCollection(nfts: self.nfts,orientation: .vertical,itemSize: .init(width: UIScreen.main.bounds.width - (UIScreen.main.bounds.width * 0.1), height: 300))
-        collection.contentInsetAdjustmentBehavior = .never
-        return collection
+    private lazy var liveBidTableView:UITableView = {
+        let tableView = UITableView(frame: .zero, style: .plain)
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        tableView.delegate = self
+        tableView.dataSource = self
+        tableView.register(CustomTableViewCell.self, forCellReuseIdentifier: "customCell")
+        tableView.backgroundColor = .clear
+        tableView.separatorStyle = .none
+        tableView.showsVerticalScrollIndicator = false
+        tableView.tableHeaderView = tableHeaderView
+        return tableView
+    }()
+    
+    private let tableHeaderView:UIView = {
+        let view = UIView()
+        view.frame = .init(origin: .zero, size: CGSize(width: UIScreen.main.bounds.width, height: 150))
+        let label = CustomLabel(text: "Live\nBid", size: 50, weight: .bold, color: .black, numOfLines: 2, adjustFontSize: true, autoLayout: true)
+        
+        var rootAttributedString:NSMutableAttributedString = .init(string:"Live", attributes: [NSAttributedString.Key.font:UIFont(name: CustomFonts.black.rawValue, size: 50)!])
+        rootAttributedString.append(.init(string: "\nBid", attributes: [NSAttributedString.Key.font:UIFont(name: CustomFonts.medium.rawValue, size: 50)!]))
+        
+        label.attributedText = NSMutableAttributedString(attributedString: rootAttributedString)
+        view.backgroundColor = .clear
+        view.addSubview(label)
+        NSLayoutConstraint.activate([
+            label.leadingAnchor.constraint(equalToSystemSpacingAfter: view.leadingAnchor, multiplier: 2),
+            label.topAnchor.constraint(equalToSystemSpacingBelow: view.topAnchor, multiplier: 1),
+            view.bottomAnchor.constraint(equalToSystemSpacingBelow: label.bottomAnchor, multiplier: 1),
+            label.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.75)
+        ])
+        
+        return view
+        
     }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.addSubview(self.liveBidCollection)
-        self.configNavigationBar()
+        view.addSubview(liveBidTableView)
         self.view.backgroundColor = .white
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.configNavigationBar()
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        if !(navigationController?.navigationBar.isHidden ?? true){
+            navigationController?.setNavigationBarHidden(true, animated: true)
+        }
+    }
+    
     private func configNavigationBar(){
-        self.navigationController?.navigationBar.isTranslucent = false
-        self.navigationItem.titleView = self.view.labelBuilder(text: "Live Bid", size: 18, weight: .bold, color: .appBlackColor, numOfLines: 1)
-        self.navigationController?.navigationBar.backgroundColor = .green
+        if let safeNavbar = self.navigationController?.navigationBar,safeNavbar.isHidden{
+            navigationController?.setNavigationBarHidden(false, animated: true)
+            navigationController?.navigationBar.transform = .init(translationX: 0, y: -view.safeAreaInsets.top)
+        }
+        self.navigationItem.titleView = CustomLabel(text: "Live Bid", size: 18, weight: .bold, color: .appBlackColor, numOfLines: 1)
         self.navigationItem.leftBarButtonItem = self.backBarButton
     }
     
@@ -67,12 +108,58 @@ class LiveBidDetailView: UIViewController  {
     }
     
     func setupLayout(){
-        self.liveBidCollection.leadingAnchor.constraint(equalTo: self.view.leadingAnchor).isActive = true
-        self.liveBidCollection.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor,constant: 40).isActive = true
-        self.liveBidCollection.widthAnchor.constraint(equalTo: self.view.widthAnchor).isActive = true
-        self.liveBidCollection.heightAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.heightAnchor).isActive = true
-//        self.liveBidCollection.frame = self.view.frame.inset(by: .init(top: 10, left: 10, bottom: 10, right: 10))
+        liveBidTableView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor).isActive = true
+        liveBidTableView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor).isActive = true
+        liveBidTableView.widthAnchor.constraint(equalTo: self.view.widthAnchor).isActive = true
+        liveBidTableView.heightAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.heightAnchor).isActive = true
         
+    }
+}
+
+//MARK: - CollectionViewDelegate
+extension LiveBidDetailView:UICollectionViewDelegate{
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let yOffset = scrollView.contentOffset.y - view.safeAreaInsets.top
+        self.navigationController?.navigationBar.transform = .init(translationX: 0, y: min(0,yOffset))
+    }
+}
+
+//MARK: - CollectionTableView
+extension LiveBidDetailView:UITableViewDelegate,UITableViewDataSource{
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 300
+    }
+    
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return nfts?.count ?? 1
+    }
+    
+
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "customCell", for: indexPath) as? CustomTableViewCell else{
+            return UITableViewCell()
+        }
+        if let safeNFT = nfts?[indexPath.row]{
+            let contentView = NFTLiveBidCellView(nft: safeNFT)
+            cell.configureCell(safeNFT, view: contentView,leadingMultiple: 2,trailingMultiple: 2)
+        }
+        cell.celldelegate = self
+        return cell
+    }
+}
+
+//MARK: - CustomTableViewCellDelegate
+extension LiveBidDetailView:CustomTableViewCellDelegate{
+    func handleTap(_ data: Any?) {
+        if let safeNFT = data as? NFTModel{
+            navigationController?.pushViewController(NFTDetailArtViewController(nftArt: safeNFT), animated: true)
+        }
         
     }
 }

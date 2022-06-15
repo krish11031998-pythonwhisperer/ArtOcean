@@ -104,9 +104,8 @@ class CustomImageView:UIImageView{
                 }
             case .failure(let err):
                 print("(Error) err : ",err.localizedDescription)
-
+                
             }
         }
-        
     }
 }

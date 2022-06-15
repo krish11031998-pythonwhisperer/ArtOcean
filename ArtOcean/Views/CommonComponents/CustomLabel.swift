@@ -8,6 +8,15 @@
 import Foundation
 import UIKit
 
+enum CustomFonts:String{
+    case black = "Satoshi-Black"
+    case bold = "Satoshi-Bold"
+    case regular = "Satoshi-Regular"
+    case medium = "Satoshi-Medium"
+    case light = "Satoshi-Light"
+    
+}
+
 class CustomLabel:UILabel{
     init(
         text:String,

@@ -22,19 +22,12 @@ class TopCollectionView: UITableView {
         self.dataSource = self
         
         self.translatesAutoresizingMaskIntoConstraints = false
-        self.setupLayout()
+
     }
     
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
-    }
-    
-    func setupLayout(){
-        self.leadingAnchor.constraint(equalTo: self.leadingAnchor).isActive = true
-        self.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
-        self.heightAnchor.constraint(equalTo:self.heightAnchor).isActive = true
-        self.widthAnchor.constraint(equalTo: self.widthAnchor).isActive = true
     }
 
 }
@@ -57,6 +50,7 @@ extension TopCollectionView:UITableViewDelegate,UITableViewDataSource{
         guard let cell = tableView.dequeueReusableCell(withIdentifier: TopCollectionTableCellViewTableViewCell.identifier, for: indexPath) as? TopCollectionTableCellViewTableViewCell else {
             return UITableViewCell()
         }
+        
         return cell 
     }
     

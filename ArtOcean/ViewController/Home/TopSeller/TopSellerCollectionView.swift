@@ -17,8 +17,7 @@ class TopSellerCollectionView:UICollectionView{
         layout.itemSize = .init(width: 125, height: 50)
         layout.scrollDirection = .horizontal
         layout.minimumInteritemSpacing = 12
-//        layout.minimumLineSpacing = 12
-        layout.sectionInset = .init(top: 0, left: 10, bottom: 0, right: 10)
+        layout.sectionInset = .init(top: 0, left: 8, bottom: 0, right: 10)
         
         super.init(frame: frame, collectionViewLayout: layout)
         

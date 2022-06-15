@@ -87,6 +87,7 @@ class ImageDownloader{
                 ImageCache.cache[safeURL] = image
                 self.handleCompletion(url: safeURL, result: .success(image))
             }.resume()
+            
         }
     }
     

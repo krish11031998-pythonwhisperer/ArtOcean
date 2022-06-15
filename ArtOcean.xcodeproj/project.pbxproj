@@ -20,6 +20,8 @@
 		EF00F5D52847A660003D8683 /* SliderSelectorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF00F5D42847A660003D8683 /* SliderSelectorView.swift */; };
 		EF00F5D7284805C1003D8683 /* StatisticCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF00F5D6284805C1003D8683 /* StatisticCollectionView.swift */; };
 		EF00F5DA2848BB6B003D8683 /* AccountsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF00F5D92848BB6B003D8683 /* AccountsViewController.swift */; };
+		EF22D0CB285A378200555179 /* NFTLiveBidViewCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF22D0CA285A378200555179 /* NFTLiveBidViewCellView.swift */; };
+		EF22D0CD285A714F00555179 /* CustomTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF22D0CC285A714F00555179 /* CustomTableViewCell.swift */; };
 		EF358377284D371C00783D75 /* StretchyHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF358376284D371C00783D75 /* StretchyHeaderView.swift */; };
 		EF527441284AC53A008C77EC /* SDWebImage in Frameworks */ = {isa = PBXBuildFile; productRef = EF527440284AC53A008C77EC /* SDWebImage */; };
 		EF527443284AC53A008C77EC /* SDWebImageMapKit in Frameworks */ = {isa = PBXBuildFile; productRef = EF527442284AC53A008C77EC /* SDWebImageMapKit */; };
@@ -158,6 +160,8 @@
 		EF00F5D42847A660003D8683 /* SliderSelectorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SliderSelectorView.swift; sourceTree = "<group>"; };
 		EF00F5D6284805C1003D8683 /* StatisticCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticCollectionView.swift; sourceTree = "<group>"; };
 		EF00F5D92848BB6B003D8683 /* AccountsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountsViewController.swift; sourceTree = "<group>"; };
+		EF22D0CA285A378200555179 /* NFTLiveBidViewCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NFTLiveBidViewCellView.swift; sourceTree = "<group>"; };
+		EF22D0CC285A714F00555179 /* CustomTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTableViewCell.swift; sourceTree = "<group>"; };
 		EF358376284D371C00783D75 /* StretchyHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StretchyHeaderView.swift; sourceTree = "<group>"; };
 		EF527491284BA4BD008C77EC /* SectionbasedData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionbasedData.swift; sourceTree = "<group>"; };
 		EF527493284BECF4008C77EC /* Bundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bundle.swift; sourceTree = "<group>"; };
@@ -443,6 +447,7 @@
 				EF8B0674283BFA900050E726 /* NFTArtCollectionLiveBidViewCell.swift */,
 				EFD13C222844196F000E422E /* NFTLiveBidCollectionProtocol.swift */,
 				EF00F5C6284638E7003D8683 /* NFTArtCollectionViewCell.swift */,
+				EF22D0CA285A378200555179 /* NFTLiveBidViewCellView.swift */,
 			);
 			path = NFTLiveBid;
 			sourceTree = "<group>";
@@ -530,6 +535,7 @@
 				EF69B6B02854C11E00ABDADA /* StackedButtons.swift */,
 				EF69B6B228550CC100ABDADA /* TransactionCell.swift */,
 				EF69B6B828562D5700ABDADA /* CustomAnimatedImage.swift */,
+				EF22D0CC285A714F00555179 /* CustomTableViewCell.swift */,
 			);
 			path = CommonComponents;
 			sourceTree = "<group>";
@@ -737,12 +743,14 @@
 				EF7447BE284A5B2600899476 /* CustomPageSelectorViewController.swift in Sources */,
 				EF69B6B528550D9F00ABDADA /* UITableViewCell.swift in Sources */,
 				EF527498284C1E5B008C77EC /* NSCollectionLayout.swift in Sources */,
+				EF22D0CB285A378200555179 /* NFTLiveBidViewCellView.swift in Sources */,
 				EF69B6B12854C11E00ABDADA /* StackedButtons.swift in Sources */,
 				EF00F5D7284805C1003D8683 /* StatisticCollectionView.swift in Sources */,
 				EF7447B4284A0F8000899476 /* ActivityCollectionViewCell.swift in Sources */,
 				EF8B0677283C20820050E726 /* UIImageView.swift in Sources */,
 				EFD13C232844196F000E422E /* NFTLiveBidCollectionProtocol.swift in Sources */,
 				EF8B066E283BF0F10050E726 /* StatisticsViewController.swift in Sources */,
+				EF22D0CD285A714F00555179 /* CustomTableViewCell.swift in Sources */,
 				EF527494284BECF4008C77EC /* Bundle.swift in Sources */,
 				EF358377284D371C00783D75 /* StretchyHeaderView.swift in Sources */,
 				EF8B0681283C2A180050E726 /* DataCache.swift in Sources */,

@@ -7,6 +7,7 @@
 
 import UIKit
 import ImageIO
+import SDWebImage
 // FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
 // Consider refactoring the code to use the non-optional operators.
 fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
@@ -24,42 +25,42 @@ fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
 
 extension UIImage {
     
-    public class func gifImageWithData(_ data: Data) -> UIImage? {
-        guard let source = CGImageSourceCreateWithData(data as CFData, nil) else {
-            print("image doesn't exist")
-            return nil
-        }
-        
-        return UIImage.animatedImageWithSource(source)
-    }
-    
-    public class func gifImageWithURL(_ gifUrl:String) -> UIImage? {
-        guard let bundleURL:URL? = URL(string: gifUrl)
-            else {
-                print("image named \"\(gifUrl)\" doesn't exist")
-                return nil
-        }
-        guard let imageData = try? Data(contentsOf: bundleURL!) else {
-            print("image named \"\(gifUrl)\" into NSData")
-            return nil
-        }
-        
-        return gifImageWithData(imageData)
-    }
-    
-    public class func gifImageWithName(_ name: String) -> UIImage? {
-        guard let bundleURL = Bundle.main
-            .url(forResource: name, withExtension: "gif") else {
-                print("SwiftGif: This image named \"\(name)\" does not exist")
-                return nil
-        }
-        guard let imageData = try? Data(contentsOf: bundleURL) else {
-            print("SwiftGif: Cannot turn image named \"\(name)\" into NSData")
-            return nil
-        }
-        
-        return gifImageWithData(imageData)
-    }
+//    public class func gifImageWithData(_ data: Data) -> UIImage? {
+//        guard let source = CGImageSourceCreateWithData(data as CFData, nil) else {
+//            print("image doesn't exist")
+//            return nil
+//        }
+//
+//        return UIImage.animatedImageWithSource(source)
+//    }
+//
+//    public class func gifImageWithURL(_ gifUrl:String) -> UIImage? {
+//        guard let bundleURL:URL? = URL(string: gifUrl)
+//            else {
+//                print("image named \"\(gifUrl)\" doesn't exist")
+//                return nil
+//        }
+//        guard let imageData = try? Data(contentsOf: bundleURL!) else {
+//            print("image named \"\(gifUrl)\" into NSData")
+//            return nil
+//        }
+//
+//        return gifImageWithData(imageData)
+//    }
+//
+//    public class func gifImageWithName(_ name: String) -> UIImage? {
+//        guard let bundleURL = Bundle.main
+//            .url(forResource: name, withExtension: "gif") else {
+//                print("SwiftGif: This image named \"\(name)\" does not exist")
+//                return nil
+//        }
+//        guard let imageData = try? Data(contentsOf: bundleURL) else {
+//            print("SwiftGif: Cannot turn image named \"\(name)\" into NSData")
+//            return nil
+//        }
+//
+//        return gifImageWithData(imageData)
+//    }
     
     class func delayForImageAtIndex(_ index: Int, source: CGImageSource!) -> Double {
         var delay = 0.1
@@ -134,13 +135,13 @@ extension UIImage {
         return gcd
     }
     
-    class func animatedImageWithSource(_ source: CGImageSource) -> UIImage? {
+    class func animatedImageWithSource(_ source: CGImageSource,downsampleOptions:CFDictionary? = nil) -> UIImage? {
         let count = CGImageSourceGetCount(source)
         var images = [CGImage]()
         var delays = [Int]()
         
         for i in 0..<count {
-            if let image = CGImageSourceCreateImageAtIndex(source, i, nil) {
+            if let image = CGImageSourceCreateImageAtIndex(source, i, downsampleOptions) {
                 images.append(image)
             }
             
@@ -179,46 +180,35 @@ extension UIImage {
         return animation
     }
     
-    func isAnimatedImage(_ imageUrl: URL) -> Bool {
-        if let imageData = try? Data(contentsOf: imageUrl),
-              let source = CGImageSourceCreateWithData(imageData as CFData, nil) {
-
-            let count = CGImageSourceGetCount(source)
-            return count > 1
-        }
-        return false
-    }
-    
-    static func downsample(imageData: Data,
-                           to pointSize: CGSize,
-                           scale: CGFloat = UIScreen.main.scale) -> UIImage? {
-
-               // Create an CGImageSource that represent an image
-               let imageSourceOptions = [kCGImageSourceShouldCache: false] as CFDictionary
-//               guard let imageSource = CGImageSourceCreateWithURL(imageURL as CFURL, imageSourceOptions) else {
-//                   return nil
-//               }
-                guard let imageSource = CGImageSourceCreateWithData(imageData as CFData, imageSourceOptions) else {
-                    return nil
-                }
+    static func downsample(imageData: Data,to pointSize: CGSize,scale: CGFloat = UIScreen.main.scale) -> UIImage? {
         
-//        CGImageSourceCreate
-               
-               // Calculate the desired dimension
-               let maxDimensionInPixels = max(pointSize.width, pointSize.height) * scale
-               
-               // Perform downsampling
-               let downsampleOptions = [
-                   kCGImageSourceCreateThumbnailFromImageAlways: true,
-                   kCGImageSourceShouldCacheImmediately: true,
-                   kCGImageSourceCreateThumbnailWithTransform: true,
-                   kCGImageSourceThumbnailMaxPixelSize: maxDimensionInPixels
-               ] as CFDictionary
-               guard let downsampledImage = CGImageSourceCreateThumbnailAtIndex(imageSource, 0, downsampleOptions) else {
-                   return nil
-               }
-               
-               // Return the downsampled image as UIImage
-               return UIImage(cgImage: downsampledImage)
-           }
+        // Create an CGImageSource that represent an image
+        let imageSourceOptions = [kCGImageSourceShouldCache: false] as CFDictionary
+        guard let imageSource = CGImageSourceCreateWithData(imageData as CFData, imageSourceOptions) else {
+            return nil
+        }
+        
+        // Calculate the desired dimension
+        let maxDimensionInPixels = max(pointSize.width, pointSize.height) * scale
+        
+        // Perform downsampling
+        let downsampleOptions = [
+            kCGImageSourceCreateThumbnailFromImageAlways: true,
+            kCGImageSourceShouldCacheImmediately: true,
+            kCGImageSourceCreateThumbnailWithTransform: true,
+            kCGImageSourceThumbnailMaxPixelSize: maxDimensionInPixels
+        ] as CFDictionary
+        guard let downsampledImage = CGImageSourceCreateThumbnailAtIndex(imageSource, 0, downsampleOptions) else {
+            return nil
+        }
+        
+        // Return the downsampled image as UIImage
+        let count = CGImageSourceGetCount(imageSource)
+//        if count > 1{
+//            return animatedImageWithSource(imageSource,downsampleOptions: downsampleOptions)
+//        }else{
+        return UIImage(cgImage: downsampledImage)
+//        }
+        
+    }
 }
