@@ -11,11 +11,12 @@ class LiveBidDetailView: UIViewController  {
         
     
     private var nfts:[NFTModel]? = nil
+    private var selectedNFT:NFTModel? = nil
     
     init(nfts:[NFTModel]? = NFTModel.testsArtData){
         self.nfts = nfts
         super.init(nibName: nil, bundle: nil)
-        
+        setupStatusBar()
     }
     
     required init?(coder: NSCoder) {
@@ -65,7 +66,13 @@ class LiveBidDetailView: UIViewController  {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        if navigationController?.isNavigationBarHidden ?? false{
+            navigationController?.setNavigationBarHidden(false, animated: true)
+        }
         self.configNavigationBar()
+        if selectedNFT != nil{
+            selectedNFT = nil
+        }
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -149,17 +156,14 @@ extension LiveBidDetailView:UITableViewDelegate,UITableViewDataSource{
             let contentView = NFTLiveBidCellView(nft: safeNFT)
             cell.configureCell(safeNFT, view: contentView,leadingMultiple: 2,trailingMultiple: 2)
         }
-        cell.celldelegate = self
         return cell
     }
-}
-
-//MARK: - CustomTableViewCellDelegate
-extension LiveBidDetailView:CustomTableViewCellDelegate{
-    func handleTap(_ data: Any?) {
-        if let safeNFT = data as? NFTModel{
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if let safeNFT = nfts?[indexPath.row] as? NFTModel,selectedNFT != safeNFT{
+            selectedNFT = safeNFT
+            navigationController?.navigationBar.transform = .init(translationX: 0, y: 0)
             navigationController?.pushViewController(NFTDetailArtViewController(nftArt: safeNFT), animated: true)
         }
-        
     }
 }

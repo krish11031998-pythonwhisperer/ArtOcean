@@ -78,7 +78,7 @@ class NFTDetailArtViewController:UIViewController{
         if let safeNavBar = self.navigationController?.isNavigationBarHidden,safeNavBar{
             self.navigationController?.setNavigationBarHidden(false, animated: true)
         }
-        self.navigationController?.navigationBar.transform = .init(translationX: 0, y: -200)
+        self.navigationController?.navigationBar.transform = .init(translationX: 0, y: -100)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -361,6 +361,8 @@ extension NFTDetailArtViewController:UIScrollViewDelegate{
             self.imageView.layoutIfNeeded()
             self.scrollView.layoutIfNeeded()
         }.startAnimation()
+        
+        print("(DEBUG) min(scrollView.contentOffset.y - 100,0) : ",min(scrollView.contentOffset.y - 100,0))
         
         self.navigationController?.navigationBar.transform = .init(translationX: 0, y: min(scrollView.contentOffset.y - 100,0))
         

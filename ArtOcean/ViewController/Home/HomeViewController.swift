@@ -180,7 +180,9 @@ class HomeViewController: UIViewController {
         self.setupLayout()
     }
     
-    private lazy var bannerImageView:UIImageView = {
+    private lazy var bannerImageView:UIView = {
+        let view = UIView()
+    
         let imageView = UIImageView()
         if let safeImg = UIImage(named: "BannerSkeleton"){
             imageView.image = safeImg
@@ -189,6 +191,12 @@ class HomeViewController: UIViewController {
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.clipsToBounds = true
         imageView.layer.cornerRadius = 16
+        
+        view.addSubview(imageView)
+        imageView.leadingAnchor.constraint(equalToSystemSpacingAfter: view.leadingAnchor,multiplier: 1).isActive = true
+        view.trailingAnchor.constraint(equalToSystemSpacingAfter: imageView.trailingAnchor,multiplier: 1).isActive = true
+        imageView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+        imageView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
         
         //LearnMoreImage
         let learnMoreBannerImage = UIImageView()
@@ -210,7 +218,7 @@ class HomeViewController: UIViewController {
         bannerTitle.bottomAnchor.constraint(equalTo: learnMoreBannerImage.topAnchor, constant: -24).isActive = true
         bannerTitle.widthAnchor.constraint(equalToConstant: 185).isActive = true
         
-        return imageView
+        return view
     }()
     
     private var stackView:UIStackView = {
