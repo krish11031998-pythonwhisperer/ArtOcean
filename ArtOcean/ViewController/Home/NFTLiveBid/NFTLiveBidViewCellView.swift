@@ -41,11 +41,7 @@ class NFTLiveBidCellView:UIView{
 
         
         self.price.textAlignment = .right
-        
-//        NSLayoutConstraint.activate([
-//            self.title.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.57,constant: -5),
-//            self.price.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.43),
-//        ])
+
         return view
     }()
     
