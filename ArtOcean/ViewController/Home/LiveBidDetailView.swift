@@ -153,7 +153,7 @@ extension LiveBidDetailView:UITableViewDelegate,UITableViewDataSource{
             return UITableViewCell()
         }
         if let safeNFT = nfts?[indexPath.row]{
-            let contentView = NFTLiveBidCellView(nft: safeNFT)
+            let contentView = NFTLiveBidCellView(nft: safeNFT,largeCard: true)
             cell.configureCell(safeNFT, view: contentView,leadingMultiple: 2,trailingMultiple: 2)
         }
         return cell

@@ -32,16 +32,20 @@ class NFTLiveBidCellView:UIView{
         view.axis = .horizontal
         view.spacing = 5
         view.translatesAutoresizingMaskIntoConstraints = false
-        
+        view.alignment = .top
         view.addArrangedSubview(self.title)
         view.addArrangedSubview(self.price)
         
+        title.setContentHuggingPriority(.init(249), for: .horizontal)
+        title.setContentCompressionResistancePriority(.init(749), for: .horizontal)
+
+        
         self.price.textAlignment = .right
         
-        NSLayoutConstraint.activate([
-            self.title.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.57,constant: -5),
-            self.price.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.43),
-        ])
+//        NSLayoutConstraint.activate([
+//            self.title.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.57,constant: -5),
+//            self.price.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.43),
+//        ])
         return view
     }()
     
@@ -71,8 +75,7 @@ class NFTLiveBidCellView:UIView{
         view.addArrangedSubview(self.bidButton)
         
         NSLayoutConstraint.activate([
-            self.timeLeftLabel.widthAnchor.constraint(equalTo: view.widthAnchor,multiplier: 0.5,constant: -4),
-            self.bidButton.widthAnchor.constraint(equalTo: view.widthAnchor,multiplier: 0.5,constant: -4),
+            self.bidButton.widthAnchor.constraint(equalTo: timeLeftLabel.widthAnchor),
         ])
         
         return view
@@ -85,15 +88,18 @@ class NFTLiveBidCellView:UIView{
         
         view.axis = .vertical
         view.translatesAutoresizingMaskIntoConstraints = false
-        
+        view.spacing = 12
         view.addArrangedSubview(self.owner)
         view.addArrangedSubview(self.artPriceAndTitleStack)
         view.addArrangedSubview(self.biddingStack)
+
+        view.setCustomSpacing(4, after: owner)
+        
+        artPriceAndTitleStack.setContentHuggingPriority(.init(249), for: .vertical)
+        artPriceAndTitleStack.setContentHuggingPriority(.init(749), for: .vertical)
         
         NSLayoutConstraint.activate([
-            self.owner.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.2),
-            self.artPriceAndTitleStack.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.4),
-            self.biddingStack.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.4),
+            self.biddingStack.heightAnchor.constraint(equalToConstant: 29),
         ])
         
         return view
@@ -118,13 +124,18 @@ class NFTLiveBidCellView:UIView{
     }()
     
     
-    init(nft:NFTModel? = nil) {
+    init(nft:NFTModel? = nil,largeCard:Bool = false) {
         super.init(frame: .zero)
         self.translatesAutoresizingMaskIntoConstraints = false
         self.addSubview(self.imageView)
         self.addSubview(self.NFTInfo)
         self.addSubview(self.loveButton)
         self.addSubview(self.shareButton)
+        
+        if largeCard{
+            title.font = .init(name: title.font.fontName, size: 18)
+            price.font = .init(name: price.font.fontName, size: 14)
+        }
         
         self.backgroundColor = .white
         self.layer.cornerRadius = 16
@@ -141,7 +152,7 @@ class NFTLiveBidCellView:UIView{
     }
     
     
-    public func updateUIWithNFT(_ nft:NFTModel,idx:Int? = nil){
+    public func updateUIWithNFT(_ nft:NFTModel,idx:Int? = nil,largeCard:Bool = false){
 
         self.nftInfo = nft
         
@@ -153,6 +164,10 @@ class NFTLiveBidCellView:UIView{
         }
         
         self.imageView.updateImageView(url: nft.metadata?.image)
+        
+        if largeCard{
+            title.font = .init(name: title.font.fontName, size: 18)
+        }
     }
     
     func setupLayout(){
@@ -160,12 +175,12 @@ class NFTLiveBidCellView:UIView{
         self.imageView.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
         self.imageView.leadingAnchor.constraint(equalTo: self.leadingAnchor).isActive = true
         self.imageView.widthAnchor.constraint(equalTo: self.widthAnchor).isActive = true
-        self.imageView.heightAnchor.constraint(equalTo: self.heightAnchor, multiplier: 0.6,constant: -20).isActive = true
+        self.imageView.heightAnchor.constraint(equalTo: self.heightAnchor, multiplier: 0.57).isActive = true
         
         self.NFTInfo.widthAnchor.constraint(equalTo:self.widthAnchor,constant: -16).isActive = true
         self.NFTInfo.leadingAnchor.constraint(equalTo: self.leadingAnchor,constant:8).isActive = true
         self.NFTInfo.bottomAnchor.constraint(equalTo: self.bottomAnchor,constant: -10).isActive = true
-        self.NFTInfo.topAnchor.constraint(equalTo: self.imageView.bottomAnchor,constant: 10).isActive = true
+        self.NFTInfo.topAnchor.constraint(equalTo: self.imageView.bottomAnchor,constant: 16).isActive = true
         
         //Lovebutton
         self.loveButton.trailingAnchor.constraint(equalTo: self.trailingAnchor,constant: -12).isActive = true
