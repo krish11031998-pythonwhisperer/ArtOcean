@@ -70,18 +70,11 @@ class NFTLiveBidCellView:UIView{
         
         let clearSpacerView:UIView = .clearView()
         view.addArrangedSubview(self.timeLeftLabel)
-        view.addArrangedSubview(clearSpacerView)
         view.addArrangedSubview(self.bidButton)
         
-        clearSpacerView.setContentHuggingPriority(.init(249), for: .horizontal)
-        clearSpacerView.setContentCompressionResistancePriority(.init(749), for: .horizontal)
-        
-        timeLeftLabel.setContentCompressionResistancePriority(.init(1000), for: .horizontal)
-        bidButton.setContentCompressionResistancePriority(.init(1000), for: .horizontal)
-        
         NSLayoutConstraint.activate([
-            self.timeLeftLabel.widthAnchor.constraint(equalToConstant: 109),
-            self.bidButton.widthAnchor.constraint(equalToConstant: 109)
+//            self.timeLeftLabel.widthAnchor.constraint(equalToConstant: 109),
+            self.bidButton.widthAnchor.constraint(equalTo: timeLeftLabel.widthAnchor)
         ])
         
         return view

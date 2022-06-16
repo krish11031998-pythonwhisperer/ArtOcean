@@ -36,27 +36,35 @@ class LiveBidDetailView: UIViewController  {
         return tableView
     }()
     
-    private let tableHeaderView:UIView = {
+    private lazy var tableHeaderView:UIView = {
         let view = UIView()
         view.frame = .init(origin: .zero, size: CGSize(width: UIScreen.main.bounds.width, height: 150))
+        
         let label = CustomLabel(text: "Live\nBid", size: 50, weight: .bold, color: .black, numOfLines: 2, adjustFontSize: true, autoLayout: true)
+        
+        let backButton = CustomButton(frame: .init(origin: .zero, size: .init(width: 30, height: 30)), cornerRadius: 15, systemName: "chevron.left", handler: {
+            self.navigationController?.popViewController(animated: true)
+        }, autolayout: true)
         
         var rootAttributedString:NSMutableAttributedString = .init(string:"Live", attributes: [NSAttributedString.Key.font:UIFont(name: CustomFonts.black.rawValue, size: 50)!])
         rootAttributedString.append(.init(string: "\nBid", attributes: [NSAttributedString.Key.font:UIFont(name: CustomFonts.medium.rawValue, size: 50)!]))
         
         label.attributedText = NSMutableAttributedString(attributedString: rootAttributedString)
         view.backgroundColor = .clear
+        
         view.addSubview(label)
+        view.addSubview(backButton)
         NSLayoutConstraint.activate([
+            backButton.leadingAnchor.constraint(equalToSystemSpacingAfter: view.leadingAnchor,multiplier: 2),
+            backButton.topAnchor.constraint(equalToSystemSpacingBelow: view.topAnchor,multiplier: 1),
             label.leadingAnchor.constraint(equalToSystemSpacingAfter: view.leadingAnchor, multiplier: 2),
-            label.topAnchor.constraint(equalToSystemSpacingBelow: view.topAnchor, multiplier: 1),
+            label.topAnchor.constraint(equalToSystemSpacingBelow: backButton.bottomAnchor, multiplier: 1),
             view.bottomAnchor.constraint(equalToSystemSpacingBelow: label.bottomAnchor, multiplier: 1),
             label.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.75)
         ])
-        
         return view
-        
     }()
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()

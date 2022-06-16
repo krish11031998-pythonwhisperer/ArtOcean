@@ -362,8 +362,7 @@ extension NFTDetailArtViewController:UIScrollViewDelegate{
             self.scrollView.layoutIfNeeded()
         }.startAnimation()
         
-        print("(DEBUG) min(scrollView.contentOffset.y - 100,0) : ",min(scrollView.contentOffset.y - 100,0))
-        
+
         self.navigationController?.navigationBar.transform = .init(translationX: 0, y: min(scrollView.contentOffset.y - 100,0))
         
         if let safeHeaderView = self.heroHeaderView as? NFTHeroHeaderView{
