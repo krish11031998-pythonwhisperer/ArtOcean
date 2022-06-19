@@ -28,6 +28,7 @@ class StreachyHeaderView:UIView{
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+        
     }
     
     override func layoutSubviews() {
@@ -36,7 +37,7 @@ class StreachyHeaderView:UIView{
     }
     private var gradient:CAGradientLayer = {
        let gradient = CAGradientLayer()
-        gradient.colors = [UIColor.white.withAlphaComponent(0.2).cgColor,UIColor.white.withAlphaComponent(1).cgColor]
+        gradient.colors = [UIColor.clear,UIColor.white.withAlphaComponent(0.2).cgColor,UIColor.white.withAlphaComponent(0.6).cgColor,UIColor.white.withAlphaComponent(1).cgColor]
         return gradient
     }()
     
@@ -47,6 +48,7 @@ class StreachyHeaderView:UIView{
         self.innerView.trailingAnchor.constraint(equalTo: self.trailingAnchor).isActive = true
         self.viewHeightConstraint =  self.innerView.heightAnchor.constraint(equalToConstant: height)
         self.viewHeightConstraint?.isActive = true
+    
     }
     
     
@@ -54,11 +56,10 @@ class StreachyHeaderView:UIView{
     
     public func StretchOnScroll(_ scrollView:UIScrollView){
         let offset = scrollView.contentOffset
-//
+
         if offset.y < 0{
-            self.viewTopConstraint?.constant = scrollView.contentOffset.y
-            self.viewHeightConstraint?.constant = max(self.height - scrollView.contentOffset.y,height)
-            self.gradient.frame.size.height = max(self.height - scrollView.contentOffset.y,height)
+            self.viewTopConstraint?.constant = offset.y - 10
+            self.viewHeightConstraint?.constant = max(self.height - offset.y,height)
         }
         
     }

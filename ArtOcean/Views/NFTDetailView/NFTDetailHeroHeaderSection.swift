@@ -54,12 +54,6 @@ class NFTHeroHeaderView:UIView{
         self.addSubview(imageView)
     }
     
-//    public func updatebackgroundImage(_ img:UIImage){
-//        DispatchQueue.main.async { [weak self] in
-//            self?.backgroundImageView.image = img
-//        }
-//    }
-    
     public func updateImages(url:String){
         backgroundImageView.updateImageView(url: url)
         imageView.updateImageView(url: url)
@@ -98,7 +92,7 @@ class NFTHeroHeaderView:UIView{
             leftButton.leadingAnchor.constraint(equalToSystemSpacingAfter: self.leadingAnchor, multiplier: 3),
             leftButton.topAnchor.constraint(equalToSystemSpacingBelow: self.topAnchor, multiplier: 5),
             imageView.centerXAnchor.constraint(equalTo: centerXAnchor),
-            imageView.centerYAnchor.constraint(equalTo: heroHeaderView.bottomAnchor)
+            imageView.topAnchor.constraint(equalTo: heroHeaderView.centerYAnchor)
         ])
         
         //ImageView Dimension Anchors

@@ -190,9 +190,8 @@ class NFTDetailArtViewController:UIViewController{
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .vertical
         stackView.spacing = 24
-        stackView.backgroundColor = .red
         stackView.isLayoutMarginsRelativeArrangement = true
-        stackView.layoutMargins = .init(top: 0, left: 24, bottom: 0, right: 24)
+        stackView.layoutMargins = .init(top: 24, left: 24, bottom: 24, right: 24)
         return stackView
     }()
     
@@ -257,7 +256,7 @@ class NFTDetailArtViewController:UIViewController{
         self.scrollView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor).isActive = true
         
         stackView.widthAnchor.constraint(equalTo: scrollView.widthAnchor).isActive = true
-        stackView.topAnchor.constraint(equalTo: heroHeaderView.bottomAnchor ,constant: 24).isActive = true
+        stackView.topAnchor.constraint(equalTo: heroHeaderView.bottomAnchor).isActive = true
         scrollView.bottomAnchor.constraint(equalToSystemSpacingBelow: stackView.bottomAnchor, multiplier: 0).isActive = true
 
         artInfoSnippet.heightAnchor.constraint(equalToConstant: 32).isActive = true
