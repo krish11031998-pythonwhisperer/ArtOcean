@@ -57,6 +57,7 @@ extension NFTOffersTableView:UITableViewDelegate,UITableViewDataSource{
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return self.frame.height/CGFloat(self.offers.count)
+//        return self.frame.height/CGFloat(self.offers.count)
+        return 65
     }
 }

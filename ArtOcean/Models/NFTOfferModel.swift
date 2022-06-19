@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct NFTArtOffer:Codable,Hashable{
+struct NFTArtOffer:Decodable,Hashable{
     var image:String?
     var name:String?
     var percent:String?

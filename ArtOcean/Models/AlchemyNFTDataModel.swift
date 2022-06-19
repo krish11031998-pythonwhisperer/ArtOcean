@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct NFTDataResponse:Codable{
+struct NFTDataResponse:Decodable{
     let ownedNfts: [NFTModel]?
     let pageKey: String?
     let totalCount: Int?
@@ -31,7 +31,7 @@ struct NFTDataResponse:Codable{
 }
 
 // MARK: - OwnedNft
-struct NFTModel:Codable,Hashable{
+struct NFTModel:Decodable,Hashable{
     let contract: Contract?
     let id: ID?
     let balance: String?
@@ -103,13 +103,13 @@ struct TokenURI:Codable,Hashable {
 }
 
 // MARK: - Metadata
-struct Metadata:Codable,Hashable {
+struct Metadata:Decodable,Hashable {
 //    var name: String?
     var description: String?
     var image: String?
     var external_url: String?
     var compiler: String?
-//    let attributes: [Attribute]?
+    let attributes: [Attribute]?
 //    let dna: String?
 //    let imageDetails: ImageDetails?
 //    let animationDetails: AnimationDetails?
@@ -132,10 +132,61 @@ struct AnimationDetails:Codable{
 }
 
 // MARK: - Attribute
-struct Attribute:Codable{
-    let value: Int?
+struct Attribute:Decodable,Hashable{
+    static func == (lhs: Attribute, rhs: Attribute) -> Bool {
+        return lhs.trait_type == rhs.trait_type
+    }
+    
+    let str_value: String?
+    let int_value:Int?
     let trait_type: String?
     let display_type: String?
+    
+    enum CodingKeys:String,CodingKey{
+        case value
+        case trait_type
+        case display_type
+    }
+
+    
+    init(from decoder:Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        
+        trait_type = try container.decodeIfPresent(String.self, forKey: .trait_type)
+        display_type = try container.decodeIfPresent(String.self, forKey: .display_type)
+        
+        if let safeDisplayType = display_type{
+            switch safeDisplayType{
+                case "number":
+                    do{
+                        print("(DEBUG) Parsing display_type is number : ",safeDisplayType)
+                        int_value = try container.decodeIfPresent(Int.self, forKey: .value)
+                    }catch{
+                        int_value = nil
+                        print("(DEBUG) Can't parse the int_value : ",error.localizedDescription)
+                    }
+                        
+                default:
+                    print("(DEBUG) Parsing display_type is not number : ",safeDisplayType)
+                    int_value = nil
+            }
+            str_value = nil
+        }else{
+            int_value = nil
+            do{
+                str_value = try container.decodeIfPresent(String.self, forKey: .value)
+            }catch{
+                str_value = nil
+                print("(DEBUG) Can't parse the str_value : ",error.localizedDescription)
+            }
+        }
+    }
+    
+}
+
+enum AttributeType:Codable,Hashable{
+    case strValue(String)
+    case intValue(Int)
 }
 
 enum DisplayType:Codable{

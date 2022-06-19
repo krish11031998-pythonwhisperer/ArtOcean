@@ -15,7 +15,7 @@ struct Section:Hashable{
     var items:[Item]?
 }
 
-enum Item:Codable,Hashable{
+enum Item:Decodable,Hashable{
     case artData(NFTModel)
     case user(User)
     case offer(NFTArtOffer)

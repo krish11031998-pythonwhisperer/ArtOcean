@@ -14,7 +14,7 @@ enum TranscationType:String,Codable{
     case receive = "Receive"
 }
 
-struct TransactionModel:Codable{
+struct TransactionModel:Decodable{
     var type:TranscationType
     var value:Float
     var dayTimes:String

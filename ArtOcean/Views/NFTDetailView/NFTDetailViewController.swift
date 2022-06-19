@@ -20,7 +20,6 @@ class NFTDetailArtViewController:UIViewController{
     
     init(nftArt:NFTModel) {
         self.nftArt = nftArt
-    
         super.init(nibName: nil, bundle: nil)
         self.configNavigationBar()
         self.setupView()
@@ -39,6 +38,10 @@ class NFTDetailArtViewController:UIViewController{
         self.heroHeaderView = NFTHeroHeaderView(nft: nftArt,height: 200 + UIScreen.main.bounds.height * 0.175, handler: {
             self.navigationController?.popViewController(animated: true)
         })
+        
+        if let safeAttributes = nftArt.metadata?.attributes{
+            self.attributesTable = .init(attributes: safeAttributes)
+        }
         
     }
     
@@ -171,8 +174,10 @@ class NFTDetailArtViewController:UIViewController{
     }()
     
     
+    private var attributesTable:NFTAttributeView? = nil
+    
     private lazy var offerView:Container = {
-        let container = Container(header: "Offers", rightButtonTitle: "Last 7 Days", innerView: NFTOffersTableView(), innerViewSize: .init(width: .zero, height: 300),paddingToHeaderView: false) {
+        let container = Container(header: "Offers", rightButtonTitle: "Last 7 Days", innerView: NFTOffersTableView(), innerViewSize: .init(width: .zero, height: 350),paddingToHeaderView: false) {
             print("(DEBUG) Clicked on last 7 days Button!")
         }
         return container
@@ -224,6 +229,10 @@ class NFTDetailArtViewController:UIViewController{
         stackView.addArrangedSubview(biddingController)
        
         stackView.addArrangedSubview(offerView)
+        
+        if let safeAttributeTable = self.attributesTable{
+            stackView.addArrangedSubview(safeAttributeTable)
+        }
        
         stackView.addArrangedSubview(placeBidButton)
 
@@ -260,7 +269,7 @@ class NFTDetailArtViewController:UIViewController{
         scrollView.bottomAnchor.constraint(equalToSystemSpacingBelow: stackView.bottomAnchor, multiplier: 0).isActive = true
 
         artInfoSnippet.heightAnchor.constraint(equalToConstant: 32).isActive = true
-
+        
         //PlaceBidModal
         self.placeBidModal.centerYAnchor.constraint(equalTo: self.view.centerYAnchor).isActive = true
         self.placeBidModal.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width - 48).isActive = true
