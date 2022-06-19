@@ -236,9 +236,8 @@ class HomeViewController: UIViewController {
         scrollView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
         scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
         
-        stackView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor,constant: 0).isActive = true
         stackView.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 0).isActive = true
-        stackView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor,constant: 0).isActive = true
+        stackView.widthAnchor.constraint(equalTo: scrollView.widthAnchor).isActive = true
         scrollView.bottomAnchor.constraint(equalToSystemSpacingBelow: stackView.bottomAnchor, multiplier: 3).isActive = true
     
         self.artTypes.heightAnchor.constraint(equalToConstant: 50).isActive = true

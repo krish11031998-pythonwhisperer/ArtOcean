@@ -20,18 +20,8 @@ class NFTDetailArtViewController:UIViewController{
     
     init(nftArt:NFTModel) {
         self.nftArt = nftArt
-        
+    
         super.init(nibName: nil, bundle: nil)
-        
-        //InitializeViews
-        self.titleView = CustomLabel(text: nftArt.Title, size: 18, weight: .bold, color: .appBlackColor, numOfLines: 1, adjustFontSize: true)
-        
-        self.descriptionView = CustomLabel(text: nftArt.Description, size: 14, weight: .medium, color: .appGrayColor, numOfLines: 3, adjustFontSize: false)
-        
-        self.heroHeaderView = NFTHeroHeaderView(nft: nftArt,height: 200, handler: {
-            self.navigationController?.popViewController(animated: true)
-        })
- 
         self.configNavigationBar()
         self.setupView()
         self.setupLayout()
@@ -39,6 +29,23 @@ class NFTDetailArtViewController:UIViewController{
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        guard let nftArt = nftArt else {
+            return
+        }
+        self.titleView = CustomLabel(text: nftArt.Title, size: 18, weight: .bold, color: .appBlackColor, numOfLines: 1, adjustFontSize: true)
+
+        self.descriptionView = CustomLabel(text: nftArt.Description, size: 14, weight: .medium, color: .appGrayColor, numOfLines: 3, adjustFontSize: false)
+
+        self.heroHeaderView = NFTHeroHeaderView(nft: nftArt,height: 200 + UIScreen.main.bounds.height * 0.175, handler: {
+            self.navigationController?.popViewController(animated: true)
+        })
+        
+    }
+    
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+
+        
     }
     
     //MARK: -  NavigationItem
@@ -91,29 +98,39 @@ class NFTDetailArtViewController:UIViewController{
         let scrollView = UIScrollView()
         scrollView.contentInsetAdjustmentBehavior = .never
         scrollView.translatesAutoresizingMaskIntoConstraints = false
-        scrollView.contentSize = .init(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height * 1.5)
         scrollView.showsVerticalScrollIndicator = false
         scrollView.delegate = self
         scrollView.backgroundColor = .clear
         return scrollView
     }()
     
-    private lazy var placeBidButton:CustomLabelButton = {
+    private lazy var placeBidButton:Container = {
         let button = CustomLabelButton(title: "Place a Bid", color: .white, backgroundColor: .appBlueColor)
+        let container = Container(innerView: button, innerViewSize: .init(width: .zero, height: 52))
         button.delegate = self
-        button.translatesAutoresizingMaskIntoConstraints = false
-        return button
+        return container
     }()
 
-    private var heroHeaderView:UIView = .clearView()
+    private var heroHeaderView:NFTHeroHeaderView!
     
     private lazy var artInteractiveInfoView:NFTArtInteractiveInfoView = .init(nft: self.nftArt ?? .init(contract: nil, id: nil, balance: nil, title: nil, description: nil, metadata: nil))
     
-    private lazy var imageView:CustomImageView = CustomImageView(cornerRadius: 16)
+    private var imageView:CustomImageView = CustomImageView(cornerRadius: 16)
+        
+    private var titleView:UILabel!
     
-    private var titleView:UILabel = UILabel()
+    private var descriptionView:UILabel!
     
-    private var descriptionView:UILabel = UILabel()
+    private lazy var titleDescriptionView:UIStackView = {
+        let stack = UIStackView(arrangedSubviews: [titleView,descriptionView])
+        stack.axis = .vertical
+        stack.spacing = 8
+        
+        descriptionView.setContentHuggingPriority(.init(249), for: .vertical)
+        descriptionView.setContentCompressionResistancePriority(.init(749), for: .vertical)
+
+        return stack
+    }()
     
     private var creatorLabel:UILabel = {
         return CustomLabel(text: "Pablo", size: 14, weight: .bold, color: .appBlueColor, numOfLines: 1,adjustFontSize: false)
@@ -124,6 +141,7 @@ class NFTDetailArtViewController:UIViewController{
     
     private lazy var creatorView:UIStackView = {
         return self.stackBuilder(header: "Created by",alignment: .left, label: self.creatorLabel)
+        
     }()
     
     private let creatorImage:CustomImageView = {
@@ -141,19 +159,20 @@ class NFTDetailArtViewController:UIViewController{
         stack.addArrangedSubview(creatorView)
         stack.addArrangedSubview(self.creatorImage)
         
-        self.creatorImage.frame.size.height = 32
-        
         NSLayoutConstraint.activate([
-            creatorView.widthAnchor.constraint(equalTo: stack.widthAnchor,multiplier: 1, constant: -40),
             creatorImage.widthAnchor.constraint(equalToConstant:32),
         ])
+
+        creatorView.setContentHuggingPriority(.init(259), for: .horizontal)
+        creatorView.setContentCompressionResistancePriority(.init(749), for: .horizontal)
         
         return stack
+        
     }()
     
     
     private lazy var offerView:Container = {
-        let container = Container(header: "Offers", rightButtonTitle: "Last 7 Days", innerView: NFTOffersTableView(), innerViewSize: .init(width: UIScreen.main.bounds.width - 50, height: 300),paddingToHeaderView: false) {
+        let container = Container(header: "Offers", rightButtonTitle: "Last 7 Days", innerView: NFTOffersTableView(), innerViewSize: .init(width: .zero, height: 300),paddingToHeaderView: false) {
             print("(DEBUG) Clicked on last 7 days Button!")
         }
         return container
@@ -166,50 +185,63 @@ class NFTDetailArtViewController:UIViewController{
         return view
     }()
     
-    private let biddingController:NFTBiddingController = NFTBiddingController()
+    private var stackView:UIStackView = {
+        let stackView = UIStackView()
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.axis = .vertical
+        stackView.spacing = 24
+        stackView.backgroundColor = .red
+        stackView.isLayoutMarginsRelativeArrangement = true
+        stackView.layoutMargins = .init(top: 0, left: 24, bottom: 0, right: 24)
+        return stackView
+    }()
+    
+    private lazy var biddingController:Container = {
+        let container:Container = .init(innerView: NFTBiddingController(), innerViewSize: .init(width:.zero,height: 82))
+        return container
+    }()
 
     
     //MARK: - View Setups
     
     func setupView(){
-        
-        
+    
         self.view.backgroundColor = .white
         self.navigationController?.isNavigationBarHidden = true
         self.navigationController?.navigationBar.isTranslucent = false
         
         self.view.addSubview(self.scrollView)
         
-        self.scrollView.addSubview(self.heroHeaderView)
-        
         self.setupImageView()
         
-        self.scrollView.addSubview(self.artInteractiveInfoView)
-        
-        self.scrollView.addSubview(self.titleView)
-        
-        self.scrollView.addSubview(self.descriptionView)
+        self.scrollView.addSubview(stackView)
+                
+        stackView.addArrangedSubview(artInteractiveInfoView)
+                
+        stackView.addArrangedSubview(titleDescriptionView)
     
-        self.scrollView.addSubview(self.artInfoSnippet)
-        
-        self.scrollView.addSubview(self.biddingController)
-        
-        self.scrollView.addSubview(self.offerView)
-        
-        self.scrollView.addSubview(self.placeBidButton)
+        stackView.addArrangedSubview(artInfoSnippet)
+       
+        stackView.addArrangedSubview(biddingController)
+       
+        stackView.addArrangedSubview(offerView)
+       
+        stackView.addArrangedSubview(placeBidButton)
 
         self.view.addSubview(self.placeBidModal)
     }
     
     func setupImageView(){
-        self.scrollView.addSubview(self.imageView)
         guard let safeImg = self.nftArt?.metadata?.image else{return}
         DispatchQueue.global().async {
-            self.imageView.updateImageView(url: safeImg)
-            if let safeHeroHeaderView = self.heroHeaderView as? NFTHeroHeaderView{
-                safeHeroHeaderView.updatebackgroundImage(url:safeImg)
-            }
+            self.heroHeaderView.updateImages(url:safeImg)
         }
+
+        scrollView.addSubview(heroHeaderView)
+        
+        heroHeaderView.topAnchor.constraint(equalTo: scrollView.topAnchor).isActive = true
+        heroHeaderView.widthAnchor.constraint(equalTo: scrollView.widthAnchor).isActive = true
+        
     }
     
     required init?(coder: NSCoder) {
@@ -218,67 +250,18 @@ class NFTDetailArtViewController:UIViewController{
     
     
     func setupLayout(){
-        
-        self.heroHeaderView.leadingAnchor.constraint(equalTo: self.scrollView.leadingAnchor).isActive = true
-        self.heroHeaderView.topAnchor.constraint(equalTo: self.scrollView.topAnchor).isActive = true
-        self.heroHeaderView.centerXAnchor.constraint(equalTo: self.scrollView.centerXAnchor).isActive = true
-        self.heroHeaderView.heightAnchor.constraint(equalToConstant: 200).isActive = true
-        
+
         self.scrollView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor).isActive = true
         self.scrollView.topAnchor.constraint(equalTo: self.view.topAnchor,constant: -self.view.safeAreaInsets.top).isActive = true
         self.scrollView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor).isActive = true
         self.scrollView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor).isActive = true
         
-        //ImageView
-        self.imageView.topAnchor.constraint(equalToSystemSpacingBelow: self.heroHeaderView.centerYAnchor, multiplier: 4).isActive = true
-        self.imageView.centerXAnchor.constraint(equalTo: self.scrollView.centerXAnchor).isActive = true
-        self.imageViewWidthAnchor = self.imageView.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width - 50)
-        self.imageViewWidthAnchor?.isActive = true
-        self.imageViewHeightAnchor = self.imageView.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.height * 0.35)
-        self.imageViewHeightAnchor?.isActive = true
-        
-        //ArtInteractiveInfoView
-        self.artInteractiveInfoView.topAnchor.constraint(equalTo: self.imageView.bottomAnchor, constant: 18).isActive = true
-        self.artInteractiveInfoView.leadingAnchor.constraint(equalTo: self.scrollView.leadingAnchor, constant: 25).isActive = true
-        self.artInteractiveInfoView.centerXAnchor.constraint(equalTo: self.scrollView.centerXAnchor).isActive = true
-        self.artInteractiveInfoView.heightAnchor.constraint(equalToConstant: 50).isActive = true
-        
-        
-        //Title
-        self.titleView.leadingAnchor.constraint(equalTo: self.scrollView.leadingAnchor,constant: 25).isActive = true
-        self.titleView.topAnchor.constraint(equalTo: self.artInteractiveInfoView.bottomAnchor, constant: 17).isActive = true
-        self.titleView.centerXAnchor.constraint(equalTo: self.scrollView.centerXAnchor).isActive = true
-        self.titleView.heightAnchor.constraint(equalToConstant: 25).isActive = true
+        stackView.widthAnchor.constraint(equalTo: scrollView.widthAnchor).isActive = true
+        stackView.topAnchor.constraint(equalTo: heroHeaderView.bottomAnchor ,constant: 24).isActive = true
+        scrollView.bottomAnchor.constraint(equalToSystemSpacingBelow: stackView.bottomAnchor, multiplier: 0).isActive = true
 
-        self.descriptionView.leadingAnchor.constraint(equalTo: self.scrollView.leadingAnchor,constant: 25).isActive = true
-        self.descriptionView.topAnchor.constraint(equalTo: self.titleView.bottomAnchor, constant: 8).isActive = true
-        self.descriptionView.centerXAnchor.constraint(equalTo: self.scrollView.centerXAnchor).isActive = true
-        self.descriptionView.heightAnchor.constraint(equalToConstant: 80).isActive = true
-        
-        //ArtInfoSnippet
-        self.artInfoSnippet.leadingAnchor.constraint(equalTo: self.artInteractiveInfoView.leadingAnchor).isActive = true
-        self.artInfoSnippet.trailingAnchor.constraint(equalTo: self.artInteractiveInfoView.trailingAnchor).isActive = true
-        self.artInfoSnippet.topAnchor.constraint(equalTo: self.descriptionView.bottomAnchor, constant: 12).isActive = true
-        self.artInfoSnippet.heightAnchor.constraint(equalToConstant: 32).isActive = true
-        self.artInfoSnippet.widthAnchor.constraint(equalTo: self.artInteractiveInfoView.widthAnchor).isActive = true
-        
-        //BiddingController
-        self.biddingController.leadingAnchor.constraint(equalTo: self.artInfoSnippet.leadingAnchor).isActive = true
-        self.biddingController.trailingAnchor.constraint(equalTo: self.artInfoSnippet.trailingAnchor).isActive = true
-        self.biddingController.heightAnchor.constraint(equalToConstant: 60).isActive = true
-        self.biddingController.topAnchor.constraint(equalTo: self.artInfoSnippet.bottomAnchor, constant: 25).isActive = true
-        
-        
-        //OffersView
-        self.offerView.topAnchor.constraint(equalTo: self.biddingController.bottomAnchor, constant: 25).isActive = true
-        self.offerView.leadingAnchor.constraint(equalTo: self.biddingController.leadingAnchor).isActive = true
-        
-        //PlaceBidButton
-        self.placeBidButton.leadingAnchor.constraint(equalTo: self.artInfoSnippet.leadingAnchor).isActive = true
-        self.placeBidButton.topAnchor.constraint(equalTo: self.offerView.bottomAnchor, constant: 20).isActive = true
-        self.placeBidButton.trailingAnchor.constraint(equalTo: self.artInfoSnippet.trailingAnchor).isActive = true
-        self.placeBidButton.heightAnchor.constraint(equalToConstant: 60).isActive = true
-        
+        artInfoSnippet.heightAnchor.constraint(equalToConstant: 32).isActive = true
+
         //PlaceBidModal
         self.placeBidModal.centerYAnchor.constraint(equalTo: self.view.centerYAnchor).isActive = true
         self.placeBidModal.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width - 48).isActive = true
@@ -286,7 +269,6 @@ class NFTDetailArtViewController:UIViewController{
 
         self.placeBidModalLeadingAnchor = self.placeBidModal.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: self.leadingOffScreen)
         self.placeBidModalLeadingAnchor?.isActive = true
-
     }
 }
 
@@ -349,24 +331,9 @@ extension NFTDetailArtViewController:CustomButtonDelegate{
 extension NFTDetailArtViewController:UIScrollViewDelegate{
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        let point = imageView.convert(scrollView.frame.origin, to: nil).y * imageScale
-        let maxPoint = self.imageView.frame.minY
-        let minPoint = -self.imageView.frame.height * 0.25
-        let scaleFactor =  (point - minPoint)/(maxPoint - minPoint)
-        self.imageScale = scaleFactor > 1 ? 1 : scaleFactor < 0.5 ? 0.5 : scaleFactor
-        
-        UIViewPropertyAnimator(duration: 0.35, curve: .easeInOut) {
-            self.imageViewHeightAnchor?.constant = self.imageScale * (UIScreen.main.bounds.height * 0.35)
-            self.imageViewWidthAnchor?.constant = self.imageScale * (UIScreen.main.bounds.width - 50)
-            self.imageView.layoutIfNeeded()
-            self.scrollView.layoutIfNeeded()
-        }.startAnimation()
-        
+        heroHeaderView.animateHeaderView(scrollView)
 
         self.navigationController?.navigationBar.transform = .init(translationX: 0, y: min(scrollView.contentOffset.y - 100,0))
         
-        if let safeHeaderView = self.heroHeaderView as? NFTHeroHeaderView{
-            safeHeaderView.headerViewScrolled(scrollView)
-        }
     }
 }

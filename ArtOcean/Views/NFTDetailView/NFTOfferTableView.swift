@@ -19,6 +19,7 @@ class NFTOffersTableView:UITableView{
         self.showsVerticalScrollIndicator = false
         self.isScrollEnabled = false
         self.separatorStyle = .none
+        self.backgroundColor = .clear
     
         self.delegate = self
         self.dataSource = self

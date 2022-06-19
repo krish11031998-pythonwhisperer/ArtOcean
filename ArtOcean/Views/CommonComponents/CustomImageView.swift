@@ -23,6 +23,7 @@ class CustomImageView:UIImageView{
         super.init(frame: .zero)
         self.named = named
         self.url = url
+        self.clipsToBounds = true
         self.layer.cornerRadius = cornerRadius
         if let safeMaskedCorner = maskedCorners{
             self.layer.maskedCorners = safeMaskedCorner
@@ -65,7 +66,8 @@ class CustomImageView:UIImageView{
             self.image = .init(named: "placeHolder")
         }
         
-        self.clipsToBounds = true
+        
+
         self.translatesAutoresizingMaskIntoConstraints = false
         self.contentMode = .scaleAspectFill
         if !self.colors.isEmpty{

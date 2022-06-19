@@ -65,6 +65,10 @@ class NFTBiddingController:UIView{
         self.layer.borderColor = UIColor.appBlueColor.withAlphaComponent(0.125).cgColor
         self.layer.borderWidth = 1
         self.layer.cornerRadius = 16
+        
     }
     
+    override var intrinsicContentSize: CGSize{
+        return .init(width: UIScreen.main.bounds.width, height: 82)
+    }
 }

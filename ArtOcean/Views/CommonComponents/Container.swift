@@ -15,6 +15,7 @@ class Container: UIView {
     private var innerViewSize:CGSize = .zero
     private var addInnerViewPadding:Bool
     private var paddingToHeaderView:Bool
+    private var padding:CGFloat
     
     init(
         header:String,
@@ -22,14 +23,43 @@ class Container: UIView {
         innerView:UIView,
         innerViewSize:CGSize,
         paddingToHeaderView:Bool = true,
+        padding:CGFloat = 8,
         buttonHandler: @escaping (() -> Void)
     ){
         self.addInnerViewPadding = false
         self.paddingToHeaderView = paddingToHeaderView
+        self.padding = padding
         super.init(frame: .zero)
         self.headerView = ContainerHeaderView(title: header, rightButtonTitle: rightButtonTitle, buttonHandler: buttonHandler)
         self.innerView = innerView
         self.innerViewSize = innerViewSize
+        self.setupViews()
+        self.setupLayout()
+    }
+    
+    init(
+        innerView:UIView,
+        innerViewSize:CGSize
+    ){
+        self.addInnerViewPadding = false
+        self.paddingToHeaderView = false
+        self.padding = .zero
+        super.init(frame: .zero)
+        self.innerView = innerView
+        self.innerViewSize = innerViewSize
+        self.setupViews()
+        self.setupLayout()
+    }
+    
+    init(
+        innerView:UIView
+    ){
+        self.addInnerViewPadding = false
+        self.paddingToHeaderView = false
+        self.padding = .zero
+        super.init(frame: .zero)
+        self.innerView = innerView
+        self.innerViewSize = .zero
         self.setupViews()
         self.setupLayout()
     }
@@ -53,20 +83,20 @@ class Container: UIView {
         
         if let safeHeaderView = self.headerView{
             safeHeaderView.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
-            safeHeaderView.leadingAnchor.constraint(equalTo: self.leadingAnchor,constant: self.paddingToHeaderView ? 8 : 0).isActive = true
-            safeHeaderView.trailingAnchor.constraint(equalTo: self.trailingAnchor,constant: self.paddingToHeaderView ? -8 : 0).isActive = true
-            self.innerView.topAnchor.constraint(equalTo: safeHeaderView.bottomAnchor, constant: 12).isActive = true
-            self.innerView.leadingAnchor.constraint(equalTo: self.leadingAnchor).isActive = true
-            self.innerView.trailingAnchor.constraint(equalTo: self.trailingAnchor).isActive = true
-            self.innerView.widthAnchor.constraint(equalToConstant: self.innerViewSize.width).isActive = true
-            self.innerView.heightAnchor.constraint(equalToConstant: self.innerViewSize.height).isActive = true
-        }else{
-            self.innerView.topAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
-            self.innerView.leadingAnchor.constraint(equalTo: self.leadingAnchor).isActive = true
-            self.innerView.trailingAnchor.constraint(equalTo: self.trailingAnchor).isActive = true
-            self.innerView.widthAnchor.constraint(equalToConstant: self.innerViewSize.width).isActive = true
-            self.innerView.heightAnchor.constraint(equalToConstant: self.innerViewSize.height).isActive = true
+            safeHeaderView.leadingAnchor.constraint(equalTo: self.leadingAnchor,constant: self.paddingToHeaderView ? padding : 0).isActive = true
+            safeHeaderView.trailingAnchor.constraint(equalTo: self.trailingAnchor,constant: self.paddingToHeaderView ? -padding : 0).isActive = true
         }
+        
+        self.innerView.topAnchor.constraint(equalTo: headerView?.bottomAnchor ?? self.topAnchor, constant: 12).isActive = true
+        self.innerView.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
+        if self.innerViewSize.width == .zero{
+            self.innerView.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
+            self.innerView.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
+        }else{
+            self.innerView.widthAnchor.constraint(equalToConstant: self.innerViewSize.width).isActive = true
+        }
+        self.innerView.heightAnchor.constraint(equalToConstant: self.innerViewSize.height).isActive = true
+        
     }
         
     override var intrinsicContentSize: CGSize{

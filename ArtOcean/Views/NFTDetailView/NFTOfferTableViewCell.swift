@@ -15,8 +15,8 @@ class NFTOfferTableViewCell:UITableViewCell{
     public static var identifier = "NFTOfferCell"
     
     private lazy var initialLabel:UILabel = {
-        let label = self.labelBuilder(text: "", size: 14, weight: .bold, color: .black, numOfLines: 1)
-        label.backgroundColor = .appWhiteBackgroundColor
+        let label = self.labelBuilder(text: "", size: 14, weight: .bold, color: .white, numOfLines: 1)
+        label.backgroundColor = .appGrayColor
         label.textAlignment = .center
         label.clipsToBounds = true
         label.layer.cornerRadius = 20
@@ -49,6 +49,8 @@ class NFTOfferTableViewCell:UITableViewCell{
     
     private lazy var cellStack:UIStackView = {
         let stack = UIView.StackBuilder(views: [offerNameAndExpirationStack,offerPriceAndPercentnStack], ratios: [0.5,0.5], spacing: 4, axis: .horizontal)
+        stack.isLayoutMarginsRelativeArrangement = true
+        stack.layoutMargins = .init(top: 5, left: 0, bottom: 5, right: 0)
         return stack
     }()
     
@@ -57,7 +59,7 @@ class NFTOfferTableViewCell:UITableViewCell{
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
         self.selectedBackgroundView = UIView.clearView()
-        self.backgroundColor = .white
+        self.backgroundColor = .clear
         self.setupViews()
         self.setupLayout()
     }

@@ -17,7 +17,7 @@ class NFTArtInteractiveInfoView:UIView{
         let view = UIView()
         view.addSubview(label)
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.layer.cornerRadius = 15
+        view.layer.cornerRadius = 16
         view.backgroundColor = .appPurple50Color
         view.clipsToBounds = true
         
@@ -56,7 +56,8 @@ class NFTArtInteractiveInfoView:UIView{
     func setupLayout(){
         
         self.timeLeftLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor).isActive = true
-        self.timeLeftLabel.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        self.timeLeftLabel.heightAnchor.constraint(equalToConstant: 32).isActive = true
+        self.timeLeftLabel.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
         self.timeLeftLabel.widthAnchor.constraint(equalToConstant: 120).isActive = true
         
         self.loveButton.trailingAnchor.constraint(equalTo: self.trailingAnchor).isActive = true
@@ -66,5 +67,9 @@ class NFTArtInteractiveInfoView:UIView{
         self.shareButton.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
 
         
+    }
+
+    override var intrinsicContentSize: CGSize{
+        return .init(width: UIScreen.main.bounds.width, height: 32)
     }
 }

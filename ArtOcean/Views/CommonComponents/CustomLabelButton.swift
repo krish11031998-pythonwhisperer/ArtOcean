@@ -38,4 +38,5 @@ class CustomLabelButton:UIButton{
             self.delegate?.handleTap?()
         }
     }
+    
 }
