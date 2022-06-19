@@ -40,7 +40,7 @@ struct NFTModel:Decodable,Hashable{
     let metadata: Metadata?
     
     var Description:String{
-        return "Space the domain of settings and surroundings of events, characters, and objects in literary narrative, along with other domains like story, character, time and ideology, constitutes a fictional universe."
+        return metadata?.description ?? "Space the domain of settings and surroundings of events, characters, and objects in literary narrative, along with other domains like story, character, time and ideology, constitutes a fictional universe."
     }
     
     var Title:String{
