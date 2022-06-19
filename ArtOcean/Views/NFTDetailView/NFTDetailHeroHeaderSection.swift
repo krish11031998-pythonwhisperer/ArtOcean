@@ -96,7 +96,6 @@ class NFTHeroHeaderView:UIView{
         ])
         
         //ImageView Dimension Anchors
-//        imageViewWidthAnchor = imageView.widthAnchor.constraint(equalTo: widthAnchor, constant: -50)
         imageViewWidthAnchor = imageView.widthAnchor.constraint(equalTo: widthAnchor, constant: -50)
         imageViewWidthAnchor?.isActive = true
         imageViewHeightAnchor = imageView.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.height * 0.35)
