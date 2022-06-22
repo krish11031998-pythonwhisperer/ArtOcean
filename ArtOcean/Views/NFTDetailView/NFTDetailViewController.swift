@@ -17,10 +17,12 @@ class NFTDetailArtViewController:UIViewController{
     private var imageScale:CGFloat = 1
     private var imageViewHeightAnchor:NSLayoutConstraint? = nil
     private var imageViewWidthAnchor:NSLayoutConstraint? = nil
+    private var prices:[Double]!
     
     init(nftArt:NFTModel) {
         self.nftArt = nftArt
         super.init(nibName: nil, bundle: nil)
+        prices = Array(repeating: 0, count: 25).compactMap({_ in Double.random(in: 1...5)})
         self.configNavigationBar()
         self.setupView()
         self.setupLayout()
@@ -205,6 +207,33 @@ class NFTDetailArtViewController:UIViewController{
         return container
     }()
 
+    private lazy var chartView:ChartView = {
+        let chartView = ChartView(data: prices)
+        chartView.chartDelegate = self
+        return chartView
+    }()
+    
+    private lazy var priceChartLabel:CustomLabel = {
+        let label = CustomLabel(text: String(format: "%.2f", prices.last ?? 0) + " ETH", size: 20, weight: .medium, color: .appGrayColor, numOfLines: 1)
+        return label
+    }()
+    
+    private lazy var chartPriceView:UIStackView = {
+        let stack = UIStackView()
+        stack.axis = .vertical
+        
+        let priceHeader = CustomLabel(text: "Price", size: 18, weight: .bold, color: .black, numOfLines: 1, adjustFontSize: false, autoLayout: false)
+    
+        priceHeader.setContentCompressionResistancePriority(.init(749), for: .horizontal)
+        priceHeader.setContentHuggingPriority(.init(249), for: .horizontal)
+        
+        let priceView:UIStackView = UIStackView(arrangedSubviews: [priceHeader,priceChartLabel])
+    
+        stack.addArrangedSubview(priceView)
+        stack.addArrangedSubview(chartView)
+        
+        return stack
+    }()
     
     //MARK: - View Setups
     
@@ -228,6 +257,8 @@ class NFTDetailArtViewController:UIViewController{
        
         stackView.addArrangedSubview(biddingController)
        
+        stackView.addArrangedSubview(chartPriceView)
+        
         stackView.addArrangedSubview(offerView)
         
         if let safeAttributeTable = self.attributesTable{
@@ -344,4 +375,25 @@ extension NFTDetailArtViewController:UIScrollViewDelegate{
         self.navigationController?.navigationBar.transform = .init(translationX: 0, y: min(scrollView.contentOffset.y - 100,0))
         
     }
+}
+
+
+//MARK: - ChartDelegate
+extension NFTDetailArtViewController:ChartDelegate{
+    
+    func selectedPrice(_ price: Double) {
+        DispatchQueue.main.async { [weak self] in
+            self?.priceChartLabel.text = String(format: "%.2f", price) + " ETH"
+            self?.priceChartLabel.textColor = (self?.prices.last)! > price ? .appRedColor : .appGreenColor
+        }
+    }
+    
+    func scrollStart() {
+        scrollView.isScrollEnabled = false
+    }
+    
+    func scrollEnded() {
+        scrollView.isScrollEnabled = true
+    }
+    
 }

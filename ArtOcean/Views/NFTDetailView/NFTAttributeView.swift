@@ -64,17 +64,17 @@ extension NFTAttributeView{
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.spacing = 8
         
-        let trait_type = CustomLabel(text: attributeData.trait_type ?? "no Trait", size: 14, weight: .bold, color: .appGrayColor, numOfLines: 1, adjustFontSize: false)
+        let trait_type = CustomLabel(text: attributeData.trait_type ?? "no Trait", size: 14, weight: .semibold, color: .appGrayColor, numOfLines: 1, adjustFontSize: false)
         stackView.addArrangedSubview(trait_type)
         
         trait_type.setContentHuggingPriority(.init(rawValue: 249), for: .horizontal)
         trait_type.setContentCompressionResistancePriority(.init(rawValue: 749), for: .horizontal)
         
         if let safeIntValue = attributeData.int_value{
-            let value = CustomLabel(text: "\(safeIntValue)" , size: 14, weight: .medium, color: .appBlackColor, numOfLines: 1, adjustFontSize: false)
+            let value = CustomLabel(text: "\(safeIntValue)" , size: 14, weight: .bold, color: .appBlackColor, numOfLines: 1, adjustFontSize: false)
             stackView.addArrangedSubview(value)
         }else if let safeStringValue = attributeData.str_value{
-            let value = CustomLabel(text: safeStringValue , size: 14, weight: .medium, color: .appBlackColor, numOfLines: 1, adjustFontSize: false)
+            let value = CustomLabel(text: safeStringValue , size: 14, weight: .bold, color: .appBlackColor, numOfLines: 1, adjustFontSize: false)
             stackView.addArrangedSubview(value)
         }
         

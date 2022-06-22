@@ -23,7 +23,7 @@
 		EF22D0CB285A378200555179 /* NFTLiveBidViewCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF22D0CA285A378200555179 /* NFTLiveBidViewCellView.swift */; };
 		EF22D0CD285A714F00555179 /* CustomTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF22D0CC285A714F00555179 /* CustomTableViewCell.swift */; };
 		EF358377284D371C00783D75 /* StretchyHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF358376284D371C00783D75 /* StretchyHeaderView.swift */; };
-		EF480E0F285F85D400FC0F3F /* NFTAttribute.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF480E0E285F85D400FC0F3F /* NFTAttribute.swift */; };
+		EF480E0F285F85D400FC0F3F /* NFTAttributeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF480E0E285F85D400FC0F3F /* NFTAttributeView.swift */; };
 		EF527441284AC53A008C77EC /* SDWebImage in Frameworks */ = {isa = PBXBuildFile; productRef = EF527440284AC53A008C77EC /* SDWebImage */; };
 		EF527443284AC53A008C77EC /* SDWebImageMapKit in Frameworks */ = {isa = PBXBuildFile; productRef = EF527442284AC53A008C77EC /* SDWebImageMapKit */; };
 		EF527492284BA4BD008C77EC /* SectionbasedData.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF527491284BA4BD008C77EC /* SectionbasedData.swift */; };
@@ -120,6 +120,9 @@
 		EF8B07482840A8150050E726 /* UIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF8B07452840A8150050E726 /* UIViewController.swift */; };
 		EF924CF5284CA454009E9C2A /* CustomSelectorCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF924CF4284CA454009E9C2A /* CustomSelectorCollectionView.swift */; };
 		EF924CF8284CE68B009E9C2A /* user.json in Resources */ = {isa = PBXBuildFile; fileRef = EF924CF7284CE68B009E9C2A /* user.json */; };
+		EFAB445A28639BCF00B33864 /* ChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFAB445928639BCF00B33864 /* ChartView.swift */; };
+		EFAB445C28639EEE00B33864 /* Array.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFAB445B28639EEE00B33864 /* Array.swift */; };
+		EFAB445E2863A58A00B33864 /* CGPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFAB445D2863A58A00B33864 /* CGPoint.swift */; };
 		EFD13C1C2843E1BD000E422E /* CustomLabelButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFD13C1B2843E1BD000E422E /* CustomLabelButton.swift */; };
 		EFD13C1F2843EC0C000E422E /* NFTDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFD13C1E2843EC0C000E422E /* NFTDetailViewController.swift */; };
 		EFD13C212843ECB3000E422E /* CustomImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFD13C202843ECB3000E422E /* CustomImageView.swift */; };
@@ -164,7 +167,7 @@
 		EF22D0CA285A378200555179 /* NFTLiveBidViewCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NFTLiveBidViewCellView.swift; sourceTree = "<group>"; };
 		EF22D0CC285A714F00555179 /* CustomTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTableViewCell.swift; sourceTree = "<group>"; };
 		EF358376284D371C00783D75 /* StretchyHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StretchyHeaderView.swift; sourceTree = "<group>"; };
-		EF480E0E285F85D400FC0F3F /* NFTAttribute.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NFTAttribute.swift; sourceTree = "<group>"; };
+		EF480E0E285F85D400FC0F3F /* NFTAttributeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NFTAttributeView.swift; sourceTree = "<group>"; };
 		EF527491284BA4BD008C77EC /* SectionbasedData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionbasedData.swift; sourceTree = "<group>"; };
 		EF527493284BECF4008C77EC /* Bundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bundle.swift; sourceTree = "<group>"; };
 		EF527495284C0608008C77EC /* CustomComplexCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomComplexCollectionView.swift; sourceTree = "<group>"; };
@@ -231,6 +234,9 @@
 		EF8B07452840A8150050E726 /* UIViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewController.swift; sourceTree = "<group>"; };
 		EF924CF4284CA454009E9C2A /* CustomSelectorCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSelectorCollectionView.swift; sourceTree = "<group>"; };
 		EF924CF7284CE68B009E9C2A /* user.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = user.json; sourceTree = "<group>"; };
+		EFAB445928639BCF00B33864 /* ChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartView.swift; sourceTree = "<group>"; };
+		EFAB445B28639EEE00B33864 /* Array.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Array.swift; sourceTree = "<group>"; };
+		EFAB445D2863A58A00B33864 /* CGPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGPoint.swift; sourceTree = "<group>"; };
 		EFD13C1B2843E1BD000E422E /* CustomLabelButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomLabelButton.swift; sourceTree = "<group>"; };
 		EFD13C1E2843EC0C000E422E /* NFTDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NFTDetailViewController.swift; sourceTree = "<group>"; };
 		EFD13C202843ECB3000E422E /* CustomImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomImageView.swift; sourceTree = "<group>"; };
@@ -438,6 +444,8 @@
 				EF527493284BECF4008C77EC /* Bundle.swift */,
 				EF527497284C1E5B008C77EC /* NSCollectionLayout.swift */,
 				EF69B6B428550D9F00ABDADA /* UITableViewCell.swift */,
+				EFAB445B28639EEE00B33864 /* Array.swift */,
+				EFAB445D2863A58A00B33864 /* CGPoint.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -538,6 +546,7 @@
 				EF69B6B228550CC100ABDADA /* TransactionCell.swift */,
 				EF69B6B828562D5700ABDADA /* CustomAnimatedImage.swift */,
 				EF22D0CC285A714F00555179 /* CustomTableViewCell.swift */,
+				EFAB445928639BCF00B33864 /* ChartView.swift */,
 			);
 			path = CommonComponents;
 			sourceTree = "<group>";
@@ -552,7 +561,7 @@
 				EF00F5B82845088F003D8683 /* NFTBidController.swift */,
 				EF00F5CD2846D2AB003D8683 /* NFTDetailHeroHeaderSection.swift */,
 				EF00F5D12846D781003D8683 /* NFTArtInteractiveInfoView.swift */,
-				EF480E0E285F85D400FC0F3F /* NFTAttribute.swift */,
+				EF480E0E285F85D400FC0F3F /* NFTAttributeView.swift */,
 			);
 			path = NFTDetailView;
 			sourceTree = "<group>";
@@ -730,6 +739,8 @@
 				EFD13C2B2844D560000E422E /* NFTOfferTableViewCell.swift in Sources */,
 				EFD13C272844CF4F000E422E /* NFTOfferTableView.swift in Sources */,
 				EF69B6AF2854965400ABDADA /* WalletDetailView.swift in Sources */,
+				EFAB445A28639BCF00B33864 /* ChartView.swift in Sources */,
+				EFAB445E2863A58A00B33864 /* CGPoint.swift in Sources */,
 				EF00F5CA28465B6E003D8683 /* TopSellerCollectionView.swift in Sources */,
 				EF8B067F283C28960050E726 /* DataError.swift in Sources */,
 				EF8B0635283BEAC10050E726 /* MainTabViewController.swift in Sources */,
@@ -764,9 +775,10 @@
 				EF7447B6284A0F9F00899476 /* UICollectionView.swift in Sources */,
 				EF527492284BA4BD008C77EC /* SectionbasedData.swift in Sources */,
 				EF00F5CE2846D2AB003D8683 /* NFTDetailHeroHeaderSection.swift in Sources */,
-				EF480E0F285F85D400FC0F3F /* NFTAttribute.swift in Sources */,
+				EF480E0F285F85D400FC0F3F /* NFTAttributeView.swift in Sources */,
 				EF8B06D5283E3A4B0050E726 /* LiveBidDetailView.swift in Sources */,
 				EF8B066C283BF0E70050E726 /* ProfileViewController.swift in Sources */,
+				EFAB445C28639EEE00B33864 /* Array.swift in Sources */,
 				EF7447AE284902A300899476 /* AccountHeaderView.swift in Sources */,
 				EF69B6AD28529FD000ABDADA /* FavoriteViewController.swift in Sources */,
 				EF7447B8284A109300899476 /* User.swift in Sources */,

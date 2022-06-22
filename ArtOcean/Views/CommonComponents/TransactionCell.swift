@@ -127,7 +127,7 @@ class TransactionViewCell:UITableViewCell{
                 txnValueInfo.text = "\(txn.value) ETH"
             case .buy,.sell:
                 if let img = txn.artModel?.metadata?.image{
-                    ImageDownloader.shared.fetchImage(urlStr: img,imageSize: .init(width: 40, height: 40)) { result in
+                    ImageDownloader.shared.fetchImage(urlStr: img) { result in
                         switch result{
                         case .success(let img):
                             DispatchQueue.main.async { [weak self] in

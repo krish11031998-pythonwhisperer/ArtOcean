@@ -28,17 +28,15 @@ public struct ImageCache:ImageDictCache{
     public subscript(url: URL) -> UIImage? {
         get{
             var res : UIImage? = nil
-            if let url = url as? NSURL{
-                res = self.cache.object(forKey: url)
-            }
+            res = self.cache.object(forKey: url as NSURL)
             return res
         }
         set{
-            guard let img = newValue, let url = url as? NSURL else {return}
-            if let res = self.cache.object(forKey: url){
-                self.cache.removeObject(forKey: url)
+            guard let img = newValue else {return}
+            if let _ = self.cache.object(forKey: url as NSURL){
+                self.cache.removeObject(forKey: url as NSURL)
             }else{
-                self.cache.setObject(img, forKey: url)
+                self.cache.setObject(img, forKey: url as NSURL)
             }
         }
     }

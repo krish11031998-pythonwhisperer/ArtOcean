@@ -233,4 +233,12 @@ extension WalletDetailView:UITableViewDelegate,UITableViewDataSource{
         
         return cell
     }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let data = items[indexPath.row]
+        
+        if let safeArtData = data.artModel{
+            self.navigationController?.pushViewController(NFTDetailArtViewController(nftArt: safeArtData), animated: true)
+        }
+    }
 }

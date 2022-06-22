@@ -255,7 +255,7 @@ extension HomeViewController:NFTLiveBidCollectionDelegate{
     }
     
     func viewNFT(art: NFTModel) {
-        print("(DEBUG) selected An Art : ",art.title)
+        print("(DEBUG) selected An Art : ",art.title ?? "")
         self.navigationController?.pushViewController(NFTDetailArtViewController(nftArt: art), animated: true)
     }
 }
