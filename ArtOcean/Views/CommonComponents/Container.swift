@@ -87,7 +87,7 @@ class Container: UIView {
             safeHeaderView.trailingAnchor.constraint(equalTo: self.trailingAnchor,constant: self.paddingToHeaderView ? -padding : 0).isActive = true
         }
         
-        self.innerView.topAnchor.constraint(equalTo: headerView?.bottomAnchor ?? self.topAnchor, constant: 12).isActive = true
+        self.innerView.topAnchor.constraint(equalTo: headerView?.bottomAnchor ?? self.topAnchor, constant: headerView == nil ? 0 : 12).isActive = true
         self.innerView.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
         if self.innerViewSize.width == .zero{
             self.innerView.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
