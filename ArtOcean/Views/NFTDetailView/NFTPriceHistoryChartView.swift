@@ -14,7 +14,7 @@ protocol NFTChartViewDelegate{
 }
 
 
-class NFTChartView:UIStackView{
+class NFTChartView:UIView{
 	
 	var prices:[Double] = []
 	
@@ -27,6 +27,10 @@ class NFTChartView:UIStackView{
 	
 	required init(coder: NSCoder) {
 		fatalError("init(coder:) has not been implemented")
+	}
+	
+	override func layoutSubviews() {
+		super.layoutSubviews()
 	}
 	
 	//MARK: -  View
@@ -42,45 +46,63 @@ class NFTChartView:UIStackView{
 	}()
 	
 	private lazy var priceChangeLabel:CustomLabel = {
-		guard let first = prices.first , let last = prices.last else {return CustomLabel(text: "No Price", color: .black, numOfLines: 1)}
-		let label = CustomLabel(text: String(format: "%.2f", (last - first)/last), size: 13, weight: .medium, color: last > first ? .appGreenColor : .appRedColor, numOfLines: 1, adjustFontSize: true, autoLayout: false)
+		guard let first = prices.first , let last = prices.last else {return CustomLabel(text: "0%", color: .black, numOfLines: 1)}
+		let label = CustomLabel(text: String(format: "%.2f%", (last - first)/last), size: 13, weight: .medium, color: last > first ? .appGreenColor : .appRedColor, numOfLines: 1, adjustFontSize: true, autoLayout: false)
 		return label
+	}()
+	
+	private lazy var priceValueStack:UIStackView = {
+		let stack = UIStackView()
+		stack.axis = .horizontal
+		stack.spacing = 8
+		stack.addArrangedSubview(priceChartLabel)
+		stack.addArrangedSubview(priceChangeLabel)
+				
+		priceChangeLabel.setContentHuggingPriority(.init(249), for: .horizontal)
+		priceChangeLabel.setContentCompressionResistancePriority(.init(749), for: .horizontal)
+		
+		return stack
+	}()
+	
+	private lazy var mainContainer:StackContainer = {
+		let container = StackContainer(header: "Price History", innerView: [priceValueStack,chartView])
+		return container
+	}()
+	
+	private let loadingView:UIView = {
+		let view = UIView()
+		let loadingLabel = CustomLabel(text: "Loading...", size: 15, weight: .medium, color: .black, numOfLines: 1)
+		view.addSubview(loadingLabel)
+		view.setCentralizedChild(loadingLabel)
+		view.backgroundColor = .white
+		return view
 	}()
 		
 	//MARK: - UpdateUI
 	
 	private func setupUI(){
-		axis = .vertical
-		let priceHeader = CustomLabel(text: "Price History", size: 18, weight: .bold, color: .black, numOfLines: 1, adjustFontSize: false, autoLayout: false)
+		addSubview(mainContainer)
+		addSubview(loadingView)
+		setContraintsToChild(loadingView, edgeInsets: .zero)
+		setContraintsToChild(mainContainer, edgeInsets: .zero)
+	}
 	
-		let priceValueStack = UIStackView()
-		priceValueStack.axis = .horizontal
-		priceValueStack.spacing = 8
-		priceValueStack.addArrangedSubview(priceChartLabel)
-		priceValueStack.addArrangedSubview(priceChangeLabel)
-		
-		priceValueStack.alignment = .firstBaseline
-		
-		priceChangeLabel.setContentHuggingPriority(.init(249), for: .horizontal)
-		priceChangeLabel.setContentCompressionResistancePriority(.init(749), for: .horizontal)
-		
-		
-		let priceView:UIStackView = UIStackView(arrangedSubviews: [priceHeader,priceValueStack])
-		priceView.axis = .vertical
-		priceView.spacing = 8
-		
-		addArrangedSubview(priceView)
-		addArrangedSubview(chartView)
+	private func resetView(){
+		loadingView.removeFromSuperview()
+		loadingView.constraints.forEach({removeConstraint($0)})
 	}
 	
 	public func updateUI(_ prices:[Double]){
 		self.prices = prices
+		resetView()
 		chartView.updateUI(prices)
 		priceChangeLabel.text = String(format:"%.2f",(prices.overallChange() ?? 1.0)/(prices.last ?? 1.0))
 		priceChangeLabel.textColor = prices.last! > prices.first! ? .appGreenColor : .appRedColor
 		priceChartLabel.text = String(format: "%.2f", prices.last ?? 0.0)
 	}
-	
+	override var intrinsicContentSize: CGSize{
+		return .init(width: UIScreen.main.bounds.width, height: mainContainer.arrangedSubviews.compactMap({$0.intrinsicContentSize.height}).reduce(0, {$0 + $1}))
+	}
 }
 
 

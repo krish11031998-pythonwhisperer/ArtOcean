@@ -124,6 +124,7 @@
 		EFAB445C28639EEE00B33864 /* Array.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFAB445B28639EEE00B33864 /* Array.swift */; };
 		EFAB445E2863A58A00B33864 /* CGPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFAB445D2863A58A00B33864 /* CGPoint.swift */; };
 		EFAB446128671EB600B33864 /* NFTPriceHistoryChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFAB446028671EB600B33864 /* NFTPriceHistoryChartView.swift */; };
+		EFAB44632867912F00B33864 /* StackContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFAB44622867912F00B33864 /* StackContainer.swift */; };
 		EFD13C1C2843E1BD000E422E /* CustomLabelButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFD13C1B2843E1BD000E422E /* CustomLabelButton.swift */; };
 		EFD13C1F2843EC0C000E422E /* NFTDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFD13C1E2843EC0C000E422E /* NFTDetailViewController.swift */; };
 		EFD13C212843ECB3000E422E /* CustomImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFD13C202843ECB3000E422E /* CustomImageView.swift */; };
@@ -239,6 +240,7 @@
 		EFAB445B28639EEE00B33864 /* Array.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Array.swift; sourceTree = "<group>"; };
 		EFAB445D2863A58A00B33864 /* CGPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGPoint.swift; sourceTree = "<group>"; };
 		EFAB446028671EB600B33864 /* NFTPriceHistoryChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NFTPriceHistoryChartView.swift; sourceTree = "<group>"; };
+		EFAB44622867912F00B33864 /* StackContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StackContainer.swift; sourceTree = "<group>"; };
 		EFD13C1B2843E1BD000E422E /* CustomLabelButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomLabelButton.swift; sourceTree = "<group>"; };
 		EFD13C1E2843EC0C000E422E /* NFTDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NFTDetailViewController.swift; sourceTree = "<group>"; };
 		EFD13C202843ECB3000E422E /* CustomImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomImageView.swift; sourceTree = "<group>"; };
@@ -549,6 +551,7 @@
 				EF69B6B828562D5700ABDADA /* CustomAnimatedImage.swift */,
 				EF22D0CC285A714F00555179 /* CustomTableViewCell.swift */,
 				EFAB445928639BCF00B33864 /* ChartView.swift */,
+				EFAB44622867912F00B33864 /* StackContainer.swift */,
 			);
 			path = CommonComponents;
 			sourceTree = "<group>";
@@ -783,6 +786,7 @@
 				EF8B06D5283E3A4B0050E726 /* LiveBidDetailView.swift in Sources */,
 				EF8B066C283BF0E70050E726 /* ProfileViewController.swift in Sources */,
 				EFAB445C28639EEE00B33864 /* Array.swift in Sources */,
+				EFAB44632867912F00B33864 /* StackContainer.swift in Sources */,
 				EF7447AE284902A300899476 /* AccountHeaderView.swift in Sources */,
 				EF69B6AD28529FD000ABDADA /* FavoriteViewController.swift in Sources */,
 				EF7447B8284A109300899476 /* User.swift in Sources */,

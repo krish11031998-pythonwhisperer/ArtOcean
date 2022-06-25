@@ -36,6 +36,22 @@ class Container: UIView {
         self.setupViews()
         self.setupLayout()
     }
+	
+	init(
+		header:String,
+		innerView:UIView,
+		innerViewSize:CGSize
+	){
+		self.addInnerViewPadding = false
+		self.paddingToHeaderView = true
+		self.padding = 8
+		super.init(frame: .zero)
+		self.headerView = ContainerHeaderView(title: header)
+		self.innerView = innerView
+		self.innerViewSize = innerViewSize
+		self.setupViews()
+		self.setupLayout()
+	}
     
     init(
         innerView:UIView,
@@ -70,7 +86,7 @@ class Container: UIView {
     
     func setupViews(){
         
-        self.translatesAutoresizingMaskIntoConstraints = false
+//        self.translatesAutoresizingMaskIntoConstraints = false
         
         if let safeHeaderView = self.headerView{
             self.addSubview(safeHeaderView)

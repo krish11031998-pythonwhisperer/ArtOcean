@@ -169,7 +169,7 @@ extension ChartView{
 		shapeLayer.lineWidth = 3
 		layer.addSublayer(shapeLayer)
 	}
-    
+
 }
 
 //MARK: - TouchEventObservers

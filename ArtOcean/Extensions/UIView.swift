@@ -128,4 +128,47 @@ extension UIView{
         self.layer.shadowOffset = .zero
         self.layer.shadowRadius = 2.5
     }
+	
+	func setContraintsToChild(_ childView:UIView,edgeInsets:UIEdgeInsets){
+		let constraints = [
+			childView.topAnchor.constraint(equalTo: self.topAnchor, constant: edgeInsets.top),
+			childView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: edgeInsets.bottom),
+			childView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: edgeInsets.left),
+			childView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: edgeInsets.right)
+		]
+
+		removeConstraints(constraints)
+		childView.translatesAutoresizingMaskIntoConstraints = false
+		NSLayoutConstraint.activate(constraints)
+	}
+	
+	func setCentralizedChild(_ childView:UIView){
+		let constraints = [
+			childView.centerXAnchor.constraint(equalTo: self.centerXAnchor),
+			childView.centerYAnchor.constraint(equalTo: self.centerYAnchor)
+		]
+
+		removeConstraints(constraints)
+		childView.translatesAutoresizingMaskIntoConstraints = false
+		NSLayoutConstraint.activate(constraints)
+	}
+	
+	func removeSimilarConstraints(_ list:[NSLayoutConstraint]){
+		constraints.forEach { item in
+			guard list.filter(item.isSame).first != nil else {return}
+			removeConstraint(item)
+		}
+	}
+	
+}
+
+extension NSLayoutConstraint{
+	
+	func isSame(as other: NSLayoutConstraint) -> Bool {
+		return firstItem === other.firstItem &&
+			secondItem === other.secondItem &&
+			firstAnchor === other.firstAnchor &&
+			secondAnchor === other.secondAnchor
+	}
+	
 }
