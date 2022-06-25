@@ -31,7 +31,8 @@ class ChartView:UIView{
 	private var data:[Double]!{
 		didSet{
 			resetChart()
-			setupUI()
+			setupIndicator()
+			drawChart()
 		}
 	}
     private var dataPoints:[CGPoint]!
@@ -41,14 +42,10 @@ class ChartView:UIView{
     
     public var chartDelegate:ChartDelegate? = nil
     
-    init(data:[Double],chartColor:UIColor = .appPurpleColor){
+    init(data:[Double] = [],chartColor:UIColor = .appPurpleColor){
         super.init(frame: .zero)
         self.data = data
         self.chartColor = chartColor
-    }
-    
-    convenience init() {
-        self.init(data: Array(repeating: 0, count: 50).map({_ in Double.random(in: 1...2.0)}))
     }
     
     required init?(coder: NSCoder) {
@@ -57,7 +54,6 @@ class ChartView:UIView{
     
     override func layoutSubviews() {
         super.layoutSubviews()
-		setupUI()
     }
     
     override var intrinsicContentSize: CGSize{
@@ -85,11 +81,11 @@ class ChartView:UIView{
                 circle.widthAnchor.constraint(equalToConstant: CGFloat(size.element)),
                 circle.heightAnchor.constraint(equalTo: circle.widthAnchor)
             ])
-            
         }
         
         return view
     }()
+	
 }
 
 //MARK: - ChartBuilder
@@ -164,21 +160,15 @@ extension ChartView{
         return path
     }
     
-    func drawChart(){
-        
-        let shapeLayer = CAShapeLayer()
-        
-        shapeLayer.path = drawBezierCurve().cgPath
-        
-        shapeLayer.strokeColor = chartColor.cgColor
-        shapeLayer.fillColor = UIColor.clear.cgColor
-        shapeLayer.lineWidth = 3
-
-        
-        layer.addSublayer(shapeLayer)
-        
-        addChart.toggle()
-    }
+	func drawChart(){
+		let shapeLayer = CAShapeLayer()
+		shapeLayer.path = drawBezierCurve().cgPath
+		
+		shapeLayer.strokeColor = chartColor.cgColor
+		shapeLayer.fillColor = UIColor.clear.cgColor
+		shapeLayer.lineWidth = 3
+		layer.addSublayer(shapeLayer)
+	}
     
 }
 
@@ -221,22 +211,22 @@ extension ChartView{
         }
     }
 	
-	private func setupUI(){
-		if !addChart{
-			drawChart()
-			chartPointIndicator.frame = .init(origin: .zero, size: .init(width: 25, height: 25))
-			chartPointIndicator.frame = chartPointIndicator.frame.offsetBy(dx: -12.5, dy: -12.5)
-			addSubview(chartPointIndicator)
-		}
+	private func setupIndicator(){
+		addSubview(chartPointIndicator)
+		
+		chartPointIndicator.frame = .init(origin: .zero, size: .init(width: 25, height: 25))
+		chartPointIndicator.frame = chartPointIndicator.frame.offsetBy(dx: -12.5, dy: -12.5)
 	}
 	
 	private func resetChart(){
-		if !dataPoints.isEmpty{ dataPoints.removeAll() }
-		if !curvedSegments.isEmpty{ curvedSegments.removeAll() }
-		addChart.toggle()
+		if dataPoints != nil && !dataPoints.isEmpty{ dataPoints.removeAll() }
+		if curvedSegments != nil && !curvedSegments.isEmpty{ curvedSegments.removeAll() }
+		if addChart {addChart.toggle()}
+				
+		if !(layer.sublayers?.isEmpty ?? true){
+			layer.sublayers?.forEach({$0.removeFromSuperlayer()})
+		}
 		
-		subviews.forEach({$0.removeFromSuperview()})
-		layer.sublayers?.forEach({$0.removeFromSuperlayer()})
 	}
 	
 	public func updateUI(_ data:[Double]){

@@ -60,7 +60,7 @@ class NFTDetailArtViewController:UIViewController{
 		DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(5)) { [weak self] in
 			self?.prices = self?.prices.compactMap({_ in Double.random(in: 1...5)})
 			print("(DEBUG) Updating the chart with new dataPoints : ",self?.prices)
-			self?.chartView.updateUI(self!.prices!)
+			self?.priceHistoryView.updateUI(self!.prices!)
 		}
 	}
 	
@@ -207,50 +207,11 @@ class NFTDetailArtViewController:UIViewController{
         return container
     }()
 
-    private lazy var chartView:ChartView = {
-        let chartView = ChartView(data: prices)
-        chartView.chartDelegate = self
-        return chartView
-    }()
-    
-    private lazy var priceChartLabel:CustomLabel = {
-        let label = CustomLabel(text: String(format: "%.2f", prices.last ?? 0) + " ETH", size: 20, weight: .medium, color: .appGrayColor, numOfLines: 1)
-        return label
-    }()
-    
-    private lazy var priceChangeLabel:CustomLabel = {
-        guard let first = prices.first , let last = prices.last else {return CustomLabel(text: "No Price", color: .black, numOfLines: 1)}
-        let label = CustomLabel(text: String(format: "%.2f", (last - first)/last), size: 13, weight: .medium, color: last > first ? .appGreenColor : .appRedColor, numOfLines: 1, adjustFontSize: true, autoLayout: false)
-        return label
-    }()
-    
-    private lazy var chartPriceView:UIStackView = {
-        let stack = UIStackView()
-        stack.axis = .vertical
-        
-        let priceHeader = CustomLabel(text: "Price History", size: 18, weight: .bold, color: .black, numOfLines: 1, adjustFontSize: false, autoLayout: false)
-    
-        let priceValueStack = UIStackView()
-        priceValueStack.axis = .horizontal
-        priceValueStack.spacing = 8
-        priceValueStack.addArrangedSubview(priceChartLabel)
-        priceValueStack.addArrangedSubview(priceChangeLabel)
-        
-        priceValueStack.alignment = .firstBaseline
-        
-        priceChangeLabel.setContentHuggingPriority(.init(249), for: .horizontal)
-        priceChangeLabel.setContentCompressionResistancePriority(.init(749), for: .horizontal)
-        
-        
-        let priceView:UIStackView = UIStackView(arrangedSubviews: [priceHeader,priceValueStack])
-        priceView.axis = .vertical
-        priceView.spacing = 8
-        
-        stack.addArrangedSubview(priceView)
-        stack.addArrangedSubview(chartView)
-        
-        return stack
-    }()
+	private let priceHistoryView:NFTChartView = {
+		let priceView = NFTChartView()
+		return priceView
+	}()
+	
     
     //MARK: - View Setups
     
@@ -274,7 +235,8 @@ class NFTDetailArtViewController:UIViewController{
        
         stackView.addArrangedSubview(biddingController)
        
-        stackView.addArrangedSubview(chartPriceView)
+		priceHistoryView.delegate = self
+		stackView.addArrangedSubview(priceHistoryView)
         
         stackView.addArrangedSubview(offerView)
         
@@ -396,40 +358,13 @@ extension NFTDetailArtViewController:UIScrollViewDelegate{
 
 
 //MARK: - ChartDelegate
-extension NFTDetailArtViewController:ChartDelegate{
-    
-    func resetPriceAndChange(){
-        if let first = prices.first,let last = prices.last {
-            DispatchQueue.main.async {[weak self] in
-                let percent = CGFloat(last - first)/CGFloat(last)
-                self?.priceChartLabel.text = String(format: "%.2f", last) + " ETH"
-                self?.priceChangeLabel.text = String(format: "%.2f", percent * 100) + "%"
-                self?.priceChartLabel.textColor = .appGrayColor
-                self?.priceChangeLabel.textColor = percent > 0 ? .appGreenColor : .appRedColor
-            }
-        }
-    }
-    
-    func selectedPrice(_ price: Double) {
-        if let last = prices.last{
-            DispatchQueue.main.async {[weak self] in
-                let percent = CGFloat(price - last)/CGFloat(price)
-                self?.priceChartLabel.text = String(format: "%.2f", price) + " ETH"
-                self?.priceChangeLabel.text = String(format: "%.2f", percent * 100) + "%"
-                self?.priceChangeLabel.textColor = percent > 0 ? .appGreenColor : .appRedColor
-                self?.priceChartLabel.textColor = last > price ? .appRedColor : .appGreenColor
-            }
-        }
-    }
-    
-    func scrollStart() {
-        scrollView.isScrollEnabled = false
-        resetPriceAndChange()
-    }
-    
-    func scrollEnded() {
-        scrollView.isScrollEnabled = true
-        resetPriceAndChange()
-    }
-    
+extension NFTDetailArtViewController:NFTChartViewDelegate{
+	func scrollStarted() {
+		scrollView.isScrollEnabled = false
+	}
+	
+	func scrollEnded() {
+		scrollView.isScrollEnabled = true
+	}
+	
 }

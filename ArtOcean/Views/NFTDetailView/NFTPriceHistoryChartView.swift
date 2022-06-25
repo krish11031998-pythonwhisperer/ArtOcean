@@ -8,11 +8,21 @@
 import Foundation
 import UIKit
 
+protocol NFTChartViewDelegate{
+	func scrollStarted()
+	func scrollEnded()
+}
+
+
 class NFTChartView:UIStackView{
 	
 	var prices:[Double] = []
+	
+	public var delegate:NFTChartViewDelegate? = nil
+	
 	override init(frame: CGRect) {
 		super.init(frame: frame)
+		setupUI()
 	}
 	
 	required init(coder: NSCoder) {
@@ -21,8 +31,8 @@ class NFTChartView:UIStackView{
 	
 	//MARK: -  View
 	private lazy var chartView:ChartView = {
-		let chartView = ChartView(data: prices)
-//		chartView.chartDelegate = self
+		let chartView = ChartView()
+		chartView.chartDelegate = self
 		return chartView
 	}()
 	
@@ -36,11 +46,11 @@ class NFTChartView:UIStackView{
 		let label = CustomLabel(text: String(format: "%.2f", (last - first)/last), size: 13, weight: .medium, color: last > first ? .appGreenColor : .appRedColor, numOfLines: 1, adjustFontSize: true, autoLayout: false)
 		return label
 	}()
-	
-	private lazy var chartPriceView:UIStackView = {
-		let stack = UIStackView()
-		stack.axis = .vertical
 		
+	//MARK: - UpdateUI
+	
+	private func setupUI(){
+		axis = .vertical
 		let priceHeader = CustomLabel(text: "Price History", size: 18, weight: .bold, color: .black, numOfLines: 1, adjustFontSize: false, autoLayout: false)
 	
 		let priceValueStack = UIStackView()
@@ -59,17 +69,55 @@ class NFTChartView:UIStackView{
 		priceView.axis = .vertical
 		priceView.spacing = 8
 		
-		stack.addArrangedSubview(priceView)
-		stack.addArrangedSubview(chartView)
-		
-		return stack
-	}()
+		addArrangedSubview(priceView)
+		addArrangedSubview(chartView)
+	}
 	
-	//MARK: - UpdateUI
-	func updateUI(){
-		
+	public func updateUI(_ prices:[Double]){
+		self.prices = prices
+		chartView.updateUI(prices)
+		priceChangeLabel.text = String(format:"%.2f",(prices.overallChange() ?? 1.0)/(prices.last ?? 1.0))
+		priceChangeLabel.textColor = prices.last! > prices.first! ? .appGreenColor : .appRedColor
+		priceChartLabel.text = String(format: "%.2f", prices.last ?? 0.0)
 	}
 	
 }
 
-//MARK: -
+
+//MARK: -  ChartViewDelegate
+extension NFTChartView:ChartDelegate{
+	
+	func resetPriceAndChange(){
+		if let first = prices.first,let last = prices.last {
+			DispatchQueue.main.async {[weak self] in
+				let percent = CGFloat(last - first)/CGFloat(last)
+				self?.priceChartLabel.text = String(format: "%.2f", last) + " ETH"
+				self?.priceChangeLabel.text = String(format: "%.2f", percent * 100) + "%"
+				self?.priceChartLabel.textColor = .appGrayColor
+				self?.priceChangeLabel.textColor = percent > 0 ? .appGreenColor : .appRedColor
+			}
+		}
+	}
+	
+	func selectedPrice(_ price: Double) {
+		if let last = prices.last{
+			DispatchQueue.main.async {[weak self] in
+				let percent = CGFloat(price - last)/CGFloat(price)
+				self?.priceChartLabel.text = String(format: "%.2f", price) + " ETH"
+				self?.priceChangeLabel.text = String(format: "%.2f", percent * 100) + "%"
+				self?.priceChangeLabel.textColor = percent > 0 ? .appGreenColor : .appRedColor
+				self?.priceChartLabel.textColor = last > price ? .appRedColor : .appGreenColor
+			}
+		}
+	}
+	
+	func scrollEnded() {
+		resetPriceAndChange()
+		delegate?.scrollEnded()
+	}
+	
+	func scrollStart() {
+		delegate?.scrollStarted()
+	}
+	
+}

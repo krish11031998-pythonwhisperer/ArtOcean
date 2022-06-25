@@ -37,6 +37,11 @@ extension Array where Element:Numeric{
     func square() -> [Self.Element]{
         return map({$0 * $0})
     }
+	
+	func overallChange() -> Self.Element?{
+		guard let safeFirst = self.first,let safeLast = self.last else {return nil}
+		return (safeLast - safeFirst)
+	}
     
 }
 
