@@ -109,10 +109,12 @@ extension UIView{
             
             stack.addArrangedSubview(view)
             
+			let spacingConstant =  -(count == 0 || count == views.count - 1 ? spacing * 0.5 : spacing)
+			
             if axis == .vertical{
-                view.heightAnchor.constraint(equalTo: stack.heightAnchor, multiplier: ratio,constant: -(count == 0 || count == views.count - 1 ? spacing * 0.5 : spacing)).isActive = true
+                view.heightAnchor.constraint(equalTo: stack.heightAnchor, multiplier: ratio,constant: spacingConstant).isActive = true
             }else if axis == .horizontal{
-                view.widthAnchor.constraint(equalTo: stack.widthAnchor, multiplier: ratio,constant: -(count == 0 || count == views.count - 1 ? spacing * 0.5 : spacing)).isActive = true
+                view.widthAnchor.constraint(equalTo: stack.widthAnchor, multiplier: ratio,constant: spacingConstant).isActive = true
             }
         }
         

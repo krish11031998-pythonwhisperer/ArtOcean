@@ -26,8 +26,8 @@ class NFTBiddingController:UIView{
         stack.addArrangedSubview(self.priceLabelView)
         
         NSLayoutConstraint.activate([
-            ethButton.widthAnchor.constraint(equalTo: stack.widthAnchor, multiplier: 0.2,constant: -6),
-            self.priceLabelView.widthAnchor.constraint(equalTo: stack.widthAnchor, multiplier: 0.8,constant: -6)
+			ethButton.widthAnchor.constraint(equalToConstant: 28),
+			ethButton.heightAnchor.constraint(equalToConstant: 28),
         ])
         
         return stack
@@ -61,7 +61,7 @@ class NFTBiddingController:UIView{
             self.priceView.centerXAnchor.constraint(equalTo: self.centerXAnchor),
             self.priceView.centerYAnchor.constraint(equalTo: self.centerYAnchor)
         ])
-        
+		
         self.layer.borderColor = UIColor.appBlueColor.withAlphaComponent(0.125).cgColor
         self.layer.borderWidth = 1
         self.layer.cornerRadius = 16
