@@ -47,11 +47,28 @@ class NFTDetailArtViewController:UIViewController{
         
     }
     
-    override func viewWillLayoutSubviews() {
-        super.viewWillLayoutSubviews()
-
-        
-    }
+	override func viewDidLayoutSubviews() {
+		super.viewDidLayoutSubviews()
+	}
+	
+	override func viewWillAppear(_ animated: Bool) {
+		super.viewWillAppear(animated)
+		if let safeNavBar = self.navigationController?.isNavigationBarHidden,safeNavBar{
+			self.navigationController?.setNavigationBarHidden(false, animated: true)
+		}
+		self.navigationController?.navigationBar.transform = .init(translationX: 0, y: -100)
+		DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(5)) { [weak self] in
+			self?.prices = self?.prices.compactMap({_ in Double.random(in: 1...5)})
+			print("(DEBUG) Updating the chart with new dataPoints : ",self?.prices)
+			self?.chartView.updateUI(self!.prices!)
+		}
+	}
+	
+	override func viewWillDisappear(_ animated: Bool) {
+		super.viewWillDisappear(animated)
+		self.navigationController?.navigationBar.transform = .init(translationX: 0, y: 0)
+	}
+	
     
     //MARK: -  NavigationItem
     private func configNavigationBar(){
@@ -80,23 +97,6 @@ class NFTDetailArtViewController:UIViewController{
         
         return barButton
     }()
-    
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        if let safeNavBar = self.navigationController?.isNavigationBarHidden,safeNavBar{
-            self.navigationController?.setNavigationBarHidden(false, animated: true)
-        }
-        self.navigationController?.navigationBar.transform = .init(translationX: 0, y: -100)
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        self.navigationController?.navigationBar.transform = .init(translationX: 0, y: 0)
-    }
     
     //MARK: - Views
     private lazy var scrollView:UIScrollView = {

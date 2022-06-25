@@ -40,8 +40,6 @@ class ChartView:UIView{
         super.init(frame: .zero)
         self.data = data
         self.chartColor = chartColor
-        
-        
     }
     
     convenience init() {
@@ -54,13 +52,7 @@ class ChartView:UIView{
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        if !addChart{
-            drawChart()
-            chartPointIndicator.frame = .init(origin: .zero, size: .init(width: 25, height: 25))
-            chartPointIndicator.frame = chartPointIndicator.frame.offsetBy(dx: -12.5, dy: -12.5)
-            addSubview(chartPointIndicator)
-        }
-        
+		setupUI()
     }
     
     override var intrinsicContentSize: CGSize{
@@ -222,6 +214,27 @@ extension ChartView{
             }
             self.chartDelegate?.scrollEnded()
         }
-
     }
+	
+	public func setupUI(){
+		if !addChart{
+			drawChart()
+			chartPointIndicator.frame = .init(origin: .zero, size: .init(width: 25, height: 25))
+			chartPointIndicator.frame = chartPointIndicator.frame.offsetBy(dx: -12.5, dy: -12.5)
+			addSubview(chartPointIndicator)
+		}
+	}
+	
+	public func updateUI(_ data:[Double]){
+		self.data = data
+		addChart.toggle()
+		
+		dataPoints.removeAll()
+		curvedSegments.removeAll()
+		
+		subviews.forEach({$0.removeFromSuperview()})
+		layer.sublayers?.forEach({$0.removeFromSuperlayer()})
+		
+		setupUI()
+	}
 }
