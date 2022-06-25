@@ -28,7 +28,12 @@ protocol ChartDelegate{
 
 class ChartView:UIView{
     
-    private var data:[Double]!
+	private var data:[Double]!{
+		didSet{
+			resetChart()
+			setupUI()
+		}
+	}
     private var dataPoints:[CGPoint]!
     private var curvedSegments:[CurveSegments]!
     private var addChart:Bool = false
@@ -216,7 +221,7 @@ extension ChartView{
         }
     }
 	
-	public func setupUI(){
+	private func setupUI(){
 		if !addChart{
 			drawChart()
 			chartPointIndicator.frame = .init(origin: .zero, size: .init(width: 25, height: 25))
@@ -225,16 +230,16 @@ extension ChartView{
 		}
 	}
 	
-	public func updateUI(_ data:[Double]){
-		self.data = data
+	private func resetChart(){
+		if !dataPoints.isEmpty{ dataPoints.removeAll() }
+		if !curvedSegments.isEmpty{ curvedSegments.removeAll() }
 		addChart.toggle()
-		
-		dataPoints.removeAll()
-		curvedSegments.removeAll()
 		
 		subviews.forEach({$0.removeFromSuperview()})
 		layer.sublayers?.forEach({$0.removeFromSuperlayer()})
-		
-		setupUI()
+	}
+	
+	public func updateUI(_ data:[Double]){
+		self.data = data
 	}
 }
