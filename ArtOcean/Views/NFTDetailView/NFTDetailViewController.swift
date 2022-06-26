@@ -216,36 +216,24 @@ class NFTDetailArtViewController:UIViewController{
     //MARK: - View Setups
     
     func setupView(){
-    
-        self.view.backgroundColor = .white
-        self.navigationController?.isNavigationBarHidden = true
-        self.navigationController?.navigationBar.isTranslucent = false
-        
-        self.view.addSubview(self.scrollView)
-        
-        self.setupImageView()
-        
-        self.scrollView.addSubview(stackView)
-                
+        view.backgroundColor = .white
+        navigationController?.isNavigationBarHidden = true
+        navigationController?.navigationBar.isTranslucent = false
+        view.addSubview(self.scrollView)
+        setupImageView()
+        scrollView.addSubview(stackView)
         stackView.addArrangedSubview(artInteractiveInfoView)
-                
         stackView.addArrangedSubview(titleDescriptionView)
-    
         stackView.addArrangedSubview(artInfoSnippet)
-       
         stackView.addArrangedSubview(biddingController)
-       
+		
 		priceHistoryView.delegate = self
 		stackView.addArrangedSubview(priceHistoryView)
-        
         stackView.addArrangedSubview(offerView)
-        
         if let safeAttributeTable = self.attributesTable{
             stackView.addArrangedSubview(safeAttributeTable)
         }
-       
         stackView.addArrangedSubview(placeBidButton)
-
         self.view.addSubview(self.placeBidModal)
     }
     
@@ -256,9 +244,10 @@ class NFTDetailArtViewController:UIViewController{
         }
 
         scrollView.addSubview(heroHeaderView)
-        
         heroHeaderView.topAnchor.constraint(equalTo: scrollView.topAnchor).isActive = true
         heroHeaderView.widthAnchor.constraint(equalTo: scrollView.widthAnchor).isActive = true
+		imageViewHeightAnchor = heroHeaderView.heightAnchor.constraint(equalToConstant: heroHeaderView.intrinsicContentSize.height)
+		imageViewHeightAnchor?.isActive = true
         
     }
     
@@ -316,6 +305,14 @@ extension NFTDetailArtViewController{
     func closeDetailView(){
         self.navigationController?.popViewController(animated: true)
     }
+	
+	public func animateheroHeaderView(_ scrollView:UIScrollView,_ height:CGFloat){
+		UIViewPropertyAnimator(duration: 0.35, curve: .easeInOut) {
+			self.imageViewHeightAnchor?.constant = height
+			self.heroHeaderView.layoutIfNeeded()
+			scrollView.layoutIfNeeded()
+		}.startAnimation()
+	}
 }
 
 
@@ -349,8 +346,8 @@ extension NFTDetailArtViewController:CustomButtonDelegate{
 extension NFTDetailArtViewController:UIScrollViewDelegate{
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        heroHeaderView.animateHeaderView(scrollView)
-
+		let height:CGFloat = heroHeaderView.animateHeaderView(scrollView)
+		animateheroHeaderView(scrollView,height)
         self.navigationController?.navigationBar.transform = .init(translationX: 0, y: min(scrollView.contentOffset.y - 100,0))
         
     }

@@ -47,7 +47,7 @@ class NFTChartView:UIView{
 	
 	private lazy var priceChangeLabel:CustomLabel = {
 		guard let first = prices.first , let last = prices.last else {return CustomLabel(text: "0%", color: .black, numOfLines: 1)}
-		let label = CustomLabel(text: String(format: "%.2f%", (last - first)/last), size: 13, weight: .medium, color: last > first ? .appGreenColor : .appRedColor, numOfLines: 1, adjustFontSize: true, autoLayout: false)
+		let label = CustomLabel(text: String(format: "%.2f", (last - first)/last), size: 13, weight: .medium, color: last > first ? .appGreenColor : .appRedColor, numOfLines: 1, adjustFontSize: true, autoLayout: false)
 		return label
 	}()
 	
@@ -96,9 +96,9 @@ class NFTChartView:UIView{
 		self.prices = prices
 		resetView()
 		chartView.updateUI(prices)
-		priceChangeLabel.text = String(format:"%.2f",(prices.overallChange() ?? 1.0)/(prices.last ?? 1.0))
+		priceChangeLabel.text = String(format:"%.2f",(prices.overallChange() ?? 1.0)/(prices.last ?? 1.0)) + "%"
 		priceChangeLabel.textColor = prices.last! > prices.first! ? .appGreenColor : .appRedColor
-		priceChartLabel.text = String(format: "%.2f", prices.last ?? 0.0)
+		priceChartLabel.text = String(format: "%.2f", prices.last ?? 0.0) + " ETH"
 	}
 	override var intrinsicContentSize: CGSize{
 		return .init(width: UIScreen.main.bounds.width, height: mainContainer.arrangedSubviews.compactMap({$0.intrinsicContentSize.height}).reduce(0, {$0 + $1}))
