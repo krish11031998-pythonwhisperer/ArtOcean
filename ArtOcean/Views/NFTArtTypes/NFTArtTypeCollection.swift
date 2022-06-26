@@ -39,6 +39,10 @@ class NFTArtTypeCollectionView:UICollectionView{
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+	
+	override var intrinsicContentSize: CGSize{
+		return .init(width: UIScreen.main.bounds.width, height: 50)
+	}
     
 }
 

@@ -223,7 +223,7 @@ class HomeViewController: UIViewController {
     
     private var stackView:UIStackView = {
         let stackView = UIStackView()
-        stackView.translatesAutoresizingMaskIntoConstraints = false
+		stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .vertical
         stackView.spacing = 24
         return stackView
@@ -239,8 +239,8 @@ class HomeViewController: UIViewController {
         stackView.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 0).isActive = true
         stackView.widthAnchor.constraint(equalTo: scrollView.widthAnchor).isActive = true
         scrollView.bottomAnchor.constraint(equalToSystemSpacingBelow: stackView.bottomAnchor, multiplier: 3).isActive = true
-    
-        self.artTypes.heightAnchor.constraint(equalToConstant: 50).isActive = true
+
+//        self.artTypes.heightAnchor.constraint(equalToConstant: 50).isActive = true
         self.bannerImageView.heightAnchor.constraint(equalToConstant: 132).isActive = true
         
     }

@@ -159,15 +159,12 @@ struct Attribute:Decodable,Hashable{
             switch safeDisplayType{
                 case "number":
                     do{
-                        print("(DEBUG) Parsing display_type is number : ",safeDisplayType)
                         int_value = try container.decodeIfPresent(Int.self, forKey: .value)
                     }catch{
                         int_value = nil
-                        print("(DEBUG) Can't parse the int_value : ",error.localizedDescription)
                     }
                         
                 default:
-                    print("(DEBUG) Parsing display_type is not number : ",safeDisplayType)
                     int_value = nil
             }
             str_value = nil
@@ -177,7 +174,6 @@ struct Attribute:Decodable,Hashable{
                 str_value = try container.decodeIfPresent(String.self, forKey: .value)
             }catch{
                 str_value = nil
-                print("(DEBUG) Can't parse the str_value : ",error.localizedDescription)
             }
         }
     }
