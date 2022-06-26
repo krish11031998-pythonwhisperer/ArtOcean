@@ -59,7 +59,11 @@ class NFTArtCollectionLiveBidViewCell: UICollectionViewCell {
         nftContentViewCell.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
 
     }
-    
+	
+	override func prepareForReuse() {
+		super.prepareForReuse()
+		nftContentViewCell.prepareToReuse()
+	}
     
 }
 

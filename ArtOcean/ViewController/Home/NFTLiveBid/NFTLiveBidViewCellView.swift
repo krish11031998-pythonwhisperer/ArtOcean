@@ -46,7 +46,7 @@ class NFTLiveBidCellView:UIView{
     }()
     
     private lazy var timeLeftLabel:UILabel = {
-        var label = self.labelBuilder(text: "3h 12m 36s left", size: 12, weight: .medium, color: .appBlueColor, numOfLines: 1)
+        var label = CustomLabel(text: "3h 12m 36s left", size: 12, weight: .medium, color: .appBlueColor, numOfLines: 1)
         label.layer.cornerRadius = 14.5
         label.backgroundColor = .appBlueColor.withAlphaComponent(0.15)
         label.clipsToBounds = true
@@ -87,7 +87,7 @@ class NFTLiveBidCellView:UIView{
         
         view.axis = .vertical
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.spacing = 12
+        view.spacing = 20
         view.addArrangedSubview(self.owner)
         view.addArrangedSubview(self.artPriceAndTitleStack)
         view.addArrangedSubview(self.biddingStack)
@@ -139,9 +139,7 @@ class NFTLiveBidCellView:UIView{
         
         self.backgroundColor = .white
         self.layer.cornerRadius = 16
-        
-        self.setupLayout()
-        
+ 
         if let safeNFT = nft{
             self.updateUIWithNFT(safeNFT)
         }
@@ -150,7 +148,17 @@ class NFTLiveBidCellView:UIView{
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+	
     
+	override func layoutSubviews() {
+		super.layoutSubviews()
+		self.setupLayout()
+		if frame.height > 245{
+			self.largeCard = true
+			title.font = .init(name: title.font.fontName, size: 18)
+			price.font = .init(name: price.font.fontName, size: 14)
+		}
+	}
     
     public func updateUIWithNFT(_ nft:NFTModel,idx:Int? = nil,largeCard:Bool = false){
 
@@ -193,7 +201,9 @@ class NFTLiveBidCellView:UIView{
         self.shareButton.centerYAnchor.constraint(equalTo: self.imageView.bottomAnchor).isActive = true
     }
     
-    
+	public func prepareToReuse(){
+		imageView.image = nil
+	}
 }
 
 

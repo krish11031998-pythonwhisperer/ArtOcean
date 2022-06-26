@@ -46,11 +46,11 @@ class SearchViewController:UIViewController{
 	}()
 	
 	private let collectionView:UICollectionView = {
-		let layout:UICollectionViewFlowLayout = .standardLayout(size:CGSize(width: UIScreen.main.bounds.width - 48, height: 20))
+		let layout:UICollectionViewFlowLayout = .standardLayout(size:CGSize(width: UIScreen.main.bounds.width - 20, height: 306))
 		let collection = UICollectionView(frame: .zero, collectionViewLayout: layout)
 		collection.showsVerticalScrollIndicator = false
 		collection.showsHorizontalScrollIndicator = false
-		collection.register(NFTArtCollectionViewCell.self, forCellWithReuseIdentifier: NFTArtCollectionViewCell.identifier)
+		collection.register(NFTArtCollectionLiveBidViewCell.self, forCellWithReuseIdentifier: NFTArtCollectionLiveBidViewCell.identifier)
 		collection.backgroundColor = .white
 		return collection
 	}()
@@ -104,9 +104,9 @@ extension SearchViewController:CustomSearchBarDelegate{
 extension SearchViewController:UICollectionViewDataSource{
 	
 	func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-		guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: NFTArtCollectionViewCell.identifier, for: indexPath) as? NFTArtCollectionViewCell else {return UICollectionViewCell()}
+		guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: NFTArtCollectionLiveBidViewCell.identifier, for: indexPath) as? NFTArtCollectionLiveBidViewCell else {return UICollectionViewCell()}
 		let data = searchedNFT[indexPath.row]
-		cell.configure(Item.artData(data))
+		cell.updateUIWithNFT(data)
 		return cell
 	}
 	

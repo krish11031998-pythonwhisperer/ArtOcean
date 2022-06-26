@@ -77,28 +77,51 @@ class NFTArtCollectionViewCell:UICollectionViewCell{
         return view
     }()
     
-    private lazy var stackView = UIView.StackBuilder(views: [self.priceView,self.likeView], ratios: [0.65,0.35], spacing: 5, axis: .horizontal)
+	func setupInfoView(){
+		let stack = StackContainer(innerView: [artTitle,infoDetails])
+		stack.spacing = 4
+		stack.backgroundColor = .white
+		addSubview(stack)
+		stack.layer.cornerRadius = 16
+		stack.layer.maskedCorners = [.layerMaxXMaxYCorner,.layerMinXMaxYCorner]
+		
+		stack.isLayoutMarginsRelativeArrangement = true
+		stack.layoutMargins = .init(top: 12, left: 8, bottom: 16, right: 8)
+		
+		stack.translatesAutoresizingMaskIntoConstraints = false
+		stack.heightAnchor.constraint(equalToConstant: 76).isActive = true
+		stack.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
+		stack.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
+		stack.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
+	}
+	
+    private lazy var infoDetails = UIView.StackBuilder(views: [self.priceView,self.likeView], ratios: [0.75,0.25], spacing: 5, axis: .horizontal)
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         
         self.addSubview(self.imageView)
-        self.addSubview(self.artTitle)
-        self.addSubview(self.stackView)
+//        self.addSubview(self.artTitle)
+//        self.addSubview(self.stackView)
+		setupInfoView()
         
         self.backgroundColor = .white
         self.layer.cornerRadius = 16
         
         self.addShadow()
-        
+		self.setupLayout()
         self.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.handleTap)))
-        
-        self.setupLayout()
+	
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+	
+	override func layoutSubviews() {
+		super.layoutSubviews()
+		
+	}
     
     @objc func handleTap(){
         self.bouncyButtonClick {
@@ -137,16 +160,7 @@ class NFTArtCollectionViewCell:UICollectionViewCell{
         self.imageView.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
         self.imageView.leadingAnchor.constraint(equalTo: self.leadingAnchor).isActive = true
         self.imageView.widthAnchor.constraint(equalTo: self.widthAnchor).isActive = true
-        self.imageView.heightAnchor.constraint(equalTo: self.heightAnchor, multiplier: 0.57).isActive = true
-        
-        self.artTitle.leadingAnchor.constraint(equalTo: self.leadingAnchor,constant: 12).isActive = true
-        self.artTitle.trailingAnchor.constraint(equalTo: self.trailingAnchor,constant: -12).isActive = true
-        self.artTitle.topAnchor.constraint(equalTo: self.imageView.bottomAnchor,constant: 12).isActive = true
-        
-        self.stackView.leadingAnchor.constraint(equalTo: self.artTitle.leadingAnchor).isActive = true
-        self.stackView.bottomAnchor.constraint(equalTo: self.bottomAnchor,constant: -16).isActive = true
-        self.stackView.topAnchor.constraint(equalTo: self.artTitle.bottomAnchor,constant: 4).isActive = true
-        self.stackView.widthAnchor.constraint(equalTo:self.widthAnchor,constant: -20).isActive = true
+        self.imageView.heightAnchor.constraint(equalTo: self.heightAnchor, constant: -76).isActive = true
     }
     
 }
