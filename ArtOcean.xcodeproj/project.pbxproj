@@ -23,6 +23,9 @@
 		EF22D0CB285A378200555179 /* NFTLiveBidViewCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF22D0CA285A378200555179 /* NFTLiveBidViewCellView.swift */; };
 		EF22D0CD285A714F00555179 /* CustomTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF22D0CC285A714F00555179 /* CustomTableViewCell.swift */; };
 		EF358377284D371C00783D75 /* StretchyHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF358376284D371C00783D75 /* StretchyHeaderView.swift */; };
+		EF3B4D4D286F806800DD57DB /* TableRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF3B4D4A286F806800DD57DB /* TableRow.swift */; };
+		EF3B4D4E286F806800DD57DB /* TableSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF3B4D4B286F806800DD57DB /* TableSection.swift */; };
+		EF3B4D4F286F806800DD57DB /* TableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF3B4D4C286F806800DD57DB /* TableView.swift */; };
 		EF480E0F285F85D400FC0F3F /* NFTAttributeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF480E0E285F85D400FC0F3F /* NFTAttributeView.swift */; };
 		EF527441284AC53A008C77EC /* SDWebImage in Frameworks */ = {isa = PBXBuildFile; productRef = EF527440284AC53A008C77EC /* SDWebImage */; };
 		EF527443284AC53A008C77EC /* SDWebImageMapKit in Frameworks */ = {isa = PBXBuildFile; productRef = EF527442284AC53A008C77EC /* SDWebImageMapKit */; };
@@ -171,6 +174,9 @@
 		EF22D0CA285A378200555179 /* NFTLiveBidViewCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NFTLiveBidViewCellView.swift; sourceTree = "<group>"; };
 		EF22D0CC285A714F00555179 /* CustomTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTableViewCell.swift; sourceTree = "<group>"; };
 		EF358376284D371C00783D75 /* StretchyHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StretchyHeaderView.swift; sourceTree = "<group>"; };
+		EF3B4D4A286F806800DD57DB /* TableRow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableRow.swift; sourceTree = "<group>"; };
+		EF3B4D4B286F806800DD57DB /* TableSection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableSection.swift; sourceTree = "<group>"; };
+		EF3B4D4C286F806800DD57DB /* TableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableView.swift; sourceTree = "<group>"; };
 		EF480E0E285F85D400FC0F3F /* NFTAttributeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NFTAttributeView.swift; sourceTree = "<group>"; };
 		EF527491284BA4BD008C77EC /* SectionbasedData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionbasedData.swift; sourceTree = "<group>"; };
 		EF527493284BECF4008C77EC /* Bundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bundle.swift; sourceTree = "<group>"; };
@@ -321,6 +327,16 @@
 			path = Accounts;
 			sourceTree = "<group>";
 		};
+		EF3B4D49286F806800DD57DB /* TableViewDataSource */ = {
+			isa = PBXGroup;
+			children = (
+				EF3B4D4A286F806800DD57DB /* TableRow.swift */,
+				EF3B4D4B286F806800DD57DB /* TableSection.swift */,
+				EF3B4D4C286F806800DD57DB /* TableView.swift */,
+			);
+			path = TableViewDataSource;
+			sourceTree = "<group>";
+		};
 		EF69B6A82851574800ABDADA /* UserProfileView */ = {
 			isa = PBXGroup;
 			children = (
@@ -444,6 +460,7 @@
 		EF8B0666283BEF190050E726 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				EF3B4D49286F806800DD57DB /* TableViewDataSource */,
 				EF8B0667283BEF250050E726 /* UIColor.swift */,
 				EF8B0676283C20820050E726 /* UIImageView.swift */,
 				EF8B0684283C31560050E726 /* UIView.swift */,
@@ -757,6 +774,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				EFD13C2B2844D560000E422E /* NFTOfferTableViewCell.swift in Sources */,
+				EF3B4D4F286F806800DD57DB /* TableView.swift in Sources */,
 				EFD13C272844CF4F000E422E /* NFTOfferTableView.swift in Sources */,
 				EF69B6AF2854965400ABDADA /* WalletDetailView.swift in Sources */,
 				EFAB445A28639BCF00B33864 /* ChartView.swift in Sources */,
@@ -782,10 +800,12 @@
 				EFAB446A2868840800B33864 /* UICollection.swift in Sources */,
 				EF00F5D7284805C1003D8683 /* StatisticCollectionView.swift in Sources */,
 				EF7447B4284A0F8000899476 /* ActivityCollectionViewCell.swift in Sources */,
+				EF3B4D4E286F806800DD57DB /* TableSection.swift in Sources */,
 				EF8B0677283C20820050E726 /* UIImageView.swift in Sources */,
 				EFD13C232844196F000E422E /* NFTLiveBidCollectionProtocol.swift in Sources */,
 				EF8B066E283BF0F10050E726 /* StatisticsViewController.swift in Sources */,
 				EF22D0CD285A714F00555179 /* CustomTableViewCell.swift in Sources */,
+				EF3B4D4D286F806800DD57DB /* TableRow.swift in Sources */,
 				EF527494284BECF4008C77EC /* Bundle.swift in Sources */,
 				EF358377284D371C00783D75 /* StretchyHeaderView.swift in Sources */,
 				EF8B0681283C2A180050E726 /* DataCache.swift in Sources */,

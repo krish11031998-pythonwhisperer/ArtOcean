@@ -46,7 +46,6 @@ class NFTArtCollectionLiveBidViewCell: UICollectionViewCell {
     
     
     public func updateUIWithNFT(_ nft:NFTModel,idx:Int? = nil){
-
         self.nftInfo = nft
         nftContentViewCell.updateUIWithNFT(nft)
     }
