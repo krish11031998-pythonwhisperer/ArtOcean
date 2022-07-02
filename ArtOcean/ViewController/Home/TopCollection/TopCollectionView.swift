@@ -14,7 +14,7 @@ class TopCollectionView: UITableView {
     init(frame:CGRect = .zero) {
         super.init(frame: frame, style: .plain)
         
-        self.register(TopCollectionTableCellViewTableViewCell.self, forCellReuseIdentifier: TopCollectionTableCellViewTableViewCell.identifier)
+        self.register(TopCollectionTableCell.self, forCellReuseIdentifier: TopCollectionTableCell.identifier)
         self.backgroundColor = .clear
         self.separatorStyle = .none
         self.isScrollEnabled = false
@@ -47,7 +47,7 @@ extension TopCollectionView:UITableViewDelegate,UITableViewDataSource{
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: TopCollectionTableCellViewTableViewCell.identifier, for: indexPath) as? TopCollectionTableCellViewTableViewCell else {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: TopCollectionTableCell.identifier, for: indexPath) as? TopCollectionTableCell else {
             return UITableViewCell()
         }
         

@@ -7,12 +7,57 @@
 
 import UIKit
 
+struct NFTArtCollectionModel{
+	var nfts:[NFTModel]
+	var size:CGSize
+	var action:((NFTModel) -> Void)?
+}
+
+class NFTArtCollectionCell:ConfigurableCell{
+	
+	private var collectionView:NFTArtCollection?
+	private var model:NFTArtCollectionModel?
+	override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+		super.init(style: style, reuseIdentifier: reuseIdentifier)
+//		setupUI()
+	}
+	
+	required init?(coder: NSCoder) {
+		fatalError("init(coder:) has not been implemented")
+	}
+	
+	func setupUI(){
+		guard let safeCollectionView = collectionView else { return }
+		
+	}
+	
+	func configureCell(with model: NFTArtCollectionModel) {
+		self.model = model
+		print("(DEBUG) model.size : ",model.size)
+		collectionView = .init(orientation: .horizontal, itemSize:model.size)
+		collectionView?.updateCollection(model.nfts)
+		collectionView?.collectionDelegate = self
+		collectionView?.backgroundColor = .white
+		contentView.addSubview(collectionView!)
+		contentView.setContraintsToChild(collectionView!, edgeInsets: .zero)
+	}
+	
+	
+}
+//MARK: - CollectionDelegate
+extension NFTArtCollectionCell:NFTLiveBidCollectionDelegate{
+	func viewAll(allArt: [NFTModel]) {}
+	
+	func viewNFT(art: NFTModel) {
+		model?.action?(art)
+	}
+}
 
 
 class NFTArtCollection: UICollectionView {
     
-    public var nfts:[NFTModel]? = nil
-    public var collectionDelegate: NFTLiveBidCollectionDelegate? = nil
+    public var nfts:[NFTModel]?
+    public var collectionDelegate: NFTLiveBidCollectionDelegate?
     
     
     public static let smallCard:CGSize = .init(width: 176, height: 154)
@@ -40,66 +85,70 @@ class NFTArtCollection: UICollectionView {
         }
         
         super.init(frame: .zero, collectionViewLayout: layout)
-        self.contentInsetAdjustmentBehavior = .never
-        self.showsVerticalScrollIndicator = false
-        self.showsHorizontalScrollIndicator = false
-        self.backgroundColor = .clear
+        contentInsetAdjustmentBehavior = .never
+        showsVerticalScrollIndicator = false
+        showsHorizontalScrollIndicator = false
+        backgroundColor = .clear
     
         
         if itemSize == NFTArtCollection.smallCard{
-            self.cellId = NFTArtCollectionViewCell.identifier
-            self.register(NFTArtCollectionViewCell.self, forCellWithReuseIdentifier: NFTArtCollectionViewCell.identifier)
+            cellId = NFTArtCollectionViewCell.identifier
+            register(NFTArtCollectionViewCell.self, forCellWithReuseIdentifier: NFTArtCollectionViewCell.identifier)
         }else{
-            self.cellId = NFTArtCollectionLiveBidViewCell.identifier
-            self.register(NFTArtCollectionLiveBidViewCell.self, forCellWithReuseIdentifier: NFTArtCollectionLiveBidViewCell.identifier)
+            cellId = NFTArtCollectionLiveBidViewCell.identifier
+            register(NFTArtCollectionLiveBidViewCell.self, forCellWithReuseIdentifier: NFTArtCollectionLiveBidViewCell.identifier)
         }
-        
-
-        self.translatesAutoresizingMaskIntoConstraints = false
-        self.delegate = self
-        self.dataSource = self
-        if self.nfts == nil{
-            self.fetchNFTsFromFile()
-        }
+		
+        delegate = self
+        dataSource = self
+		heightAnchor.constraint(equalToConstant: layout.itemSize.height + 20).isActive = true
     }
+	
+	convenience init(orientation:UICollectionView.ScrollDirection = .horizontal,itemSize:CGSize = NFTArtCollection.largeCard){
+		self.init(nfts: nil, orientation: .horizontal, itemSize: itemSize)
+	}
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
     
-    func fetchNFTs(){
-        AlchemyAPI.shared.getNFTs(address: "0x8742fa292AFfB6e5eA88168539217f2e132294f9") { [weak self] result in
-            switch result{
-            case .success(let nfts):
-                let filterNFTS = nfts.compactMap({$0.metadata?.image?.contains("https") ?? false ? $0 : nil})
-                self?.nfts = (filterNFTS.count > 10 ? Array(filterNFTS[0...9]) : filterNFTS)
-                print("(DEBUG) Got Data Successffuly !")
-                DispatchQueue.main.async {
-                    self?.reloadData()
-                }
-            case .failure(let err):
-                print("(error) err : ",err.localizedDescription)
-            }
-        }
-    }
+//    func fetchNFTs(){
+//        AlchemyAPI.shared.getNFTs(address: "0x8742fa292AFfB6e5eA88168539217f2e132294f9") { [weak self] result in
+//            switch result{
+//            case .success(let nfts):
+//                let filterNFTS = nfts.compactMap({$0.metadata?.image?.contains("https") ?? false ? $0 : nil})
+//                self?.nfts = (filterNFTS.count > 10 ? Array(filterNFTS[0...9]) : filterNFTS)
+//                print("(DEBUG) Got Data Successffuly !")
+//                DispatchQueue.main.async {
+//                    self?.reloadData()
+//                }
+//            case .failure(let err):
+//                print("(error) err : ",err.localizedDescription)
+//            }
+//        }
+//    }
+//
+//    func fetchNFTsFromFile(){
+//        AlchemyAPI.shared.getNftsFromFile(fileName: "nft") { [weak self] result in
+//            switch result{
+//            case .success(let nfts):
+//                let filterNFTS = nfts.compactMap({$0.metadata?.image?.contains("https") ?? false ? $0 : nil})
+//                self?.nfts = (filterNFTS.count > 5 ? Array(filterNFTS[0...4]) : filterNFTS)
+//                print("(DEBUG) Got Data Successffuly !")
+//                DispatchQueue.main.async {
+//                    self?.reloadData()
+//                }
+//            case .failure(let err):
+//                print("(error) err : ",err.localizedDescription)
+//            }
+//        }
+//    }
     
-    func fetchNFTsFromFile(){
-        AlchemyAPI.shared.getNftsFromFile(fileName: "nft") { [weak self] result in
-            switch result{
-            case .success(let nfts):
-                let filterNFTS = nfts.compactMap({$0.metadata?.image?.contains("https") ?? false ? $0 : nil})
-                self?.nfts = (filterNFTS.count > 5 ? Array(filterNFTS[0...4]) : filterNFTS)
-                print("(DEBUG) Got Data Successffuly !")
-                DispatchQueue.main.async {
-                    self?.reloadData()
-                }
-            case .failure(let err):
-                print("(error) err : ",err.localizedDescription)
-            }
-        }
-    }
-    
+	public func updateCollection(_ nfts:[NFTModel]){
+		self.nfts = nfts
+		reloadData()
+	}
 
 }
 

@@ -68,4 +68,9 @@ class NFTTypeCollectionCell:UICollectionViewCell{
         self.typeLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16).isActive = true
     }
     
+	override func prepareForReuse() {
+		super.prepareForReuse()
+		backgroundColor = .clear
+		imgView.image = nil
+	}
 }

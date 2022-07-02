@@ -9,162 +9,119 @@ import UIKit
 
 class HomeViewController: UIViewController {
     
-    private var textLabel:UILabel = {
-        let label = UILabel()
-        label.textColor = .black
-        label.font = .systemFont(ofSize: 15, weight: .bold)
-        label.text = "Welcome, Krishna"
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
-    
-    private let scrollView:UIScrollView = {
-        let scrollView = UIScrollView()
-        scrollView.showsVerticalScrollIndicator = false
-        scrollView.backgroundColor = .clear
-        scrollView.translatesAutoresizingMaskIntoConstraints = false
-        return scrollView
-    }()
-    
-    private lazy var liveBidCollection:NFTArtCollection = {
-        let collection = NFTArtCollection(orientation: .horizontal)
-        collection.collectionDelegate = self
-        return collection
-    }()
 
-    private lazy var liveBidCollectionContainer:Container = {
-        let container = Container(header: "Live Bidding", rightButtonTitle: "See All", innerView: self.liveBidCollection, innerViewSize: .init(width: self.view.bounds.width, height: 250), buttonHandler: self.pushSeeAllArtVC)
-        return container
-    }()
-    
-    
-    private lazy var hotItems:Container = {
-        let hotItemsCollection = NFTArtCollection(orientation: .horizontal, itemSize: NFTArtCollection.smallCard)
-        hotItemsCollection.collectionDelegate = self
-        let collection = Container(header: "Hot Item", rightButtonTitle: "See all", innerView: hotItemsCollection, innerViewSize: .init(width: self.view.bounds.width, height: NFTArtCollection.smallCard.height + 20), buttonHandler: self.pushSeeAllArtVC)
-        return collection
-    }()
-    
-    private lazy var popularItems:Container = {
-        let popularItems = NFTArtCollection(orientation: .horizontal, itemSize: NFTArtCollection.smallCard)
-        popularItems.collectionDelegate = self
-        let collection = Container(header: "Popular Item", rightButtonTitle: "See all", innerView: popularItems, innerViewSize: .init(width: self.view.bounds.width, height: NFTArtCollection.smallCard.height + 20), buttonHandler: self.pushSeeAllArtVC)
-        return collection
-    }()
+	private var tableView:UITableView?
+	private var nfts:[NFTModel]?
+	private lazy var datasource:TableViewDataSource = { buildDataSource() }()
 
-    private lazy var topCollection:Container = {
-        let container = Container(header: "Top Collection", rightButtonTitle: "View All", innerView: TopCollectionView(), innerViewSize: .init(width: UIScreen.main.bounds.width, height: 208),buttonHandler: self.pushSeeAllArtVC)
-        return container
+	
+	func buildDataSource() -> TableViewDataSource{
+		.init(section: [liveBidCollection, topCollection, hotItems, topSeller, popularItems].compactMap{ $0 })
+	}
+	
+	private var liveBidCollection:TableSection? {
+		guard let safeNFTs = nfts, !safeNFTs.isEmpty else { return nil }
+		var data:NFTArtCollectionModel = .init(nfts: safeNFTs, size: NFTArtCollection.largeCard)
+		data.action = { [weak self] art in self?.viewNFT(art: art) }
+		let rows:[CellProvider] = [TableRow<NFTArtCollectionCell>(data)]
+		let headerView = ContainerHeaderView(title: "Live Bid", rightButtonTitle: "View All", buttonHandler: { [weak self] in self?.pushSeeAllArtVC() })
+		return TableSection(headerView: headerView , rows: rows)
+	}
+	
+	private var hotItems:TableSection? {
+		guard let safeNFTs = nfts, !safeNFTs.isEmpty else { return nil }
+		var data:NFTArtCollectionModel = .init(nfts: safeNFTs, size: NFTArtCollection.smallCard)
+		data.action = { [weak self] art in self?.viewNFT(art: art) }
+		let rows:[CellProvider] = [TableRow<NFTArtCollectionCell>(data)]
+		let headerView = ContainerHeaderView(title: "Hot Items", rightButtonTitle: "View All", buttonHandler: { [weak self] in self?.pushSeeAllArtVC() })
+		return TableSection(headerView: headerView , rows: rows)
+	}
+	
+	private var popularItems:TableSection? {
+		guard let safeNFTs = nfts, !safeNFTs.isEmpty else { return nil }
+		var data:NFTArtCollectionModel = .init(nfts: safeNFTs, size: NFTArtCollection.smallCard)
+		data.action = { [weak self] art in self?.viewNFT(art: art) }
+		let rows:[CellProvider] = [TableRow<NFTArtCollectionCell>(data)]
+		let headerView = ContainerHeaderView(title: "Popular Items", rightButtonTitle: "View All", buttonHandler: { [weak self] in self?.pushSeeAllArtVC() })
+		return TableSection(headerView: headerView , rows: rows)
+	}
+
+	
+	private var topCollection:TableSection{
+		let headerView = ContainerHeaderView(title: "Top Collection", rightButtonTitle: "View All") { [weak self] in self?.pushSeeAllArtVC() }
+		return .init(headerView: headerView, rows: Array(repeating: TopCollectionData.test, count: 5).compactMap{ TableRow<TopCollectionTableCell>($0) })
+	}
+	
+    private lazy var artTypes:TableSection? = {
+		return .init(rows: [TableRow<NFTArtTypeCollectionViewCell>(NFTArtType.allType)])
     }()
-    
-    private lazy var artTypes:NFTArtTypeCollectionView = {
-        return NFTArtTypeCollectionView()
-    }()
-    
-    private lazy var topSeller:Container = {
-        let container = Container(header: "Top Seller", rightButtonTitle: "View all", innerView: TopSellerCollectionView(), innerViewSize: .init(width: UIScreen.main.bounds.width, height: 113), buttonHandler: self.pushSeeAllArtVC)
-        print("(DEBUG) container intrinsic size : ",container.intrinsicContentSize)
-        return container
-    }()
+	
+	private var topSeller:TableSection?{
+		let headerView = ContainerHeaderView(title: "Top Seller", rightButtonTitle: "View all") { [weak self] in self?.pushSeeAllArtVC() }
+		let rowData = Array(repeating: SellerData.test, count: 15)
+		let row = [TableRow<TopSellerCollectionViewTableCell>(rowData)]
+		return .init(headerView: headerView, rows: row)
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.textLabel.frame = .init(origin: .zero, size: .init(width: 50, height: 50))
-        self.view.addSubview(self.scrollView)
-        self.scrollView.addSubview(self.stackView)
-        
-        stackView.addArrangedSubview(artTypes)
-        stackView.addArrangedSubview(bannerImageView)
-        stackView.addArrangedSubview(liveBidCollectionContainer)
-        stackView.addArrangedSubview(topCollection)
-        stackView.addArrangedSubview(hotItems)
-        stackView.addArrangedSubview(topSeller)
-        stackView.addArrangedSubview(popularItems)
-        
+		buildTableView()
+		tableView?.reload(with: datasource)
         self.setupStatusBar()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.navigationController?.setNavigationBarHidden(true, animated: animated)
+		loadNFT()
+        navigationController?.setNavigationBarHidden(true, animated: animated)
     }
+	
+	func buildTableView(){
+		tableView = UITableView(frame: .zero, style: .grouped)
+		tableView?.backgroundColor = .clear
+		tableView?.tableHeaderView = headerView
+		tableView?.separatorStyle = .none
+		view.addSubview(tableView!)
+		view.setContraintsToChild(tableView!, edgeInsets: .zero)
+	}
+	
+	func loadNFT(){
+		guard nfts == nil else {return}
+		AlchemyAPI.shared.getNftsFromFile(fileName: "nft") { [weak self] result in
+			switch result{
+			case .success(let nfts):
+				let filterNFTS = nfts.compactMap({$0.metadata?.image?.contains("https") ?? false ? $0 : nil})
+				self?.nfts = (filterNFTS.count > 5 ? Array(filterNFTS[0...4]) : filterNFTS)
+				print("(DEBUG) Got Data Successffuly !")
+				DispatchQueue.main.async {
+					guard let safeDatasource = self?.buildDataSource() else { return }
+					self?.tableView?.reload(with: safeDatasource)
+				}
+			case .failure(let err):
+				print("(error) err : ",err.localizedDescription)
+			}
+		}
+	}
+	
+	private func viewArt(_ nft:NFTModel){
+		navigationController?.pushViewController(NFTDetailArtViewController(nftArt: nft), animated: true)
+	}
+	
     
-    private let logoView:UIView = {
-        let logo:UIImageView = UIImageView()
-        logo.translatesAutoresizingMaskIntoConstraints = false
-        if let safeImage = UIImage(named: "logo"){
-            logo.image = safeImage
-        }
+	private var headerView:UIView {
 
-        logo.contentMode = .scaleAspectFill
-        
-        let titleView = CustomLabel(text: "NFTX", size: 20, weight: .bold, color: .appBlackColor, numOfLines: 1)
-
-        
-        let ethLogo:UIImageView = UIImageView()
-        ethLogo.translatesAutoresizingMaskIntoConstraints = false
-        if let safeImage = UIImage(named: "ethBasicLogo"){
-            ethLogo.image = safeImage
-        }
-
-        ethLogo.contentMode = .scaleAspectFill
-        
-        let balanceView = CustomLabel(text: "0.1345", size: 14, weight: .regular, color: .appWhiteBackgroundColor, numOfLines: 1)
-        balanceView.textAlignment = .right
-        
-        let bgView = UIView()
-        bgView.translatesAutoresizingMaskIntoConstraints = false
-        bgView.backgroundColor = .appPurpleColor
-        bgView.layer.cornerRadius = 16
-        bgView.addSubview(balanceView)
-        bgView.addSubview(ethLogo)
-    
-        let view = UIView()
-        view.addSubview(logo)
-        view.addSubview(titleView)
-        view.addSubview(bgView)
-        
-        view.translatesAutoresizingMaskIntoConstraints = false
-        
-        NSLayoutConstraint.activate([
-            logo.leadingAnchor.constraint(equalTo: view.leadingAnchor,constant: 5),
-            logo.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-            logo.widthAnchor.constraint(equalToConstant: 33),
-            logo.heightAnchor.constraint(equalToConstant: 34),
-            
-            titleView.leadingAnchor.constraint(equalTo: logo.trailingAnchor, constant: 3),
-            titleView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-            titleView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            
-            bgView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            bgView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-            bgView.widthAnchor.constraint(equalToConstant: 80),
-            bgView.heightAnchor.constraint(equalToConstant: 30),
-            
-            
-            ethLogo.leadingAnchor.constraint(equalTo: bgView.leadingAnchor,constant: 12),
-            ethLogo.centerYAnchor.constraint(equalTo: bgView.centerYAnchor),
-            
-            balanceView.leadingAnchor.constraint(equalTo: ethLogo.trailingAnchor, constant: 8),
-            balanceView.centerYAnchor.constraint(equalTo: bgView.centerYAnchor),
-            balanceView.trailingAnchor.constraint(equalTo: bgView.trailingAnchor,constant: -12)
-            
-        ])
-        
-        
-        return view
-    }()
-    
-    func configNavBar(){
-        NSLayoutConstraint.activate([
-            self.logoView.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width - 20),
-            self.logoView.heightAnchor.constraint(equalToConstant: 100)
-        ])
-        
-        self.navigationItem.titleView = self.logoView
-    }
-    
-    
+		let stackView = UIStackView(frame: .init(origin: .zero, size: .init(width: UIScreen.main.bounds.width, height: 226)))
+		stackView.axis = .vertical
+		stackView.spacing = 24
+		let artTypeCollection = NFTArtTypeCollectionView()
+		artTypeCollection.configureCollection(NFTArtType.allType)
+		stackView.addArrangedSubview(artTypeCollection)
+		stackView.addArrangedSubview(bannerImageView)
+		stackView.isLayoutMarginsRelativeArrangement = true
+		stackView.layoutMargins = .init(top: 10, left: 0, bottom: 10, right: 0)
+		return stackView
+	}
+	
     func popLivBidVC(){
         self.navigationController?.popViewController(animated: true)
     }
@@ -173,11 +130,6 @@ class HomeViewController: UIViewController {
     func pushSeeAllArtVC(){
         let liveBidVC = LiveBidDetailView()
         self.navigationController?.pushViewController(liveBidVC, animated: true)
-    }
-    
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        self.setupLayout()
     }
     
     private lazy var bannerImageView:UIView = {
@@ -218,6 +170,8 @@ class HomeViewController: UIViewController {
         bannerTitle.bottomAnchor.constraint(equalTo: learnMoreBannerImage.topAnchor, constant: -24).isActive = true
         bannerTitle.widthAnchor.constraint(equalToConstant: 185).isActive = true
         
+		view.heightAnchor.constraint(equalToConstant: 132).isActive = true
+		
         return view
     }()
     
@@ -229,21 +183,21 @@ class HomeViewController: UIViewController {
         return stackView
     }()
     
-    func setupLayout(){
-        
-        scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
-        scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-        scrollView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
-        scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
-        
-        stackView.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 0).isActive = true
-        stackView.widthAnchor.constraint(equalTo: scrollView.widthAnchor).isActive = true
-        scrollView.bottomAnchor.constraint(equalToSystemSpacingBelow: stackView.bottomAnchor, multiplier: 3).isActive = true
-
-//        self.artTypes.heightAnchor.constraint(equalToConstant: 50).isActive = true
-        self.bannerImageView.heightAnchor.constraint(equalToConstant: 132).isActive = true
-        
-    }
+//    func setupLayout(){
+//
+//        scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+//        scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+//        scrollView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+//        scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+//
+//        stackView.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 0).isActive = true
+//        stackView.widthAnchor.constraint(equalTo: scrollView.widthAnchor).isActive = true
+//        scrollView.bottomAnchor.constraint(equalToSystemSpacingBelow: stackView.bottomAnchor, multiplier: 3).isActive = true
+//
+////        self.artTypes.heightAnchor.constraint(equalToConstant: 50).isActive = true
+//        self.bannerImageView.heightAnchor.constraint(equalToConstant: 132).isActive = true
+//
+//    }
     
 }
 

@@ -41,9 +41,7 @@ class ContainerHeaderView: UIStackView {
     init(title:String,rightButtonTitle:String?,buttonHandler:(() -> Void)?){
         
         super.init(frame: .zero)
-        
-        self.translatesAutoresizingMaskIntoConstraints = false
-        
+		
         self.headerLabel.text = title
         
         if let safeRightButtonTitle = rightButtonTitle{
@@ -65,23 +63,23 @@ class ContainerHeaderView: UIStackView {
     }
     
     override var intrinsicContentSize: CGSize{
-        return .init(width: .zero, height: 25)
+		return .init(width: UIScreen.main.bounds.width, height: 50)
     }
     
     func setupView(){
-        self.axis = .horizontal
-        self.spacing = 5
-        self.translatesAutoresizingMaskIntoConstraints = false
-        self.addArrangedSubview(self.headerLabel)
+        axis = .horizontal
+        spacing = 5
+        addArrangedSubview(self.headerLabel)
+		isLayoutMarginsRelativeArrangement = true
+		layoutMargins = .init(top: 10, left: 16, bottom: 10, right: 16)
         
         //LayoutConstraint
-        self.headerLabel.widthAnchor.constraint(equalTo: self.widthAnchor, multiplier: self.includeButton ? 0.65 : 1).isActive = true
-        if self.includeButton{
-            self.addArrangedSubview(self.rightButton)
-            self.rightButton.widthAnchor.constraint(equalTo: self.widthAnchor, multiplier: 0.35,constant: -5).isActive = true
-            self.rightButton.titleLabel?.textAlignment = .right
+		headerLabel.setContentCompressionResistancePriority(.init(rawValue: 249), for: .horizontal)
+		headerLabel.setContentHuggingPriority(.init(rawValue: 749), for: .horizontal)
+        if includeButton{
+			addArrangedSubview(self.rightButton)
+            rightButton.titleLabel?.textAlignment = .right
         }
-        
     }
     
 

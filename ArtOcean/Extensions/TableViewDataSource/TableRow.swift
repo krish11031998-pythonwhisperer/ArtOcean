@@ -50,9 +50,7 @@ class TableRow<Cell: ConfigurableCell>:CellProvider{
 	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		let cell:Cell = tableView.dequeueCell()
 		cell.configureCell(with: model)
-		let view = UIView()
-		view.backgroundColor = .clear
-		cell.selectedBackgroundView = view
+		cell.selectedBackgroundView = .clearView()
 		return cell
 	}
 	

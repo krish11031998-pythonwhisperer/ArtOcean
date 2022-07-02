@@ -8,34 +8,67 @@
 import Foundation
 import UIKit
 
+
+struct SellerData{
+	var name:String
+	var image:String
+	var percent:Float
+	
+	static var test:SellerData = .init(name: "Shapire Cole", image: "", percent: Float.random(in: 1...15))
+}
+
+
+class TopSellerCollectionViewTableCell:ConfigurableCell{
+	private var sellerCollectionView:TopSellerCollectionView?
+	
+	override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+		super.init(style: style, reuseIdentifier: reuseIdentifier)
+	}
+	
+	required init?(coder: NSCoder) {
+		fatalError("init(coder:) has not been implemented")
+	}
+	
+	
+	func configureCell(with model: [SellerData]) {
+		sellerCollectionView = TopSellerCollectionView()
+		contentView.addSubview(sellerCollectionView!)
+		contentView.setContraintsToChild(sellerCollectionView!, edgeInsets: .zero)
+		sellerCollectionView?.updateCollection(model)
+	}
+}
+
 class TopSellerCollectionView:UICollectionView{
     
-    var sellers:[(name:String,imgName:String,percent:Float)] = Array(repeating: (name:"Shapire Cole",imgName:"",percent:0), count: 10)
+	var sellers:[SellerData] = Array(repeating: .test, count: 10)
     
     override init(frame: CGRect, collectionViewLayout layout: UICollectionViewLayout) {
         let layout = UICollectionViewFlowLayout()
-        layout.itemSize = .init(width: 125, height: 50)
+        layout.itemSize = .init(width: 125, height: 42)
         layout.scrollDirection = .horizontal
         layout.minimumInteritemSpacing = 12
-        layout.sectionInset = .init(top: 0, left: 8, bottom: 0, right: 10)
+		layout.minimumLineSpacing = 12
+        layout.sectionInset = .init(top: 10, left: 15, bottom: 10, right: 15)
         
         super.init(frame: frame, collectionViewLayout: layout)
         
-        self.register(TopSellerCollectionViewCell.self, forCellWithReuseIdentifier: TopSellerCollectionViewCell.identifier)
-        self.dataSource = self
-        self.delegate = self
-        self.translatesAutoresizingMaskIntoConstraints = false
-        self.backgroundColor = .clear
-        self.showsVerticalScrollIndicator = false
-        self.showsHorizontalScrollIndicator = false
-        
-        
+        register(TopSellerCollectionViewCell.self, forCellWithReuseIdentifier: TopSellerCollectionViewCell.identifier)
+        dataSource = self
+        delegate = self
+        translatesAutoresizingMaskIntoConstraints = false
+        showsVerticalScrollIndicator = false
+        showsHorizontalScrollIndicator = false
+		heightAnchor.constraint(equalToConstant: layout.itemSize.height * 2 + 32).isActive = true
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
+	public func updateCollection(_ sellers:[SellerData]){
+		self.sellers = sellers
+		reloadData()
+	}
 }
 
 
@@ -55,7 +88,6 @@ extension TopSellerCollectionView:UICollectionViewDelegate,UICollectionViewDataS
         }
         
         let seller = self.sellers[indexPath.row]
-//        cell.backgroundColor = .blue
         cell.updateUI(seller)
         
         return cell

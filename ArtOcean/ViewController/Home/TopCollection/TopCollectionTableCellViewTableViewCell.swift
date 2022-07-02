@@ -7,7 +7,19 @@
 
 import UIKit
 
-class TopCollectionTableCellViewTableViewCell: UITableViewCell {
+struct TopCollectionData{
+	var name:String
+	var price:Double
+	var owner:String
+	var	percentage:Double
+	var orderNumber:Int
+	
+	static var test:TopCollectionData{
+		return .init(name: "Bored Apes Yacht Club", price: 4218.0, owner: "RoycoJack", percentage: -32.01, orderNumber: 1)
+	}
+}
+
+class TopCollectionTableCell: ConfigurableCell {
     
     public static var identifier:String = "TopCollectionCell"
     
@@ -31,7 +43,6 @@ class TopCollectionTableCellViewTableViewCell: UITableViewCell {
         let stack = UIStackView()
         stack.spacing = 15
         stack.translatesAutoresizingMaskIntoConstraints = false
-//        stack.alignment = .center
         return stack
     }()
     
@@ -111,7 +122,8 @@ class TopCollectionTableCellViewTableViewCell: UITableViewCell {
         NSLayoutConstraint.activate([
             imageAndGroupIcon.centerYAnchor.constraint(equalTo: mainStack.centerYAnchor),
             collectionNameAndOwnerStack.centerYAnchor.constraint(equalTo: mainStack.centerYAnchor),
-            collectionPriceInfo.centerYAnchor.constraint(equalTo: mainStack.centerYAnchor)
+            collectionPriceInfo.centerYAnchor.constraint(equalTo: mainStack.centerYAnchor),
+			mainStack.heightAnchor.constraint(equalToConstant: 50)
         ])
         
         self.selectedBackgroundView = UIView()
@@ -121,17 +133,7 @@ class TopCollectionTableCellViewTableViewCell: UITableViewCell {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-        if selected{
-            self.bouncyButtonClick {
-                print("(DEBUG) Clicked on TableCell!")
-            }
-        }
-    }
-    
+        
     override func layoutSubviews() {
         super.layoutSubviews()
         self.setupLayout()
@@ -140,12 +142,18 @@ class TopCollectionTableCellViewTableViewCell: UITableViewCell {
     
     func setupLayout(){
         
-        mainStack.leadingAnchor.constraint(equalTo: leadingAnchor,constant: 8).isActive = true
-        mainStack.trailingAnchor.constraint(equalTo: trailingAnchor,constant: -8).isActive = true
+		mainStack.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor,constant: 16).isActive = true
+		mainStack.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor,constant: -16).isActive = true
         mainStack.topAnchor.constraint(equalTo: topAnchor,constant: 5).isActive = true
         mainStack.bottomAnchor.constraint(equalTo: bottomAnchor,constant: -5).isActive = true
     }
     
-    
+	func configureCell(with model: TopCollectionData) {
+		collectionName.text = model.name
+		priceOfCollection.text = String(format:"%.2f",model.price)
+		ownerLabel.text = model.owner
+		percentageLabel.text = String(format: "%.2f", model.percentage)
+		orderNumberLabel.text = "\(model.orderNumber)"
+	}
 
 }

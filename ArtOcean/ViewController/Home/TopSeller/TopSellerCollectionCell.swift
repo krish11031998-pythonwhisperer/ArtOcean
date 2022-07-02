@@ -12,7 +12,7 @@ class TopSellerCollectionViewCell:UICollectionViewCell{
     
     public static var identifier = "TopSellerCollectionView"
     
-    private var seller:(name:String,imgName:String,percent:Float)? = nil
+    private var seller:SellerData? = nil
     
     private lazy var imageView:CustomImageView = {
         let imageView = CustomImageView(cornerRadius: 15)
@@ -33,21 +33,20 @@ class TopSellerCollectionViewCell:UICollectionViewCell{
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
-        self.addSubview(self.imageView)
-        self.addSubview(self.namePercentLabelStack)
-        self.setupLayout()
+        addSubview(self.imageView)
+        addSubview(self.namePercentLabelStack)
+        setupLayout()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    public func updateUI(_ seller:(name:String,imgName:String,percent:Float)){
+    public func updateUI(_ seller:SellerData){
         self.seller = seller
         
-        if seller.imgName != ""{
-            self.imageView.updateImageView(url: seller.imgName)
+        if seller.image != ""{
+            self.imageView.updateImageView(url: seller.image)
         }
         
         DispatchQueue.main.async {
@@ -58,7 +57,6 @@ class TopSellerCollectionViewCell:UICollectionViewCell{
     
     func setupLayout(){
         self.imageView.leadingAnchor.constraint(equalTo: self.leadingAnchor).isActive = true
-//        self.imageView.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
         self.imageView.widthAnchor.constraint(equalToConstant: 32).isActive = true
         self.imageView.heightAnchor.constraint(equalToConstant: 32).isActive = true
         self.imageView.layer.cornerRadius = 16
