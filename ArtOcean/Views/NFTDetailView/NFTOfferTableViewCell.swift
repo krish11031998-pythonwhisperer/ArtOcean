@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-class NFTOfferTableViewCell:UITableViewCell{
+class NFTOfferTableViewCell:ConfigurableCell{
     
     private var offer:NFTArtOffer = .init()
     
@@ -22,6 +22,18 @@ class NFTOfferTableViewCell:UITableViewCell{
         label.layer.cornerRadius = 20
         return label
     }()
+	
+	private lazy var initialView:UIView = {
+		let view = UIView()
+		view.addSubview(initialLabel)
+		
+		initialLabel.widthAnchor.constraint(equalToConstant: 40).isActive = true
+		initialLabel.heightAnchor.constraint(equalToConstant: 40).isActive = true
+		initialLabel.layer.cornerRadius = 20
+		initialLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+		
+		return view
+	}()
     
     private lazy var nameLabel = self.labelBuilder(text: "", size: 14, weight: .bold, color: .black, numOfLines: 1)
     
@@ -59,7 +71,6 @@ class NFTOfferTableViewCell:UITableViewCell{
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
         self.selectedBackgroundView = UIView.clearView()
-        self.backgroundColor = .clear
         self.setupViews()
         self.setupLayout()
     }
@@ -77,23 +88,29 @@ class NFTOfferTableViewCell:UITableViewCell{
     }
     
     func setupViews(){
-        self.addSubview(self.initialLabel)
-        self.addSubview(self.cellStack)
+		stackView()
     }
+
+	func stackView(){
+		let stack = UIStackView(arrangedSubviews: [initialView,cellStack])
+		stack.spacing = 12
+		contentView.addSubview(stack)
+		contentView.setContraintsToChild(stack, edgeInsets: .init(top: 10, left: 15, bottom: -10, right: -15))
+	}
     
-    func setupLayout(){
-        
-        self.initialLabel.widthAnchor.constraint(equalToConstant: 40).isActive = true
-        self.initialLabel.heightAnchor.constraint(equalToConstant: 40).isActive = true
-        self.initialLabel.layer.cornerRadius = 20
-        self.initialLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor).isActive = true
-        self.initialLabel.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
-        
-        self.cellStack.leadingAnchor.constraint(equalTo: self.initialLabel.trailingAnchor,constant: 12).isActive = true
-        self.cellStack.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
-        self.cellStack.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
-        self.cellStack.trailingAnchor.constraint(equalTo: self.trailingAnchor).isActive = true
-    }
+	func setupLayout(){
+		initialView.widthAnchor.constraint(equalToConstant: 40).isActive = true
+		initialView.heightAnchor.constraint(equalToConstant: 50).isActive = true
+	}
+
+	func configureCell(with model: NFTArtOffer) {
+		if subviews.isEmpty{
+			subviews.forEach { $0.removeFromSuperview() }
+		}
+		updateCell(offer: model)
+		setupViews()
+		setupLayout()
+	}
     
 }
 

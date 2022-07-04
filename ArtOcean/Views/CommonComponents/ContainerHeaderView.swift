@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ContainerHeaderView: UIStackView {
+class ContainerHeaderView: UIView{
 
     private var buttonHandler:(() -> Void)? = nil
     private var includeButton:Bool = false
@@ -40,7 +40,7 @@ class ContainerHeaderView: UIStackView {
     
     init(title:String,rightButtonTitle:String?,buttonHandler:(() -> Void)?){
         
-        super.init(frame: .zero)
+		super.init(frame: .init(origin: .zero, size: .init(width: UIScreen.main.bounds.width, height: 50)))
 		
         self.headerLabel.text = title
         
@@ -62,24 +62,22 @@ class ContainerHeaderView: UIStackView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override var intrinsicContentSize: CGSize{
-		return .init(width: UIScreen.main.bounds.width, height: 50)
-    }
-    
     func setupView(){
-        axis = .horizontal
-        spacing = 5
-        addArrangedSubview(self.headerLabel)
-		isLayoutMarginsRelativeArrangement = true
-		layoutMargins = .init(top: 10, left: 16, bottom: 10, right: 16)
+		let stack = UIStackView()
+		stack.axis = .horizontal
+		stack.spacing = 5
+		stack.addArrangedSubview(self.headerLabel)
         
         //LayoutConstraint
 		headerLabel.setContentCompressionResistancePriority(.init(rawValue: 249), for: .horizontal)
 		headerLabel.setContentHuggingPriority(.init(rawValue: 749), for: .horizontal)
         if includeButton{
-			addArrangedSubview(self.rightButton)
+			stack.addArrangedSubview(self.rightButton)
             rightButton.titleLabel?.textAlignment = .right
         }
+		addSubview(stack)
+		setContraintsToChild(stack, edgeInsets: .init(top: 12, left: 16, bottom: -12, right: -16))
+		heightAnchor.constraint(equalToConstant: 48).isActive = true
     }
     
 

@@ -30,6 +30,7 @@ class ChartView:UIView{
     
 	private var data:[Double]!{
 		didSet{
+			guard !data.isEmpty else { return }
 			resetChart()
 			setupIndicator()
 			drawChart()
@@ -92,8 +93,8 @@ class ChartView:UIView{
 extension ChartView{
     
     func computeDataPoints(){
-        let spacing = data.count > 0 ? frame.width/CGFloat(data.count) : 40
-        let height = frame.height - 50
+        let spacing = data.count > 0 ? (frame.width.isZero ? intrinsicContentSize.width : frame.width)/CGFloat(data.count) : 40
+		let height = (frame.height.isZero ? intrinsicContentSize.height : frame.height) - 50
         guard
         let min = data.min(),
         let max = data.max()

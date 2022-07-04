@@ -13,6 +13,34 @@ protocol NFTChartViewDelegate{
 	func scrollEnded()
 }
 
+struct NFTChartViewData {
+	var prices:[Double]
+	var delegate:NFTChartViewDelegate?
+}
+
+class NFTChartViewCell:ConfigurableCell{
+	
+	private var chartView:NFTChartView?
+	
+	override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+		super.init(style: style, reuseIdentifier: reuseIdentifier)
+	}
+	
+	required init?(coder: NSCoder) {
+		fatalError("init(coder:) has not been implemented")
+	}
+	
+	func configureCell(with model: NFTChartViewData) {
+		chartView = NFTChartView()
+		chartView?.updateUI(model.prices)
+		chartView?.delegate = model.delegate
+		
+		contentView.subviews.forEach { $0.removeFromSuperview() }
+		contentView.addSubview(chartView!)
+		contentView.setContraintsToChild(chartView!, edgeInsets: .init(top: 0, left: 16, bottom: 0, right: -16))
+	}
+	
+}
 
 class NFTChartView:UIView{
 	
@@ -65,7 +93,7 @@ class NFTChartView:UIView{
 	}()
 	
 	private lazy var mainContainer:StackContainer = {
-		let container = StackContainer(header: "Price History", innerView: [priceValueStack,chartView])
+		let container = StackContainer(innerView: [priceValueStack,chartView])
 		return container
 	}()
 	
@@ -93,6 +121,7 @@ class NFTChartView:UIView{
 	}
 	
 	public func updateUI(_ prices:[Double]){
+		guard !prices.isEmpty else { return }
 		self.prices = prices
 		resetView()
 		chartView.updateUI(prices)

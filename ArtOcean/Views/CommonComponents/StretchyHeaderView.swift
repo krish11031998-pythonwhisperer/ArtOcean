@@ -55,11 +55,11 @@ class StreachyHeaderView:UIView{
     //MARK: - StretchOnScroll
     
     public func StretchOnScroll(_ scrollView:UIScrollView){
-        let offset = scrollView.contentOffset
+		let y_offset = scrollView.contentOffset.y
 
-        if offset.y < 0{
-            self.viewTopConstraint?.constant = offset.y - 10
-            self.viewHeightConstraint?.constant = max(self.height - offset.y,height)
+        if y_offset < 0{
+            self.viewTopConstraint?.constant = y_offset - 10
+            self.viewHeightConstraint?.constant = max(self.height - y_offset,height)
         }
         
     }

@@ -79,7 +79,7 @@ class HomeViewController: UIViewController {
 	func buildTableView(){
 		tableView = UITableView(frame: .zero, style: .grouped)
 		tableView?.backgroundColor = .clear
-		tableView?.tableHeaderView = headerView
+		tableView?.tableHeaderView = tableHeaderView
 		tableView?.separatorStyle = .none
 		view.addSubview(tableView!)
 		view.setContraintsToChild(tableView!, edgeInsets: .zero)
@@ -108,18 +108,53 @@ class HomeViewController: UIViewController {
 	}
 	
     
-	private var headerView:UIView {
-
-		let stackView = UIStackView(frame: .init(origin: .zero, size: .init(width: UIScreen.main.bounds.width, height: 226)))
+	private var tableHeaderView:UIView {
+//		let view = UIView(frame: .init(origin: .zero, size: .init(width: UIScreen.main.bounds.width, height: 250)))
+//
+//		view.addSubview(bannerImageView)
+//		view.backgroundColor = .red
+//		bannerImageView.translatesAutoresizingMaskIntoConstraints = false
+//		let leadingAnchor = bannerImageView.leadingAnchor.constraint(equalToSystemSpacingAfter: view.leadingAnchor, multiplier: 1)
+//		leadingAnchor.priority = .init(rawValue: 750)
+//		let trailingAnchor = view.trailingAnchor.constraint(equalToSystemSpacingAfter: bannerImageView.trailingAnchor, multiplier: 1)
+//		trailingAnchor.priority = .init(rawValue: 750)
+//		NSLayoutConstraint.activate([
+////			bannerImageView.leadingAnchor.constraint(equalToSystemSpacingAfter: view.leadingAnchor, multiplier: 1),
+////			view.trailingAnchor.constraint(equalToSystemSpacingAfter: bannerImageView.trailingAnchor, multiplier: 1),
+//			leadingAnchor,
+//			trailingAnchor,
+//			view.bottomAnchor.constraint(equalToSystemSpacingBelow: bannerImageView.bottomAnchor, multiplier: 1),
+////			bannerImageView.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width),
+////			bannerImageView.heightAnchor.constraint(equalToConstant: 132)
+//		])
+		
+//		let stackView = UIStackView(frame: .init(origin: .zero, size: .init(width: UIScreen.main.bounds.width, height: 132)))
+		let view  = UIView(frame: .init(origin: .zero, size: .init(width: UIScreen.main.bounds.width, height: 206)))
+		let stackView = UIStackView()
 		stackView.axis = .vertical
+		stackView.alignment = .center
 		stackView.spacing = 24
+		
 		let artTypeCollection = NFTArtTypeCollectionView()
 		artTypeCollection.configureCollection(NFTArtType.allType)
+		
 		stackView.addArrangedSubview(artTypeCollection)
 		stackView.addArrangedSubview(bannerImageView)
-		stackView.isLayoutMarginsRelativeArrangement = true
-		stackView.layoutMargins = .init(top: 10, left: 0, bottom: 10, right: 0)
-		return stackView
+		
+		let imageleading = bannerImageView.leadingAnchor.constraint(equalTo: stackView.leadingAnchor, constant: 10)
+		imageleading.priority = .init(rawValue: 750)
+		let imagetrailing = bannerImageView.trailingAnchor.constraint(equalTo: stackView.trailingAnchor, constant: -10)
+		imagetrailing.priority = .init(rawValue: 750)
+		
+		NSLayoutConstraint.activate([
+			imageleading,
+			imagetrailing
+		])
+		
+		view.addSubview(stackView)
+		view.setContraintsToChild(stackView, edgeInsets: .zero)
+		
+		return view
 	}
 	
     func popLivBidVC(){
@@ -133,22 +168,18 @@ class HomeViewController: UIViewController {
     }
     
     private lazy var bannerImageView:UIView = {
-        let view = UIView()
-    
+
         let imageView = UIImageView()
         if let safeImg = UIImage(named: "BannerSkeleton"){
             imageView.image = safeImg
-        }
+		}else{
+			imageView.backgroundColor = .black
+		}
         imageView.contentMode = .scaleAspectFill
-        imageView.translatesAutoresizingMaskIntoConstraints = false
+//        imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.clipsToBounds = true
         imageView.layer.cornerRadius = 16
         
-        view.addSubview(imageView)
-        imageView.leadingAnchor.constraint(equalToSystemSpacingAfter: view.leadingAnchor,multiplier: 1).isActive = true
-        view.trailingAnchor.constraint(equalToSystemSpacingAfter: imageView.trailingAnchor,multiplier: 1).isActive = true
-        imageView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
-        imageView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
         
         //LearnMoreImage
         let learnMoreBannerImage = UIImageView()
@@ -165,14 +196,14 @@ class HomeViewController: UIViewController {
         //titlView
         let bannerTitle = self.view.labelBuilder(text: "Collect and Sell extraordinary NFTs", size: 18, weight: .bold, color: .appWhiteBackgroundColor, numOfLines: 2, adjustFontSize: false)
         imageView.addSubview(bannerTitle)
-        bannerTitle.leadingAnchor.constraint(equalTo: learnMoreBannerImage.leadingAnchor).isActive = true
+        bannerTitle.leadingAnchor.constraint(equalTo: imageView.leadingAnchor,constant: 24).isActive = true
         bannerTitle.topAnchor.constraint(equalTo: imageView.topAnchor,constant:20).isActive = true
         bannerTitle.bottomAnchor.constraint(equalTo: learnMoreBannerImage.topAnchor, constant: -24).isActive = true
         bannerTitle.widthAnchor.constraint(equalToConstant: 185).isActive = true
         
-		view.heightAnchor.constraint(equalToConstant: 132).isActive = true
+//		view.heightAnchor.constraint(equalToConstant: 132).isActive = true
 		
-        return view
+        return imageView
     }()
     
     private var stackView:UIStackView = {
@@ -182,23 +213,7 @@ class HomeViewController: UIViewController {
         stackView.spacing = 24
         return stackView
     }()
-    
-//    func setupLayout(){
-//
-//        scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
-//        scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-//        scrollView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
-//        scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
-//
-//        stackView.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 0).isActive = true
-//        stackView.widthAnchor.constraint(equalTo: scrollView.widthAnchor).isActive = true
-//        scrollView.bottomAnchor.constraint(equalToSystemSpacingBelow: stackView.bottomAnchor, multiplier: 3).isActive = true
-//
-////        self.artTypes.heightAnchor.constraint(equalToConstant: 50).isActive = true
-//        self.bannerImageView.heightAnchor.constraint(equalToConstant: 132).isActive = true
-//
-//    }
-    
+
 }
 
 //MARK: - NFTLiveBidCollectionDelegate

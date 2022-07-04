@@ -10,6 +10,7 @@ import UIKit
 
 class NFTDetailArtViewController:UIViewController{
     
+	private var observer:NSKeyValueObservation?
     private var nftArt:NFTModel?
     private var placeBidModalLeadingAnchor:NSLayoutConstraint? = nil
     private var leadingOffScreen:CGFloat = 1000
@@ -17,15 +18,16 @@ class NFTDetailArtViewController:UIViewController{
     private var imageScale:CGFloat = 1
     private var imageViewHeightAnchor:NSLayoutConstraint? = nil
     private var imageViewWidthAnchor:NSLayoutConstraint? = nil
-    private var prices:[Double]!
+    private var prices:[Double]? = []
+	private var offers:NFTArtOffers = .init(repeating: .init(name: "John Doe", percent: "5.93", price: 12.03, time: 5), count: 5)
+	private var tableView:UITableView?
+	private var tableHeaderView:UIView?
     
     init(nftArt:NFTModel) {
         self.nftArt = nftArt
         super.init(nibName: nil, bundle: nil)
-        prices = Array(repeating: 0, count: 25).compactMap({_ in Double.random(in: 1...5)})
         self.configNavigationBar()
         self.setupView()
-        self.setupLayout()
     }
     
     override func viewDidLoad() {
@@ -33,18 +35,12 @@ class NFTDetailArtViewController:UIViewController{
         guard let nftArt = nftArt else {
             return
         }
-        self.titleView = CustomLabel(text: nftArt.Title, size: 18, weight: .bold, color: .appBlackColor, numOfLines: 1, adjustFontSize: true)
-
-        self.descriptionView = CustomLabel(text: nftArt.Description, size: 14, weight: .medium, color: .appGrayColor, numOfLines: 3, adjustFontSize: false)
 
         self.heroHeaderView = NFTHeroHeaderView(nft: nftArt,height: 200 + UIScreen.main.bounds.height * 0.175, handler: {
             self.navigationController?.popViewController(animated: true)
         })
         
-        if let safeAttributes = nftArt.metadata?.attributes{
-            self.attributesTable = .init(attributes: safeAttributes)
-        }
-        
+		buildTable()
     }
     
 	override func viewDidLayoutSubviews() {
@@ -58,9 +54,9 @@ class NFTDetailArtViewController:UIViewController{
 		}
 		self.navigationController?.navigationBar.transform = .init(translationX: 0, y: -100)
 		DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(5)) { [weak self] in
-			self?.prices = self?.prices.compactMap({_ in Double.random(in: 1...5)})
-			print("(DEBUG) Updating the chart with new dataPoints : ",self?.prices)
-			self?.priceHistoryView.updateUI(self!.prices!)
+			self?.prices = Array(repeating: 0, count: 15).compactMap({_ in Double.random(in: 1...5)})
+			guard let safeDataSource = self?.buildDataSource() else { return }
+			self?.tableView?.reload(with: safeDataSource)
 		}
 	}
 	
@@ -99,15 +95,6 @@ class NFTDetailArtViewController:UIViewController{
     }()
     
     //MARK: - Views
-    private lazy var scrollView:UIScrollView = {
-        let scrollView = UIScrollView()
-        scrollView.contentInsetAdjustmentBehavior = .never
-        scrollView.translatesAutoresizingMaskIntoConstraints = false
-        scrollView.showsVerticalScrollIndicator = false
-        scrollView.delegate = self
-        scrollView.backgroundColor = .clear
-        return scrollView
-    }()
     
     private lazy var placeBidButton:Container = {
         let button = CustomLabelButton(title: "Place a Bid", color: .white, backgroundColor: .appBlueColor)
@@ -116,38 +103,23 @@ class NFTDetailArtViewController:UIViewController{
         return container
     }()
 
-    private var heroHeaderView:NFTHeroHeaderView!
+    private var heroHeaderView:NFTHeroHeaderView?
     
     private lazy var artInteractiveInfoView:NFTArtInteractiveInfoView = .init(nft: self.nftArt ?? .init(contract: nil, id: nil, balance: nil, title: nil, description: nil, metadata: nil))
     
     private var imageView:CustomImageView = CustomImageView(cornerRadius: 16)
         
-    private var titleView:UILabel!
-    
-    private var descriptionView:UILabel!
-    
-    private lazy var titleDescriptionView:UIStackView = {
-        let stack = UIStackView(arrangedSubviews: [titleView,descriptionView])
-        stack.axis = .vertical
-        stack.spacing = 8
-        
-        descriptionView.setContentHuggingPriority(.init(249), for: .vertical)
-        descriptionView.setContentCompressionResistancePriority(.init(749), for: .vertical)
-
-        return stack
-    }()
-    
-    private var creatorLabel:UILabel = {
-        return CustomLabel(text: "Pablo", size: 14, weight: .bold, color: .appBlueColor, numOfLines: 1,adjustFontSize: false)
-    }()
-    private var timeEndsLabel:UILabel = {
-        return CustomLabel(text: "08h 34m 59s", size: 14, weight: .bold, color: .black, numOfLines: 1, adjustFontSize: false)
-    }()
-    
-    private lazy var creatorView:UIStackView = {
-        return self.stackBuilder(header: "Created by",alignment: .left, label: self.creatorLabel)
-        
-    }()
+//    private var creatorLabel:UILabel = {
+//        return CustomLabel(text: "Pablo", size: 14, weight: .bold, color: .appBlueColor, numOfLines: 1,adjustFontSize: false)
+//    }()
+//    private var timeEndsLabel:UILabel = {
+//        return CustomLabel(text: "08h 34m 59s", size: 14, weight: .bold, color: .black, numOfLines: 1, adjustFontSize: false)
+//    }()
+//
+//    private lazy var creatorView:UIStackView = {
+//        return self.stackBuilder(header: "Created by",alignment: .left, label: self.creatorLabel)
+//
+//    }()
     
     private let creatorImage:CustomImageView = {
         let imageView = CustomImageView(cornerRadius: 16)
@@ -156,34 +128,24 @@ class NFTDetailArtViewController:UIViewController{
         return imageView
     }()
     
-    private lazy var artInfoSnippet:UIStackView = {
-        let stack = UIStackView()
-        stack.axis = .horizontal
-        stack.spacing = 8
-        stack.translatesAutoresizingMaskIntoConstraints = false
-        stack.addArrangedSubview(creatorView)
-        stack.addArrangedSubview(self.creatorImage)
-        
-        NSLayoutConstraint.activate([
-            creatorImage.widthAnchor.constraint(equalToConstant:32),
-        ])
-
-        creatorView.setContentHuggingPriority(.init(259), for: .horizontal)
-        creatorView.setContentCompressionResistancePriority(.init(749), for: .horizontal)
-        
-        return stack
-        
-    }()
-    
-    
-    private var attributesTable:NFTAttributeView? = nil
-    
-    private lazy var offerView:Container = {
-        let container = Container(header: "Offers", rightButtonTitle: "Last 7 Days", innerView: NFTOffersTableView(), innerViewSize: .init(width: .zero, height: 350),paddingToHeaderView: false) {
-            print("(DEBUG) Clicked on last 7 days Button!")
-        }
-        return container
-    }()
+//    private lazy var artInfoSnippet:UIStackView = {
+//        let stack = UIStackView()
+//        stack.axis = .horizontal
+//        stack.spacing = 8
+//        stack.translatesAutoresizingMaskIntoConstraints = false
+//        stack.addArrangedSubview(creatorView)
+//        stack.addArrangedSubview(self.creatorImage)
+//
+//        NSLayoutConstraint.activate([
+//            creatorImage.widthAnchor.constraint(equalToConstant:32),
+//        ])
+//
+//        creatorView.setContentHuggingPriority(.init(259), for: .horizontal)
+//        creatorView.setContentCompressionResistancePriority(.init(749), for: .horizontal)
+//
+//        return stack
+//
+//    }()
     
     private lazy var placeBidModal:NFTBiddingModal = {
         let view = NFTBiddingModal {
@@ -192,26 +154,75 @@ class NFTDetailArtViewController:UIViewController{
         return view
     }()
     
-    private var stackView:UIStackView = {
-        let stackView = UIStackView()
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-        stackView.axis = .vertical
-        stackView.spacing = 24
-        stackView.isLayoutMarginsRelativeArrangement = true
-        stackView.layoutMargins = .init(top: 24, left: 24, bottom: 24, right: 24)
-        return stackView
-    }()
-    
+
     private lazy var biddingController:Container = {
         let container:Container = .init(innerView: NFTBiddingController(), innerViewSize: .init(width:.zero,height: 82))
         return container
     }()
-
-	private let priceHistoryView:NFTChartView = {
-		let priceView = NFTChartView()
-		return priceView
+	
+	func buildTable(){
+		tableView = UITableView(frame: .zero, style: .grouped)
+		tableView?.backgroundColor = .clear
+		observer = tableView?.observe(\.contentOffset, changeHandler: {[weak self] target, _ in self?.updateOnScroll(target) })
+		view.addSubview(tableView!)
+		view.setContraintsToChild(tableView!, edgeInsets: .init(top: 0, left: 0, bottom: -40, right: 0))
+		tableView?.separatorStyle = .none
+		buildTableHeaderView()
+		tableView?.tableHeaderView = tableHeaderView
+		tableView?.contentInsetAdjustmentBehavior = .never
+		tableView?.reload(with: buildDataSource())
+	}
+	
+	func buildDataSource() -> TableViewDataSource{
+		.init(section: [artIntroduction, priceHistorySection, attributeSection, offerSection].compactMap{ $0 })
+	}
+	
+	private var artIntroduction:TableSection? {
+		guard let safeNFT = nftArt else { return nil }
+		return .init(rows: [TableRow<NFTArtIntroduction>(safeNFT)])
+	}
+	
+	private var priceHistorySection:TableSection? {
+		guard let prices = self.prices else { return nil }
+		return .init(title:"Price History",rows: [TableRow<NFTChartViewCell>(.init(prices: prices, delegate: self))])
+	}
+	
+	private var attributeSection:TableSection? {
+		guard let attributes = nftArt?.metadata?.Attributes, !attributes.isEmpty else { return nil }
+		return .init(title: "Attributes", rows: attributes.compactMap{ TableRow<NFTAttributeCell>($0) })
+	}
+	
+	private var offerSection:TableSection? {
+		guard !offers.isEmpty else { return nil }
+		return .init(title:"Offers",rows: offers.compactMap{ TableRow<NFTOfferTableViewCell>($0) })
+	}
+	
+	private var backgroundimgView:CustomImageView = {
+		let imageView = CustomImageView(cornerRadius: 0)
+		return imageView
 	}()
 	
+	private var imgView:CustomImageView = {
+		let imageView = CustomImageView(cornerRadius: 16)
+		return imageView
+	}()
+	
+	func buildTableHeaderView(){
+		tableHeaderView = UIView(frame: .init(origin: .zero, size: .init(width: UIScreen.main.bounds.width, height: 325)))
+		buildImage()
+	}
+	
+	func buildImage(){
+		guard let safeHeaderView = tableHeaderView,let nftArt = nftArt, let image = nftArt.metadata?.image else { return }
+		backgroundimgView.updateImageView(url: image)
+		safeHeaderView.addSubview(backgroundimgView)
+		safeHeaderView.setContraintsToChild(backgroundimgView,edgeInsets: .zero)
+		
+		
+//		safeHederView.addSubview(imgView)
+//		tableHeaderView?.setContraintsToChild(imgView, edgeInsets: .init(top: 24, left: 24, bottom: -24, right: -24))
+//		imgView.updateImageView(url: image)
+	}
     
     //MARK: - View Setups
     
@@ -219,100 +230,23 @@ class NFTDetailArtViewController:UIViewController{
         view.backgroundColor = .white
         navigationController?.isNavigationBarHidden = true
         navigationController?.navigationBar.isTranslucent = false
-        view.addSubview(self.scrollView)
-        setupImageView()
-        scrollView.addSubview(stackView)
-        stackView.addArrangedSubview(artInteractiveInfoView)
-        stackView.addArrangedSubview(titleDescriptionView)
-        stackView.addArrangedSubview(artInfoSnippet)
-        stackView.addArrangedSubview(biddingController)
-		
-		priceHistoryView.delegate = self
-		stackView.addArrangedSubview(priceHistoryView)
-        stackView.addArrangedSubview(offerView)
-        if let safeAttributeTable = self.attributesTable{
-            stackView.addArrangedSubview(safeAttributeTable)
-        }
-        stackView.addArrangedSubview(placeBidButton)
-        self.view.addSubview(self.placeBidModal)
     }
     
-    func setupImageView(){
-        guard let safeImg = self.nftArt?.metadata?.image else{return}
-        DispatchQueue.global().async {
-            self.heroHeaderView.updateImages(url:safeImg)
-        }
-
-        scrollView.addSubview(heroHeaderView)
-        heroHeaderView.topAnchor.constraint(equalTo: scrollView.topAnchor).isActive = true
-        heroHeaderView.widthAnchor.constraint(equalTo: scrollView.widthAnchor).isActive = true
-		imageViewHeightAnchor = heroHeaderView.heightAnchor.constraint(equalToConstant: heroHeaderView.intrinsicContentSize.height)
-		imageViewHeightAnchor?.isActive = true
-        
-    }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    
-    func setupLayout(){
-
-        self.scrollView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor).isActive = true
-        self.scrollView.topAnchor.constraint(equalTo: self.view.topAnchor,constant: -self.view.safeAreaInsets.top).isActive = true
-        self.scrollView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor).isActive = true
-        self.scrollView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor).isActive = true
-        
-        stackView.widthAnchor.constraint(equalTo: scrollView.widthAnchor).isActive = true
-        stackView.topAnchor.constraint(equalTo: heroHeaderView.bottomAnchor).isActive = true
-        scrollView.bottomAnchor.constraint(equalToSystemSpacingBelow: stackView.bottomAnchor, multiplier: 0).isActive = true
-
-        artInfoSnippet.heightAnchor.constraint(equalToConstant: 32).isActive = true
-        
-        //PlaceBidModal
-        self.placeBidModal.centerYAnchor.constraint(equalTo: self.view.centerYAnchor).isActive = true
-        self.placeBidModal.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width - 48).isActive = true
-        self.placeBidModal.heightAnchor.constraint(equalToConstant: 300).isActive = true
-
-        self.placeBidModalLeadingAnchor = self.placeBidModal.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: self.leadingOffScreen)
-        self.placeBidModalLeadingAnchor?.isActive = true
-    }
 }
 
 //MARK: - ViewBuilder Helpers
 
 extension NFTDetailArtViewController{
-    func stackBuilder(header:String,alignment:NSTextAlignment,label:UILabel) -> UIStackView{
-        let stack = UIStackView()
-        stack.translatesAutoresizingMaskIntoConstraints = false
-        stack.axis = .vertical
-        stack.spacing = 8
-        
-        let headerLabel:UILabel = self.view.labelBuilder(text: header, size: 12, weight: .regular, color: .black, numOfLines: 1)
-        headerLabel.textAlignment = alignment
-        label.textAlignment = alignment
-        stack.addArrangedSubview(headerLabel)
-        stack.addArrangedSubview(label)
-        
-        NSLayoutConstraint.activate([
-            headerLabel.heightAnchor.constraint(equalTo: stack.heightAnchor,multiplier: 0.5, constant: -4),
-            label.heightAnchor.constraint(equalTo: stack.heightAnchor,multiplier: 0.5, constant: -4)
-        ])
-        
-        return stack
-    }
     
     func closeDetailView(){
         self.navigationController?.popViewController(animated: true)
     }
-	
-	public func animateheroHeaderView(_ scrollView:UIScrollView,_ height:CGFloat){
-		UIViewPropertyAnimator(duration: 0.35, curve: .easeInOut) {
-			self.imageViewHeightAnchor?.constant = height
-			self.heroHeaderView.layoutIfNeeded()
-			scrollView.layoutIfNeeded()
-		}.startAnimation()
-	}
+
 }
 
 
@@ -322,8 +256,6 @@ extension NFTDetailArtViewController:CustomButtonDelegate{
     func handleTap() {
         let animation = UIViewPropertyAnimator(duration: 0.5, curve: .easeInOut) {
             self.placeBidModalLeadingAnchor?.constant = self.leadingOnScreen
-            self.scrollView.isScrollEnabled = false
-            self.scrollView.layer.opacity = 0.5
             self.view.layoutIfNeeded()
         }
         animation.startAnimation()
@@ -333,8 +265,6 @@ extension NFTDetailArtViewController:CustomButtonDelegate{
         let animation = UIViewPropertyAnimator(duration: 0.5, curve: .easeInOut) {
             self.placeBidModalLeadingAnchor?.constant = -self.leadingOffScreen
             self.leadingOffScreen = -self.leadingOffScreen
-            self.scrollView.isScrollEnabled = true
-            self.scrollView.layer.opacity = 1
             self.view.layoutIfNeeded()
         }
         animation.startAnimation()
@@ -343,11 +273,11 @@ extension NFTDetailArtViewController:CustomButtonDelegate{
 
 
 //MARK: - ScrollViewDelegate
-extension NFTDetailArtViewController:UIScrollViewDelegate{
+extension NFTDetailArtViewController{
     
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-		let height:CGFloat = heroHeaderView.animateHeaderView(scrollView)
-		animateheroHeaderView(scrollView,height)
+    func updateOnScroll(_ scrollView: UIScrollView) {
+//		let height:CGFloat = heroHeaderView?.animateHeaderView(scrollView) ?? .zero
+//		animateheroHeaderView(scrollView,300)
         self.navigationController?.navigationBar.transform = .init(translationX: 0, y: min(scrollView.contentOffset.y - 100,0))
         
     }
@@ -357,11 +287,11 @@ extension NFTDetailArtViewController:UIScrollViewDelegate{
 //MARK: - ChartDelegate
 extension NFTDetailArtViewController:NFTChartViewDelegate{
 	func scrollStarted() {
-		scrollView.isScrollEnabled = false
+		tableView?.isScrollEnabled = false
 	}
 	
 	func scrollEnded() {
-		scrollView.isScrollEnabled = true
+		tableView?.isScrollEnabled = true
 	}
 	
 }

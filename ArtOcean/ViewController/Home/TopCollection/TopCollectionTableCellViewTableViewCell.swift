@@ -55,8 +55,7 @@ class TopCollectionTableCell: ConfigurableCell {
         
         stack.setContentHuggingPriority(.init(249), for: .horizontal)
         stack.setContentCompressionResistancePriority(.init(749), for: .horizontal)
-        
-        stack.translatesAutoresizingMaskIntoConstraints = false
+
         return stack
     }()
     
@@ -72,9 +71,6 @@ class TopCollectionTableCell: ConfigurableCell {
         self.priceOfCollection.setContentHuggingPriority(.init(249), for: .vertical)
         self.priceOfCollection.setContentCompressionResistancePriority(.init(749), for: .vertical)
 
-        stack.translatesAutoresizingMaskIntoConstraints = false
-        
-        
         return stack
     }()
     
@@ -118,16 +114,11 @@ class TopCollectionTableCell: ConfigurableCell {
         mainStack.addArrangedSubview(imageAndGroupIcon)
         mainStack.addArrangedSubview(collectionNameAndOwnerStack)
         mainStack.addArrangedSubview(collectionPriceInfo)
-                
-        NSLayoutConstraint.activate([
-            imageAndGroupIcon.centerYAnchor.constraint(equalTo: mainStack.centerYAnchor),
-            collectionNameAndOwnerStack.centerYAnchor.constraint(equalTo: mainStack.centerYAnchor),
-            collectionPriceInfo.centerYAnchor.constraint(equalTo: mainStack.centerYAnchor),
-			mainStack.heightAnchor.constraint(equalToConstant: 50)
-        ])
-        
+			
         self.selectedBackgroundView = UIView()
         selectedBackgroundView?.clearView()
+		
+		self.setupLayout()
     }
     
     required init?(coder: NSCoder) {
@@ -146,6 +137,7 @@ class TopCollectionTableCell: ConfigurableCell {
 		mainStack.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor,constant: -16).isActive = true
         mainStack.topAnchor.constraint(equalTo: topAnchor,constant: 5).isActive = true
         mainStack.bottomAnchor.constraint(equalTo: bottomAnchor,constant: -5).isActive = true
+		heightAnchor.constraint(equalToConstant: 65).isActive = true
     }
     
 	func configureCell(with model: TopCollectionData) {

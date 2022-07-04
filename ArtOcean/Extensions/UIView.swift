@@ -142,6 +142,20 @@ extension UIView{
 		NSLayoutConstraint.activate(constraints)
 	}
 	
+	
+	func setSafeAreaConstraintsToChild(_ childView:UIView,edgeInsets:UIEdgeInsets){
+		let constraints = [
+			childView.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor, constant: edgeInsets.top),
+			childView.bottomAnchor.constraint(equalTo: self.safeAreaLayoutGuide.bottomAnchor, constant: edgeInsets.bottom),
+			childView.leadingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.leadingAnchor, constant: edgeInsets.left),
+			childView.trailingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.trailingAnchor, constant: edgeInsets.right)
+		]
+
+		removeConstraints(constraints)
+		childView.translatesAutoresizingMaskIntoConstraints = false
+		NSLayoutConstraint.activate(constraints)
+	}
+	
 	func setCentralizedChild(_ childView:UIView){
 		let constraints = [
 			childView.centerXAnchor.constraint(equalTo: self.centerXAnchor),

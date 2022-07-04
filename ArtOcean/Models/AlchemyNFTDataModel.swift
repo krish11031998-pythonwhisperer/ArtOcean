@@ -119,6 +119,9 @@ struct Metadata:Decodable,Hashable {
 //    let title: String?
 //    let properties: [Property]?
     
+	var Attributes:[Attribute]{
+		attributes?.compactMap{ $0 }.filter{ $0.trait_type != nil && ($0.str_value != nil || $0.int_value != nil) } ?? []
+	}
 }
 
 // MARK: - AnimationDetails
@@ -177,6 +180,10 @@ struct Attribute:Decodable,Hashable{
             }
         }
     }
+	
+	var Value:String?{
+		return str_value != nil ? str_value! : int_value != nil ? "\(int_value!)" : nil
+	}
     
 }
 

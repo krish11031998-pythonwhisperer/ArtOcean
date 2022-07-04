@@ -36,7 +36,7 @@ class NFTHeroHeaderView:UIView{
         self.leftButton = CustomButton(systemName: "chevron.left", handler: handler, autolayout: true)
         self.height = height
         self.onCloseHandler = handler
-        super.init(frame:.zero)
+		super.init(frame:.init(origin: .zero, size: .init(width: UIScreen.main.bounds.width, height: height + originalImageHeight * 0.5)))
         self.translatesAutoresizingMaskIntoConstraints = false
         
         self.setupViews()
@@ -48,7 +48,7 @@ class NFTHeroHeaderView:UIView{
     }
     
     private func setupViews(){
-        self.addSubview(self.heroHeaderView)
+        self.addSubview(heroHeaderView)
         self.addSubview(leftButton)
         self.addSubview(imageView)
     }
@@ -98,8 +98,8 @@ class NFTHeroHeaderView:UIView{
         ])
     }
 	    
-    override var intrinsicContentSize: CGSize{
-		return .init(width: UIScreen.main.bounds.width, height: height + originalImageHeight * 0.5)
-    }
+//    override var intrinsicContentSize: CGSize{
+//		return .init(width: UIScreen.main.bounds.width, height: height + originalImageHeight * 0.5)
+//    }
     
 }

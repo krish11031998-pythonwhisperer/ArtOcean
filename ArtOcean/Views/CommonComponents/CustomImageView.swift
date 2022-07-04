@@ -66,8 +66,6 @@ class CustomImageView:UIImageView{
             self.image = .init(named: "placeHolder")
         }
         
-        
-
         self.translatesAutoresizingMaskIntoConstraints = false
         self.contentMode = .scaleAspectFill
         if !self.colors.isEmpty{

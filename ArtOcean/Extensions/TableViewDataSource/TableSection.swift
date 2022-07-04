@@ -11,21 +11,25 @@ import UIKit
 //MARK: - TableSection
 class TableSection{
 	
-	var headerView:UIView?
-	var rows:[CellProvider]
-	var axis:UIAxis
+	let headerView:UIView?
+	let title:String?
+	let rows:[CellProvider]
+	let axis:UIAxis
 	
-	init(headerView:UIView? = nil,rows:[CellProvider],axis:UIAxis = .vertical){
+	init(headerView:UIView? = nil,title:String? = nil,rows:[CellProvider],axis:UIAxis = .vertical){
 		self.headerView = headerView
 		self.rows = rows
 		self.axis = axis
+		self.title = title
 	}
 	
 	convenience init(headerView:UIView? = nil,columns:[CellProvider]){
 		self.init(headerView: headerView, rows: columns, axis: .horizontal)
 	}
 	
-	
+	convenience init(title:String? = nil,rows:[CellProvider]){
+		self.init(title: title, rows: rows, axis: .vertical)
+	}
 	
 }
 
@@ -51,7 +55,15 @@ extension TableViewDataSource:UITableViewDataSource{
 	}
 	
 	func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-		self.section[section].headerView
+		if let customHeaderView = self.section[section].headerView{
+			return customHeaderView
+		}else if let safeTitle = self.section[section].title {
+			let header = ContainerHeaderView(title: safeTitle)
+			return header
+		}else{
+			return nil
+		}
+//		return nil
 	}
 	
 	func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
