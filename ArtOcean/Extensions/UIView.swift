@@ -11,20 +11,23 @@ import UIKit
 
 extension UIView{
     
-    static func clearView() -> UIView{
+	static func clearView(frame:CGRect = .zero) -> UIView{
         let view = UIView()
-        view.clearView()
+        view.backgroundColor = .clear
         return view
     }
     
-    public func gradientLayerBuilder() -> CAGradientLayer{
+	public func gradientLayerBuilder(_ color:[CGColor] =  [UIColor.clear.cgColor,UIColor.black.cgColor]) -> CAGradientLayer{
         let gradient = CAGradientLayer()
-        gradient.colors = [
-            UIColor.clear.cgColor,
-            UIColor.black.cgColor
-        ]
+        gradient.colors = color
         return gradient
     }
+	
+	func addGradientLayer(_ color:[CGColor] =  [UIColor.clear.cgColor,UIColor.black.cgColor]){
+		let gradient = gradientLayerBuilder(color)
+		layer.addSublayer(gradient)
+		gradient.frame = frame
+	}
     
     public func bouncyButtonClick(scaleDownTo:CGFloat = 0.95,completion:(() -> Void)? = nil){
         DispatchQueue.main.async {
@@ -100,7 +103,7 @@ extension UIView{
         stack.spacing = spacing
         
         if views.count != ratios.count{
-            print("(Error) Not Ratios and Views Count are mismatching !")
+            print("(Error) No. Ratios and Views Count are mismatching !")
         }
         
         for count in 0..<views.count{
@@ -121,6 +124,14 @@ extension UIView{
         return stack
     }
     
+	
+	static func StackBuilder(views:[UIView],spacing:CGFloat = 16, axis:NSLayoutConstraint.Axis) -> UIStackView {
+		let stack = UIStackView(arrangedSubviews: views)
+		stack.axis = axis
+		stack.spacing = spacing
+		return stack
+	}
+	
     
     func addShadow(){
         self.layer.shadowColor = UIColor.black.cgColor
@@ -128,6 +139,12 @@ extension UIView{
         self.layer.shadowOffset = .zero
         self.layer.shadowRadius = 2.5
     }
+	
+	func addViewAndSetConstraints(_ innerView:UIView?,edgeInsets:UIEdgeInsets) {
+		guard let safeInnerView = innerView else { return }
+		addSubview(safeInnerView)
+		setContraintsToChild(safeInnerView, edgeInsets: edgeInsets)
+	}
 	
 	func setContraintsToChild(_ childView:UIView,edgeInsets:UIEdgeInsets){
 		let constraints = [
@@ -141,7 +158,6 @@ extension UIView{
 		childView.translatesAutoresizingMaskIntoConstraints = false
 		NSLayoutConstraint.activate(constraints)
 	}
-	
 	
 	func setSafeAreaConstraintsToChild(_ childView:UIView,edgeInsets:UIEdgeInsets){
 		let constraints = [
@@ -174,6 +190,24 @@ extension UIView{
 		}
 	}
 	
+	static func spacer(width:CGFloat? = nil,height:CGFloat? = nil) -> UIView{
+		let view = UIView(frame: .init(origin: .zero, size: .init(width: width ?? 0, height: height ?? 0)))
+		view.setFrameConstraints(width: width, height: height)
+		return view
+	}
+	
+	func setFrameConstraints(width:CGFloat? = nil,height:CGFloat? = nil){
+		widthAnchor.constraint(equalToConstant: width ?? 0).isActive = width != nil
+		heightAnchor.constraint(equalToConstant: height ?? 0).isActive = height != nil
+		translatesAutoresizingMaskIntoConstraints = false
+	}
+	
+	var snapshot:UIImage {
+		let renderer = UIGraphicsImageRenderer()
+		return renderer.image { context in
+			layer.render(in: context.cgContext)
+		}
+	}
 }
 
 extension NSLayoutConstraint{

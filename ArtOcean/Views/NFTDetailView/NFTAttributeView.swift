@@ -27,7 +27,7 @@ class NFTAttributeCell:ConfigurableCell{
 		let view = innerCardBuilder()
 		addSubview(view)
 		setContraintsToChild(view, edgeInsets: .init(top: 8, left: 24, bottom: -8, right: -24))
-//		view.heightAnchor.constraint(equalToConstant: 50).isActive = true
+		backgroundColor = .clear
 	}
 	
 	func innerCardBuilder() -> UIStackView{
@@ -37,9 +37,8 @@ class NFTAttributeCell:ConfigurableCell{
 		
 		trait_type = CustomLabel(text: "", size: 14, weight: .semibold, color: .appGrayColor, numOfLines: 1, adjustFontSize: false)
 		stackView.addArrangedSubview(trait_type!)
-
-		trait_type!.setContentHuggingPriority(.init(rawValue: 249), for: .horizontal)
-		trait_type!.setContentCompressionResistancePriority(.init(rawValue: 749), for: .horizontal)
+		
+		stackView.addArrangedSubview(.spacer())
 		
 		value_label = CustomLabel(text: "" , size: 14, weight: .bold, color: .appBlackColor, numOfLines: 1, adjustFontSize: false)
 		stackView.addArrangedSubview(value_label!)

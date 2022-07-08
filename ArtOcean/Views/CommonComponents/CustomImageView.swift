@@ -93,19 +93,5 @@ class CustomImageView:UIImageView{
             self.gradientView!.trailingAnchor.constraint(equalTo: self.trailingAnchor)
         ])
     }
-    
-    public func updateImageView(url:String?){
-        guard let safeURL = url else {return}
-        ImageDownloader.shared.fetchImage(urlStr: safeURL) {result in
-            switch result{
-            case .success(let image):
-                DispatchQueue.main.async { [weak self] in
-                    self?.image = image
-                }
-            case .failure(let err):
-                print("(Error) err : ",err.localizedDescription)
-                
-            }
-        }
-    }
+
 }

@@ -15,6 +15,7 @@ class NFTHeroHeaderView:UIView{
     private var height:CGFloat
     private var imageScale:CGFloat = 1
 	public let originalImageHeight:CGFloat = UIScreen.main.bounds.height * 0.35
+	private var nftArt:NFTModel
     
     //MARK: - Views
     private lazy var backgroundImageView:CustomImageView = {
@@ -23,7 +24,7 @@ class NFTHeroHeaderView:UIView{
         return imageView
     }()
     
-    private lazy var heroHeaderView:StreachyHeaderView = StreachyHeaderView(height: self.height, innerView: backgroundImageView)
+    private lazy var heroHeaderView:StreachyHeaderView = StreachyHeaderView(height: height - 132, innerView: backgroundImageView)
     
     private lazy var imageView:CustomImageView = .init(cornerRadius: 16)
     
@@ -36,9 +37,9 @@ class NFTHeroHeaderView:UIView{
         self.leftButton = CustomButton(systemName: "chevron.left", handler: handler, autolayout: true)
         self.height = height
         self.onCloseHandler = handler
-		super.init(frame:.init(origin: .zero, size: .init(width: UIScreen.main.bounds.width, height: height + originalImageHeight * 0.5)))
+		nftArt = nft
+		super.init(frame:.init(origin: .zero, size: .init(width: UIScreen.main.bounds.width, height: height)))
         self.translatesAutoresizingMaskIntoConstraints = false
-        
         self.setupViews()
         self.setupLayout()
     }
@@ -51,6 +52,8 @@ class NFTHeroHeaderView:UIView{
         self.addSubview(heroHeaderView)
         self.addSubview(leftButton)
         self.addSubview(imageView)
+		guard let img = nftArt.metadata?.image else { return }
+		updateImages(url: img)
     }
     
     public func updateImages(url:String){
@@ -59,41 +62,45 @@ class NFTHeroHeaderView:UIView{
     }
     
     func animateHeaderView(_ scrollView:UIScrollView) ->  CGFloat{
-        headerViewScrolled(scrollView)
+		heroHeaderView.StretchOnScroll(scrollView)
         return animateImageView(scrollView)
     }
     
     public func headerViewScrolled(_ scrollView:UIScrollView){
-        self.heroHeaderView.StretchOnScroll(scrollView)
+		heroHeaderView.StretchOnScroll(scrollView)
     }
-    
+	
     public func animateImageView(_ scrollView:UIScrollView) -> CGFloat{
-        let point = imageView.convert(scrollView.frame.origin, to: nil).y * imageScale
-        let maxPoint = self.imageView.frame.minY
-        let minPoint = -self.imageView.frame.height * 0.25
-        let scaleFactor =  (point - minPoint)/(maxPoint - minPoint)
-        self.imageScale = scaleFactor > 1 ? 1 : scaleFactor < 0.75 ? 0.75 : scaleFactor
-        
-        UIViewPropertyAnimator(duration: 0.35, curve: .easeInOut) {
-			self.imageView.transform = .init(scaleX: self.imageScale, y: self.imageScale)
-            self.imageView.layoutIfNeeded()
-            scrollView.layoutIfNeeded()
-        }.startAnimation()
+		let point = scrollView.contentOffset.y
+		let totalHeight = height
+        let maxPoint = totalHeight
+		let minPoint = totalHeight * 0.5
+		let scaleFactor =  -(point - minPoint)/(maxPoint - minPoint)
+		self.imageScale = scaleFactor > 1 ? 1 : scaleFactor < 0 ? 0 : scaleFactor
+		
+		UIViewPropertyAnimator(duration: 0.35, curve: .easeInOut) { [weak self] in
+			let scale = self?.imageScale ?? 0
+			self?.imageView.transform = .init(scaleX: scale, y: scale)
+			self?.heroHeaderView.alpha = scale
+			self?.imageView.layoutIfNeeded()
+			scrollView.layoutIfNeeded()
+		}.startAnimation()
+
 		
 		return originalImageHeight * 0.5 * imageScale + height
     }
     
     private func setupLayout(){
         NSLayoutConstraint.activate([
-            self.heroHeaderView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
-            self.heroHeaderView.topAnchor.constraint(equalTo: self.topAnchor),
-            self.heroHeaderView.widthAnchor.constraint(equalTo:self.widthAnchor),
-            self.heroHeaderView.heightAnchor.constraint(equalToConstant: self.height),
+			heroHeaderView.topAnchor.constraint(equalTo: topAnchor),
+			heroHeaderView.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width),
+			heroHeaderView.heightAnchor.constraint(equalToConstant: height - 132),
             leftButton.leadingAnchor.constraint(equalToSystemSpacingAfter: self.leadingAnchor, multiplier: 3),
             leftButton.topAnchor.constraint(equalToSystemSpacingBelow: self.topAnchor, multiplier: 5),
             imageView.centerXAnchor.constraint(equalTo: centerXAnchor),
-			imageView.topAnchor.constraint(equalTo: heroHeaderView.centerYAnchor),
-			imageView.widthAnchor.constraint(equalTo: widthAnchor, constant: -50),
+			imageView.topAnchor.constraint(equalTo: heroHeaderView.topAnchor,constant: 132),
+//			imageView.centerYAnchor.constraint(equalTo: heroHeaderView.bottomAnchor),
+			imageView.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width - 50),
 			imageView.heightAnchor.constraint(equalToConstant: originalImageHeight)
         ])
     }

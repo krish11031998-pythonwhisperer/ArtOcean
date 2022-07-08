@@ -19,28 +19,17 @@ class NFTOfferTableViewCell:ConfigurableCell{
         label.backgroundColor = .appGrayColor
         label.textAlignment = .center
         label.clipsToBounds = true
+		label.setFrameConstraints(width: 40, height: 40)
         label.layer.cornerRadius = 20
         return label
     }()
 	
-	private lazy var initialView:UIView = {
-		let view = UIView()
-		view.addSubview(initialLabel)
-		
-		initialLabel.widthAnchor.constraint(equalToConstant: 40).isActive = true
-		initialLabel.heightAnchor.constraint(equalToConstant: 40).isActive = true
-		initialLabel.layer.cornerRadius = 20
-		initialLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
-		
-		return view
-	}()
-    
     private lazy var nameLabel = self.labelBuilder(text: "", size: 14, weight: .bold, color: .black, numOfLines: 1)
     
     private lazy var expirationLabel = self.labelBuilder(text: "", size: 12, weight: .regular, color: .black, numOfLines: 1)
     
-    private lazy var offerNameAndExpirationStack:UIStackView = {
-        return UIView.StackBuilder(views: [nameLabel,expirationLabel], ratios: [0.5,0.5], spacing: 4, axis: .vertical)
+    private lazy var offerNameAndExpirationStack:UIView = {
+		return .StackBuilder(views: [nameLabel,expirationLabel], spacing: 12, axis: .vertical)
     }()
     
     private lazy var priceLabel:UILabel = {
@@ -55,14 +44,12 @@ class NFTOfferTableViewCell:ConfigurableCell{
         return label
     }()
     
-    private lazy var offerPriceAndPercentnStack:UIStackView = {
-        return UIView.StackBuilder(views: [priceLabel,percentLabel], ratios: [0.5,0.5], spacing: 4, axis: .vertical)
+    private lazy var offerPriceAndPercentnStack:UIView = {
+		return .StackBuilder(views: [priceLabel,percentLabel], axis: .vertical)
     }()
     
     private lazy var cellStack:UIStackView = {
-        let stack = UIView.StackBuilder(views: [offerNameAndExpirationStack,offerPriceAndPercentnStack], ratios: [0.5,0.5], spacing: 4, axis: .horizontal)
-        stack.isLayoutMarginsRelativeArrangement = true
-        stack.layoutMargins = .init(top: 5, left: 0, bottom: 5, right: 0)
+		let stack: UIStackView = .init(arrangedSubviews: [offerNameAndExpirationStack,.spacer(),offerPriceAndPercentnStack])
         return stack
     }()
     
@@ -72,7 +59,6 @@ class NFTOfferTableViewCell:ConfigurableCell{
         
         self.selectedBackgroundView = UIView.clearView()
         self.setupViews()
-        self.setupLayout()
     }
     
     required init?(coder: NSCoder) {
@@ -88,28 +74,18 @@ class NFTOfferTableViewCell:ConfigurableCell{
     }
     
     func setupViews(){
-		stackView()
-    }
-
-	func stackView(){
-		let stack = UIStackView(arrangedSubviews: [initialView,cellStack])
+		let stack = UIStackView(arrangedSubviews: [initialLabel,cellStack])
 		stack.spacing = 12
+		stack.alignment = .center
 		contentView.addSubview(stack)
-		contentView.setContraintsToChild(stack, edgeInsets: .init(top: 10, left: 15, bottom: -10, right: -15))
+		contentView.setContraintsToChild(stack, edgeInsets: .init(vertical: 10, horizontal: 15))
 	}
-    
-	func setupLayout(){
-		initialView.widthAnchor.constraint(equalToConstant: 40).isActive = true
-		initialView.heightAnchor.constraint(equalToConstant: 50).isActive = true
-	}
-
+	
 	func configureCell(with model: NFTArtOffer) {
 		if subviews.isEmpty{
 			subviews.forEach { $0.removeFromSuperview() }
 		}
 		updateCell(offer: model)
-		setupViews()
-		setupLayout()
 	}
     
 }

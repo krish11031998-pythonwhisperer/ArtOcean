@@ -109,26 +109,7 @@ class HomeViewController: UIViewController {
 	
     
 	private var tableHeaderView:UIView {
-//		let view = UIView(frame: .init(origin: .zero, size: .init(width: UIScreen.main.bounds.width, height: 250)))
-//
-//		view.addSubview(bannerImageView)
-//		view.backgroundColor = .red
-//		bannerImageView.translatesAutoresizingMaskIntoConstraints = false
-//		let leadingAnchor = bannerImageView.leadingAnchor.constraint(equalToSystemSpacingAfter: view.leadingAnchor, multiplier: 1)
-//		leadingAnchor.priority = .init(rawValue: 750)
-//		let trailingAnchor = view.trailingAnchor.constraint(equalToSystemSpacingAfter: bannerImageView.trailingAnchor, multiplier: 1)
-//		trailingAnchor.priority = .init(rawValue: 750)
-//		NSLayoutConstraint.activate([
-////			bannerImageView.leadingAnchor.constraint(equalToSystemSpacingAfter: view.leadingAnchor, multiplier: 1),
-////			view.trailingAnchor.constraint(equalToSystemSpacingAfter: bannerImageView.trailingAnchor, multiplier: 1),
-//			leadingAnchor,
-//			trailingAnchor,
-//			view.bottomAnchor.constraint(equalToSystemSpacingBelow: bannerImageView.bottomAnchor, multiplier: 1),
-////			bannerImageView.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width),
-////			bannerImageView.heightAnchor.constraint(equalToConstant: 132)
-//		])
 		
-//		let stackView = UIStackView(frame: .init(origin: .zero, size: .init(width: UIScreen.main.bounds.width, height: 132)))
 		let view  = UIView(frame: .init(origin: .zero, size: .init(width: UIScreen.main.bounds.width, height: 206)))
 		let stackView = UIStackView()
 		stackView.axis = .vertical
@@ -168,7 +149,6 @@ class HomeViewController: UIViewController {
     }
     
     private lazy var bannerImageView:UIView = {
-
         let imageView = UIImageView()
         if let safeImg = UIImage(named: "BannerSkeleton"){
             imageView.image = safeImg
@@ -176,7 +156,6 @@ class HomeViewController: UIViewController {
 			imageView.backgroundColor = .black
 		}
         imageView.contentMode = .scaleAspectFill
-//        imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.clipsToBounds = true
         imageView.layer.cornerRadius = 16
         

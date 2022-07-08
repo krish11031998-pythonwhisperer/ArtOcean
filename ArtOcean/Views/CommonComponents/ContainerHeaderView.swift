@@ -77,7 +77,8 @@ class ContainerHeaderView: UIView{
         }
 		addSubview(stack)
 		setContraintsToChild(stack, edgeInsets: .init(top: 12, left: 16, bottom: -12, right: -16))
-		heightAnchor.constraint(equalToConstant: 48).isActive = true
+
+		
     }
     
 

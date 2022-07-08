@@ -34,7 +34,7 @@ class NFTChartViewCell:ConfigurableCell{
 		chartView = NFTChartView()
 		chartView?.updateUI(model.prices)
 		chartView?.delegate = model.delegate
-		
+		backgroundColor = .clear
 		contentView.subviews.forEach { $0.removeFromSuperview() }
 		contentView.addSubview(chartView!)
 		contentView.setContraintsToChild(chartView!, edgeInsets: .init(top: 0, left: 16, bottom: 0, right: -16))

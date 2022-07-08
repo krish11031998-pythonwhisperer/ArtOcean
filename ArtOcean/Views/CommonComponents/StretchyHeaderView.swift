@@ -19,8 +19,8 @@ class StreachyHeaderView:UIView{
         self.height = height
         self.innerView = innerView
         self.innerView.clipsToBounds = true
-        super.init(frame: .zero)
-        self.translatesAutoresizingMaskIntoConstraints = false
+		super.init(frame: .init(origin: .zero, size: .init(width: UIScreen.main.bounds.width, height: height)))
+		autoresizingMask = [.flexibleWidth,.flexibleHeight]
         self.addSubview(innerView)
         self.layer.addSublayer(self.gradient)
         self.setupLayout()
@@ -58,8 +58,10 @@ class StreachyHeaderView:UIView{
 		let y_offset = scrollView.contentOffset.y
 
         if y_offset < 0{
-            self.viewTopConstraint?.constant = y_offset - 10
-            self.viewHeightConstraint?.constant = max(self.height - y_offset,height)
+            self.viewTopConstraint?.constant = 0
+			let computedHeight = max(self.height - y_offset,height)
+            self.viewHeightConstraint?.constant = computedHeight
+//			layer.sublayers?.first(where: {$0 as? CAGradientLayer != nil}).
         }
         
     }

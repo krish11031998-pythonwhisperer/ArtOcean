@@ -212,3 +212,20 @@ extension UIImage {
         
     }
 }
+
+extension UIImageView {
+	public func updateImageView(url:String?){
+		guard let safeURL = url else {return}
+		ImageDownloader.shared.fetchImage(urlStr: safeURL) {result in
+			switch result{
+			case .success(let image):
+				DispatchQueue.main.async { [weak self] in
+					self?.image = image
+				}
+			case .failure(let err):
+				print("(Error) err : ",err.localizedDescription)
+				
+			}
+		}
+	}
+}

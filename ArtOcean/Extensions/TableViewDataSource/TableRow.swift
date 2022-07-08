@@ -56,6 +56,7 @@ class TableRow<Cell: ConfigurableCell>:CellProvider{
 	
 	func tableView(_ tableView: UITableView, updateRowAt indexPath: IndexPath) {
 		let cell = tableView.dequeueCell() as? Cell
+		cell?.backgroundColor = .white
 		cell?.configureCell(with: model)
 	}
 	

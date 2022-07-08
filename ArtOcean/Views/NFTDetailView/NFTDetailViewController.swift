@@ -10,19 +10,54 @@ import UIKit
 
 class NFTDetailArtViewController:UIViewController{
     
+// MARK: - Properties
+	
 	private var observer:NSKeyValueObservation?
     private var nftArt:NFTModel?
     private var placeBidModalLeadingAnchor:NSLayoutConstraint? = nil
     private var leadingOffScreen:CGFloat = 1000
     private let leadingOnScreen:CGFloat = 24
     private var imageScale:CGFloat = 1
-    private var imageViewHeightAnchor:NSLayoutConstraint? = nil
-    private var imageViewWidthAnchor:NSLayoutConstraint? = nil
+	private let headerHeight:CGFloat = 460
     private var prices:[Double]? = []
 	private var offers:NFTArtOffers = .init(repeating: .init(name: "John Doe", percent: "5.93", price: 12.03, time: 5), count: 5)
 	private var tableView:UITableView?
 	private var tableHeaderView:UIView?
     
+	private lazy var placeBidButton:Container = {
+		let button = CustomLabelButton(title: "Place a Bid", color: .white, backgroundColor: .appBlueColor)
+		let container = Container(innerView: button, innerViewSize: .init(width: .zero, height: 52))
+		button.delegate = self
+		return container
+	}()
+
+	private var heroHeaderView:NFTHeroHeaderView?
+	
+	private lazy var artInteractiveInfoView:NFTArtInteractiveInfoView = .init(nft: self.nftArt ?? .init(contract: nil, id: nil, balance: nil, title: nil, description: nil, metadata: nil))
+	
+	private var imageView:CustomImageView = CustomImageView(cornerRadius: 16)
+	
+	private let creatorImage:CustomImageView = {
+		let imageView = CustomImageView(cornerRadius: 16)
+		imageView.image = .init(named: "profileImage")
+		imageView.backgroundColor = .black
+		return imageView
+	}()
+	
+	private lazy var placeBidModal:NFTBiddingModal = {
+		let view = NFTBiddingModal {
+			self.closeModal()
+		}
+		return view
+	}()
+	
+
+	private lazy var biddingController:Container = {
+		let container:Container = .init(innerView: NFTBiddingController(), innerViewSize: .init(width:.zero,height: 82))
+		return container
+	}()
+	
+// MARK: -  Constructors
     init(nftArt:NFTModel) {
         self.nftArt = nftArt
         super.init(nibName: nil, bundle: nil)
@@ -32,14 +67,7 @@ class NFTDetailArtViewController:UIViewController{
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        guard let nftArt = nftArt else {
-            return
-        }
-
-        self.heroHeaderView = NFTHeroHeaderView(nft: nftArt,height: 200 + UIScreen.main.bounds.height * 0.175, handler: {
-            self.navigationController?.popViewController(animated: true)
-        })
-        
+		buildHeroHeaderView()
 		buildTable()
     }
     
@@ -96,18 +124,14 @@ class NFTDetailArtViewController:UIViewController{
     
     //MARK: - Views
     
-    private lazy var placeBidButton:Container = {
-        let button = CustomLabelButton(title: "Place a Bid", color: .white, backgroundColor: .appBlueColor)
-        let container = Container(innerView: button, innerViewSize: .init(width: .zero, height: 52))
-        button.delegate = self
-        return container
-    }()
-
-    private var heroHeaderView:NFTHeroHeaderView?
-    
-    private lazy var artInteractiveInfoView:NFTArtInteractiveInfoView = .init(nft: self.nftArt ?? .init(contract: nil, id: nil, balance: nil, title: nil, description: nil, metadata: nil))
-    
-    private var imageView:CustomImageView = CustomImageView(cornerRadius: 16)
+	private func buildHeroHeaderView(){
+		guard let safeNFTArt = nftArt else { return }
+		heroHeaderView = .init(nft: safeNFTArt, height: headerHeight, handler: { [weak self] in
+			self?.navigationController?.popViewController(animated: true)
+		})
+		view.addSubview(heroHeaderView!)
+	}
+	
         
 //    private var creatorLabel:UILabel = {
 //        return CustomLabel(text: "Pablo", size: 14, weight: .bold, color: .appBlueColor, numOfLines: 1,adjustFontSize: false)
@@ -121,12 +145,7 @@ class NFTDetailArtViewController:UIViewController{
 //
 //    }()
     
-    private let creatorImage:CustomImageView = {
-        let imageView = CustomImageView(cornerRadius: 16)
-        imageView.image = .init(named: "profileImage")
-        imageView.backgroundColor = .black
-        return imageView
-    }()
+    
     
 //    private lazy var artInfoSnippet:UIStackView = {
 //        let stack = UIStackView()
@@ -147,18 +166,7 @@ class NFTDetailArtViewController:UIViewController{
 //
 //    }()
     
-    private lazy var placeBidModal:NFTBiddingModal = {
-        let view = NFTBiddingModal {
-            self.closeModal()
-        }
-        return view
-    }()
-    
-
-    private lazy var biddingController:Container = {
-        let container:Container = .init(innerView: NFTBiddingController(), innerViewSize: .init(width:.zero,height: 82))
-        return container
-    }()
+   
 	
 	func buildTable(){
 		tableView = UITableView(frame: .zero, style: .grouped)
@@ -208,20 +216,9 @@ class NFTDetailArtViewController:UIViewController{
 	}()
 	
 	func buildTableHeaderView(){
-		tableHeaderView = UIView(frame: .init(origin: .zero, size: .init(width: UIScreen.main.bounds.width, height: 325)))
-		buildImage()
-	}
-	
-	func buildImage(){
-		guard let safeHeaderView = tableHeaderView,let nftArt = nftArt, let image = nftArt.metadata?.image else { return }
-		backgroundimgView.updateImageView(url: image)
-		safeHeaderView.addSubview(backgroundimgView)
-		safeHeaderView.setContraintsToChild(backgroundimgView,edgeInsets: .zero)
-		
-		
-//		safeHederView.addSubview(imgView)
-//		tableHeaderView?.setContraintsToChild(imgView, edgeInsets: .init(top: 24, left: 24, bottom: -24, right: -24))
-//		imgView.updateImageView(url: image)
+		tableHeaderView = UIView(frame: .init(origin: .zero, size: .init(width: UIScreen.main.bounds.width, height: headerHeight)))
+		tableHeaderView?.backgroundColor = .clear
+//		buildImage()
 	}
     
     //MARK: - View Setups
@@ -276,11 +273,23 @@ extension NFTDetailArtViewController:CustomButtonDelegate{
 extension NFTDetailArtViewController{
     
     func updateOnScroll(_ scrollView: UIScrollView) {
-//		let height:CGFloat = heroHeaderView?.animateHeaderView(scrollView) ?? .zero
-//		animateheroHeaderView(scrollView,300)
-        self.navigationController?.navigationBar.transform = .init(translationX: 0, y: min(scrollView.contentOffset.y - 100,0))
-        
+		self.navigationController?.navigationBar.transform = .init(translationX: 0, y: min(scrollView.contentOffset.y - headerHeight * 0.75,0))
+		heroHeaderView?.animateHeaderView(scrollView)
+		
     }
+	
+	func animateImgView(_ scrollView:UIScrollView){
+		let point = imgView.convert(scrollView.frame.origin, to: nil).y * imageScale
+		let maxPoint = self.imgView.frame.minY
+		let minPoint = -self.imgView.frame.height * 0.25
+		let scaleFactor =  (point - minPoint)/(maxPoint - minPoint)
+		self.imageScale = scaleFactor > 1 ? 1 : scaleFactor < 0.75 ? 0.75 : scaleFactor
+		
+		UIViewPropertyAnimator(duration: 0.35, curve: .easeInOut) {
+			self.imgView.transform = .init(scaleX: self.imageScale, y: self.imageScale)
+		}.startAnimation()
+
+	}
 }
 
 
