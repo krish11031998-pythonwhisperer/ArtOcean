@@ -17,7 +17,14 @@ class CustomButton:UIView{
     static var minusButton:CustomButton = .init(frame: .init(origin: .zero, size: .init(width: 28, height: 28)),name: "minus",autolayout: true)
     static var ethButton:CustomButton = .init(frame: .init(origin: .zero, size: .init(width: 28, height: 28)),name: "eth",autolayout: true)
     
-    init(frame:CGRect = .init(origin: .zero, size: .init(width:30,height:30)),cornerRadius:CGFloat = 15,systemName:String? = nil,name:String? = nil,handler:(() -> Void)? = nil,autolayout:Bool = false){
+    init(
+		frame:CGRect = .init(origin: .zero, size: .init(width:30,height:30)),
+		cornerRadius:CGFloat = 15,
+		systemName:String? = nil,
+		name:String? = nil,
+		handler:(() -> Void)? = nil,
+		autolayout:Bool = false
+	){
         
         self.handler = handler
         
@@ -31,11 +38,9 @@ class CustomButton:UIView{
         self.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handlerSelector)))
     
         self.translatesAutoresizingMaskIntoConstraints = !autolayout
-        
-//        if autolayout{
-            buttonView.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
-            buttonView.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
-//        }
+	
+		buttonView.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
+		buttonView.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
     }
     
     required init?(coder: NSCoder) {
@@ -69,6 +74,7 @@ class CustomButton:UIView{
     }
     
     @objc func handlerSelector(){
+		print("(DEBUG) Clicked on the button")
         self.handler?()
     }
     

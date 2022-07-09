@@ -218,7 +218,16 @@ class NFTDetailArtViewController:UIViewController{
 	func buildTableHeaderView(){
 		tableHeaderView = UIView(frame: .init(origin: .zero, size: .init(width: UIScreen.main.bounds.width, height: headerHeight)))
 		tableHeaderView?.backgroundColor = .clear
-//		buildImage()
+		let backButton = CustomButton.backButton
+		backButton.handler = { [weak self] in
+			self?.navigationController?.popViewController(animated: true)
+		}
+		tableHeaderView?.addSubview(backButton)
+		backButton.translatesAutoresizingMaskIntoConstraints = false
+		NSLayoutConstraint.activate([
+			backButton.leadingAnchor.constraint(equalToSystemSpacingAfter: tableHeaderView!.leadingAnchor, multiplier: 2),
+			backButton.topAnchor.constraint(equalToSystemSpacingBelow: tableHeaderView!.topAnchor, multiplier: 7)
+		])
 	}
     
     //MARK: - View Setups
@@ -275,21 +284,7 @@ extension NFTDetailArtViewController{
     func updateOnScroll(_ scrollView: UIScrollView) {
 		self.navigationController?.navigationBar.transform = .init(translationX: 0, y: min(scrollView.contentOffset.y - headerHeight * 0.75,0))
 		heroHeaderView?.animateHeaderView(scrollView)
-		
     }
-	
-	func animateImgView(_ scrollView:UIScrollView){
-		let point = imgView.convert(scrollView.frame.origin, to: nil).y * imageScale
-		let maxPoint = self.imgView.frame.minY
-		let minPoint = -self.imgView.frame.height * 0.25
-		let scaleFactor =  (point - minPoint)/(maxPoint - minPoint)
-		self.imageScale = scaleFactor > 1 ? 1 : scaleFactor < 0.75 ? 0.75 : scaleFactor
-		
-		UIViewPropertyAnimator(duration: 0.35, curve: .easeInOut) {
-			self.imgView.transform = .init(scaleX: self.imageScale, y: self.imageScale)
-		}.startAnimation()
-
-	}
 }
 
 
