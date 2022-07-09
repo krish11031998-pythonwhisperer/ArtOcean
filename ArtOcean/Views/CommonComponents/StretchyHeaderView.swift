@@ -15,15 +15,15 @@ class StreachyHeaderView:UIView{
     private var height:CGFloat
     private let innerView:UIView
     
-    init(height:CGFloat,innerView:UIView){
+	init(width:CGFloat = UIScreen.main.bounds.width,height:CGFloat,innerView:UIView){
         self.height = height
         self.innerView = innerView
         self.innerView.clipsToBounds = true
-		super.init(frame: .init(origin: .zero, size: .init(width: UIScreen.main.bounds.width, height: height)))
+		super.init(frame: .init(origin: .zero, size: .init(width: width, height: height)))
 		autoresizingMask = [.flexibleWidth,.flexibleHeight]
-        self.addSubview(innerView)
-        self.layer.addSublayer(self.gradient)
-        self.setupLayout()
+        addSubview(innerView)
+        layer.addSublayer(gradient)
+        setupLayout()
     }
     
     required init?(coder: NSCoder) {
@@ -33,7 +33,7 @@ class StreachyHeaderView:UIView{
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        self.gradient.frame = self.frame
+        gradient.frame = frame
     }
     private var gradient:CAGradientLayer = {
        let gradient = CAGradientLayer()
@@ -42,27 +42,25 @@ class StreachyHeaderView:UIView{
     }()
     
     func setupLayout(){
-        self.innerView.leadingAnchor.constraint(equalTo: self.leadingAnchor).isActive = true
-        self.viewTopConstraint = self.innerView.topAnchor.constraint(equalTo: self.topAnchor)
-        self.viewTopConstraint?.isActive = true
-        self.innerView.trailingAnchor.constraint(equalTo: self.trailingAnchor).isActive = true
-        self.viewHeightConstraint =  self.innerView.heightAnchor.constraint(equalToConstant: height)
-        self.viewHeightConstraint?.isActive = true
-    
+        innerView.leadingAnchor.constraint(equalTo: self.leadingAnchor).isActive = true
+        viewTopConstraint = innerView.topAnchor.constraint(equalTo: self.topAnchor)
+        viewTopConstraint?.isActive = true
+        innerView.trailingAnchor.constraint(equalTo: self.trailingAnchor).isActive = true
+        viewHeightConstraint =  innerView.heightAnchor.constraint(equalToConstant: height)
+        viewHeightConstraint?.isActive = true
     }
     
     
     //MARK: - StretchOnScroll
     
-    public func StretchOnScroll(_ scrollView:UIScrollView){
+    public func StretchOnScroll(_ scrollView:UIScrollView) -> CGFloat {
 		let y_offset = scrollView.contentOffset.y
 
         if y_offset < 0{
-            self.viewTopConstraint?.constant = 0
-			let computedHeight = max(self.height - y_offset,height)
-            self.viewHeightConstraint?.constant = computedHeight
-//			layer.sublayers?.first(where: {$0 as? CAGradientLayer != nil}).
+			let computedHeight = max(height - y_offset,height)
+            viewHeightConstraint?.constant = computedHeight
+			return computedHeight
         }
-        
+        return height
     }
 }

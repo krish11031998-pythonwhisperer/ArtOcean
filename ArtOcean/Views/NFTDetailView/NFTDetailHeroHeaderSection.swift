@@ -14,7 +14,11 @@ class NFTHeroHeaderView:UIView{
     private var onCloseHandler:(() -> Void)
     private var height:CGFloat
     private var imageScale:CGFloat = 1
+	private let originalImageWidth:CGFloat = UIScreen.main.bounds.width - 40
 	public let originalImageHeight:CGFloat = UIScreen.main.bounds.height * 0.35
+	private var imageWidthConstraint:NSLayoutConstraint? = nil
+	private var imageHeightConstraint:NSLayoutConstraint? = nil
+	private var heroHeaderHeightConstraint:NSLayoutConstraint? = nil
 	private var nftArt:NFTModel
     
     //MARK: - Views
@@ -24,7 +28,7 @@ class NFTHeroHeaderView:UIView{
         return imageView
     }()
     
-    private lazy var heroHeaderView:StreachyHeaderView = StreachyHeaderView(height: height - 132, innerView: backgroundImageView)
+	private lazy var heroHeaderView:StreachyHeaderView = StreachyHeaderView(height: height - originalImageHeight * 0.5, innerView: backgroundImageView)
     
     private lazy var imageView:CustomImageView = .init(cornerRadius: 16)
     
@@ -62,12 +66,11 @@ class NFTHeroHeaderView:UIView{
     }
     
     func animateHeaderView(_ scrollView:UIScrollView) ->  CGFloat{
-		heroHeaderView.StretchOnScroll(scrollView)
+		let h = heroHeaderView.StretchOnScroll(scrollView)
+		UIViewPropertyAnimator(duration: 0.35, curve: .easeInOut) {
+			self.heroHeaderHeightConstraint?.constant = h
+		}.startAnimation()
         return animateImageView(scrollView)
-    }
-    
-    public func headerViewScrolled(_ scrollView:UIScrollView){
-		heroHeaderView.StretchOnScroll(scrollView)
     }
 	
     public func animateImageView(_ scrollView:UIScrollView) -> CGFloat{
@@ -76,14 +79,12 @@ class NFTHeroHeaderView:UIView{
         let maxPoint = totalHeight
 		let minPoint = totalHeight * 0.5
 		let scaleFactor =  -(point - minPoint)/(maxPoint - minPoint)
-		self.imageScale = scaleFactor > 1 ? 1 : scaleFactor < 0 ? 0 : scaleFactor
-		
-		UIViewPropertyAnimator(duration: 0.35, curve: .easeInOut) { [weak self] in
-			let scale = self?.imageScale ?? 0
-			self?.imageView.transform = .init(scaleX: scale, y: scale)
-			self?.heroHeaderView.alpha = scale
-			self?.imageView.layoutIfNeeded()
-			scrollView.layoutIfNeeded()
+		imageScale = scaleFactor > 1 ? 1 : scaleFactor < 0 ? 0 : scaleFactor
+		UIViewPropertyAnimator(duration: 0.35, curve: .easeInOut) {
+			let scale = self.imageScale
+			self.imageWidthConstraint?.constant = scale * self.originalImageWidth
+			self.imageHeightConstraint?.constant = scale * self.originalImageHeight
+			self.heroHeaderView.alpha = scale
 		}.startAnimation()
 
 		
@@ -94,19 +95,22 @@ class NFTHeroHeaderView:UIView{
         NSLayoutConstraint.activate([
 			heroHeaderView.topAnchor.constraint(equalTo: topAnchor),
 			heroHeaderView.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width),
-			heroHeaderView.heightAnchor.constraint(equalToConstant: height - 132),
+			
             leftButton.leadingAnchor.constraint(equalToSystemSpacingAfter: self.leadingAnchor, multiplier: 3),
             leftButton.topAnchor.constraint(equalToSystemSpacingBelow: self.topAnchor, multiplier: 5),
+			
             imageView.centerXAnchor.constraint(equalTo: centerXAnchor),
-			imageView.topAnchor.constraint(equalTo: heroHeaderView.topAnchor,constant: 132),
-//			imageView.centerYAnchor.constraint(equalTo: heroHeaderView.bottomAnchor),
-			imageView.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width - 50),
-			imageView.heightAnchor.constraint(equalToConstant: originalImageHeight)
+			imageView.centerYAnchor.constraint(equalTo: heroHeaderView.bottomAnchor)
         ])
+		
+		heroHeaderHeightConstraint = heroHeaderView.heightAnchor.constraint(equalToConstant: height - 132)
+		heroHeaderHeightConstraint?.isActive = true
+		
+		imageWidthConstraint = imageView.widthAnchor.constraint(equalToConstant: originalImageWidth)
+		imageWidthConstraint?.isActive = true
+		imageHeightConstraint = imageView.heightAnchor.constraint(equalToConstant: originalImageHeight)
+		imageHeightConstraint?.isActive = true
     }
 	    
-//    override var intrinsicContentSize: CGSize{
-//		return .init(width: UIScreen.main.bounds.width, height: height + originalImageHeight * 0.5)
-//    }
     
 }
