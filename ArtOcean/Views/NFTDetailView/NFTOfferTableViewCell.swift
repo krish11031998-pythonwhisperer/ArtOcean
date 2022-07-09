@@ -93,13 +93,13 @@ class NFTOfferTableViewCell:ConfigurableCell{
 //MARK: -  DateHandler
 extension NFTOfferTableViewCell{
     
-    public func updateCell(offer:NFTArtOffer){
-        DispatchQueue.main.async {
-            self.expirationLabel.text = "Expiration in \(offer.time ?? 0) days"
-            self.nameLabel.text = offer.name ?? "No Name"
-            self.priceLabel.text = "\(offer.price ?? 0)"
-            self.percentLabel.text = offer.percent ?? "0"
-            self.initialLabel.text = (offer.name ?? "No Name").split(separator: " ").compactMap({$0.first}).reduce("", {$0.isEmpty ? String($1) : $0 + String($1)})
-        }
-    }
+	public func updateCell(offer:NFTArtOffer){
+		backgroundColor = .clear
+		selectionStyle = .none
+		expirationLabel.text = "Expiration in \(offer.time ?? 0) days"
+		nameLabel.text = offer.name ?? "No Name"
+		priceLabel.text = "\(offer.price ?? 0)"
+		percentLabel.text = offer.percent ?? "0"
+		initialLabel.text = (offer.name ?? "No Name").split(separator: " ").compactMap({$0.first}).reduce("", {$0.isEmpty ? String($1) : $0 + String($1)})
+	}
 }
