@@ -32,16 +32,22 @@ class NFTHeroHeaderView:UIView{
     
     private lazy var imageView:CustomImageView = .init(cornerRadius: 16)
     
-
-    
+	private lazy var backButton:CustomButton = {
+		let button = CustomButton.backButton
+		button.translatesAutoresizingMaskIntoConstraints = false
+		return button
+	}()
+//
     //MARK: - View LifeCycle and Init
     
     init(nft:NFTModel,height:CGFloat,handler:@escaping (() -> Void)){
-        self.height = height
+		self.height = height
 		nftArt = nft
 		super.init(frame:.init(origin: .zero, size: .init(width: UIScreen.main.bounds.width, height: height)))
-        self.setupViews()
-        self.setupLayout()
+		backButton.handler = handler
+        setupViews()
+        setupLayout()
+		isUserInteractionEnabled = true
     }
     
     required init?(coder: NSCoder) {
@@ -51,6 +57,7 @@ class NFTHeroHeaderView:UIView{
     
     private func setupViews(){
 		addSubview(backdropImage)
+		addSubview(backButton)
 		addSubview(imageView)
 		imageView.updateImageView(url: nftArt.metadata?.image)
     }
@@ -111,7 +118,9 @@ class NFTHeroHeaderView:UIView{
         NSLayoutConstraint.activate([
             imageView.centerXAnchor.constraint(equalTo: centerXAnchor),
 			imageView.heightAnchor.constraint(equalToConstant: originalImageHeight),
-			imageView.widthAnchor.constraint(equalToConstant: originalImageWidth)
+			imageView.widthAnchor.constraint(equalToConstant: originalImageWidth),
+			backButton.topAnchor.constraint(equalToSystemSpacingBelow: topAnchor, multiplier: 7),
+			backButton.leadingAnchor.constraint(equalToSystemSpacingAfter: leadingAnchor, multiplier: 2)
         ])
 		
 		topAnchorPaddingConstraint = imageView.topAnchor.constraint(equalTo: topAnchor,constant: 132)

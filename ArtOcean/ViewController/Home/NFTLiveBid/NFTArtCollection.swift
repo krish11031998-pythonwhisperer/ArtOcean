@@ -60,7 +60,7 @@ class NFTArtCollection: UICollectionView {
     public var collectionDelegate: NFTLiveBidCollectionDelegate?
     
     
-    public static let smallCard:CGSize = .init(width: 176, height: 154)
+    public static let smallCard:CGSize = .init(width: 154, height: 176)
     public static let largeCard:CGSize = .init(width: 225, height: 245)
     private var cellId:String = ""
     
@@ -112,38 +112,6 @@ class NFTArtCollection: UICollectionView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    
-//    func fetchNFTs(){
-//        AlchemyAPI.shared.getNFTs(address: "0x8742fa292AFfB6e5eA88168539217f2e132294f9") { [weak self] result in
-//            switch result{
-//            case .success(let nfts):
-//                let filterNFTS = nfts.compactMap({$0.metadata?.image?.contains("https") ?? false ? $0 : nil})
-//                self?.nfts = (filterNFTS.count > 10 ? Array(filterNFTS[0...9]) : filterNFTS)
-//                print("(DEBUG) Got Data Successffuly !")
-//                DispatchQueue.main.async {
-//                    self?.reloadData()
-//                }
-//            case .failure(let err):
-//                print("(error) err : ",err.localizedDescription)
-//            }
-//        }
-//    }
-//
-//    func fetchNFTsFromFile(){
-//        AlchemyAPI.shared.getNftsFromFile(fileName: "nft") { [weak self] result in
-//            switch result{
-//            case .success(let nfts):
-//                let filterNFTS = nfts.compactMap({$0.metadata?.image?.contains("https") ?? false ? $0 : nil})
-//                self?.nfts = (filterNFTS.count > 5 ? Array(filterNFTS[0...4]) : filterNFTS)
-//                print("(DEBUG) Got Data Successffuly !")
-//                DispatchQueue.main.async {
-//                    self?.reloadData()
-//                }
-//            case .failure(let err):
-//                print("(error) err : ",err.localizedDescription)
-//            }
-//        }
-//    }
     
 	public func updateCollection(_ nfts:[NFTModel]){
 		self.nfts = nfts

@@ -8,15 +8,17 @@
 import Foundation
 import UIKit
 
-class NFTAttributeCell:ConfigurableCell{
+class NFTAttributeCell:UIView{
 	
 	private var trait_type:UILabel?
 	private var value_label:UILabel?
 	
 	
-	override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-		super.init(style: style, reuseIdentifier: reuseIdentifier)
+//	override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+	init(attribute:Attribute) {
+		super.init(frame: .zero)
 		setupContentCell()
+		configureCell(with: attribute)
 	}
 	
 	required init?(coder: NSCoder) {
@@ -25,8 +27,7 @@ class NFTAttributeCell:ConfigurableCell{
 	
 	func setupContentCell(){
 		let view = innerCardBuilder()
-		addSubview(view)
-		setContraintsToChild(view, edgeInsets: .init(top: 8, left: 24, bottom: -8, right: -24))
+		addViewAndSetConstraints(view, edgeInsets: .init(vertical: 8, horizontal: 16))
 		backgroundColor = .clear
 	}
 	

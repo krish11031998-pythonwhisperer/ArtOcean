@@ -29,7 +29,8 @@
 		EF3B4D4F286F806800DD57DB /* TableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF3B4D4C286F806800DD57DB /* TableView.swift */; };
 		EF3B4D51287073E400DD57DB /* NFTArtIntroductionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF3B4D50287073E400DD57DB /* NFTArtIntroductionView.swift */; };
 		EF3BF928287813E80070CAE5 /* UIEdgeInsets.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF3BF927287813E80070CAE5 /* UIEdgeInsets.swift */; };
-		EF480E0F285F85D400FC0F3F /* NFTAttributeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF480E0E285F85D400FC0F3F /* NFTAttributeView.swift */; };
+		EF3BF92A287AB3D10070CAE5 /* NFTAttributeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF3BF929287AB3D10070CAE5 /* NFTAttributeView.swift */; };
+		EF480E0F285F85D400FC0F3F /* NFTAttributeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF480E0E285F85D400FC0F3F /* NFTAttributeCell.swift */; };
 		EF527441284AC53A008C77EC /* SDWebImage in Frameworks */ = {isa = PBXBuildFile; productRef = EF527440284AC53A008C77EC /* SDWebImage */; };
 		EF527443284AC53A008C77EC /* SDWebImageMapKit in Frameworks */ = {isa = PBXBuildFile; productRef = EF527442284AC53A008C77EC /* SDWebImageMapKit */; };
 		EF527492284BA4BD008C77EC /* SectionbasedData.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF527491284BA4BD008C77EC /* SectionbasedData.swift */; };
@@ -183,7 +184,8 @@
 		EF3B4D4C286F806800DD57DB /* TableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableView.swift; sourceTree = "<group>"; };
 		EF3B4D50287073E400DD57DB /* NFTArtIntroductionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NFTArtIntroductionView.swift; sourceTree = "<group>"; };
 		EF3BF927287813E80070CAE5 /* UIEdgeInsets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIEdgeInsets.swift; sourceTree = "<group>"; };
-		EF480E0E285F85D400FC0F3F /* NFTAttributeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NFTAttributeView.swift; sourceTree = "<group>"; };
+		EF3BF929287AB3D10070CAE5 /* NFTAttributeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NFTAttributeView.swift; sourceTree = "<group>"; };
+		EF480E0E285F85D400FC0F3F /* NFTAttributeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NFTAttributeCell.swift; sourceTree = "<group>"; };
 		EF527491284BA4BD008C77EC /* SectionbasedData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionbasedData.swift; sourceTree = "<group>"; };
 		EF527493284BECF4008C77EC /* Bundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bundle.swift; sourceTree = "<group>"; };
 		EF527495284C0608008C77EC /* CustomComplexCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomComplexCollectionView.swift; sourceTree = "<group>"; };
@@ -605,9 +607,10 @@
 				EF00F5B82845088F003D8683 /* NFTBidController.swift */,
 				EF00F5CD2846D2AB003D8683 /* NFTDetailHeroHeaderSection.swift */,
 				EF00F5D12846D781003D8683 /* NFTArtInteractiveInfoView.swift */,
-				EF480E0E285F85D400FC0F3F /* NFTAttributeView.swift */,
+				EF480E0E285F85D400FC0F3F /* NFTAttributeCell.swift */,
 				EFAB446028671EB600B33864 /* NFTPriceHistoryChartView.swift */,
 				EF3B4D50287073E400DD57DB /* NFTArtIntroductionView.swift */,
+				EF3BF929287AB3D10070CAE5 /* NFTAttributeView.swift */,
 			);
 			path = NFTDetailView;
 			sourceTree = "<group>";
@@ -814,6 +817,7 @@
 				EF3B4D4E286F806800DD57DB /* TableSection.swift in Sources */,
 				EF8B0677283C20820050E726 /* UIImageView.swift in Sources */,
 				EFD13C232844196F000E422E /* NFTLiveBidCollectionProtocol.swift in Sources */,
+				EF3BF92A287AB3D10070CAE5 /* NFTAttributeView.swift in Sources */,
 				EF8B066E283BF0F10050E726 /* StatisticsViewController.swift in Sources */,
 				EF22D0CD285A714F00555179 /* CustomTableViewCell.swift in Sources */,
 				EF3B4D4D286F806800DD57DB /* TableRow.swift in Sources */,
@@ -829,7 +833,7 @@
 				EF7447B6284A0F9F00899476 /* UICollectionView.swift in Sources */,
 				EF527492284BA4BD008C77EC /* SectionbasedData.swift in Sources */,
 				EF00F5CE2846D2AB003D8683 /* NFTDetailHeroHeaderSection.swift in Sources */,
-				EF480E0F285F85D400FC0F3F /* NFTAttributeView.swift in Sources */,
+				EF480E0F285F85D400FC0F3F /* NFTAttributeCell.swift in Sources */,
 				EF8B06D5283E3A4B0050E726 /* LiveBidDetailView.swift in Sources */,
 				EF8B066C283BF0E70050E726 /* ProfileViewController.swift in Sources */,
 				EFAB445C28639EEE00B33864 /* Array.swift in Sources */,

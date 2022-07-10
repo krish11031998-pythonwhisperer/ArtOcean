@@ -67,8 +67,8 @@ class NFTDetailArtViewController:UIViewController{
     
     override func viewDidLoad() {
         super.viewDidLoad()
-		buildHeroHeaderView()
 		buildTable()
+		buildHeroHeaderView()
     }
     
 	override func viewDidLayoutSubviews() {
@@ -176,7 +176,6 @@ class NFTDetailArtViewController:UIViewController{
 		view.setContraintsToChild(tableView!, edgeInsets: .init(top: 0, left: 0, bottom: -40, right: 0))
 		tableView?.separatorStyle = .none
 		buildTableHeaderView()
-		tableView?.tableHeaderView = tableHeaderView
 		tableView?.contentInsetAdjustmentBehavior = .never
 		tableView?.reload(with: buildDataSource())
 	}
@@ -197,7 +196,7 @@ class NFTDetailArtViewController:UIViewController{
 	
 	private var attributeSection:TableSection? {
 		guard let attributes = nftArt?.metadata?.Attributes, !attributes.isEmpty else { return nil }
-		return .init(title: "Attributes", rows: attributes.compactMap{ TableRow<NFTAttributeCell>($0) })
+		return .init(title: "Attributes", rows: [TableRow<NFTAttributeView>(attributes.compactMap { $0 })])
 	}
 	
 	private var offerSection:TableSection? {
@@ -218,16 +217,7 @@ class NFTDetailArtViewController:UIViewController{
 	func buildTableHeaderView(){
 		tableHeaderView = UIView(frame: .init(origin: .zero, size: .init(width: UIScreen.main.bounds.width, height: headerHeight)))
 		tableHeaderView?.backgroundColor = .clear
-		let backButton = CustomButton.backButton
-		backButton.handler = { [weak self] in
-			self?.navigationController?.popViewController(animated: true)
-		}
-		tableHeaderView?.addSubview(backButton)
-		backButton.translatesAutoresizingMaskIntoConstraints = false
-		NSLayoutConstraint.activate([
-			backButton.leadingAnchor.constraint(equalToSystemSpacingAfter: tableHeaderView!.leadingAnchor, multiplier: 2),
-			backButton.topAnchor.constraint(equalToSystemSpacingBelow: tableHeaderView!.topAnchor, multiplier: 7)
-		])
+		tableView?.tableHeaderView = tableHeaderView
 	}
     
     //MARK: - View Setups
@@ -283,7 +273,7 @@ extension NFTDetailArtViewController{
     
     func updateOnScroll(_ scrollView: UIScrollView) {
 		self.navigationController?.navigationBar.transform = .init(translationX: 0, y: min(scrollView.contentOffset.y - headerHeight * 0.75,0))
-		heroHeaderView?.animateHeaderView(scrollView)
+		let _ = heroHeaderView?.animateHeaderView(scrollView)
     }
 }
 
