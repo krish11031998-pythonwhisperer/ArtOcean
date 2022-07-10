@@ -28,118 +28,64 @@ class NFTLiveBidCellView:UIView{
     private let loveButton:CustomButton = CustomButton(name: "heart", handler: nil, autolayout: true)
     
     private lazy var artPriceAndTitleStack:UIStackView = {
-        let view:UIStackView = UIStackView()
+		let view:UIStackView = UIStackView(arrangedSubviews: [title,.spacer(),price])
         view.axis = .horizontal
         view.spacing = 5
-        view.translatesAutoresizingMaskIntoConstraints = false
         view.alignment = .top
-        view.addArrangedSubview(self.title)
-        view.addArrangedSubview(self.price)
-        
-        title.setContentHuggingPriority(.init(249), for: .horizontal)
-        title.setContentCompressionResistancePriority(.init(749), for: .horizontal)
-
-        
-        self.price.textAlignment = .right
-
+		price.textAlignment = .right
         return view
     }()
     
-    private lazy var timeLeftLabel:UILabel = {
+    private lazy var timeLeftLabel:UIView = {
         var label = CustomLabel(text: "3h 12m 36s left", size: 12, weight: .medium, color: .appBlueColor, numOfLines: 1)
-        label.layer.cornerRadius = 14.5
-        label.backgroundColor = .appBlueColor.withAlphaComponent(0.15)
-        label.clipsToBounds = true
         label.textAlignment = .center
-        label.frame = label.frame.inset(by: .init(top: 5, left: 7.5, bottom: 5, right: 7.5))
-        return label
+		return label.labelCapsule(color: .appBlueColor.withAlphaComponent(0.15), cornerRadius: 14.5)
     }()
 
-    private lazy var bidButton:CustomLabelButton = {
+    private lazy var bidButton:UIView = {
         var button = CustomLabelButton(title: "Place a bid", color: .white, backgroundColor: .init(hexString: "2281E3",alpha: 1))
-        button.layer.cornerRadius = 14.5
         button.delegate = self
-        return button
+		return button
     }()
     
     private lazy var biddingStack:UIStackView = {
-        let view:UIStackView = UIStackView()
+		let view:UIStackView = UIStackView(arrangedSubviews: [timeLeftLabel,.spacer(),bidButton])
         view.axis = .horizontal
         view.spacing = 8
-        view.translatesAutoresizingMaskIntoConstraints = false
-        
-        let clearSpacerView:UIView = .clearView()
-        view.addArrangedSubview(self.timeLeftLabel)
-        view.addArrangedSubview(self.bidButton)
-        
-        NSLayoutConstraint.activate([
-//            self.timeLeftLabel.widthAnchor.constraint(equalToConstant: 109),
-            self.bidButton.widthAnchor.constraint(equalTo: timeLeftLabel.widthAnchor)
-        ])
-        
         return view
         
     }()
     
     private lazy var NFTInfo:UIStackView = {
-        
-        let view:UIStackView = .init()
-        
+		let view:UIStackView = .init(arrangedSubviews: [owner,artPriceAndTitleStack,biddingStack])
         view.axis = .vertical
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.spacing = 20
-        view.addArrangedSubview(self.owner)
-        view.addArrangedSubview(self.artPriceAndTitleStack)
-        view.addArrangedSubview(self.biddingStack)
-
-        view.setCustomSpacing(4, after: owner)
-        
-        artPriceAndTitleStack.setContentHuggingPriority(.init(249), for: .vertical)
-        artPriceAndTitleStack.setContentHuggingPriority(.init(749), for: .vertical)
-        
-        NSLayoutConstraint.activate([
-            self.biddingStack.heightAnchor.constraint(equalToConstant: 29),
-        ])
-        
+        view.spacing = 4
+        view.setCustomSpacing(12, after: artPriceAndTitleStack)
+		view.isLayoutMarginsRelativeArrangement = true
+		view.layoutMargins = .init(top: 12, left: 12, bottom: 16, right: 12)
+		biddingStack.heightAnchor.constraint(equalToConstant: 29).isActive = true
         return view
-        
     }()
     
     private lazy var card:UIStackView = {
-        let view = UIStackView()
-        view.translatesAutoresizingMaskIntoConstraints = false
+        let view = UIStackView(arrangedSubviews: [imageView,NFTInfo])
         view.axis = .vertical
         view.spacing = 5
-        
-        view.addArrangedSubview(self.imageView)
-        view.addArrangedSubview(self.NFTInfo)
-        
-        NSLayoutConstraint.activate([
-            self.imageView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.6,constant: -5),
-            self.NFTInfo.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.4)
-        ])
-        
+		NFTInfo.heightAnchor.constraint(equalToConstant: 117).isActive = true
         return view
     }()
     
     
     init(nft:NFTModel? = nil,largeCard:Bool = false) {
         super.init(frame: .zero)
-        self.translatesAutoresizingMaskIntoConstraints = false
-        self.addSubview(self.imageView)
-        self.addSubview(self.NFTInfo)
-        self.addSubview(self.loveButton)
-        self.addSubview(self.shareButton)
-        
+		addViewAndSetConstraints(card, edgeInsets: .zero)
         if largeCard{
             self.largeCard = largeCard
             title.font = .init(name: title.font.fontName, size: 18)
             price.font = .init(name: price.font.fontName, size: 14)
         }
-        
         self.backgroundColor = .white
         self.layer.cornerRadius = 16
- 
         if let safeNFT = nft{
             self.updateUIWithNFT(safeNFT)
         }
@@ -152,7 +98,6 @@ class NFTLiveBidCellView:UIView{
     
 	override func layoutSubviews() {
 		super.layoutSubviews()
-		self.setupLayout()
 		if frame.height > 245{
 			self.largeCard = true
 			title.font = .init(name: title.font.fontName, size: 18)

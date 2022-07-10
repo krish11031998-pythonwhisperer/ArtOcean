@@ -26,7 +26,8 @@ class NFTArtCollectionLiveBidViewCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        self.addSubview(self.nftContentViewCell)
+//        self.addSubview(self.nftContentViewCell)
+		addViewAndSetConstraints(nftContentViewCell, edgeInsets: .zero)
         
         self.addShadow()
         
@@ -35,9 +36,9 @@ class NFTArtCollectionLiveBidViewCell: UICollectionViewCell {
         
         self.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.onTapHandler(_:))))
         
-        self.addShadow()
+//        self.addShadow()
         
-        self.setupLayout()
+//        self.setupLayout()
     }
     
     required init?(coder: NSCoder) {
@@ -52,10 +53,10 @@ class NFTArtCollectionLiveBidViewCell: UICollectionViewCell {
     
     func setupLayout(){
 
-        self.nftContentViewCell.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
-        nftContentViewCell.topAnchor.constraint(equalTo: topAnchor).isActive = true
-        nftContentViewCell.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
-        nftContentViewCell.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
+//        self.nftContentViewCell.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
+//        nftContentViewCell.topAnchor.constraint(equalTo: topAnchor).isActive = true
+//        nftContentViewCell.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
+//        nftContentViewCell.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
 
     }
 	

@@ -38,8 +38,7 @@ class NFTArtCollectionViewCell:UICollectionViewCell{
     
     private let likeLabel:UILabel = CustomLabel(text: "30", size: 12, weight: .medium, color: .appGrayColor, numOfLines: 1,adjustFontSize: true)
     
-    private lazy var likeView:UIView = {
-
+	private lazy var likeView:UIView = {
 		let img:CustomImageView = .init(named: "heart", cornerRadius: 0)
 		img.contentMode = .scaleAspectFit
 		img.setFrameConstraints(width: 10, height: 20)

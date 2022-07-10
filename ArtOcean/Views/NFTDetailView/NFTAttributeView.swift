@@ -37,6 +37,8 @@ class NFTAttributeView:ConfigurableCell {
 //MARK: - Exposed Methods
 	
 	func configureCell(with model: [Attribute]) {
+		selectionStyle = .none
+		isUserInteractionEnabled = false
 		if !stackView.arrangedSubviews.isEmpty {
 			stackView.arrangedSubviews.forEach { $0.removeFromSuperview() }
 		}

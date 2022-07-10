@@ -24,9 +24,11 @@ class CustomLabelButton:UIButton{
         self.titleLabel?.textColor = color
         self.titleLabel?.adjustsFontSizeToFitWidth = true
         self.backgroundColor = backgroundColor
-        self.layer.cornerRadius = 16
+		self.layer.cornerRadius = 14.5
         self.translatesAutoresizingMaskIntoConstraints = false
         self.addTarget(self, action: #selector(self.tapHandler), for: .touchUpInside)
+		configuration = nil
+		contentEdgeInsets = .init(top: 7.5, left: 10, bottom: 7.5, right: 10)
     }
     
     required init?(coder: NSCoder) {
