@@ -17,7 +17,6 @@ class HomeViewController: UIViewController {
 	
 	func buildDataSource() -> TableViewDataSource{
 		.init(section: [liveBidCollection, topCollection, hotItems, topSeller, popularItems].compactMap{ $0 })
-//		.init(section: [liveBidCollection, topCollection, hotItems,popularItems].compactMap{ $0 })
 	}
 	
 	private var liveBidCollection:CollectionSection? {
