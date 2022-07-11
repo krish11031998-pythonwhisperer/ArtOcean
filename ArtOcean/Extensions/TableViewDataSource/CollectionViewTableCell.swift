@@ -24,6 +24,7 @@ class CollectionViewTableCell:ConfigurableCell{
 	
 	func buildCollection(_ layout:UICollectionViewFlowLayout) -> UICollectionView{
 		let collection = UICollectionView(frame: .zero, collectionViewLayout: layout)
+		collection.backgroundColor = .clear
 		collection.showsHorizontalScrollIndicator = false
 		collection.setFrameConstraints(width: UIScreen.main.bounds.width, height: layout.itemSize.height + padding)
 		return collection
@@ -31,6 +32,8 @@ class CollectionViewTableCell:ConfigurableCell{
 	
 	func configureCell(with model: CollectionDelegateAndDataSource) {
 		let collection = buildCollection(model.layout)
+		selectionStyle = .none
+		backgroundColor = .clear
 		contentView.addSubview(collection)
 		contentView.setContraintsToChild(collection, edgeInsets: .zero)
 		collection.reload(with: model)
