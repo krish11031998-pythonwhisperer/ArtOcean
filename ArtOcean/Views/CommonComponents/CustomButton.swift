@@ -32,15 +32,9 @@ class CustomButton:UIView{
         
         self.setupView(cornerRadius: cornerRadius)
         
-        let buttonView = self.buttonViewBuilder(systemName: systemName, name: name)
-        self.addSubview(buttonView)
-        
+        self.buttonViewBuilder(systemName: systemName, name: name)
         self.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handlerSelector)))
-    
-        self.translatesAutoresizingMaskIntoConstraints = !autolayout
-	
-		buttonView.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
-		buttonView.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
+		setFrameConstraints(size: frame.size)
     }
     
     required init?(coder: NSCoder) {
@@ -48,21 +42,18 @@ class CustomButton:UIView{
     }
     
     
-    private func buttonViewBuilder(systemName:String?,name:String?) -> UIView{
+    private func buttonViewBuilder(systemName:String?,name:String?){
         let buttonView = UIImageView()
         if let safeSystemName = systemName{
             buttonView.image = .init(systemName: safeSystemName,withConfiguration:UIImage.SymbolConfiguration(pointSize: 12, weight: .bold))
         }else if let safeName = name{
-            buttonView.image = .init(named: safeName)
-            buttonView.contentMode = .scaleAspectFill
+			buttonView.image = .init(named: safeName)
+            buttonView.contentMode = .scaleAspectFit
         }
         
         buttonView.tintColor = .appBlackColor
-        
-        buttonView.frame.size = .init(width: 12, height: 12)
-        buttonView.frame.origin = .init(x: self.frame.midX - buttonView.frame.width * 0.5, y: self.frame.midY - buttonView.frame.height * 0.5)
-        
-        return buttonView
+		addSubview(buttonView)
+		setCentralizedChild(buttonView)
     }
     
     func setupView(cornerRadius:CGFloat){

@@ -75,18 +75,7 @@ class NFTHeroHeaderView:UIView{
 		let image:CustomImageView = .init(cornerRadius: 0)
 		image.updateImageView(url: nftArt.metadata?.image)
 		image.setFrameConstraints(width: UIScreen.main.bounds.width, height: 200)
-		
-		let blurEffect = UIBlurEffect(style: .light)
-		let blurEffectView = UIVisualEffectView(effect: blurEffect)
-		blurEffectView.frame = image.frame
-		blurEffectView.autoresizingMask = [.flexibleWidth,.flexibleHeight]
-		image.addSubview(blurEffectView)
-		
-		let gradient = CAGradientLayer()
-		gradient.colors = [UIColor.clear.cgColor,UIColor.white.cgColor,UIColor.white.cgColor]
-		gradient.frame = .init(origin: .zero, size: .init(width:UIScreen.main.bounds.width,height:200))
-		image.layer.insertSublayer(gradient, at: 0)
-		
+		image.blurGradientBackDrop(size: .init(width: UIScreen.main.bounds.width, height: 200))
 		return image
 	}()
 	

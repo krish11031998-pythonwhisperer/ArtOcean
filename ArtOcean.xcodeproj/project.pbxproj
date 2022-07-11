@@ -28,6 +28,9 @@
 		EF3259CC287C0BCF001B0CA6 /* UICollectionLayoutExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF3259C8287C0BCF001B0CA6 /* UICollectionLayoutExtension.swift */; };
 		EF3259CD287C0BCF001B0CA6 /* CollectionViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF3259C9287C0BCF001B0CA6 /* CollectionViewExtension.swift */; };
 		EF3259CF287C0C9B001B0CA6 /* CollectionViewTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF3259CE287C0C9B001B0CA6 /* CollectionViewTableCell.swift */; };
+		EF3259D1287C211B001B0CA6 /* ProfileHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF3259D0287C211B001B0CA6 /* ProfileHeaderView.swift */; };
+		EF3259D3287C2761001B0CA6 /* CGSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF3259D2287C2761001B0CA6 /* CGSize.swift */; };
+		EF3259D5287C79A2001B0CA6 /* CGFloat.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF3259D4287C79A2001B0CA6 /* CGFloat.swift */; };
 		EF358377284D371C00783D75 /* StretchyHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF358376284D371C00783D75 /* StretchyHeaderView.swift */; };
 		EF3B4D4D286F806800DD57DB /* TableRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF3B4D4A286F806800DD57DB /* TableRow.swift */; };
 		EF3B4D4E286F806800DD57DB /* TableSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF3B4D4B286F806800DD57DB /* TableSection.swift */; };
@@ -189,6 +192,9 @@
 		EF3259C8287C0BCF001B0CA6 /* UICollectionLayoutExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UICollectionLayoutExtension.swift; sourceTree = "<group>"; };
 		EF3259C9287C0BCF001B0CA6 /* CollectionViewExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionViewExtension.swift; sourceTree = "<group>"; };
 		EF3259CE287C0C9B001B0CA6 /* CollectionViewTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewTableCell.swift; sourceTree = "<group>"; };
+		EF3259D0287C211B001B0CA6 /* ProfileHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileHeaderView.swift; sourceTree = "<group>"; };
+		EF3259D2287C2761001B0CA6 /* CGSize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGSize.swift; sourceTree = "<group>"; };
+		EF3259D4287C79A2001B0CA6 /* CGFloat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGFloat.swift; sourceTree = "<group>"; };
 		EF358376284D371C00783D75 /* StretchyHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StretchyHeaderView.swift; sourceTree = "<group>"; };
 		EF3B4D4A286F806800DD57DB /* TableRow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableRow.swift; sourceTree = "<group>"; };
 		EF3B4D4B286F806800DD57DB /* TableSection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableSection.swift; sourceTree = "<group>"; };
@@ -383,6 +389,7 @@
 				EF8B066B283BF0E70050E726 /* ProfileViewController.swift */,
 				EF69B6AC28529FD000ABDADA /* FavoriteViewController.swift */,
 				EF69B6AE2854965400ABDADA /* WalletDetailView.swift */,
+				EF3259D0287C211B001B0CA6 /* ProfileHeaderView.swift */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -508,6 +515,8 @@
 				EF018306287376F500064F60 /* Number.swift */,
 				EF3BF927287813E80070CAE5 /* UIEdgeInsets.swift */,
 				EF3BF92B287ACEBE0070CAE5 /* UILabel.swift */,
+				EF3259D2287C2761001B0CA6 /* CGSize.swift */,
+				EF3259D4287C79A2001B0CA6 /* CGFloat.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -847,6 +856,7 @@
 				EF8B0677283C20820050E726 /* UIImageView.swift in Sources */,
 				EFD13C232844196F000E422E /* NFTLiveBidCollectionProtocol.swift in Sources */,
 				EF3BF92A287AB3D10070CAE5 /* NFTAttributeView.swift in Sources */,
+				EF3259D5287C79A2001B0CA6 /* CGFloat.swift in Sources */,
 				EF8B066E283BF0F10050E726 /* StatisticsViewController.swift in Sources */,
 				EF22D0CD285A714F00555179 /* CustomTableViewCell.swift in Sources */,
 				EF3B4D4D286F806800DD57DB /* TableRow.swift in Sources */,
@@ -877,7 +887,9 @@
 				EF3259CA287C0BCF001B0CA6 /* CollectionViewDataSource.swift in Sources */,
 				EF00F5DA2848BB6B003D8683 /* AccountsViewController.swift in Sources */,
 				EF00F5C7284638E7003D8683 /* NFTArtCollectionViewCell.swift in Sources */,
+				EF3259D3287C2761001B0CA6 /* CGSize.swift in Sources */,
 				EF69B6B928562D5700ABDADA /* CustomAnimatedImage.swift in Sources */,
+				EF3259D1287C211B001B0CA6 /* ProfileHeaderView.swift in Sources */,
 				EF8B06CC283D5B4C0050E726 /* TopCollectionView.swift in Sources */,
 				EF527496284C0608008C77EC /* CustomComplexCollectionView.swift in Sources */,
 				EF924CF5284CA454009E9C2A /* CustomSelectorCollectionView.swift in Sources */,

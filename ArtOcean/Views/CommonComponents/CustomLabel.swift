@@ -23,7 +23,7 @@ class CustomLabel:UILabel{
         size:CGFloat = 13,
         weight:UIFont.Weight = .semibold,
         color:UIColor,
-        numOfLines:Int,
+        numOfLines:Int = 1,
         adjustFontSize:Bool = true,
         autoLayout:Bool = true
     ){

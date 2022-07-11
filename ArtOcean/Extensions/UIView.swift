@@ -208,6 +208,28 @@ extension UIView{
 		translatesAutoresizingMaskIntoConstraints = false
 	}
 	
+	func setWidthWithPriority(_ width:CGFloat,priority:UILayoutPriority = .defaultHigh) {
+		let anchor = widthAnchor.constraint(equalToConstant: width)
+		anchor.priority = priority
+		anchor.isActive = true
+	}
+	
+	func setHeightWithPriority(_ height:CGFloat,priority:UILayoutPriority = .defaultHigh) {
+		let anchor = heightAnchor.constraint(equalToConstant: height)
+		anchor.priority = priority
+		anchor.isActive = true
+	}
+	
+	func setWidthForChildWithPadding(_ childView:UIView,paddingFactor:CGFloat) {
+		childView.leadingAnchor.constraint(equalToSystemSpacingAfter: leadingAnchor, multiplier: paddingFactor).isActive = true
+		trailingAnchor.constraint(equalToSystemSpacingAfter: childView.trailingAnchor, multiplier: paddingFactor).isActive = true
+	}
+	
+	func setHeightForChildWithPadding(_ childView:UIView,paddingFactor:CGFloat) {
+		childView.topAnchor.constraint(equalToSystemSpacingBelow: topAnchor, multiplier: paddingFactor).isActive = true
+		bottomAnchor.constraint(equalToSystemSpacingBelow: childView.bottomAnchor, multiplier: paddingFactor).isActive = true
+	}
+	
 	var snapshot:UIImage {
 		let renderer = UIGraphicsImageRenderer()
 		return renderer.image { context in

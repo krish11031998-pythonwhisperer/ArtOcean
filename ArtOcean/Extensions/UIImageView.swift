@@ -211,6 +211,13 @@ extension UIImage {
 //        }
         
     }
+	
+	func resized(_ newSize:CGSize) -> UIImage {
+		let renderer = UIGraphicsImageRenderer(size: newSize)
+		let image = renderer.image(actions: { _ in self.draw(in: .init(origin: .zero, size: newSize))})
+		let newImage = image.withRenderingMode(renderingMode)
+		return newImage
+	}
 }
 
 extension UIImageView {
@@ -228,4 +235,19 @@ extension UIImageView {
 			}
 		}
 	}
+	
+	func blurGradientBackDrop(size:CGSize){
+		let blurEffect = UIBlurEffect(style: .light)
+		let blurEffectView = UIVisualEffectView(effect: blurEffect)
+		blurEffectView.frame = .init(origin: .zero, size: size)
+		blurEffectView.autoresizingMask = [.flexibleWidth,.flexibleHeight]
+		addSubview(blurEffectView)
+		
+		let gradient = CAGradientLayer()
+		gradient.colors = [UIColor.clear.cgColor,UIColor.white.cgColor,UIColor.white.cgColor]
+		gradient.frame = .init(origin: .zero, size: .init(width:size.width,height:size.height))
+		layer.insertSublayer(gradient, at: 0)
+	}
+	
+	
 }

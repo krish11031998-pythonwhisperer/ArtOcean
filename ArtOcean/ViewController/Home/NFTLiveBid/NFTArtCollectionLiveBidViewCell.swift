@@ -32,8 +32,6 @@ class NFTArtCollectionLiveBidViewCell: UICollectionViewCell {
         
         self.backgroundColor = .white
         self.layer.cornerRadius = 16
-        
-        self.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.onTapHandler(_:))))
 
     }
     
@@ -53,14 +51,6 @@ class NFTArtCollectionLiveBidViewCell: UICollectionViewCell {
 		nftContentViewCell.prepareToReuse()
 	}
     
-}
-
-
-//MARK: - CustomButtonDelegate
-extension NFTArtCollectionLiveBidViewCell:CustomButtonDelegate{
-    func handleTap() {
-        print("(DEBUG) Clicked on the Cell!")
-    }
 }
 
 //MARK: - Configurable
