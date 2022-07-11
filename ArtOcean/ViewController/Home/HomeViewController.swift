@@ -17,33 +17,32 @@ class HomeViewController: UIViewController {
 	
 	func buildDataSource() -> TableViewDataSource{
 		.init(section: [liveBidCollection, topCollection, hotItems, topSeller, popularItems].compactMap{ $0 })
+//		.init(section: [liveBidCollection, topCollection, hotItems,popularItems].compactMap{ $0 })
 	}
 	
-	private var liveBidCollection:TableSection? {
+	private var liveBidCollection:CollectionSection? {
 		guard let safeNFTs = nfts, !safeNFTs.isEmpty else { return nil }
-		var data:NFTArtCollectionModel = .init(nfts: safeNFTs, size: NFTArtCollection.largeCard)
-		data.action = { [weak self] art in self?.viewNFT(art: art) }
-		let rows:[CellProvider] = [TableRow<NFTArtCollectionCell>(data)]
-		let headerView = ContainerHeaderView(title: "Live Bid", rightButtonTitle: "View All", buttonHandler: { [weak self] in self?.pushSeeAllArtVC() })
-		return TableSection(headerView: headerView , rows: rows)
+		let data:[NFTArtCollectionViewCellData] = safeNFTs.map { nft in .init(nft: nft) { [weak self] in self?.viewArt(nft) } }
+		let cols = data.map { CollectionColumn<NFTArtCollectionLiveBidViewCell>($0) }
+		let size: CGSize = NFTArtCollectionLiveBidViewCell.itemSize
+ 		let headerView = ContainerHeaderView(title: "Live Bid", rightButtonTitle: "View All", buttonHandler: { [weak self] in self?.pushSeeAllArtVC() })
+		return .init(headerView: headerView, columns: cols,layout: .standardFlowWithSize(size),padding: true)
 	}
 	
-	private var hotItems:TableSection? {
+	private var hotItems:CollectionSection? {
 		guard let safeNFTs = nfts, !safeNFTs.isEmpty else { return nil }
-		var data:NFTArtCollectionModel = .init(nfts: safeNFTs, size: NFTArtCollection.smallCard)
-		data.action = { [weak self] art in self?.viewNFT(art: art) }
-		let rows:[CellProvider] = [TableRow<NFTArtCollectionCell>(data)]
+		let data:[NFTArtCollectionViewCellData] = safeNFTs.map { nft in .init(nft: nft) { [weak self] in self?.viewArt(nft) } }
+		let cols = data.map { CollectionColumn<NFTArtCollectionViewCell>($0) }
 		let headerView = ContainerHeaderView(title: "Hot Items", rightButtonTitle: "View All", buttonHandler: { [weak self] in self?.pushSeeAllArtVC() })
-		return TableSection(headerView: headerView , rows: rows)
+		return .init(headerView: headerView, columns: cols)
 	}
 	
-	private var popularItems:TableSection? {
+	private var popularItems:CollectionSection? {
 		guard let safeNFTs = nfts, !safeNFTs.isEmpty else { return nil }
-		var data:NFTArtCollectionModel = .init(nfts: safeNFTs, size: NFTArtCollection.smallCard)
-		data.action = { [weak self] art in self?.viewNFT(art: art) }
-		let rows:[CellProvider] = [TableRow<NFTArtCollectionCell>(data)]
+		let data:[NFTArtCollectionViewCellData] = safeNFTs.map { nft in .init(nft: nft) { [weak self] in self?.viewArt(nft) } }
+		let cols = data.map { CollectionColumn<NFTArtCollectionViewCell>($0) }
 		let headerView = ContainerHeaderView(title: "Popular Items", rightButtonTitle: "View All", buttonHandler: { [weak self] in self?.pushSeeAllArtVC() })
-		return TableSection(headerView: headerView , rows: rows)
+		return .init(headerView: headerView, columns: cols)
 	}
 
 	
@@ -56,11 +55,11 @@ class HomeViewController: UIViewController {
 		return .init(rows: [TableRow<NFTArtTypeCollectionViewCell>(NFTArtType.allType)])
     }()
 	
-	private var topSeller:TableSection?{
+	private var topSeller:CollectionSection?{
 		let headerView = ContainerHeaderView(title: "Top Seller", rightButtonTitle: "View all") { [weak self] in self?.pushSeeAllArtVC() }
-		let rowData = Array(repeating: SellerData.test, count: 15)
-		let row = [TableRow<TopSellerCollectionViewTableCell>(rowData)]
-		return .init(headerView: headerView, rows: row)
+		let colsData:[TopSellerCollectionViewData] = Array(repeating: SellerData.test, count: 15).map {seller in .init(seller: seller) { print("(DEBUG) Clicked on ",seller.name) } }
+		let cols = colsData.map { CollectionColumn<TopSellerCollectionViewCell>($0) }
+		return .init(headerView: headerView, columns: cols, layout: .standardGridFlow,padding: false)
     }
     
     override func viewDidLoad() {

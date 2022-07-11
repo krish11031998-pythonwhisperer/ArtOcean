@@ -202,6 +202,12 @@ extension UIView{
 		translatesAutoresizingMaskIntoConstraints = false
 	}
 	
+	func setFrameConstraints(size:CGSize) {
+		widthAnchor.constraint(equalToConstant: size.width).isActive = true
+		heightAnchor.constraint(equalToConstant: size.height).isActive = true
+		translatesAutoresizingMaskIntoConstraints = false
+	}
+	
 	var snapshot:UIImage {
 		let renderer = UIGraphicsImageRenderer()
 		return renderer.image { context in

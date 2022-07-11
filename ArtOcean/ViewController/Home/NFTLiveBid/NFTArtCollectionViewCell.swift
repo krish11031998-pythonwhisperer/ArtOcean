@@ -8,6 +8,11 @@
 import Foundation
 import UIKit
 
+struct NFTArtCollectionViewCellData:ActionProvider {
+	var nft:NFTModel
+	var action: Callback?
+}
+
 class NFTArtCollectionViewCell:UICollectionViewCell{
     
     private var nft:NFTModel? = nil
@@ -79,7 +84,7 @@ class NFTArtCollectionViewCell:UICollectionViewCell{
     override init(frame: CGRect) {
         super.init(frame: frame)
 		setupView()
-        addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleTap)))
+//        addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleTap)))
     }
     
     required init?(coder: NSCoder) {
@@ -128,4 +133,15 @@ extension NFTArtCollectionViewCell:ConfirgurableCell{
         }
     }
     
+}
+
+//MARK: -
+extension NFTArtCollectionViewCell: Configurable {
+	func configureCell(with model: NFTArtCollectionViewCellData) {
+		updateUIWithNFT(model.nft)
+	}
+	
+	static var itemSize: CGSize {
+		.init(width: 154, height: 176)
+	}
 }

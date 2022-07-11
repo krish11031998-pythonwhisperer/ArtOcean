@@ -25,8 +25,7 @@ class NFTArtCollectionLiveBidViewCell: UICollectionViewCell {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
-//        self.addSubview(self.nftContentViewCell)
+
 		addViewAndSetConstraints(nftContentViewCell, edgeInsets: .zero)
         
         self.addShadow()
@@ -35,10 +34,7 @@ class NFTArtCollectionLiveBidViewCell: UICollectionViewCell {
         self.layer.cornerRadius = 16
         
         self.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.onTapHandler(_:))))
-        
-//        self.addShadow()
-        
-//        self.setupLayout()
+
     }
     
     required init?(coder: NSCoder) {
@@ -51,15 +47,7 @@ class NFTArtCollectionLiveBidViewCell: UICollectionViewCell {
         nftContentViewCell.updateUIWithNFT(nft)
     }
     
-    func setupLayout(){
 
-//        self.nftContentViewCell.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
-//        nftContentViewCell.topAnchor.constraint(equalTo: topAnchor).isActive = true
-//        nftContentViewCell.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
-//        nftContentViewCell.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
-
-    }
-	
 	override func prepareForReuse() {
 		super.prepareForReuse()
 		nftContentViewCell.prepareToReuse()
@@ -73,4 +61,15 @@ extension NFTArtCollectionLiveBidViewCell:CustomButtonDelegate{
     func handleTap() {
         print("(DEBUG) Clicked on the Cell!")
     }
+}
+
+//MARK: - Configurable
+extension NFTArtCollectionLiveBidViewCell: Configurable {
+	func configureCell(with model: NFTArtCollectionViewCellData) {
+		updateUIWithNFT(model.nft)
+	}
+	
+	static var itemSize: CGSize {
+		.init(width: 225, height: 245)
+	}
 }

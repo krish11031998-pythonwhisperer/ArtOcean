@@ -12,9 +12,15 @@ import UIKit
 protocol Configurable{
 	associatedtype Model
 	func configureCell(with model:Model)
+	static var itemSize:CGSize { get }
+}
+
+extension Configurable{
+	static var itemSize:CGSize { return .zero }
 }
 
 typealias ConfigurableCell = UITableViewCell & Configurable
+
 
 //MARK: -  CellProvider
 protocol CellProvider{
@@ -24,9 +30,7 @@ protocol CellProvider{
 	func didSelect(_ tableView: UITableView)
 }
 
-protocol CellProviderColumn{
-	func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell
-}
+
 
 //MARK: - ActionProvider
 typealias Callback = () -> Void
@@ -50,13 +54,12 @@ class TableRow<Cell: ConfigurableCell>:CellProvider{
 	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		let cell:Cell = tableView.dequeueCell()
 		cell.configureCell(with: model)
-		cell.selectedBackgroundView = .clearView()
+		cell.selectionStyle = .none
 		return cell
 	}
 	
 	func tableView(_ tableView: UITableView, updateRowAt indexPath: IndexPath) {
 		let cell = tableView.dequeueCell() as? Cell
-		cell?.backgroundColor = .white
 		cell?.configureCell(with: model)
 	}
 	
@@ -66,5 +69,6 @@ class TableRow<Cell: ConfigurableCell>:CellProvider{
 		}
 		model.action?()
 	}
+	
 		
 }

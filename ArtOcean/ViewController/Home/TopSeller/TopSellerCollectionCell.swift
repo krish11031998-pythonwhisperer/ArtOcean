@@ -8,6 +8,12 @@
 import Foundation
 import UIKit
 
+struct TopSellerCollectionViewData: ActionProvider {
+	let seller: SellerData
+	let action: Callback?
+}
+
+
 class TopSellerCollectionViewCell:UICollectionViewCell{
     
     public static var identifier = "TopSellerCollectionView"
@@ -68,4 +74,16 @@ class TopSellerCollectionViewCell:UICollectionViewCell{
         self.namePercentLabelStack.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
     }
     
+}
+
+//MARK: - Configurable
+extension TopSellerCollectionViewCell: Configurable {
+	func configureCell(with model: TopSellerCollectionViewData) {
+		updateUI(model.seller)
+	}
+
+	static var itemSize: CGSize {
+		.init(width: 125, height: 42)
+	}
+	
 }
