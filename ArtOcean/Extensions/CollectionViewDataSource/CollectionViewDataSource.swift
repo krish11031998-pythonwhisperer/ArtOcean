@@ -8,35 +8,42 @@
 import Foundation
 import UIKit
 
-class CollectionDelegateAndDataSource:NSObject{
+class CollectionDataSource:NSObject{
     
     var columns:[CellProviderColumn]
-	var layout:UICollectionViewFlowLayout
+	let layout:UICollectionViewFlowLayout
+	private let height:CGFloat
+	private let width:CGFloat
     
-	init(columns:[CellProviderColumn],layout:UICollectionViewFlowLayout){
+	init(
+		columns:[CellProviderColumn],
+		layout:UICollectionViewFlowLayout,
+		width: CGFloat,
+		height: CGFloat
+	){
         self.columns = columns
 		self.layout = layout
-    }
+		self.width = width
+		self.height = height
+	}
+	
+	var collectionHeight: CGFloat { height == .zero ? layout.itemSize.height + 20 : height }
+	var collectionWidth: CGFloat { width == .zero ? layout.itemSize.width : width }
 }
 
 
-extension CollectionDelegateAndDataSource:UICollectionViewDataSource,UICollectionViewDelegate,UICollectionViewDelegateFlowLayout{
+extension CollectionDataSource:UICollectionViewDataSource,UICollectionViewDelegate{
     
-    func numberOfSections(in collectionView: UICollectionView) -> Int { return 1 }
+	func numberOfSections(in collectionView: UICollectionView) -> Int { return 1 }
     
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int { return columns.count }
+	func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int { return columns.count }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        columns[indexPath.row].collectionView(collectionView, cellForItemAt: indexPath)
+		columns[indexPath.row].collectionView(collectionView, cellForItemAt: indexPath)
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        columns[indexPath.row].didSelect(collectionView)
+		columns[indexPath.row].didSelect(collectionView)
     }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-		columns[indexPath.row].itemSize == .zero ? layout.itemSize : columns[indexPath.row].itemSize
-    }
-
 }
 

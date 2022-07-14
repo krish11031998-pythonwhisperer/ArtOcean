@@ -15,43 +15,24 @@ typealias TableSectionDataSource = NSObject & UITableViewDelegate & UITableViewD
 class TableSection:TableSectionDataSource{
 	
 	var headerView:UIView?
-	var title:String?
 	var rows:[CellProvider]
 
-	init(
+    init(
 		headerView:UIView? = nil,
-		title:String?,
 		rows:[CellProvider]
 	){
-		self.title = title
 		self.headerView = headerView
 		self.rows = rows
 	}
 
-	convenience init(headerView:UIView?,rows:[CellProvider]){
-		self.init(headerView: headerView,title:nil, rows: rows)
-	}
-	
-	convenience init(title:String?,rows:[CellProvider]){
-		self.init(headerView: nil, title: title, rows: rows)
-	}
-	
-	convenience init(rows:[CellProvider]) {
-		self.init(headerView: nil, title: nil, rows: rows)
+	convenience init (title:String, rows:[CellProvider]) {
+		let headerView = ContainerHeaderView(title: title)
+		self.init(headerView: headerView, rows: rows)
 	}
 	
 	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell { rows[indexPath.row].tableView(tableView, cellForRowAt: indexPath) }
 	
-	func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-		if let customHeaderView = headerView{
-			return customHeaderView
-		}else if let safeTitle = title {
-			let header = ContainerHeaderView(title: safeTitle)
-			return header
-		}else{
-			return nil
-		}
-	}
+	func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? { headerView }
 	
 	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 		let row = rows[indexPath.row]
@@ -63,32 +44,52 @@ class TableSection:TableSectionDataSource{
 }
 
 //MARK: - CollectionSection
-class CollectionSection:TableSectionDataSource {
+class TableCollectionSection:TableSectionDataSource {
 
 	let columns:[CellProviderColumn]
-	var layout:UICollectionViewFlowLayout
+	let layout:UICollectionViewFlowLayout
 	let headerView:UIView?
-	let padding:Bool
+	let size:CGSize
 	
 	init(
 		headerView:UIView?,
 		columns:[CellProviderColumn],
-		layout:UICollectionViewFlowLayout,
-		padding:Bool
+		layout:UICollectionViewFlowLayout = .standardFlow,
+		size:CGSize = .zero
 	) {
 		self.headerView = headerView
 		self.columns = columns
 		self.layout = layout
-		self.padding = padding
+		self.size = size
 	}
 	
-	convenience init (headerView:UIView?,columns:[CellProviderColumn],padding:Bool = false){
-		self.init(headerView: headerView, columns: columns, layout: .standardFlow,padding:padding)
+
+	convenience init (headerView:UIView?, columns:[CellProviderColumn],layout:UICollectionViewFlowLayout, height: CGFloat) {
+		self.init(headerView: headerView, columns: columns, layout:layout, size:.init(width: .totalWidth, height: height))
 	}
 
+	convenience init (title:String,columns:[CellProviderColumn],layout:UICollectionViewFlowLayout,height:CGFloat) {
+		let headerView = ContainerHeaderView(title: title)
+		self.init(headerView:headerView, columns: columns, layout: layout, height: height)
+	}
+	
+	convenience init (
+		title:String,
+		rightTitle:String,
+		columns:[CellProviderColumn],
+		layout:UICollectionViewFlowLayout,
+		height:CGFloat = .zero,
+		handler:(() -> Void)? = nil
+	) {
+		let headerView = ContainerHeaderView(title: title, rightButtonTitle: rightTitle, buttonHandler: handler)
+		self.init(headerView:headerView, columns: columns, layout: layout, height: height)
+	}
+	
+	private var collectionDataSource: CollectionDataSource { .init(columns: columns,layout: layout,width: size.width,height: size.height) }
+
 	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-		let cell = CollectionViewTableCell(withPadding: padding)
-		cell.configureCell(with: .init(columns: columns, layout: layout))
+		let cell = CollectionViewTableCell()
+		cell.configureCell(with: collectionDataSource)
 		return cell
 	}
 	
@@ -137,75 +138,3 @@ extension TableViewDataSource:UITableViewDelegate{
 	func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat { .zero }
 
 }
-
-////MARK: - TableSection
-//class TableSection{
-//
-//	let headerView:UIView?
-//	let title:String?
-//	let rows:[CellProvider]
-//	let axis:UIAxis
-//
-//	init(headerView:UIView? = nil,title:String? = nil,rows:[CellProvider],axis:UIAxis = .vertical){
-//		self.headerView = headerView
-//		self.rows = rows
-//		self.axis = axis
-//		self.title = title
-//	}
-//
-//	convenience init(headerView:UIView? = nil,columns:[CellProvider]){
-//		self.init(headerView: headerView, rows: columns, axis: .horizontal)
-//	}
-//
-//	convenience init(title:String? = nil,rows:[CellProvider]){
-//		self.init(title: title, rows: rows, axis: .vertical)
-//	}
-//
-//}
-//
-//
-////MARK: -  TableSource
-//class TableViewDataSource:NSObject{
-//
-//	var section:[TableSection]
-//
-//	init(section:[TableSection]){
-//		self.section = section
-//	}
-//
-//}
-//
-//extension TableViewDataSource:UITableViewDataSource{
-//	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int { self.section[section].rows.count }
-//
-//	func numberOfSections(in tableView: UITableView) -> Int { self.section.count }
-//
-//	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-//		section[indexPath.section].rows[indexPath.row].tableView(tableView, cellForRowAt: indexPath)
-//	}
-//
-//	func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-////		if let customHeaderView = self.section[section].headerView{
-////			return customHeaderView
-////		}else if let safeTitle = self.section[section].title {
-////			let header = ContainerHeaderView(title: safeTitle)
-////			return header
-////		}else{
-////			return nil
-////		}
-////		return nil
-//	}
-//
-//	func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-//		return nil
-//	}
-//}
-//
-//
-//extension TableViewDataSource:UITableViewDelegate{
-//	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//		let row = section[indexPath.section].rows[indexPath.row]
-//		row.didSelect(tableView)
-//	}
-//
-//}

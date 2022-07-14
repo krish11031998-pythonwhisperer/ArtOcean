@@ -18,4 +18,8 @@ extension CGFloat {
 		UIScreen.main.bounds.height
 	}
 	
+	func half() -> Self { self * 0.5 }
+	
+	func multiple(factor x: CGFloat) -> Self { self * x }
+	
 }

@@ -12,11 +12,6 @@ import UIKit
 protocol Configurable{
 	associatedtype Model
 	func configureCell(with model:Model)
-	static var itemSize:CGSize { get }
-}
-
-extension Configurable{
-	static var itemSize:CGSize { return .zero }
 }
 
 typealias ConfigurableCell = UITableViewCell & Configurable
@@ -46,7 +41,7 @@ class TableRow<Cell: ConfigurableCell>:CellProvider{
 	var model:Cell.Model
 	
 	var cellModel: Any { model }
-	
+    
 	public init(_ model:Cell.Model){
 		self.model = model
 	}
@@ -54,7 +49,7 @@ class TableRow<Cell: ConfigurableCell>:CellProvider{
 	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		let cell:Cell = tableView.dequeueCell()
 		cell.configureCell(with: model)
-		cell.selectionStyle = .none
+        cell.selectionStyle = .none
 		return cell
 	}
 	
@@ -69,6 +64,6 @@ class TableRow<Cell: ConfigurableCell>:CellProvider{
 		}
 		model.action?()
 	}
-	
+    
 		
 }

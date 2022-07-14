@@ -12,8 +12,8 @@ extension UICollectionView{
     
     private static var propertyKey: UInt8 = 1
     
-    private var source: CollectionDelegateAndDataSource? {
-        get { return objc_getAssociatedObject(self, &Self.propertyKey) as? CollectionDelegateAndDataSource }
+    private var source: CollectionDataSource? {
+        get { return objc_getAssociatedObject(self, &Self.propertyKey) as? CollectionDataSource }
         set { objc_setAssociatedObject(self, &Self.propertyKey, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC) }
     }
     
@@ -26,11 +26,17 @@ extension UICollectionView{
         return cell
     }
     
-    func reload(with source:CollectionDelegateAndDataSource){
+    func reload(with source:CollectionDataSource){
         self.source = source
         dataSource = source
         delegate = source
-        
+		collectionViewLayout = source.layout
+		
+		showsVerticalScrollIndicator = source.layout.scrollDirection != .vertical
+		showsHorizontalScrollIndicator = source.layout.scrollDirection != .horizontal
+		
+		heightAnchor.constraint(equalToConstant: source.collectionHeight).isActive = true
+		
         reloadData()
     }
     

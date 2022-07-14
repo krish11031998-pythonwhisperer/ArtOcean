@@ -8,6 +8,14 @@
 import Foundation
 import UIKit
 
+struct SellerData{
+	var name:String
+	var image:String
+	var percent:Float
+
+	static var test:SellerData = .init(name: "Shapire Cole", image: "", percent: Float.random(in: 1...15))
+}
+
 struct TopSellerCollectionViewData: ActionProvider {
 	let seller: SellerData
 	let action: Callback?
@@ -81,9 +89,17 @@ extension TopSellerCollectionViewCell: Configurable {
 	func configureCell(with model: TopSellerCollectionViewData) {
 		updateUI(model.seller)
 	}
+}
 
-	static var itemSize: CGSize {
-		.init(width: 125, height: 42)
+//MARK: - Layout
+extension TopSellerCollectionViewCell {
+	static var layout: UICollectionViewFlowLayout {
+		return .init(
+			itemSize: .init(width: 125, height: 42),
+			scrollDirection: .horizontal,
+			sectionInset: .init(vertical: .zero, horizontal: 16),
+			interitemSpacing: 12,
+			lineSpacing: 24
+		)
 	}
-	
 }

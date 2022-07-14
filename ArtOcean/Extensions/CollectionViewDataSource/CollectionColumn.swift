@@ -14,7 +14,6 @@ protocol CellProviderColumn{
     var cellModel: Any { get }
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell
     func didSelect(_ collectionView: UICollectionView)
-    var itemSize:CGSize { get }
 }
 
 class CollectionColumn<Cell:ConfigurableCollectionCell>:CellProviderColumn{
@@ -22,8 +21,7 @@ class CollectionColumn<Cell:ConfigurableCollectionCell>:CellProviderColumn{
     var cellModel: Any { model }
     
     var model:Cell.Model
-        
-    var itemSize: CGSize { Cell.itemSize }
+	
     
 	init(_ model:Cell.Model){
         self.model = model

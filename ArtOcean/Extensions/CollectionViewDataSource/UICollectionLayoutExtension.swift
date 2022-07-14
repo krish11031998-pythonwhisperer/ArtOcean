@@ -10,11 +10,26 @@ import UIKit
 
 extension UICollectionViewFlowLayout {
 	
+	convenience init(
+		itemSize:CGSize,
+		scrollDirection:UICollectionView.ScrollDirection = .vertical,
+		sectionInset:UIEdgeInsets = .zero,
+		interitemSpacing:CGFloat = 10,
+		lineSpacing:CGFloat = 10
+	) {
+		self.init()
+		self.itemSize = itemSize
+		self.scrollDirection = scrollDirection
+		self.sectionInset = sectionInset
+		self.minimumInteritemSpacing = interitemSpacing
+		self.minimumLineSpacing = lineSpacing
+	}
+	
 	static var standardFlow: UICollectionViewFlowLayout {
 		let layout = UICollectionViewFlowLayout()
 		layout.itemSize = .init(width: 175, height: 200)
 		layout.scrollDirection = .horizontal
-		layout.sectionInset = .init(top: 0, left: 8, bottom: 0, right: 8)
+		layout.sectionInset = .init(vertical: 0, horizontal: 16)
 		layout.minimumInteritemSpacing = 0
 		layout.minimumLineSpacing = 10
 		return layout
@@ -26,13 +41,24 @@ extension UICollectionViewFlowLayout {
 		return layout
 	}
 	
-	static var standardGridFlow: UICollectionViewFlowLayout {
+	
+	static var standardHGridFlow: UICollectionViewFlowLayout {
 		let layout = UICollectionViewFlowLayout()
-		layout.itemSize = .init(width: UIScreen.main.bounds.width, height: 116)
+		layout.itemSize = .init(width: 135, height: 250)
 		layout.scrollDirection = .horizontal
-		layout.sectionInset = .init(top: 10, left: 10, bottom: 10, right: 10)
+		layout.sectionInset = .init(vertical: 0, horizontal: 16)
 		layout.minimumInteritemSpacing = 0
 		layout.minimumLineSpacing = 24
+		return layout
+	}
+	
+	static var standardVGridFlow: UICollectionViewFlowLayout {
+		let layout = UICollectionViewFlowLayout()
+		layout.scrollDirection = .vertical
+		layout.sectionInset = .init(vertical: 0, horizontal: 16)
+		layout.minimumInteritemSpacing = 10
+		layout.minimumLineSpacing = 24
+		layout.itemSize = .init(width: .totalWidth.half() - layout.minimumInteritemSpacing.multiple(factor: 2), height: 250)
 		return layout
 	}
 	

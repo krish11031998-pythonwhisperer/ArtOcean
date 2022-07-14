@@ -19,29 +19,41 @@ class HomeViewController: UIViewController {
 		.init(section: [liveBidCollection, topCollection, hotItems, topSeller, popularItems].compactMap{ $0 })
 	}
 	
-	private var liveBidCollection:CollectionSection? {
+	private var liveBidCollection:TableCollectionSection? {
 		guard let safeNFTs = nfts, !safeNFTs.isEmpty else { return nil }
 		let data:[NFTArtCollectionViewCellData] = safeNFTs.map { nft in .init(nft: nft) { [weak self] in self?.viewArt(nft) } }
 		let cols = data.map { CollectionColumn<NFTArtCollectionLiveBidViewCell>($0) }
 		let size: CGSize = NFTArtCollectionLiveBidViewCell.itemSize
- 		let headerView = ContainerHeaderView(title: "Live Bid", rightButtonTitle: "View All", buttonHandler: { [weak self] in self?.pushSeeAllArtVC() })
-		return .init(headerView: headerView, columns: cols,layout: .standardFlowWithSize(size),padding: true)
+ 		return .init(
+			title:"Hot Items",
+			rightTitle: "View All",
+			columns: cols,
+			layout: .standardFlowWithSize(size)
+		) { [weak self] in self?.pushSeeAllArtVC() }
 	}
 	
-	private var hotItems:CollectionSection? {
+	private var hotItems:TableCollectionSection? {
 		guard let safeNFTs = nfts, !safeNFTs.isEmpty else { return nil }
 		let data:[NFTArtCollectionViewCellData] = safeNFTs.map { nft in .init(nft: nft) { [weak self] in self?.viewArt(nft) } }
 		let cols = data.map { CollectionColumn<NFTArtCollectionViewCell>($0) }
-		let headerView = ContainerHeaderView(title: "Hot Items", rightButtonTitle: "View All", buttonHandler: { [weak self] in self?.pushSeeAllArtVC() })
-		return .init(headerView: headerView, columns: cols)
+		return .init(
+			title:"Hot Items",
+			rightTitle: "View All",
+			columns: cols,
+			layout: .standardFlowWithSize(.init(width: 154, height: 176))
+		) { [weak self] in self?.pushSeeAllArtVC() }
 	}
 	
-	private var popularItems:CollectionSection? {
+	private var popularItems:TableCollectionSection? {
 		guard let safeNFTs = nfts, !safeNFTs.isEmpty else { return nil }
 		let data:[NFTArtCollectionViewCellData] = safeNFTs.map { nft in .init(nft: nft) { [weak self] in self?.viewArt(nft) } }
 		let cols = data.map { CollectionColumn<NFTArtCollectionViewCell>($0) }
-		let headerView = ContainerHeaderView(title: "Popular Items", rightButtonTitle: "View All", buttonHandler: { [weak self] in self?.pushSeeAllArtVC() })
-		return .init(headerView: headerView, columns: cols)
+		return .init(
+			title:"Popular Items",
+			rightTitle: "View All",
+			columns: cols,
+			layout: .standardFlowWithSize(.init(width: 154, height: 176))
+		) { [weak self] in self?.pushSeeAllArtVC() }
 	}
 
 	
@@ -54,11 +66,15 @@ class HomeViewController: UIViewController {
 		return .init(rows: [TableRow<NFTArtTypeCollectionViewCell>(NFTArtType.allType)])
     }()
 	
-	private var topSeller:CollectionSection?{
-		let headerView = ContainerHeaderView(title: "Top Seller", rightButtonTitle: "View all") { [weak self] in self?.pushSeeAllArtVC() }
+	private var topSeller:TableCollectionSection?{
 		let colsData:[TopSellerCollectionViewData] = Array(repeating: SellerData.test, count: 15).map {seller in .init(seller: seller) { print("(DEBUG) Clicked on ",seller.name) } }
 		let cols = colsData.map { CollectionColumn<TopSellerCollectionViewCell>($0) }
-		return .init(headerView: headerView, columns: cols, layout: .standardGridFlow,padding: false)
+		return .init(
+			title: "Top Seller",
+			rightTitle: "View all",
+			columns: cols,
+			layout: TopSellerCollectionViewCell.layout,
+			height: 96) { [weak self] in self?.pushSeeAllArtVC() }
     }
     
     override func viewDidLoad() {

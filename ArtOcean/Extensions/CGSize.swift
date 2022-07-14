@@ -14,12 +14,9 @@ extension CGSize {
 		return .init(width: dimension, height: dimension)
 	}
 	
-	func halfed() -> CGSize {
-		return .init(width: width * 0.5, height: height * 0.5)
-	}
-	
 	static func * (lhs:CGSize,rhs:CGFloat) -> CGSize {
 		return .init(width: lhs.width * rhs, height: lhs.height * rhs)
 	}
-	
+
+	var halfed: CGSize { self * 0.5 }
 }
