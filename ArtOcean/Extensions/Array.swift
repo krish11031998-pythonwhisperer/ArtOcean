@@ -12,11 +12,13 @@ import UIKit
 extension Array where Element == CGPoint{
     
     func findNearestPoint(_ location:CGPoint) -> CGPoint?{
-        var target:CGPoint? = nil
-        var min:CGFloat = CGFloat(Float.greatestFiniteMagnitude)
-        
         if isEmpty { return nil }
-        
+		
+		var target:CGPoint? = first
+		var min:CGFloat = CGFloat(Float.greatestFiniteMagnitude)
+		
+		print("(DEBUG) finding for location : ",location.x)
+		
         for point in self{
             let diff = abs(point.x - location.x)
             if diff < min{

@@ -63,6 +63,7 @@ class NFTDetailArtViewController:UIViewController{
         super.init(nibName: nil, bundle: nil)
         self.configNavigationBar()
         self.setupView()
+//		NotificationCenter.default.addObserver(self, selector: #selector(scrollStarted), name: Notification.Name.chartViewScrollDidBegin, object: nil)
     }
     
     override func viewDidLoad() {
@@ -283,9 +284,22 @@ extension NFTDetailArtViewController:NFTChartViewDelegate{
 	func scrollStarted() {
 		tableView?.isScrollEnabled = false
 	}
-	
+
 	func scrollEnded() {
+		print("(DEBUG) scrollEnded , enabling TableView scroll")
 		tableView?.isScrollEnabled = true
 	}
-	
+
 }
+
+//MARK: - NotificationCenter
+//extension NFTDetailArtViewController {
+//
+//	@objc func scrollStarted() {
+//		tableView?.isScrollEnabled = false
+//	}
+//
+//	@objc func scrollEnded() {
+//		tableView?.isScrollEnabled = true
+//	}
+//}

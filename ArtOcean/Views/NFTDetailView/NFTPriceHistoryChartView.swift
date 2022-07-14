@@ -165,10 +165,12 @@ extension NFTChartView:ChartDelegate{
 	func scrollEnded() {
 		resetPriceAndChange()
 		delegate?.scrollEnded()
+		NotificationCenter.default.post(name: .chartViewScrollEnded, object: nil)
 	}
 	
 	func scrollStart() {
 		delegate?.scrollStarted()
+		NotificationCenter.default.post(name: .chartViewScrollDidBegin, object: nil)
 	}
 	
 }

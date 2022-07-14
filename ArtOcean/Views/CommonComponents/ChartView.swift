@@ -47,6 +47,7 @@ class ChartView:UIView{
         super.init(frame: .zero)
         self.data = data
         self.chartColor = chartColor
+		backgroundColor = .cyan
     }
     
     required init?(coder: NSCoder) {
@@ -92,6 +93,12 @@ class ChartView:UIView{
 //MARK: - ChartBuilder
 extension ChartView{
     
+	var horizontalSpacing: CGFloat {
+		guard !data.isEmpty else { return 40 }
+		let width = frame.width.isZero ? intrinsicContentSize.width : frame.width
+		return (width - 10)/CGFloat(data.count)
+	}
+	
     func computeDataPoints(){
         let spacing = data.count > 0 ? (frame.width.isZero ? intrinsicContentSize.width : frame.width)/CGFloat(data.count) : 40
 		let height = (frame.height.isZero ? intrinsicContentSize.height : frame.height) - 50
@@ -101,7 +108,7 @@ extension ChartView{
         else {return}
         
         for dataPoint in data.map({($0 - min)/(max - min)}).enumerated(){
-            let point:CGPoint = .init(x: spacing * CGFloat(dataPoint.offset), y: (1 - CGFloat(dataPoint.element)) * height + 25)
+            let point:CGPoint = .init(x: spacing * CGFloat(dataPoint.offset) + 10, y: (1 - CGFloat(dataPoint.element)) * height + 25)
             if dataPoints == nil{
                 dataPoints = [point]
             }else{
@@ -190,6 +197,8 @@ extension ChartView{
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesMoved(touches, with: event)
+		guard let firstTouch = touches.first else { return }
+		firstTouch.findDirectionOfTouch(in: self)
         guard let location  = touches.first?.location(in: self),
               let nearestPoint = dataPoints.findNearestPoint(location),
               let idx = dataPoints.firstIndex(where: {$0 == nearestPoint})
