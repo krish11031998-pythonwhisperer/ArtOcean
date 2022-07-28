@@ -64,7 +64,6 @@ class ImageDownloader{
         
         
         if let image = ImageCache.cache[safeURL]{
-            print("(DEBUG) Retrieving From Cache!!!")
             self.handleCompletion(url: safeURL, result: .success(image))
         }else{
             URLSession.shared.dataTask(with: safeURL) { data , response, err in

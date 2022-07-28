@@ -22,4 +22,14 @@ extension CGFloat {
 	
 	func multiple(factor x: CGFloat) -> Self { self * x }
 	
+	func clampBetween(min:CGFloat,max:CGFloat) -> CGFloat {
+		if self <= min {
+			return min + max * 0.2
+		} else if self >= max {
+			return max - max * 0.2
+		} else {
+			return self
+		}
+	}
+	
 }

@@ -21,6 +21,7 @@ class CollectionViewTableCell:ConfigurableCell{
 	
 	func configureCell(with model: CollectionDataSource) {
 		let collection = UICollectionView(frame: .zero,collectionViewLayout: .init())
+		collection.backgroundColor = .clear
 		contentView.addSubview(collection)
 		contentView.setContraintsToChild(collection, edgeInsets: .zero)
 		collection.reload(with: model)

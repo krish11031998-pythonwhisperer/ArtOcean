@@ -90,6 +90,7 @@ class TableCollectionSection:TableSectionDataSource {
 	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		let cell = CollectionViewTableCell()
 		cell.configureCell(with: collectionDataSource)
+		cell.backgroundColor = .clear
 		return cell
 	}
 	

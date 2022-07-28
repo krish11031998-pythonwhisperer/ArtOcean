@@ -16,12 +16,12 @@ extension UITouch {
 		
 		let deltaX = abs(location.x - prevLocation.x)
 		let deltaY = abs(location.y - prevLocation.y)
-		let delta = abs(deltaY - deltaX)
-//		if deltaX > deltaY {
-//			print("(DEBUG) Touched Horizontally by : ",delta)
-//		} else {
-//			print("(DEBUG) Touched Vertically by : ",delta)
-//		}
+		let delta = deltaY/deltaX
+		if delta < 0.5 {
+			print("(DEBUG) Touched Horizontally by : ",delta)
+		} else {
+			print("(DEBUG) Touched Vertically by : ",delta)
+		}
 		
 	}
 	

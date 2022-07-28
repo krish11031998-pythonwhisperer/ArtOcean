@@ -47,7 +47,6 @@ class ChartView:UIView{
         super.init(frame: .zero)
         self.data = data
         self.chartColor = chartColor
-		backgroundColor = .cyan
     }
     
     required init?(coder: NSCoder) {
