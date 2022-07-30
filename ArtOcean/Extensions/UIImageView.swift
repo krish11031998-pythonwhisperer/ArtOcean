@@ -218,6 +218,16 @@ extension UIImage {
 		let newImage = image.withRenderingMode(renderingMode)
 		return newImage
 	}
+	
+	func resized(to size: CGSize) -> UIImage {
+		
+		let renderer = UIGraphicsImageRenderer(size: size)
+		let img = renderer.image { _ in self.draw(in: .init(origin: .zero, size: size)) }
+		
+		return img
+	}
+	
+	
 }
 
 extension UIImageView {

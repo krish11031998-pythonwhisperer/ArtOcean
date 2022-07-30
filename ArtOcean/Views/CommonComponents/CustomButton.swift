@@ -70,3 +70,74 @@ class CustomButton:UIView{
     }
     
 }
+
+
+//MARK: - CustomImageButton
+class CustomImageButton: UIButton {
+	
+	public var handler: (() -> Void)?
+	let name: String?
+	var url: String?
+	let systemName: String?
+	
+	init(name:String?,systemName:String?,url:String?,frame:CGSize = .squared(30), handler: (() -> Void)? ) {
+		self.name = name
+		self.systemName = systemName
+		self.handler = handler
+		super.init(frame: .init(origin: .zero, size: frame))
+		setupButton()
+	}
+	
+	required init?(coder: NSCoder) {
+		fatalError("init(coder:) has not been implemented")
+	}
+	
+	convenience init(name:String?,frame:CGSize,handler:(() -> Void)?) {
+		self.init(name: name, systemName: nil,url: nil, frame: frame, handler: handler)
+	}
+	
+	convenience init(systemName:String?,frame:CGSize,handler:(() -> Void)?) {
+		self.init(name: nil, systemName: systemName,url: nil, frame: frame, handler: handler)
+	}
+	
+	convenience init(url:String?,frame:CGSize,handler:(() -> Void)?) {
+		self.init(name: nil, systemName: nil,url: url, frame: frame, handler: handler)
+	}
+	
+	func setupButton() {
+		if let image = setupSystemImage() ?? setupImage() {
+			setImage(image, for: .normal)
+		}
+		self.addTarget(self, action: #selector(handleTap), for: .touchUpInside)
+	}
+	
+	@objc func handleTap() {
+		handler?()
+	}
+	
+	func setupSystemImage() -> UIImage? {
+		guard let systemName = systemName else { return nil }
+		let imageView = UIImageView(frame: frame)
+		imageView.contentMode = .center
+		imageView.layer.borderWidth = 1
+		imageView.layer.borderColor = UIColor.appGrayColor.cgColor
+		imageView.layer.cornerRadius = frame.width.half()
+		imageView.image = UIImage(systemName: systemName)?.resized(frame.size * 0.58)
+		return imageView.snapshot
+	}
+	
+	func setupImage() -> UIImage? {
+		guard let name = name else { return nil }
+		let imageView = UIImageView(frame: frame)
+		imageView.contentMode = .center
+		imageView.image = imageView.image?.resized(frame.size * 0.58)
+		imageView.layer.cornerRadius = frame.width.half()
+		imageView.layer.borderWidth = 1
+		imageView.layer.borderColor = UIColor.appGrayColor.cgColor
+		
+		return imageView.snapshot
+	}
+	
+	static var closeButton: CustomImageButton = .init(systemName: "chevron.left", frame: .squared(32), handler: nil)
+	
+}

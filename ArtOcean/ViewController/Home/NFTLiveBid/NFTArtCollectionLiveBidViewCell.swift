@@ -21,7 +21,7 @@ class NFTArtCollectionLiveBidViewCell: UICollectionViewCell {
         }
     }
     
-    private let nftContentViewCell:NFTLiveBidCellView = NFTLiveBidCellView()
+    private let nftContentViewCell:NFTLiveBidView = NFTLiveBidView()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -48,7 +48,7 @@ class NFTArtCollectionLiveBidViewCell: UICollectionViewCell {
 
 	override func prepareForReuse() {
 		super.prepareForReuse()
-		nftContentViewCell.prepareToReuse()
+		nftContentViewCell.prepareForReuse()
 	}
     
 }

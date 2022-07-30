@@ -370,8 +370,8 @@
 		EF3259F42880925E001B0CA6 /* TableViewDataSource */ = {
 			isa = PBXGroup;
 			children = (
-				EF3259F52880925E001B0CA6 /* TableRow.swift */,
 				EF3259F62880925E001B0CA6 /* CollectionView.swift */,
+				EF3259F52880925E001B0CA6 /* TableRow.swift */,
 				EF3259F72880925E001B0CA6 /* TableSection.swift */,
 				EF3259F82880925E001B0CA6 /* TableView.swift */,
 			);

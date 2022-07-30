@@ -37,7 +37,7 @@ class NFTChartViewCell:ConfigurableCell{
 		backgroundColor = .clear
 		contentView.subviews.forEach { $0.removeFromSuperview() }
 		contentView.addSubview(chartView!)
-		contentView.setContraintsToChild(chartView!, edgeInsets: .init(top: 0, left: 16, bottom: 0, right: -16))
+		contentView.setContraintsToChild(chartView!, edgeInsets: .init(top: 0, left: 16, bottom: 0, right: 16))
 	}
 	
 }

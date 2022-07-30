@@ -14,6 +14,14 @@ protocol Configurable{
 	func configureCell(with model:Model)
 }
 
+protocol ConfigurableStyling {
+	static var insetPadding: UIEdgeInsets { get }
+	func prepareCellForReuse()
+}
+
+typealias InnerConfigurableView = UIView & Configurable & ConfigurableStyling
+
+
 typealias ConfigurableCell = UITableViewCell & Configurable
 
 
@@ -35,10 +43,9 @@ protocol ActionProvider{
 
 
 //MARK: -  TableRow
-class TableRow<Cell: ConfigurableCell>:CellProvider{
+class TableRow<Cell : ConfigurableCell> : CellProvider{
 
-	
-	var model:Cell.Model
+	var model : Cell.Model
 	
 	var cellModel: Any { model }
     
@@ -65,5 +72,4 @@ class TableRow<Cell: ConfigurableCell>:CellProvider{
 		model.action?()
 	}
     
-		
 }

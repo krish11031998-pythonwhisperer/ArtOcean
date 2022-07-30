@@ -56,7 +56,7 @@ class CustomSearchBar:UIView{
 		
 		addSubview(view)
 		
-		setContraintsToChild(view, edgeInsets: .init(top: 0, left: 10, bottom: 0, right: -10))
+		setContraintsToChild(view, edgeInsets: .init(top: 0, left: 10, bottom: 0, right: 10))
 	}
 	
 	override var intrinsicContentSize: CGSize{

@@ -174,7 +174,7 @@ class NFTDetailArtViewController:UIViewController{
 		tableView?.backgroundColor = .clear
 		observer = tableView?.observe(\.contentOffset, changeHandler: {[weak self] target, _ in self?.updateOnScroll(target) })
 		view.addSubview(tableView!)
-		view.setContraintsToChild(tableView!, edgeInsets: .init(top: 0, left: 0, bottom: -40, right: 0))
+		view.setContraintsToChild(tableView!, edgeInsets: .init(top: 0, left: 0, bottom: 40, right: 0))
 		tableView?.separatorStyle = .none
 		buildTableHeaderView()
 		tableView?.contentInsetAdjustmentBehavior = .never

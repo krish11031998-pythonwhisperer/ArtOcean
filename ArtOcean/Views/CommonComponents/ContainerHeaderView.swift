@@ -76,7 +76,7 @@ class ContainerHeaderView: UIView{
             rightButton.titleLabel?.textAlignment = .right
         }
 		addSubview(stack)
-		setContraintsToChild(stack, edgeInsets: .init(top: 12, left: 16, bottom: -12, right: -16))
+		setContraintsToChild(stack, edgeInsets: .init(top: 12, left: 16, bottom: 12, right: 16))
 
 		
     }

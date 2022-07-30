@@ -58,7 +58,7 @@ class SearchViewController:UIViewController{
 	func setupCollectionView(){
 		view.addSubview(collectionView)
 		collectionView.dataSource = self
-		view.setContraintsToChild(collectionView, edgeInsets: .init(top: view.safeAreaInsets.top + searchBar.intrinsicContentSize.height + 34, left: 0, bottom: -24, right: 0))
+		view.setContraintsToChild(collectionView, edgeInsets: .init(top: view.safeAreaInsets.top + searchBar.intrinsicContentSize.height + 34, left: 0, bottom: 24, right: 0))
 	}
 	
 	//MARK: - Setting Up View

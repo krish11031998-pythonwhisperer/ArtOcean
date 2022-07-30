@@ -140,20 +140,28 @@ extension UIView{
         self.layer.shadowRadius = 2.5
     }
 	
+	func removeShadow() {
+		self.layer.shadowColor = UIColor.black.cgColor
+		self.layer.shadowOpacity = 0
+		self.layer.shadowOffset = .zero
+		self.layer.shadowRadius = 0
+		
+	}
+	
 	func addViewAndSetConstraints(_ innerView:UIView?,edgeInsets:UIEdgeInsets) {
 		guard let safeInnerView = innerView else { return }
 		addSubview(safeInnerView)
 		setContraintsToChild(safeInnerView, edgeInsets: edgeInsets)
 	}
 	
-	func setContraintsToChild(_ childView:UIView,edgeInsets:UIEdgeInsets){
+	func setContraintsToChild(_ childView:UIView,edgeInsets:UIEdgeInsets,withPriority: Float = 1000){
 		let constraints = [
 			childView.topAnchor.constraint(equalTo: self.topAnchor, constant: edgeInsets.top),
-			childView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: edgeInsets.bottom),
+			childView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -edgeInsets.bottom),
 			childView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: edgeInsets.left),
-			childView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: edgeInsets.right)
-		]
-
+			childView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -edgeInsets.right)
+		].map { $0.setPriority(priority: withPriority) }
+		
 		removeConstraints(constraints)
 		childView.translatesAutoresizingMaskIntoConstraints = false
 		NSLayoutConstraint.activate(constraints)
@@ -231,10 +239,15 @@ extension UIView{
 	}
 	
 	var snapshot:UIImage {
-		let renderer = UIGraphicsImageRenderer()
-		return renderer.image { context in
+		let renderer = UIGraphicsImageRenderer(bounds: bounds)
+		let img =  renderer.image { context in
 			layer.render(in: context.cgContext)
 		}
+		return img
+	}
+	
+	func removeAllSubViews() {
+		subviews.forEach { $0.removeFromSuperview() }
 	}
 }
 
@@ -245,6 +258,12 @@ extension NSLayoutConstraint{
 			secondItem === other.secondItem &&
 			firstAnchor === other.firstAnchor &&
 			secondAnchor === other.secondAnchor
+	}
+	
+	func setPriority(priority: Float) -> Self {
+		let constraintWithPriority = self
+		constraintWithPriority.priority = .init(rawValue: priority)
+		return constraintWithPriority
 	}
 	
 }
