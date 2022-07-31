@@ -82,6 +82,7 @@ class NFTDetailArtViewController:UIViewController{
     
 	override func viewDidLayoutSubviews() {
 		super.viewDidLayoutSubviews()
+		view.setContraintsToChild(tableView, edgeInsets: .init(top: 0, left: 0, bottom: view.safeAreaInsets.bottom, right: 0))
 	}
 	
 	override func viewWillAppear(_ animated: Bool) {
@@ -174,7 +175,6 @@ class NFTDetailArtViewController:UIViewController{
 	
 	func buildTable(){
 		view.addSubview(tableView)
-		view.setContraintsToChild(tableView, edgeInsets: .init(top: 0, left: 0, bottom: 40, right: 0))
 		buildTableHeaderView()
 		tableView.reload(with: buildDataSource())
 	}
