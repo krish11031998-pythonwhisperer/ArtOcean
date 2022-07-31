@@ -41,10 +41,10 @@ class LiveBidDetailView: UIViewController  {
 		
         let label = CustomLabel(text: "Live\nBid", size: 50, weight: .bold, color: .black, numOfLines: 2, adjustFontSize: false)
         
-		let backButton = CustomImageButton.closeButton
-		backButton.handler = {
+		let backButton = CustomImageButton.closeButton {
 			self.navigationController?.popViewController(animated: true)
 		}
+		
         var rootAttributedString:NSMutableAttributedString = .init(string:"Live", attributes: [NSAttributedString.Key.font:UIFont(name: CustomFonts.black.rawValue, size: 50)!])
         rootAttributedString.append(.init(string: "\nBid", attributes: [NSAttributedString.Key.font:UIFont(name: CustomFonts.medium.rawValue, size: 50)!]))
         
@@ -58,7 +58,7 @@ class LiveBidDetailView: UIViewController  {
 		
 		view.addSubview(stack)
 		
-		view.setContraintsToChild(stack, edgeInsets: .init(top: 65, left: 10, bottom: 0, right: 10),withPriority: 750)
+		view.setContraintsToChild(stack, edgeInsets: .init(top: 65, left: 24, bottom: 0, right: 10),withPriority: 750)
 		
         return view
     }()
@@ -89,9 +89,6 @@ class LiveBidDetailView: UIViewController  {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        if navigationController?.isNavigationBarHidden ?? false{
-            navigationController?.setNavigationBarHidden(false, animated: true)
-        }
         self.configNavigationBar()
         if selectedNFT != nil{
             selectedNFT = nil
@@ -99,16 +96,20 @@ class LiveBidDetailView: UIViewController  {
     }
     
     override func viewDidDisappear(_ animated: Bool) {
-        if !(navigationController?.navigationBar.isHidden ?? true){
+		super.viewDidDisappear(animated)
+        if !(navigationController?.navigationBar.isHidden ?? true), selectedNFT == nil{
+			print("(DEBUG) Hiding the View!")
             navigationController?.setNavigationBarHidden(true, animated: true)
         }
+		if selectedNFT != nil { navigationController?.navigationBar.transform = .init(translationX: 0, y: -100) }
+		
     }
     
     private func configNavigationBar(){
-        if let safeNavbar = self.navigationController?.navigationBar,safeNavbar.isHidden{
-            navigationController?.setNavigationBarHidden(false, animated: true)
-            navigationController?.navigationBar.transform = .init(translationX: 0, y: -view.safeAreaInsets.top)
-        }
+		if isNavBarHidden {
+			navigationController?.setNavigationBarHidden(false, animated: true)
+			scrollViewDidScroll(liveBidTableView)
+		}
         self.navigationItem.titleView = CustomLabel(text: "Live Bid", size: 18, weight: .bold, color: .appBlackColor, numOfLines: 1)
         self.navigationItem.leftBarButtonItem = self.backBarButton
     }
@@ -116,10 +117,9 @@ class LiveBidDetailView: UIViewController  {
     private lazy var backBarButton:UIBarButtonItem = {
         let barButton = UIBarButtonItem()
         
-        let backButton = CustomButton.backButton
-        backButton.handler = {
-            self.navigationController?.popViewController(animated: true)
-        }
+		let backButton = CustomImageButton.closeButton {
+			self.navigationController?.popViewController(animated: true)
+		}
         
         barButton.customView = backButton
         
@@ -128,22 +128,22 @@ class LiveBidDetailView: UIViewController  {
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        self.setupLayout()
-        self.navigationController?.navigationBar.transform = .init(translationX: 0, y: -200)
+        setupLayout()
     }
-    
+	
     func setupLayout(){
 		view.addViewAndSetConstraints(liveBidTableView, edgeInsets: .zero)
     }
 	
 	private func pushVC(nft:NFTModel) {
+		selectedNFT = nft
 		navigationController?.pushViewController(NFTDetailArtViewController(nftArt: nft), animated: true)
 	}
 }
 
 //MARK: - CollectionViewDelegate
 extension LiveBidDetailView{
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+    @objc func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let yOffset = scrollView.contentOffset.y - view.safeAreaInsets.top
         self.navigationController?.navigationBar.transform = .init(translationX: 0, y: min(0,yOffset))
     }

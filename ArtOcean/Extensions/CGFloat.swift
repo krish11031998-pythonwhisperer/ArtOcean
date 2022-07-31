@@ -33,3 +33,26 @@ extension CGFloat {
 	}
 	
 }
+
+extension ClosedRange {
+		
+	func clamped(_ val:Bound) -> Bound {
+		Swift.min(upperBound,Swift.max(lowerBound,val))
+	}
+	
+	
+	
+}
+
+extension ClosedRange where Bound == CGFloat {
+	
+	func percent(_ val:Bound,normalizeBelow: CGFloat = 0.001) -> Bound {
+		let normVal = normalized(val)
+		return normVal > normalizeBelow ? normVal : 0
+	}
+	
+	func normalized(_ val:Bound) -> Bound {
+		(clamped(val) - lowerBound)/(upperBound - lowerBound)
+	}
+	
+}

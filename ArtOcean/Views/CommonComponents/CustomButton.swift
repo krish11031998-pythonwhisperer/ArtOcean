@@ -80,6 +80,8 @@ class CustomImageButton: UIButton {
 	var url: String?
 	let systemName: String?
 	
+	private let rescaleFactor: CGFloat = 0.375
+	
 	init(name:String?,systemName:String?,url:String?,frame:CGSize = .squared(30), handler: (() -> Void)? ) {
 		self.name = name
 		self.systemName = systemName
@@ -122,7 +124,8 @@ class CustomImageButton: UIButton {
 		imageView.layer.borderWidth = 1
 		imageView.layer.borderColor = UIColor.appGrayColor.cgColor
 		imageView.layer.cornerRadius = frame.width.half()
-		imageView.image = UIImage(systemName: systemName)?.resized(frame.size * 0.58)
+		imageView.image = UIImage(systemName: systemName,withConfiguration: UIImage.SymbolConfiguration(pointSize: 10, weight: .semibold))?
+			.resized(frame.size * rescaleFactor)
 		return imageView.snapshot
 	}
 	
@@ -130,12 +133,17 @@ class CustomImageButton: UIButton {
 		guard let name = name else { return nil }
 		let imageView = UIImageView(frame: frame)
 		imageView.contentMode = .center
-		imageView.image = imageView.image?.resized(frame.size * 0.58)
+		imageView.image = UIImage(named: name)?.resized(frame.size * rescaleFactor)
 		imageView.layer.cornerRadius = frame.width.half()
 		imageView.layer.borderWidth = 1
 		imageView.layer.borderColor = UIColor.appGrayColor.cgColor
 		
 		return imageView.snapshot
+	}
+	
+	static func closeButton(handler: @escaping () -> Void) -> CustomImageButton {
+		let button: CustomImageButton = .init(systemName: "chevron.left", frame: .squared(32), handler: handler)
+		return button
 	}
 	
 	static var closeButton: CustomImageButton = .init(systemName: "chevron.left", frame: .squared(32), handler: nil)

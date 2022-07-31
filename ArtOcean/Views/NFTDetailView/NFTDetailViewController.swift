@@ -12,7 +12,8 @@ class NFTDetailArtViewController:UIViewController{
     
 // MARK: - Properties
 	
-	private var observer:NSKeyValueObservation?
+	private var tableObserver:NSKeyValueObservation?
+	private var navbarObserver:NSKeyValueObservation?
     private var nftArt:NFTModel?
     private var placeBidModalLeadingAnchor:NSLayoutConstraint? = nil
     private var leadingOffScreen:CGFloat = 1000
@@ -21,7 +22,15 @@ class NFTDetailArtViewController:UIViewController{
 	private let headerHeight:CGFloat = 460
     private var prices:[Double]? = []
 	private var offers:NFTArtOffers = .init(repeating: .init(name: "John Doe", percent: "5.93", price: 12.03, time: 5), count: 5)
-	private var tableView:UITableView?
+	
+	private var tableView:UITableView = {
+		let tableView = UITableView(frame: .zero, style: .grouped)
+		tableView.backgroundColor = .clear
+		tableView.separatorStyle = .none
+		tableView.contentInsetAdjustmentBehavior = .never
+		return tableView
+	}()
+	
 	private var tableHeaderView:UIView?
     
 	private lazy var placeBidButton:Container = {
@@ -63,7 +72,6 @@ class NFTDetailArtViewController:UIViewController{
         super.init(nibName: nil, bundle: nil)
         self.configNavigationBar()
         self.setupView()
-//		NotificationCenter.default.addObserver(self, selector: #selector(scrollStarted), name: Notification.Name.chartViewScrollDidBegin, object: nil)
     }
     
     override func viewDidLoad() {
@@ -78,26 +86,22 @@ class NFTDetailArtViewController:UIViewController{
 	
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
-		if let safeNavBar = self.navigationController?.isNavigationBarHidden,safeNavBar{
+		if let safeNavBar = self.navigationController?.navigationBar.isHidden,safeNavBar{
 			self.navigationController?.setNavigationBarHidden(false, animated: true)
 		}
-		self.navigationController?.navigationBar.transform = .init(translationX: 0, y: -100)
-		DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(5)) { [weak self] in
-			self?.prices = Array(repeating: 0, count: 15).compactMap({_ in Double.random(in: 1...5)})
-			guard let safeDataSource = self?.buildDataSource() else { return }
-			self?.tableView?.reload(with: safeDataSource)
-		}
+		updateOnScroll(tableView)
+		tableObserver = tableView.observe(\.contentOffset, changeHandler: {[weak self] target, _ in self?.updateOnScroll(target) })
+		navbarObserver = navigationController?.navigationBar.observe(\.frame) {[weak self] target,_ in self?.updateNavBarOnTransformation(target)}
+		loadChartData()
 	}
 	
 	override func viewWillDisappear(_ animated: Bool) {
 		super.viewWillDisappear(animated)
-		self.navigationController?.navigationBar.transform = .init(translationX: 0, y: 0)
 	}
 	
     
     //MARK: -  NavigationItem
     private func configNavigationBar(){
-        //navigationBar
         let navbarAppearence = UINavigationBarAppearance()
         navbarAppearence.backgroundColor = .white
         self.navigationController?.navigationBar.standardAppearance = .init(barAppearance: navbarAppearence)
@@ -105,7 +109,6 @@ class NFTDetailArtViewController:UIViewController{
         self.navigationController?.navigationBar.isTranslucent = false
         self.navigationItem.titleView = self.view.labelBuilder(text: self.nftArt?.Title ?? "", size: 18, weight: .bold, color: .appBlackColor, numOfLines: 1)
         self.navigationItem.leftBarButtonItem = self.backBarButton
-        
     }
     
     private lazy var backBarButton:UIBarButtonItem = {
@@ -170,15 +173,10 @@ class NFTDetailArtViewController:UIViewController{
    
 	
 	func buildTable(){
-		tableView = UITableView(frame: .zero, style: .grouped)
-		tableView?.backgroundColor = .clear
-		observer = tableView?.observe(\.contentOffset, changeHandler: {[weak self] target, _ in self?.updateOnScroll(target) })
-		view.addSubview(tableView!)
-		view.setContraintsToChild(tableView!, edgeInsets: .init(top: 0, left: 0, bottom: 40, right: 0))
-		tableView?.separatorStyle = .none
+		view.addSubview(tableView)
+		view.setContraintsToChild(tableView, edgeInsets: .init(top: 0, left: 0, bottom: 40, right: 0))
 		buildTableHeaderView()
-		tableView?.contentInsetAdjustmentBehavior = .never
-		tableView?.reload(with: buildDataSource())
+		tableView.reload(with: buildDataSource())
 	}
 	
 	func buildDataSource() -> TableViewDataSource{
@@ -218,7 +216,14 @@ class NFTDetailArtViewController:UIViewController{
 	func buildTableHeaderView(){
 		tableHeaderView = UIView(frame: .init(origin: .zero, size: .init(width: UIScreen.main.bounds.width, height: headerHeight)))
 		tableHeaderView?.backgroundColor = .clear
-		tableView?.tableHeaderView = tableHeaderView
+		tableView.tableHeaderView = tableHeaderView
+	}
+	
+	private func loadChartData() {
+		DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(5)) {
+			self.prices = Array(repeating: 0, count: 15).compactMap({_ in Double.random(in: 1...5)})
+			self.tableView.reload(with: self.buildDataSource())
+		}
 	}
     
     //MARK: - View Setups
@@ -271,23 +276,26 @@ extension NFTDetailArtViewController:CustomButtonDelegate{
 
 //MARK: - ScrollViewDelegate
 extension NFTDetailArtViewController{
-    
-    func updateOnScroll(_ scrollView: UIScrollView) {
+	@objc func updateOnScroll(_ scrollView: UIScrollView) {
 		self.navigationController?.navigationBar.transform = .init(translationX: 0, y: min(scrollView.contentOffset.y - headerHeight * 0.75,0))
 		let _ = heroHeaderView?.animateHeaderView(scrollView)
     }
+	
+	@objc func updateNavBarOnTransformation(_ navBar:UINavigationBar) {
+		//navBar.layer.opacity = Float((0...100).percent(abs(navBarOrigin.y), normalizeBelow: 0.001))
+	}
 }
 
 
 //MARK: - ChartDelegate
 extension NFTDetailArtViewController:NFTChartViewDelegate{
 	func scrollStarted() {
-		tableView?.isScrollEnabled = false
+		tableView.isScrollEnabled = false
 	}
 
 	func scrollEnded() {
 		print("(DEBUG) scrollEnded , enabling TableView scroll")
-		tableView?.isScrollEnabled = true
+		tableView.isScrollEnabled = true
 	}
 
 }

@@ -24,5 +24,8 @@ extension UIViewController{
         navigationBar.isTranslucent = true
         self.navigationController?.view.backgroundColor = .clear
     }
+	
+	var navBarOrigin: CGPoint { navigationController?.navigationBar.frame.origin ?? .zero }
     
+	var isNavBarHidden: Bool { navigationController?.navigationBar.isHidden ?? false }
 }
