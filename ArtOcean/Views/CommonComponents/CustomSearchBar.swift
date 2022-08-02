@@ -12,9 +12,20 @@ protocol CustomSearchBarDelegate{
 	func searchWithFilter(_ word:String)
 }
 
-class CustomSearchBar:UIView{
+class CustomSearchBar:UIView {
 	
 	public var delegate:CustomSearchBarDelegate? = nil
+	
+	private var textField: UITextField = {
+		let textField = UITextField()
+		textField.backgroundColor = .clear
+		textField.attributedPlaceholder = NSAttributedString(string: "Search For Items", attributes: [NSAttributedString.Key.foregroundColor : UIColor.appGrayColor,NSAttributedString.Key.font : UIFont(name: "Satoshi-Medium", size: 14)!])
+		textField.font = UIFont(name: "Satoshi-Medium", size: 14)!
+		textField.textColor = .black
+		textField.setContentHuggingPriority(.init(249), for: .horizontal)
+		textField.setContentCompressionResistancePriority(.init(749), for: .horizontal)
+		return textField
+	}()
 	
 	override init(frame: CGRect) {
 		super.init(frame: frame)
@@ -26,41 +37,34 @@ class CustomSearchBar:UIView{
 	}
 	
 	func setupUI(){
-		let view = UIStackView()
-		view.spacing = 18.5
+		let stack = UIStackView()
+		stack.spacing = 18.5
 		
-		let textField = UITextField()
 		textField.delegate = self
-		textField.backgroundColor = .clear
-		textField.attributedPlaceholder = NSAttributedString(string: "Search For Items", attributes: [NSAttributedString.Key.foregroundColor : UIColor.appGrayColor,NSAttributedString.Key.font : UIFont(name: "Satoshi-Medium", size: 14)!])
-		textField.font = UIFont(name: "Satoshi-Medium", size: 14)!
-		textField.textColor = .black
-		textField.setContentHuggingPriority(.init(249), for: .horizontal)
-		textField.setContentCompressionResistancePriority(.init(749), for: .horizontal)
-		textField.layer.cornerRadius = 12
 		
 		let imageView = UIImageView()
-		imageView.image = .init(named: "search")
+		imageView.image = .init(named: "search-outline")
 		imageView.clipsToBounds = true
 		imageView.contentMode = .scaleAspectFit
+		stack.addArrangedSubview(imageView)
+		stack.addArrangedSubview(textField)
 		
-		view.addArrangedSubview(imageView)
-		view.addArrangedSubview(textField)
+		stack.translatesAutoresizingMaskIntoConstraints = false
+		stack.layer.borderColor = UIColor.appGrayColor.cgColor
+		stack.isLayoutMarginsRelativeArrangement = true
+		stack.layoutMargins = .init(vertical: 10, horizontal: 10)
+		stack.bordered()
+		addSubview(stack)
 		
-		view.translatesAutoresizingMaskIntoConstraints = false
-		view.layer.borderColor = UIColor.appGrayColor.cgColor
-		view.layer.borderWidth = 1
-		view.layer.cornerRadius = 12
-		view.isLayoutMarginsRelativeArrangement = true
-		view.layoutMargins = .init(top: 10, left: 25, bottom: 10, right: 25)
-		
-		addSubview(view)
-		
-		setContraintsToChild(view, edgeInsets: .init(top: 0, left: 10, bottom: 0, right: 10))
+		setContraintsToChild(stack, edgeInsets: .init(top: 0, left: 10, bottom: 0, right: 10))
 	}
 	
 	override var intrinsicContentSize: CGSize{
 		return .init(width: UIScreen.main.bounds.width, height: 55)
+	}
+	
+	public func showDismissKeyboard() {
+		textField.resignFirstResponder()
 	}
 	
 }
@@ -70,5 +74,10 @@ extension CustomSearchBar:UITextFieldDelegate{
 	func textFieldDidChangeSelection(_ textField: UITextField) {
 		guard let searchedText = textField.text else {return}
 		delegate?.searchWithFilter(searchedText)
+	}
+	
+	func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+		textField.resignFirstResponder()
+		return false
 	}
 }

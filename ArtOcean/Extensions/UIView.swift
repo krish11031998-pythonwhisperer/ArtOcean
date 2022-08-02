@@ -254,6 +254,23 @@ extension UIView{
 		get { layer.cornerRadius }
 		set { layer.cornerRadius = newValue }
 	}
+	
+	var borderWidth: CGFloat {
+		get { layer.borderWidth }
+		set { layer.borderWidth = newValue }
+	}
+	
+	var borderColor: UIColor? {
+		get { UIColor(cgColor: layer.borderColor ?? UIColor.clear.cgColor) }
+		set { layer.borderColor = newValue?.cgColor }
+	}
+	
+	
+	func bordered(cornerRadius: CGFloat = 8, borderWidth: CGFloat = 1, borderColor: UIColor = .black) {
+		self.cornerRadius = cornerRadius
+		self.borderWidth = borderWidth
+		self.borderColor = borderColor
+	}
 }
 
 extension NSLayoutConstraint{

@@ -52,10 +52,10 @@ class NFTDetailNavHeader: UIView {
 		imageView.transform = .init(scaleX: .zero, y: .zero)
 	}
 	
-	
 	public func animateIn(offset: CGFloat) {
+		let scale: CGFloat = offset != .zero ? .zero : 1
 		UIView.animate(withDuration: 0.25, delay: 0.3) {
-			self.imageView.transform = .init(scaleX: 1, y: 1)
+			self.imageView.transform = .init(scaleX: scale, y: scale)
 		}
 	}
 }
