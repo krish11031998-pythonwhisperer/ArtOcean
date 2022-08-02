@@ -22,7 +22,7 @@ class NFTDetailArtViewController:UIViewController{
 	private let headerHeight:CGFloat = 460
     private var prices:[Double]? = []
 	private var offers:NFTArtOffers = .init(repeating: .init(name: "John Doe", percent: "5.93", price: 12.03, time: 5), count: 5)
-	
+	private var navHeader: NFTDetailNavHeader = { NFTDetailNavHeader() }()
 	private var tableView:UITableView = {
 		let tableView = UITableView(frame: .zero, style: .grouped)
 		tableView.backgroundColor = .clear
@@ -108,7 +108,8 @@ class NFTDetailArtViewController:UIViewController{
         self.navigationController?.navigationBar.standardAppearance = .init(barAppearance: navbarAppearence)
         self.navigationController?.navigationBar.scrollEdgeAppearance = .init(barAppearance: navbarAppearence)
         self.navigationController?.navigationBar.isTranslucent = false
-        self.navigationItem.titleView = self.view.labelBuilder(text: self.nftArt?.Title ?? "", size: 18, weight: .bold, color: .appBlackColor, numOfLines: 1)
+		navHeader.configureHeader(image: .loadCache(nftArt?.metadata?.image ?? ""), title: nftArt?.Title ?? "")
+        self.navigationItem.titleView = navHeader
         self.navigationItem.leftBarButtonItem = self.backBarButton
     }
     
@@ -277,7 +278,9 @@ extension NFTDetailArtViewController:CustomButtonDelegate{
 //MARK: - ScrollViewDelegate
 extension NFTDetailArtViewController{
 	@objc func updateOnScroll(_ scrollView: UIScrollView) {
-		self.navigationController?.navigationBar.transform = .init(translationX: 0, y: min(scrollView.contentOffset.y - headerHeight * 0.75,0))
+		let navBarOffset = min(scrollView.contentOffset.y - headerHeight * 0.75,0)
+		self.navigationController?.navigationBar.transform = .init(translationX: 0, y: navBarOffset)
+		if navBarOffset == .zero { navHeader.animateIn(offset: navBarOffset) }
 		let _ = heroHeaderView?.animateHeaderView(scrollView)
     }
 	
@@ -299,15 +302,3 @@ extension NFTDetailArtViewController:NFTChartViewDelegate{
 	}
 
 }
-
-//MARK: - NotificationCenter
-//extension NFTDetailArtViewController {
-//
-//	@objc func scrollStarted() {
-//		tableView?.isScrollEnabled = false
-//	}
-//
-//	@objc func scrollEnded() {
-//		tableView?.isScrollEnabled = true
-//	}
-//}

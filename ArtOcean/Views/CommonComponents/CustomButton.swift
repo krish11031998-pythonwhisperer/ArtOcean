@@ -79,13 +79,14 @@ class CustomImageButton: UIButton {
 	let name: String?
 	var url: String?
 	let systemName: String?
-	
+	let bg: Bool
 	private let rescaleFactor: CGFloat = 0.375
 	
-	init(name:String?,systemName:String?,url:String?,frame:CGSize = .squared(30), handler: (() -> Void)? ) {
+	init(name:String?,systemName:String?,url:String?,frame:CGSize,addBG:Bool, handler: (() -> Void)? ) {
 		self.name = name
 		self.systemName = systemName
 		self.handler = handler
+		self.bg = addBG
 		super.init(frame: .init(origin: .zero, size: frame))
 		setupButton()
 	}
@@ -94,20 +95,20 @@ class CustomImageButton: UIButton {
 		fatalError("init(coder:) has not been implemented")
 	}
 	
-	convenience init(name:String?,frame:CGSize,handler:(() -> Void)?) {
-		self.init(name: name, systemName: nil,url: nil, frame: frame, handler: handler)
+	convenience init(name:String?,frame:CGSize = .squared(32),addBG: Bool = false,handler:(() -> Void)?) {
+		self.init(name: name, systemName: nil,url: nil, frame: frame, addBG: addBG, handler: handler)
 	}
 	
-	convenience init(systemName:String?,frame:CGSize,handler:(() -> Void)?) {
-		self.init(name: nil, systemName: systemName,url: nil, frame: frame, handler: handler)
+	convenience init(systemName:String?,frame:CGSize = .squared(32),addBG: Bool = false,handler:(() -> Void)?) {
+		self.init(name: nil, systemName: systemName,url: nil, frame: frame, addBG: addBG, handler: handler)
 	}
 	
-	convenience init(url:String?,frame:CGSize,handler:(() -> Void)?) {
-		self.init(name: nil, systemName: nil,url: url, frame: frame, handler: handler)
+	convenience init(url:String?,frame:CGSize = .squared(32),addBG: Bool = false,handler:(() -> Void)?) {
+		self.init(name: nil, systemName: nil,url: url, frame: frame, addBG: addBG, handler: handler)
 	}
 	
 	func setupButton() {
-		if let image = setupSystemImage() ?? setupImage() {
+		if let image = setupButtonImage() {
 			setImage(image, for: .normal)
 		}
 		self.addTarget(self, action: #selector(handleTap), for: .touchUpInside)
@@ -117,32 +118,32 @@ class CustomImageButton: UIButton {
 		handler?()
 	}
 	
-	func setupSystemImage() -> UIImage? {
-		guard let systemName = systemName else { return nil }
-		let imageView = UIImageView(frame: frame)
-		imageView.contentMode = .center
-		imageView.layer.borderWidth = 1
-		imageView.layer.borderColor = UIColor.appGrayColor.cgColor
-		imageView.layer.cornerRadius = frame.width.half()
-		imageView.image = UIImage(systemName: systemName,withConfiguration: UIImage.SymbolConfiguration(pointSize: 10, weight: .semibold))?
-			.resized(frame.size * rescaleFactor)
-		return imageView.snapshot
+	private var img: UIImage? {
+		if let validName = name {
+			return .init(named: validName)?.resized(frame.size * rescaleFactor)
+		} else if let validSystemName = systemName {
+			return .init(systemName: validSystemName, withConfiguration: UIImage.SymbolConfiguration(pointSize: 10, weight: .semibold))?
+				.resized(frame.size * rescaleFactor)
+		} else {
+			return nil
+		}
 	}
 	
-	func setupImage() -> UIImage? {
-		guard let name = name else { return nil }
+	func setupButtonImage() -> UIImage? {
 		let imageView = UIImageView(frame: frame)
 		imageView.contentMode = .center
-		imageView.image = UIImage(named: name)?.resized(frame.size * rescaleFactor)
-		imageView.layer.cornerRadius = frame.width.half()
+		if bg {
+			imageView.backgroundColor = .white
+		}
 		imageView.layer.borderWidth = 1
 		imageView.layer.borderColor = UIColor.appGrayColor.cgColor
-		
+		imageView.layer.cornerRadius = frame.width.half()
+		imageView.image = img?.withTintColor(.appPurpleColor)
 		return imageView.snapshot
 	}
 	
 	static func closeButton(handler: @escaping () -> Void) -> CustomImageButton {
-		let button: CustomImageButton = .init(systemName: "chevron.left", frame: .squared(32), handler: handler)
+		let button: CustomImageButton = .init(name: "chevron-left", frame: .squared(32), handler: handler)
 		return button
 	}
 	

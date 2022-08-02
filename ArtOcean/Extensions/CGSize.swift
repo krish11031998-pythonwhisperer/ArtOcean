@@ -19,4 +19,6 @@ extension CGSize {
 	}
 
 	var halfed: CGSize { self * 0.5 }
+	
+	static var smallestSqaure: CGSize { .squared(32) }
 }

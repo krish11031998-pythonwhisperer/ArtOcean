@@ -249,6 +249,11 @@ extension UIView{
 	func removeAllSubViews() {
 		subviews.forEach { $0.removeFromSuperview() }
 	}
+	
+	var cornerRadius: CGFloat {
+		get { layer.cornerRadius }
+		set { layer.cornerRadius = newValue }
+	}
 }
 
 extension NSLayoutConstraint{

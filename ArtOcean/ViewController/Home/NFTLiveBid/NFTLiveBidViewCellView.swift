@@ -23,9 +23,22 @@ class NFTLiveBidView : UIView {
     
     private lazy var price = self.labelBuilder(text: "3 ETH", size: 12, weight: .medium, color: .appGreenColor, numOfLines: 1)
 
-    private let shareButton:CustomButton = CustomButton(name: "share", handler: nil, autolayout: true)
-    
-    private let loveButton:CustomButton = CustomButton(name: "heart", handler: nil, autolayout: true)
+	private let shareButton:CustomImageButton = {
+		let button: CustomImageButton = .init(name: "share",addBG:true) {
+			print("(DEBUG) share pressed")
+		}
+		button.translatesAutoresizingMaskIntoConstraints = false
+		return button
+	}()
+	
+	private let loveButton:CustomImageButton = {
+		let button: CustomImageButton = .init(name: "heart",addBG:true) {
+			print("(DEBUG) heart pressed")
+		}
+		button.translatesAutoresizingMaskIntoConstraints = false
+		return button
+	}()
+	
     
     private lazy var artPriceAndTitleStack:UIStackView = {
 		let view:UIStackView = UIStackView(arrangedSubviews: [title,.spacer(),price])

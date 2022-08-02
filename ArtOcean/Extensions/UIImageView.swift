@@ -227,6 +227,13 @@ extension UIImage {
 		return img
 	}
 	
+	static func loadCache(_ urlString:String) -> UIImage? {
+		guard
+			let url = URL(string: urlString),
+			let img = ImageCache.cache[url]
+		else { return nil }
+		return img
+	}
 	
 }
 

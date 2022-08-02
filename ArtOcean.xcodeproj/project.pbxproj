@@ -41,6 +41,7 @@
 		EF3BF928287813E80070CAE5 /* UIEdgeInsets.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF3BF927287813E80070CAE5 /* UIEdgeInsets.swift */; };
 		EF3BF92A287AB3D10070CAE5 /* NFTAttributeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF3BF929287AB3D10070CAE5 /* NFTAttributeView.swift */; };
 		EF3BF92C287ACEBE0070CAE5 /* UILabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF3BF92B287ACEBE0070CAE5 /* UILabel.swift */; };
+		EF3C9A6F28999F6A007F5200 /* NFTLiveBidNavHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF3C9A6E28999F6A007F5200 /* NFTLiveBidNavHeader.swift */; };
 		EF480E0F285F85D400FC0F3F /* NFTAttributeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF480E0E285F85D400FC0F3F /* NFTAttributeCell.swift */; };
 		EF527441284AC53A008C77EC /* SDWebImage in Frameworks */ = {isa = PBXBuildFile; productRef = EF527440284AC53A008C77EC /* SDWebImage */; };
 		EF527443284AC53A008C77EC /* SDWebImageMapKit in Frameworks */ = {isa = PBXBuildFile; productRef = EF527442284AC53A008C77EC /* SDWebImageMapKit */; };
@@ -207,6 +208,7 @@
 		EF3BF927287813E80070CAE5 /* UIEdgeInsets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIEdgeInsets.swift; sourceTree = "<group>"; };
 		EF3BF929287AB3D10070CAE5 /* NFTAttributeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NFTAttributeView.swift; sourceTree = "<group>"; };
 		EF3BF92B287ACEBE0070CAE5 /* UILabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UILabel.swift; sourceTree = "<group>"; };
+		EF3C9A6E28999F6A007F5200 /* NFTLiveBidNavHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NFTLiveBidNavHeader.swift; sourceTree = "<group>"; };
 		EF480E0E285F85D400FC0F3F /* NFTAttributeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NFTAttributeCell.swift; sourceTree = "<group>"; };
 		EF527491284BA4BD008C77EC /* SectionbasedData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionbasedData.swift; sourceTree = "<group>"; };
 		EF527493284BECF4008C77EC /* Bundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bundle.swift; sourceTree = "<group>"; };
@@ -652,6 +654,7 @@
 				EFAB446028671EB600B33864 /* NFTPriceHistoryChartView.swift */,
 				EF3B4D50287073E400DD57DB /* NFTArtIntroductionView.swift */,
 				EF3BF929287AB3D10070CAE5 /* NFTAttributeView.swift */,
+				EF3C9A6E28999F6A007F5200 /* NFTLiveBidNavHeader.swift */,
 			);
 			path = NFTDetailView;
 			sourceTree = "<group>";
@@ -857,6 +860,7 @@
 				EF325A022880A02F001B0CA6 /* NotificationCenter.Name.swift in Sources */,
 				EF00F5D7284805C1003D8683 /* StatisticCollectionView.swift in Sources */,
 				EF3259FA2880925F001B0CA6 /* CollectionColumn.swift in Sources */,
+				EF3C9A6F28999F6A007F5200 /* NFTLiveBidNavHeader.swift in Sources */,
 				EF7447B4284A0F8000899476 /* ActivityCollectionViewCell.swift in Sources */,
 				EF8B0677283C20820050E726 /* UIImageView.swift in Sources */,
 				EFD13C232844196F000E422E /* NFTLiveBidCollectionProtocol.swift in Sources */,
