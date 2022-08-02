@@ -135,7 +135,7 @@ class NFTDetailArtViewController:UIViewController{
 		heroHeaderView = .init(nft: safeNFTArt, height: headerHeight, handler: { [weak self] in
 			self?.navigationController?.popViewController(animated: true)
 		})
-		view.addSubview(heroHeaderView!)
+		view.insertSubview(heroHeaderView!, at: 0)
 	}
 	
         
@@ -281,7 +281,8 @@ extension NFTDetailArtViewController{
 		let navBarOffset = min(scrollView.contentOffset.y - headerHeight * 0.75,0)
 		self.navigationController?.navigationBar.transform = .init(translationX: 0, y: navBarOffset)
 		 navHeader.animateIn(offset: navBarOffset)
-		let _ = heroHeaderView?.animateHeaderView(scrollView)
+//		let _ = heroHeaderView?.animateHeaderView(scrollView)
+		heroHeaderView?.animateHeaderView(scrollView)
     }
 	
 	@objc func updateNavBarOnTransformation(_ navBar:UINavigationBar) {

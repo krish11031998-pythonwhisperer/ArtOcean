@@ -76,12 +76,8 @@ class ChartView:UIView{
             
             view.addSubview(circle)
             
-            NSLayoutConstraint.activate([
-                circle.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-                circle.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-                circle.widthAnchor.constraint(equalToConstant: CGFloat(size.element)),
-                circle.heightAnchor.constraint(equalTo: circle.widthAnchor)
-            ])
+			view.setCentralizedChild(circle)
+			circle.setFrameConstraints(size: .squared(CGFloat(size.element)))
         }
         
         return view
@@ -196,8 +192,6 @@ extension ChartView{
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesMoved(touches, with: event)
-		guard let firstTouch = touches.first else { return }
-		firstTouch.findDirectionOfTouch(in: self)
         guard let location  = touches.first?.location(in: self),
               let nearestPoint = dataPoints.findNearestPoint(location),
               let idx = dataPoints.firstIndex(where: {$0 == nearestPoint})

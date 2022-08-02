@@ -34,7 +34,6 @@
 		EF3259FF2880925F001B0CA6 /* TableSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF3259F72880925E001B0CA6 /* TableSection.swift */; };
 		EF325A002880925F001B0CA6 /* TableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF3259F82880925E001B0CA6 /* TableView.swift */; };
 		EF325A022880A02F001B0CA6 /* NotificationCenter.Name.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF325A012880A02F001B0CA6 /* NotificationCenter.Name.swift */; };
-		EF325A042880A585001B0CA6 /* UITouch.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF325A032880A585001B0CA6 /* UITouch.swift */; };
 		EF325A062880BFDA001B0CA6 /* Numeric.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF325A052880BFDA001B0CA6 /* Numeric.swift */; };
 		EF358377284D371C00783D75 /* StretchyHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF358376284D371C00783D75 /* StretchyHeaderView.swift */; };
 		EF3B4D51287073E400DD57DB /* NFTArtIntroductionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF3B4D50287073E400DD57DB /* NFTArtIntroductionView.swift */; };
@@ -201,7 +200,6 @@
 		EF3259F72880925E001B0CA6 /* TableSection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableSection.swift; sourceTree = "<group>"; };
 		EF3259F82880925E001B0CA6 /* TableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableView.swift; sourceTree = "<group>"; };
 		EF325A012880A02F001B0CA6 /* NotificationCenter.Name.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationCenter.Name.swift; sourceTree = "<group>"; };
-		EF325A032880A585001B0CA6 /* UITouch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITouch.swift; sourceTree = "<group>"; };
 		EF325A052880BFDA001B0CA6 /* Numeric.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Numeric.swift; sourceTree = "<group>"; };
 		EF358376284D371C00783D75 /* StretchyHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StretchyHeaderView.swift; sourceTree = "<group>"; };
 		EF3B4D50287073E400DD57DB /* NFTArtIntroductionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NFTArtIntroductionView.swift; sourceTree = "<group>"; };
@@ -523,7 +521,6 @@
 				EF3259D2287C2761001B0CA6 /* CGSize.swift */,
 				EF3259D4287C79A2001B0CA6 /* CGFloat.swift */,
 				EF325A012880A02F001B0CA6 /* NotificationCenter.Name.swift */,
-				EF325A032880A585001B0CA6 /* UITouch.swift */,
 				EF325A052880BFDA001B0CA6 /* Numeric.swift */,
 			);
 			path = Extensions;
@@ -907,7 +904,6 @@
 				EF3BF928287813E80070CAE5 /* UIEdgeInsets.swift in Sources */,
 				EF00F5B72844F4A7003D8683 /* NFTBiddingModal.swift in Sources */,
 				EF00F5D52847A660003D8683 /* SliderSelectorView.swift in Sources */,
-				EF325A042880A585001B0CA6 /* UITouch.swift in Sources */,
 				EF8B0683283C2CA10050E726 /* AlchemyNFTDataModel.swift in Sources */,
 				EF8B06DE283E7C2C0050E726 /* Container.swift in Sources */,
 				EF00F5D02846D460003D8683 /* CustomLabel.swift in Sources */,

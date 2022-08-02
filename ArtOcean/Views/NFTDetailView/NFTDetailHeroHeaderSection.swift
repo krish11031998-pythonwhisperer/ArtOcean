@@ -67,8 +67,8 @@ class NFTHeroHeaderView:UIView{
         imageView.updateImageView(url: url)
     }
     
-    func animateHeaderView(_ scrollView:UIScrollView) ->  CGFloat{
-        return animateImageView(scrollView)
+    func animateHeaderView(_ scrollView:UIScrollView){
+		animateImageView(scrollView)
     }
 	
 	private lazy var backdropImage: UIView = {
@@ -79,7 +79,7 @@ class NFTHeroHeaderView:UIView{
 		return image
 	}()
 	
-    public func animateImageView(_ scrollView:UIScrollView) -> CGFloat{
+    public func animateImageView(_ scrollView:UIScrollView){
 		let point = scrollView.contentOffset.y
 		let totalHeight = height
         let maxPoint = totalHeight
@@ -98,9 +98,6 @@ class NFTHeroHeaderView:UIView{
 			}
 			self.backdropImage.alpha = self.imageScale
 		}.startAnimation()
-
-		
-		return originalImageHeight * 0.5 * imageScale + height
     }
     
     private func setupLayout(){

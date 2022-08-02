@@ -16,9 +16,7 @@ class NFTAttributeView:ConfigurableCell {
 		let stack = UIStackView()
 		stack.axis = .vertical
 		stack.spacing = 0
-		stack.layer.cornerRadius = 20
-		stack.layer.borderColor = UIColor.appBlackColor.withAlphaComponent(0.25).cgColor
-		stack.layer.borderWidth = 1.25
+		stack.bordered(cornerRadius: 20, borderWidth: 1.25, borderColor: UIColor.appBlackColor.withAlphaComponent(0.25))
 		return stack
 	}()
 
@@ -38,6 +36,7 @@ class NFTAttributeView:ConfigurableCell {
 	
 	func configureCell(with model: [Attribute]) {
 		selectionStyle = .none
+		backgroundColor = .clear
 		isUserInteractionEnabled = false
 		if !stackView.arrangedSubviews.isEmpty {
 			stackView.arrangedSubviews.forEach { $0.removeFromSuperview() }
