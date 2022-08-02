@@ -32,11 +32,11 @@ class NFTHeroHeaderView:UIView{
     
     private lazy var imageView:CustomImageView = .init(cornerRadius: 16)
     
-	private lazy var backButton:CustomButton = {
-		let button = CustomButton.backButton
-		button.translatesAutoresizingMaskIntoConstraints = false
-		return button
-	}()
+//	private lazy var backButton:CustomButton = {
+//		let button = CustomButton.backButton
+//		button.translatesAutoresizingMaskIntoConstraints = false
+//		return button
+//	}()
 //
     //MARK: - View LifeCycle and Init
     
@@ -44,7 +44,7 @@ class NFTHeroHeaderView:UIView{
 		self.height = height
 		nftArt = nft
 		super.init(frame:.init(origin: .zero, size: .init(width: UIScreen.main.bounds.width, height: height)))
-		backButton.handler = handler
+//		backButton.handler = handler
         setupViews()
         setupLayout()
 		isUserInteractionEnabled = true
@@ -57,7 +57,7 @@ class NFTHeroHeaderView:UIView{
     
     private func setupViews(){
 		addSubview(backdropImage)
-		addSubview(backButton)
+//		addSubview(backButton)
 		addSubview(imageView)
 		imageView.updateImageView(url: nftArt.metadata?.image)
     }
@@ -101,12 +101,11 @@ class NFTHeroHeaderView:UIView{
     }
     
     private func setupLayout(){
+		imageView.setFrameConstraints(size: .init(width: originalImageWidth, height: originalImageHeight))
         NSLayoutConstraint.activate([
             imageView.centerXAnchor.constraint(equalTo: centerXAnchor),
-			imageView.heightAnchor.constraint(equalToConstant: originalImageHeight),
-			imageView.widthAnchor.constraint(equalToConstant: originalImageWidth),
-			backButton.topAnchor.constraint(equalToSystemSpacingBelow: topAnchor, multiplier: 7),
-			backButton.leadingAnchor.constraint(equalToSystemSpacingAfter: leadingAnchor, multiplier: 2)
+//			backButton.topAnchor.constraint(equalToSystemSpacingBelow: topAnchor, multiplier: 7),
+//			backButton.leadingAnchor.constraint(equalToSystemSpacingAfter: leadingAnchor, multiplier: 2)
         ])
 		
 		topAnchorPaddingConstraint = imageView.topAnchor.constraint(equalTo: topAnchor,constant: 132)

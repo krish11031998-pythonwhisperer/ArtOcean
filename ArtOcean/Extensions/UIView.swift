@@ -8,9 +8,9 @@
 import Foundation
 import UIKit
 
-
+//MARK: - UIView Common Extension
 extension UIView{
-    
+
 	static func clearView(frame:CGRect = .zero) -> UIView{
         let view = UIView()
         view.backgroundColor = .clear
@@ -148,6 +148,59 @@ extension UIView{
 		
 	}
 	
+	static func spacer(width:CGFloat? = nil,height:CGFloat? = nil) -> UIView{
+		let view = UIView(frame: .init(origin: .zero, size: .init(width: width ?? 0, height: height ?? 0)))
+		view.setFrameConstraints(width: width, height: height)
+		return view
+	}
+		
+	var snapshot:UIImage {
+		let renderer = UIGraphicsImageRenderer(bounds: bounds)
+		let img =  renderer.image { context in
+			layer.render(in: context.cgContext)
+		}
+		return img
+	}
+		
+	var cornerRadius: CGFloat {
+		get { layer.cornerRadius }
+		set { layer.cornerRadius = newValue }
+	}
+	
+	var borderWidth: CGFloat {
+		get { layer.borderWidth }
+		set { layer.borderWidth = newValue }
+	}
+	
+	var borderColor: UIColor? {
+		get { UIColor(cgColor: layer.borderColor ?? UIColor.clear.cgColor) }
+		set { layer.borderColor = newValue?.cgColor }
+	}
+	
+	
+	func bordered(cornerRadius: CGFloat = 8, borderWidth: CGFloat = 1, borderColor: UIColor = .black) {
+		self.cornerRadius = cornerRadius
+		self.borderWidth = borderWidth
+		self.borderColor = borderColor
+	}
+}
+
+//MARK: - UIView Constaint Extension
+
+extension UIView {
+	enum Alignment {
+		case topLeading
+		case top
+		case topTrailing
+		case leading
+		case center
+		case trailing
+		case bottomLeading
+		case bottom
+		case bottomTrailing
+
+	}
+	
 	func addViewAndSetConstraints(_ innerView:UIView?,edgeInsets:UIEdgeInsets) {
 		guard let safeInnerView = innerView else { return }
 		addSubview(safeInnerView)
@@ -198,12 +251,6 @@ extension UIView{
 		}
 	}
 	
-	static func spacer(width:CGFloat? = nil,height:CGFloat? = nil) -> UIView{
-		let view = UIView(frame: .init(origin: .zero, size: .init(width: width ?? 0, height: height ?? 0)))
-		view.setFrameConstraints(width: width, height: height)
-		return view
-	}
-	
 	func setFrameConstraints(width:CGFloat? = nil,height:CGFloat? = nil){
 		widthAnchor.constraint(equalToConstant: width ?? 0).isActive = width != nil
 		heightAnchor.constraint(equalToConstant: height ?? 0).isActive = height != nil
@@ -238,38 +285,43 @@ extension UIView{
 		bottomAnchor.constraint(equalToSystemSpacingBelow: childView.bottomAnchor, multiplier: paddingFactor).isActive = true
 	}
 	
-	var snapshot:UIImage {
-		let renderer = UIGraphicsImageRenderer(bounds: bounds)
-		let img =  renderer.image { context in
-			layer.render(in: context.cgContext)
-		}
-		return img
-	}
-	
 	func removeAllSubViews() {
 		subviews.forEach { $0.removeFromSuperview() }
 	}
 	
-	var cornerRadius: CGFloat {
-		get { layer.cornerRadius }
-		set { layer.cornerRadius = newValue }
-	}
-	
-	var borderWidth: CGFloat {
-		get { layer.borderWidth }
-		set { layer.borderWidth = newValue }
-	}
-	
-	var borderColor: UIColor? {
-		get { UIColor(cgColor: layer.borderColor ?? UIColor.clear.cgColor) }
-		set { layer.borderColor = newValue?.cgColor }
-	}
-	
-	
-	func bordered(cornerRadius: CGFloat = 8, borderWidth: CGFloat = 1, borderColor: UIColor = .black) {
-		self.cornerRadius = cornerRadius
-		self.borderWidth = borderWidth
-		self.borderColor = borderColor
+	func setFrameLayout(childView: UIView,alignment: Alignment, paddingFactor: [CGFloat]) {
+		var constraints: [NSLayoutConstraint]
+		switch alignment {
+		case .topLeading:
+			constraints = [childView.topAnchor.constraint(equalTo: topAnchor),childView.leadingAnchor.constraint(equalTo: leadingAnchor)]
+		case .top:
+			constraints = [childView.topAnchor.constraint(equalTo: topAnchor)]
+		case .topTrailing:
+			constraints = [childView.topAnchor.constraint(equalTo: topAnchor),childView.trailingAnchor.constraint(equalTo: trailingAnchor)]
+		case .leading:
+			constraints = [childView.leadingAnchor.constraint(equalTo: leadingAnchor)]
+		case .center:
+			constraints = [childView.centerXAnchor.constraint(equalTo: centerXAnchor),childView.centerYAnchor.constraint(equalTo: centerYAnchor)]
+		case .trailing:
+			constraints = [childView.trailingAnchor.constraint(equalTo: trailingAnchor)]
+		case .bottomLeading:
+			constraints = [childView.bottomAnchor.constraint(equalTo: bottomAnchor),childView.leadingAnchor.constraint(equalTo: leadingAnchor)]
+		case .bottom:
+			constraints = [childView.bottomAnchor.constraint(equalTo: bottomAnchor)]
+		case .bottomTrailing:
+			constraints = [childView.bottomAnchor.constraint(equalTo: bottomAnchor),childView.trailingAnchor.constraint(equalTo: trailingAnchor)]
+		}
+		
+		guard constraints.count == paddingFactor.count else { fatalError("(Error) The Constraints provided dont have equal number of paddingFactor Values") }
+		
+		for (constraint,constant) in zip(constraints,paddingFactor) {
+			constraint.constant = constant
+		}
+		
+		removeConstraints(constraints)
+		childView.translatesAutoresizingMaskIntoConstraints = false
+		NSLayoutConstraint.activate(constraints)
+		
 	}
 }
 

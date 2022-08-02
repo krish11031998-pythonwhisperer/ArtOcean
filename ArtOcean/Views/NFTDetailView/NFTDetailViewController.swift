@@ -23,6 +23,10 @@ class NFTDetailArtViewController:UIViewController{
     private var prices:[Double]? = []
 	private var offers:NFTArtOffers = .init(repeating: .init(name: "John Doe", percent: "5.93", price: 12.03, time: 5), count: 5)
 	private var navHeader: NFTDetailNavHeader = { NFTDetailNavHeader() }()
+	private lazy var backButton:CustomButton = {
+		let button = CustomButton.backButton
+		return button
+	}()
 	private var tableView:UITableView = {
 		let tableView = UITableView(frame: .zero, style: .grouped)
 		tableView.backgroundColor = .clear
@@ -216,7 +220,13 @@ class NFTDetailArtViewController:UIViewController{
 	
 	func buildTableHeaderView(){
 		tableHeaderView = UIView(frame: .init(origin: .zero, size: .init(width: UIScreen.main.bounds.width, height: headerHeight)))
-		tableHeaderView?.backgroundColor = .clear
+		tableHeaderView!.backgroundColor = .clear
+		tableHeaderView!.isUserInteractionEnabled = true
+		backButton.handler = { [weak self] in
+			self?.navigationController?.popViewController(animated: true)
+		}
+		tableHeaderView!.addSubview(backButton)
+		tableHeaderView!.setFrameLayout(childView: backButton, alignment: .topLeading, paddingFactor: [56,16])
 		tableView.tableHeaderView = tableHeaderView
 	}
 	
