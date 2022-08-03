@@ -226,7 +226,7 @@ class NFTDetailArtViewController:UIViewController{
 			self?.navigationController?.popViewController(animated: true)
 		}
 		tableHeaderView!.addSubview(backButton)
-		tableHeaderView!.setFrameLayout(childView: backButton, alignment: .topLeading, paddingFactor: [56,16])
+		tableHeaderView!.setFrameLayout(childView: backButton, alignment: .topLeading, paddingFactor: .init(vertical: 56, horizontal: 16))
 		tableView.tableHeaderView = tableHeaderView
 	}
 	

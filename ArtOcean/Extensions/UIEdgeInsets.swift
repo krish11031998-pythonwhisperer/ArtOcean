@@ -14,4 +14,11 @@ extension UIEdgeInsets {
 		self.init(top: vertical, left: horizontal, bottom: vertical, right: horizontal)
 	}
 	
+	var vertical: CGFloat {
+		top == bottom ? top : .zero
+	}
+	
+	var horizontal: CGFloat {
+		self.left == self.right ? self.left : .zero
+	}
 }

@@ -89,24 +89,14 @@ class NFTHeroHeaderView:UIView{
 		UIViewPropertyAnimator(duration: 0.35, curve: .easeInOut) {
 			self.imageView.transform = .init(scaleX: self.imageScale, y: self.imageScale)
 			self.topAnchorPaddingConstraint?.constant = scaleFactor * self.imageViewTopPadding
-			if self.imageScale < 0.35 {
-				self.imageView.alpha = 0
-			}else if self.imageScale > 0.85{
-				self.imageView.alpha = 1
-			}else{
-				self.imageView.alpha = self.imageScale
-			}
+			self.imageView.alpha = self.imageScale < 0.35 ? 0 : self.imageScale > 0.85 ? 1 : self.imageScale
 			self.backdropImage.alpha = self.imageScale
 		}.startAnimation()
     }
     
     private func setupLayout(){
 		imageView.setFrameConstraints(size: .init(width: originalImageWidth, height: originalImageHeight))
-        NSLayoutConstraint.activate([
-            imageView.centerXAnchor.constraint(equalTo: centerXAnchor),
-//			backButton.topAnchor.constraint(equalToSystemSpacingBelow: topAnchor, multiplier: 7),
-//			backButton.leadingAnchor.constraint(equalToSystemSpacingAfter: leadingAnchor, multiplier: 2)
-        ])
+		setFrameLayout(childView: imageView, alignment: .centerX, paddingFactor: .zero)
 		
 		topAnchorPaddingConstraint = imageView.topAnchor.constraint(equalTo: topAnchor,constant: 132)
 		topAnchorPaddingConstraint?.isActive = true

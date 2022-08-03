@@ -194,11 +194,21 @@ extension UIView {
 		case topTrailing
 		case leading
 		case center
+		case centerX
+		case centerY
 		case trailing
 		case bottomLeading
 		case bottom
 		case bottomTrailing
 
+//		var anchors:[NSLayoutAnchor<AnyObject>] {
+//			switch self {
+//			case .topLeading :
+//				return [topAnchor,leadingAnchor]
+//			default:
+//				return [centerXAnchor]
+//			}
+//		}
 	}
 	
 	func addViewAndSetConstraints(_ innerView:UIView?,edgeInsets:UIEdgeInsets) {
@@ -289,33 +299,46 @@ extension UIView {
 		subviews.forEach { $0.removeFromSuperview() }
 	}
 	
-	func setFrameLayout(childView: UIView,alignment: Alignment, paddingFactor: [CGFloat]) {
+	func setFrameLayout(childView: UIView,alignment: Alignment, paddingFactor: UIEdgeInsets = .zero) {
 		var constraints: [NSLayoutConstraint]
 		switch alignment {
 		case .topLeading:
-			constraints = [childView.topAnchor.constraint(equalTo: topAnchor),childView.leadingAnchor.constraint(equalTo: leadingAnchor)]
+			constraints = [
+				childView.topAnchor.constraint(equalTo: topAnchor,constant: paddingFactor.vertical),
+				childView.leadingAnchor.constraint(equalTo: leadingAnchor,constant: paddingFactor.horizontal)
+			]
 		case .top:
-			constraints = [childView.topAnchor.constraint(equalTo: topAnchor)]
+			constraints = [childView.topAnchor.constraint(equalTo: topAnchor,constant: paddingFactor.vertical)]
 		case .topTrailing:
-			constraints = [childView.topAnchor.constraint(equalTo: topAnchor),childView.trailingAnchor.constraint(equalTo: trailingAnchor)]
+			constraints = [
+				childView.topAnchor.constraint(equalTo: topAnchor,constant: paddingFactor.vertical),
+				childView.trailingAnchor.constraint(equalTo: trailingAnchor,constant: paddingFactor.horizontal)
+			]
 		case .leading:
-			constraints = [childView.leadingAnchor.constraint(equalTo: leadingAnchor)]
+			constraints = [childView.leadingAnchor.constraint(equalTo: leadingAnchor,constant: paddingFactor.horizontal)]
 		case .center:
-			constraints = [childView.centerXAnchor.constraint(equalTo: centerXAnchor),childView.centerYAnchor.constraint(equalTo: centerYAnchor)]
+			constraints = [
+				childView.centerXAnchor.constraint(equalTo: centerXAnchor,constant: paddingFactor.horizontal),
+				childView.centerYAnchor.constraint(equalTo: centerYAnchor,constant: paddingFactor.vertical)
+			]
+		case .centerX:
+			constraints = [childView.centerXAnchor.constraint(equalTo: centerXAnchor,constant: paddingFactor.horizontal)]
+		case .centerY:
+			constraints = [childView.centerYAnchor.constraint(equalTo: centerYAnchor,constant: paddingFactor.vertical)]
 		case .trailing:
-			constraints = [childView.trailingAnchor.constraint(equalTo: trailingAnchor)]
+			constraints = [childView.trailingAnchor.constraint(equalTo: trailingAnchor,constant: paddingFactor.horizontal)]
 		case .bottomLeading:
-			constraints = [childView.bottomAnchor.constraint(equalTo: bottomAnchor),childView.leadingAnchor.constraint(equalTo: leadingAnchor)]
+			constraints = [
+				childView.bottomAnchor.constraint(equalTo: bottomAnchor,constant: paddingFactor.vertical),
+				childView.leadingAnchor.constraint(equalTo: leadingAnchor,constant: paddingFactor.horizontal)
+			]
 		case .bottom:
-			constraints = [childView.bottomAnchor.constraint(equalTo: bottomAnchor)]
+			constraints = [childView.bottomAnchor.constraint(equalTo: bottomAnchor,constant: paddingFactor.vertical)]
 		case .bottomTrailing:
-			constraints = [childView.bottomAnchor.constraint(equalTo: bottomAnchor),childView.trailingAnchor.constraint(equalTo: trailingAnchor)]
-		}
-		
-		guard constraints.count == paddingFactor.count else { fatalError("(Error) The Constraints provided dont have equal number of paddingFactor Values") }
-		
-		for (constraint,constant) in zip(constraints,paddingFactor) {
-			constraint.constant = constant
+			constraints = [
+				childView.bottomAnchor.constraint(equalTo: bottomAnchor,constant: paddingFactor.vertical),
+				childView.trailingAnchor.constraint(equalTo: trailingAnchor,constant: paddingFactor.horizontal)
+			]
 		}
 		
 		removeConstraints(constraints)
