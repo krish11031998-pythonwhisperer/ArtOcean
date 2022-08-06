@@ -19,7 +19,7 @@ class CustomTableWrapperView<Cell:InnerConfigurableView> : ConfigurableCell {
 		let content = Cell()
 		removeAllSubViews()
 		addViewAndSetConstraints(content, edgeInsets: Cell.insetPadding)
-		content.configureCell(with: model)
+		content.configureView(with: model)
 	}
 	
 	

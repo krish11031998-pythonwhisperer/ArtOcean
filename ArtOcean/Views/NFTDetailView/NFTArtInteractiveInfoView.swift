@@ -25,13 +25,13 @@ class NFTArtInteractiveInfoView:UIView{
     }()
     
     private let shareButton:CustomImageButton = {
-		.init(name: "share") {
+		.init(name: .share) {
 			print("(DEBUG) heart pressed")
 		}
 	}()
     
 	private let loveButton:CustomImageButton = {
-		.init(name: "heart") {
+		.init(name: .heartOutline) {
 			print("(DEBUG) heart pressed")
 		}
 	}()

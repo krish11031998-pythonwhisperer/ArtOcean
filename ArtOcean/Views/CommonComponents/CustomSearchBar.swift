@@ -42,9 +42,8 @@ class CustomSearchBar:UIView {
 		
 		textField.delegate = self
 		
-		let imageView = UIImageView()
-		imageView.image = .init(named: "search-outline")
-		imageView.clipsToBounds = true
+		let imageView = UIImageView(frame: .init(origin: .zero, size: .smallestSqaure))
+		imageView.image = .Catalogue.searchOutline.image
 		imageView.contentMode = .scaleAspectFit
 		stack.addArrangedSubview(imageView)
 		stack.addArrangedSubview(textField)

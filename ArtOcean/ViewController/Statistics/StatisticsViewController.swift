@@ -38,7 +38,7 @@ class StatisticsViewController: UIViewController {
     }
 
     func configNavbar(){
-        let searchButton = CustomButton(name: "search", handler: nil, autolayout: false)
+		let searchButton = CustomImageButton(name: .searchOutline, frame: .smallestSqaure, addBG: true, handler: nil)
         let label = CustomLabel(text: "Statistics", size: 22, weight: .bold, color: .appBlackColor, numOfLines: 1)
         label.translatesAutoresizingMaskIntoConstraints = true
         self.navigationItem.leftBarButtonItem = .init(customView: label)

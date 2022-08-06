@@ -76,17 +76,33 @@ class CustomButton:UIView{
 class CustomImageButton: UIButton {
 	
 	public var handler: (() -> Void)?
-	let name: String?
+	let name: UIImage.Catalogue?
 	var url: String?
 	let systemName: String?
 	let bg: Bool
+	let bgColor: UIColor
+	let buttonTintColor: UIColor
+	let bordered: Bool
 	private let rescaleFactor: CGFloat = 0.375
 	
-	init(name:String?,systemName:String?,url:String?,frame:CGSize,addBG:Bool, handler: (() -> Void)? ) {
+	init(
+		name:UIImage.Catalogue?,
+		systemName:String?,
+		url:String?,
+		frame:CGSize,
+		addBG:Bool,
+		tintColor: UIColor,
+		bgColor: UIColor,
+		bordered: Bool,
+		handler: (() -> Void)?
+	) {
 		self.name = name
 		self.systemName = systemName
 		self.handler = handler
 		self.bg = addBG
+		self.buttonTintColor = tintColor
+		self.bgColor = bgColor
+		self.bordered = bordered
 		super.init(frame: .init(origin: .zero, size: frame))
 		setupButton()
 	}
@@ -95,21 +111,31 @@ class CustomImageButton: UIButton {
 		fatalError("init(coder:) has not been implemented")
 	}
 	
-	convenience init(name:String?,frame:CGSize = .squared(32),addBG: Bool = false,handler:(() -> Void)?) {
-		self.init(name: name, systemName: nil,url: nil, frame: frame, addBG: addBG, handler: handler)
+	convenience init(name:UIImage.Catalogue?,frame:CGSize = .squared(32),addBG: Bool = true,tintColor: UIColor = .black, bgColor: UIColor = .appWhiteBackgroundColor, bordered: Bool = true,handler:(() -> Void)?) {
+		self.init(name: name, systemName: nil,url: nil, frame: frame, addBG: addBG,tintColor: tintColor,bgColor: bgColor,bordered: bordered, handler: handler)
 	}
 	
-	convenience init(systemName:String?,frame:CGSize = .squared(32),addBG: Bool = false,handler:(() -> Void)?) {
-		self.init(name: nil, systemName: systemName,url: nil, frame: frame, addBG: addBG, handler: handler)
+	convenience init(systemName:String?,frame:CGSize = .squared(32),addBG: Bool = true,tintColor: UIColor = .black, bgColor: UIColor = .appWhiteBackgroundColor, bordered: Bool = true,handler:(() -> Void)?) {
+		self.init(name: nil, systemName: systemName,url: nil, frame: frame, addBG: addBG,tintColor: tintColor,bgColor: bgColor,bordered: bordered, handler: handler)
 	}
 	
-	convenience init(url:String?,frame:CGSize = .squared(32),addBG: Bool = false,handler:(() -> Void)?) {
-		self.init(name: nil, systemName: nil,url: url, frame: frame, addBG: addBG, handler: handler)
+	convenience init(url:String?,frame:CGSize = .squared(32),addBG: Bool = true,tintColor: UIColor = .black, bgColor: UIColor = .appWhiteBackgroundColor, bordered: Bool = true,handler:(() -> Void)?) {
+		self.init(name: nil, systemName: nil,url: url, frame: frame, addBG: addBG,tintColor: tintColor,bgColor: bgColor,bordered: bordered, handler: handler)
+	}
+	
+	override var isSelected: Bool {
+		willSet {
+			UIView.animate(withDuration: 0.15, delay: 0, options: .curveEaseInOut) {
+				self.transform = .init(scaleX: 0.9, y: 0.9)
+			}
+		}
 	}
 	
 	func setupButton() {
 		if let image = setupButtonImage() {
 			setImage(image, for: .normal)
+			setBackgroundImage(.solid(color: .clear), for: .normal)
+			setBackgroundImage(.solid(color: .clear), for: .selected)
 		}
 		self.addTarget(self, action: #selector(handleTap), for: .touchUpInside)
 	}
@@ -120,7 +146,7 @@ class CustomImageButton: UIButton {
 	
 	private var img: UIImage? {
 		if let validName = name {
-			return .init(named: validName)?.resized(frame.size * rescaleFactor)
+			return .buildCatalogueImage(name: validName, size: frame.size * rescaleFactor)
 		} else if let validSystemName = systemName {
 			return .init(systemName: validSystemName, withConfiguration: UIImage.SymbolConfiguration(pointSize: 10, weight: .semibold))?
 				.resized(frame.size * rescaleFactor)
@@ -133,17 +159,19 @@ class CustomImageButton: UIButton {
 		let imageView = UIImageView(frame: frame)
 		imageView.contentMode = .center
 		if bg {
-			imageView.backgroundColor = .white
+			imageView.backgroundColor = bgColor
 		}
-		imageView.layer.borderWidth = 1
-		imageView.layer.borderColor = UIColor.appGrayColor.cgColor
-		imageView.layer.cornerRadius = frame.width.half()
-		imageView.image = img?.withTintColor(.appPurpleColor)
+		
+		if bordered {
+			imageView.bordered(cornerRadius: frame.width.half(), borderWidth: 1, borderColor: .appGrayColor)
+		}
+		
+		imageView.image = img?.withTintColor(buttonTintColor)
 		return imageView.snapshot
 	}
 	
 	static func closeButton(handler: @escaping () -> Void) -> CustomImageButton {
-		let button: CustomImageButton = .init(name: "chevron-left", frame: .squared(32), handler: handler)
+		let button: CustomImageButton = .init(name: .chevronLeft, frame: .squared(32), handler: handler)
 		return button
 	}
 	

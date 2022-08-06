@@ -8,6 +8,22 @@
 import Foundation
 import UIKit
 
+fileprivate extension UIView {
+	static func buttonBuilder(_ buttonName:UIImage.Catalogue, _ buttonTitle:String, handler: @escaping () -> Void) -> UIView {
+		let button = CustomImageButton(name: buttonName, frame: .squared(40), addBG: true, handler: nil)
+		let label = CustomLabel(text: buttonTitle, size: 12, weight: .medium, color: .gray,numOfLines: 1,adjustFontSize: false)
+		label.textAlignment = .center
+		let stack = UIStackView(arrangedSubviews: [button,label])
+		stack.axis = .vertical
+		stack.spacing = 12
+		stack.distribution = .fill
+		stack.alignment = .center
+		stack.accessibilityIdentifier = buttonTitle
+		button.handler = handler
+		return stack
+	}
+}
+
 protocol ProfileHeaderEventDelegate {
 	func clickedOnProfileButton(_ identifier: String)
 }
@@ -23,19 +39,22 @@ class ProfileHeaderView:UIView {
 	
 	private let profileHeader:UILabel =  CustomLabel(text: "Profile", size: 22, weight: .bold, color: .white)
 	
-	private let settingButton:UIView = { CustomButton(frame: .init(origin: .zero, size: .squared(40)),cornerRadius: 20, name: "settings", handler: nil) }()
+	private let settingButton:UIView = { CustomImageButton(name: .userOutline, frame: .squared(40), addBG: true, handler: nil) }()
 	
-	private lazy var favoriteButton:UIView = { buttonBuilder("favorites", "Favorites") }()
+	private lazy var buttons: [UIView] = {
+		[(UIImage.Catalogue.heartOutline,"Favorites"),
+		 (UIImage.Catalogue.creditCardOutline, "Wallet"),
+		 (UIImage.Catalogue.pencil, "Draft"),
+		 (UIImage.Catalogue.userOutline, "Profile")
+		].map { (img,title) in .buttonBuilder(img, title) { [weak self] in self?.delegate?.clickedOnProfileButton(title)} }
+
+	}()
 	
-	private lazy var walletButton:UIView = { buttonBuilder("wallet", "Wallet") }()
-	
-	private lazy var draftButton:UIView = { buttonBuilder("draft", "Draft") }()
-	
-	private lazy var profileButton:UIView = { buttonBuilder("profile", "Profile") }()
 	
 	private lazy var mainStack: UIStackView = {
 		let stack = UIStackView(arrangedSubviews: [.spacer(height: 56)])
 		stack.axis = .vertical
+		stack.alignment = .center
 		return stack
 	}()
 	
@@ -83,35 +102,18 @@ class ProfileHeaderView:UIView {
 	}
 	
 	private func setupTopHeaderView() {
-		let stack: UIStackView = .init(arrangedSubviews: [.spacer(width: 24),profileHeader,.spacer(),settingButton,.spacer(width: 24)])
+		let stack: UIStackView = .init(arrangedSubviews: [profileHeader,.spacer(),settingButton])
 		mainStack.addArrangedSubview(stack)
+		mainStack.setHorizontalConstraintsToChild(stack, edgeInsets: .init(vertical: .zero, horizontal: 20), withPriority: 999)
 		mainStack.setCustomSpacing(46, after: stack)
 	}
 	
-	private func buttonBuilder(_ buttonName:String, _ buttonTitle:String) -> UIView {
-		let button = CustomButton(frame: .init(origin: .zero, size: .squared(40)),cornerRadius: 20, name: buttonName)
-		let label = CustomLabel(text: buttonTitle, size: 12, weight: .medium, color: .gray,numOfLines: 1,adjustFontSize: false)
-		label.textAlignment = .center
-		let stack = UIStackView(arrangedSubviews: [button,label])
-		stack.axis = .vertical
-		stack.spacing = 5
-		stack.alignment = .center
-		button.setWidthWithPriority(40, priority: .defaultHigh)
-		label.setContentCompressionResistancePriority(.required, for: .horizontal)
-		stack.accessibilityIdentifier = buttonTitle
-		button.handler = { [weak self] in self?.delegate?.clickedOnProfileButton(buttonTitle) }
-		return stack
-	}
-	
 	private func profileOptionsView() {
-		let stack = UIStackView(arrangedSubviews: [.spacer(width:50),favoriteButton,.spacer(),profileButton,.spacer(),walletButton,.spacer(),draftButton,.spacer(width: 50)])
+		let stack = UIStackView(arrangedSubviews: buttons)
 		stack.alignment = .center
-		stack.spacing = 10
-		let availableWidth = UIScreen.main.bounds.width - 100
-		let viewWidth = availableWidth/CGFloat(stack.arrangedSubviews.count) - stack.spacing * 0.5
-		
-		stack.arrangedSubviews.forEach { $0.setWidthWithPriority(viewWidth, priority: .defaultHigh) }
+		stack.distribution = .fillEqually
+		stack.spacing = 0
 		mainStack.addArrangedSubview(stack)
-//		mainStack.addArrangedSubview(.spacer())
+		mainStack.setHorizontalConstraintsToChild(stack, edgeInsets: .init(vertical: .zero, horizontal: 20), withPriority: 999)
 	}
 }

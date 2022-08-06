@@ -15,11 +15,13 @@ protocol Configurable{
 }
 
 protocol ConfigurableStyling {
+	associatedtype Model
+	func configureView(with model:Model)
 	static var insetPadding: UIEdgeInsets { get }
 	func prepareCellForReuse()
 }
 
-typealias InnerConfigurableView = UIView & Configurable & ConfigurableStyling
+typealias InnerConfigurableView = UIView & ConfigurableStyling
 
 
 typealias ConfigurableCell = UITableViewCell & Configurable

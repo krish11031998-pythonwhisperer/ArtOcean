@@ -8,6 +8,46 @@
 import Foundation
 import UIKit
 
+fileprivate extension CustomImageButton {
+	
+	static func walletButton(name: UIImage.Catalogue) -> CustomImageButton {
+		let button = CustomImageButton(name: name, frame: .squared(55), addBG: true, tintColor: .appPurpleColor, bgColor: .appPurple50Color, bordered: false, handler: nil)
+		button.imageView?.cornerRadius = CGFloat(55).half()
+		return button
+	}
+}
+
+fileprivate extension UIImage.Catalogue {
+	
+	var buttonName: String {
+		switch self {
+			case .arrowDown:
+				return "Received"
+			case .creditCard:
+				return "Buy"
+			case .arrowUpRight:
+				return "Send"
+			case .switchHorizontal:
+				return "Swap"
+			default:
+				return ""
+		}
+	}
+}
+
+fileprivate extension UIStackView {
+	
+	static func walletButton(name: UIImage.Catalogue) -> UIStackView {
+		let button = CustomImageButton.walletButton(name: name)
+		let label = CustomLabel(text: name.buttonName, size: 14, weight: .medium, color: .appPurpleColor, numOfLines: 1)
+		let stack = UIStackView(arrangedSubviews: [button,label])
+		stack.alignment = .center
+		stack.axis = .vertical
+		stack.spacing = 12
+		return stack
+	}
+}
+
 class WalletDetailView:UIViewController{
     
     private var items:[TransactionModel] = txns
@@ -38,8 +78,12 @@ class WalletDetailView:UIViewController{
     
     
     private lazy var walletActionView:UIView = {
-        let stack = StackedButtons(stackableButtons: [.receiveButton,.buyButton,.sendButton,.swapButton])
-        
+		let images: Array<UIImage.Catalogue> = [.arrowDown,.creditCard,.arrowUpRight,.switchHorizontal]
+		let buttons: [UIStackView] = images.map(UIStackView.walletButton(name:))
+	
+        let stack = UIStackView(arrangedSubviews: buttons)
+		stack.spacing = 20
+		stack.translatesAutoresizingMaskIntoConstraints = false
         return stack
     }()
     
@@ -163,8 +207,7 @@ class WalletDetailView:UIViewController{
         balanceViewStack.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         
         walletActionView.topAnchor.constraint(equalToSystemSpacingBelow: balanceViewStack.bottomAnchor, multiplier: 3).isActive = true
-        walletActionView.leadingAnchor.constraint(equalToSystemSpacingAfter: view.safeAreaLayoutGuide.leadingAnchor, multiplier: 5).isActive = true
-        view.safeAreaLayoutGuide.trailingAnchor.constraint(equalToSystemSpacingAfter: walletActionView.trailingAnchor, multiplier: 5).isActive = true
+		walletActionView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         
         recentActivity.topAnchor.constraint(equalToSystemSpacingBelow: walletActionView.bottomAnchor, multiplier: 5).isActive = true
         recentActivity.leadingAnchor.constraint(equalToSystemSpacingAfter: view.safeAreaLayoutGuide.leadingAnchor, multiplier: 3).isActive = true

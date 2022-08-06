@@ -70,7 +70,7 @@ class StackableButton:UIStackView{
         
     init(buttonImage:String,buttonName:String? = nil,buttonColor:UIColor,textColor:UIColor? = nil,handleTap: (() -> Void)? = nil){
         self.handleTap = handleTap
-        super.init(frame: .zero)
+		super.init(frame: .init(origin: .zero, size: .init(width: 55, height: 55)))
         
         self.axis = .vertical
         self.spacing = 8
@@ -96,9 +96,6 @@ class StackableButton:UIStackView{
         imageView.centerYAnchor.constraint(equalTo: imageBackground.centerYAnchor).isActive = true
 
         self.addArrangedSubview(imageBackground)
-        
-        imageBackground.widthAnchor.constraint(equalToConstant: 55).isActive = true
-        imageBackground.heightAnchor.constraint(equalToConstant: 55).isActive = true
         
         if let safebuttonName = self.buttonName{
             self.addArrangedSubview(safebuttonName)

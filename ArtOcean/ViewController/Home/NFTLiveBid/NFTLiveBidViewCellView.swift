@@ -24,7 +24,7 @@ class NFTLiveBidView : UIView {
     private lazy var price = self.labelBuilder(text: "3 ETH", size: 12, weight: .medium, color: .appGreenColor, numOfLines: 1)
 
 	private let shareButton:CustomImageButton = {
-		let button: CustomImageButton = .init(name: "share",addBG:true) {
+		let button: CustomImageButton = .init(name: .share,addBG:true) {
 			print("(DEBUG) share pressed")
 		}
 		button.translatesAutoresizingMaskIntoConstraints = false
@@ -32,7 +32,7 @@ class NFTLiveBidView : UIView {
 	}()
 	
 	private let loveButton:CustomImageButton = {
-		let button: CustomImageButton = .init(name: "heart",addBG:true) {
+		let button: CustomImageButton = .init(name: .heartOutline,addBG:true) {
 			print("(DEBUG) heart pressed")
 		}
 		button.translatesAutoresizingMaskIntoConstraints = false
@@ -142,20 +142,14 @@ class NFTLiveBidView : UIView {
 	}
 }
 
-//MARK: - Configurable
-
-extension NFTLiveBidView: Configurable {
-	
-	typealias Model = NFTArtCollectionViewCellData
-	
-	func configureCell(with model: NFTArtCollectionViewCellData) {
-		self.updateUIWithNFT(model.nft)
-	}
-}
-
 //MARK: - ConfigurableStyling
 
 extension NFTLiveBidView: ConfigurableStyling {
+	
+	func configureView(with model: NFTArtCollectionViewCellData) {
+		self.updateUIWithNFT(model.nft)
+	}
+	
 	static var insetPadding: UIEdgeInsets {
 		.init(vertical: 12, horizontal: 24)
 	}

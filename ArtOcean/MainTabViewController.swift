@@ -34,19 +34,19 @@ class MainTabController: UITabBarController {
         switch tab{
             case .home:
                 let navView = UINavigationController(rootViewController: HomeViewController())
-                navView.tabBarItem = .init(title: "Home", image: .init(named: "home")?.resized(.squared(20)), tag: 1)
+			navView.tabBarItem = .init(title: "Home", image: .buildCatalogueImage(name: .homeOutline, size: .squared(20)), tag: 1)
                 return navView
             case .search:
                 let navView = UINavigationController(rootViewController: SearchViewController())
-                navView.tabBarItem = .init(title: "Search", image: .init(named: "search")?.resized(.squared(20)), tag: 2)
+                navView.tabBarItem = .init(title: "Search", image: .buildCatalogueImage(name: .searchOutline, size: .squared(20)), tag: 2)
                 return navView
             case .profile:
                 let navView = UINavigationController(rootViewController: ProfileViewController())
-			navView.tabBarItem = .init(title: "Profile", image: .init(named: "user")?.resized(.squared(20)), tag: 3)
+			navView.tabBarItem = .init(title: "Profile", image: .buildCatalogueImage(name: .userOutline, size: .squared(20)), tag: 3)
                 return navView
             case .statistics:
                 let navView = UINavigationController(rootViewController: StatisticsViewController())
-                navView.tabBarItem = .init(title: "Statistics", image: .init(named: "chart-square-bar")?.resized(.squared(20)), tag: 4)
+                navView.tabBarItem = .init(title: "Statistics", image: .buildCatalogueImage(name: .chartSquareBarOutline, size: .squared(20)), tag: 4)
                 return navView
         }
     }

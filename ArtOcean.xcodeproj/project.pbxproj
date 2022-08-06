@@ -41,6 +41,7 @@
 		EF3BF92A287AB3D10070CAE5 /* NFTAttributeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF3BF929287AB3D10070CAE5 /* NFTAttributeView.swift */; };
 		EF3BF92C287ACEBE0070CAE5 /* UILabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF3BF92B287ACEBE0070CAE5 /* UILabel.swift */; };
 		EF3C9A6F28999F6A007F5200 /* NFTLiveBidNavHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF3C9A6E28999F6A007F5200 /* NFTLiveBidNavHeader.swift */; };
+		EF3C9A71289B0E3D007F5200 /* UIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF3C9A70289B0E3D007F5200 /* UIImage.swift */; };
 		EF480E0F285F85D400FC0F3F /* NFTAttributeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF480E0E285F85D400FC0F3F /* NFTAttributeCell.swift */; };
 		EF527441284AC53A008C77EC /* SDWebImage in Frameworks */ = {isa = PBXBuildFile; productRef = EF527440284AC53A008C77EC /* SDWebImage */; };
 		EF527443284AC53A008C77EC /* SDWebImageMapKit in Frameworks */ = {isa = PBXBuildFile; productRef = EF527442284AC53A008C77EC /* SDWebImageMapKit */; };
@@ -207,6 +208,7 @@
 		EF3BF929287AB3D10070CAE5 /* NFTAttributeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NFTAttributeView.swift; sourceTree = "<group>"; };
 		EF3BF92B287ACEBE0070CAE5 /* UILabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UILabel.swift; sourceTree = "<group>"; };
 		EF3C9A6E28999F6A007F5200 /* NFTLiveBidNavHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NFTLiveBidNavHeader.swift; sourceTree = "<group>"; };
+		EF3C9A70289B0E3D007F5200 /* UIImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImage.swift; sourceTree = "<group>"; };
 		EF480E0E285F85D400FC0F3F /* NFTAttributeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NFTAttributeCell.swift; sourceTree = "<group>"; };
 		EF527491284BA4BD008C77EC /* SectionbasedData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionbasedData.swift; sourceTree = "<group>"; };
 		EF527493284BECF4008C77EC /* Bundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bundle.swift; sourceTree = "<group>"; };
@@ -505,6 +507,7 @@
 				EF3259EF2880925E001B0CA6 /* CollectionViewDataSource */,
 				EF3259F42880925E001B0CA6 /* TableViewDataSource */,
 				EF8B0667283BEF250050E726 /* UIColor.swift */,
+				EF3C9A70289B0E3D007F5200 /* UIImage.swift */,
 				EF8B0676283C20820050E726 /* UIImageView.swift */,
 				EF8B0684283C31560050E726 /* UIView.swift */,
 				EF8B07452840A8150050E726 /* UIViewController.swift */,
@@ -842,6 +845,7 @@
 				EFD13C292844CF80000E422E /* NFTOfferModel.swift in Sources */,
 				EF8B07462840A8150050E726 /* UIViewController.swift in Sources */,
 				EF7447B028495A8700899476 /* AccountMetrics.swift in Sources */,
+				EF3C9A71289B0E3D007F5200 /* UIImage.swift in Sources */,
 				EFAB44662868684600B33864 /* SearchViewController.swift in Sources */,
 				EF00F5BC284539CE003D8683 /* NFTArtTypeCollection.swift in Sources */,
 				EF69B6B328550CC100ABDADA /* TransactionCell.swift in Sources */,
