@@ -71,7 +71,6 @@ class NFTLiveBidView : UIView {
     
     private lazy var NFTInfo : UIView = {
 		let view = UIView()
-		
 		let stack:UIStackView = .init(arrangedSubviews: [owner,artPriceAndTitleStack,biddingStack])
         stack.axis = .vertical
         stack.spacing = 4
@@ -147,6 +146,7 @@ class NFTLiveBidView : UIView {
 extension NFTLiveBidView: ConfigurableStyling {
 	
 	func configureView(with model: NFTArtCollectionViewCellData) {
+		backgroundColor = .appWhiteBackgroundColor
 		self.updateUIWithNFT(model.nft)
 	}
 	
