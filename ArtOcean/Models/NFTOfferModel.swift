@@ -6,8 +6,10 @@
 //
 
 import Foundation
+import UIKit
 
-struct NFTArtOffer:Decodable,Hashable{
+
+struct NFTArtOffer:Decodable,Hashable{	
     var image:String?
     var name:String?
     var percent:String?
@@ -16,19 +18,55 @@ struct NFTArtOffer:Decodable,Hashable{
     var nft:NFTModel?
 }
 
+extension NFTArtOffer {
+	
+	static func decodeFromNFTModel(_ model: NFTModel) -> Self {
+		.init(
+			image: model.metadata?.image,
+			name: model.title,
+			percent: "\(Float.random(in: -50...50))",
+			price: Float.random(in: 0...100),
+			time: Int.random(in: 1...59),
+			nft: model
+		)
+	}
+	
+	static func encodeToItem(_ offer: NFTArtOffer) -> Item {
+		Item.offer(offer)
+	}
+}
+
+extension Array where Element == NFTArtOffer {
+	
+	func sorted() -> [Self.Element] {
+		sorted(by: {$0.time!  < $1.time!})
+	}
+}
+
 typealias NFTArtOffers = [NFTArtOffer]
 
 let NFTArtOfferSection:Section = {
-    var section:Section = .init()
-    section.type = "OFFER"
+	var items: [Item]?
     Bundle.main.decodable(NFTDataResponse.self, for: "nft.json") { result in
         switch result{
         case .success(let nft):
             guard let nfts = nft.ownedNfts else {return}
-            section.items = Array(nfts[0...25]).compactMap({NFTArtOffer(image:$0.metadata?.image,name:$0.title,percent:"\(Float.random(in: -50...50))",price:Float.random(in: 0...100),time:Int.random(in: 1...59),nft:$0)}).sorted(by: {$0.time!  < $1.time!}).map({Item.offer($0)})
+			items = Array(nfts[0...25]).compactMap(NFTArtOffer.decodeFromNFTModel).sorted().map(NFTArtOffer.encodeToItem)
         case .failure(let err):
             print("(DEBUG) err : ",err.localizedDescription)
         }
     }
-    return section
+	
+	let layout: UICollectionViewFlowLayout = .init()
+	layout.itemSize = CGSize(width: .totalWidth - 48, height: 50)
+	layout.scrollDirection = .vertical
+	layout.sectionInset = .init(vertical: .zero, horizontal: 24)
+	layout.minimumInteritemSpacing = 12
+	layout.minimumLineSpacing = 12
+	
+	return .init(
+		type: "OFFER",
+		items: items,
+		layout: layout
+	)
 }()

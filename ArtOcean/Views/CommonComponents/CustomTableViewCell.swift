@@ -28,3 +28,23 @@ class CustomTableWrapperView<Cell:InnerConfigurableView> : ConfigurableCell {
 		cell.prepareCellForReuse()
 	}
 }
+
+//MARK: - CustomCollectionWrapperView
+
+class CustomCollectionWrapperView<Cell: InnerConfigurableView> : ConfigurableCollectionCell {
+	
+	typealias Model = Cell.Model
+	
+	func configureCell(with model: Cell.Model) {
+		backgroundColor = .clear
+		let content = Cell()
+		removeAllSubViews()
+		addViewAndSetConstraints(content, edgeInsets: Cell.insetPadding)
+		content.configureView(with: model)
+	}
+	
+	override func prepareForReuse() {
+		let cell = Cell()
+		cell.prepareCellForReuse()
+	}
+}

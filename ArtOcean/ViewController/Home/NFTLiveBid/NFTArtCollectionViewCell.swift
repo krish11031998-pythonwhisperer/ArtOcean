@@ -13,6 +13,19 @@ struct NFTArtCollectionViewCellData:ActionProvider {
 	var action: Callback?
 }
 
+extension NFTArtCollectionViewCellData {
+	
+	static func decodedFromItem(item: Item) -> Self? {
+		switch item {
+		case .artData(let nFTModel):
+			return .init(nft: nFTModel)
+		default:
+			return nil
+		}
+	}
+	
+}
+
 class NFTArtCollectionViewCell:UICollectionViewCell{
     
     private var nft:NFTModel? = nil
@@ -112,13 +125,19 @@ class NFTArtCollectionViewCell:UICollectionViewCell{
 		if let safeTitle = nft.title{
 			self.artTitle.text = safeTitle == "" ? "Title" : safeTitle
 		}
-        
+
         //Simulating PriceLabel Change
         self.priceLabel.text = "0.47"
         self.likeLabel.text = "30"
 
         self.imageView.updateImageView(url: nft.metadata?.image)
     }
+	
+	override func prepareForReuse() {
+		super.prepareForReuse()
+		print("(DEBUG) Reusing the cell!")
+		resetCell()
+	}
     
 }
 

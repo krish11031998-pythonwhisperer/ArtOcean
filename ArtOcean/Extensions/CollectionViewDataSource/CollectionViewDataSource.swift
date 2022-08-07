@@ -10,40 +10,49 @@ import UIKit
 
 class CollectionDataSource:NSObject{
     
-    var columns:[CellProviderColumn]
+	let sections:[CollectionSection]
 	let layout:UICollectionViewFlowLayout
 	private let height:CGFloat
 	private let width:CGFloat
     
 	init(
-		columns:[CellProviderColumn],
+		sections:[CollectionSection],
 		layout:UICollectionViewFlowLayout,
-		width: CGFloat,
-		height: CGFloat
+		width: CGFloat = .zero,
+		height: CGFloat = .zero
 	){
-        self.columns = columns
+        self.sections = sections
 		self.layout = layout
 		self.width = width
 		self.height = height
 	}
 	
-	var collectionHeight: CGFloat { height == .zero ? layout.itemSize.height + 20 : height }
-	var collectionWidth: CGFloat { width == .zero ? layout.itemSize.width : width }
+	convenience init(
+		columns:[CellProviderColumn],
+		layout:UICollectionViewFlowLayout,
+		width: CGFloat = .zero,
+		height: CGFloat = .zero
+	){
+		self.init(sections: [.init(cells: columns)], layout: layout, width: width, height: height)
+	}
+	
+	var collectionHeight: CGFloat? { height == .zero ? layout.itemSize.height + 20 : height != .infinity ? height : nil }
+	var collectionWidth: CGFloat? { width == .zero ? layout.itemSize.width : width != .infinity ? width : nil }
 }
 
 
 extension CollectionDataSource:UICollectionViewDataSource,UICollectionViewDelegate{
     
-	func numberOfSections(in collectionView: UICollectionView) -> Int { return 1 }
+	func numberOfSections(in collectionView: UICollectionView) -> Int { sections.count }
     
-	func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int { return columns.count }
+	func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int { sections[section].cells.count }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-		columns[indexPath.row].collectionView(collectionView, cellForItemAt: indexPath)
+		sections[indexPath.section].cells[indexPath.row].collectionView(collectionView, cellForItemAt: indexPath)
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-		columns[indexPath.row].didSelect(collectionView)
+		sections[indexPath.section].cells[indexPath.row].didSelect(collectionView)
     }
 }
 

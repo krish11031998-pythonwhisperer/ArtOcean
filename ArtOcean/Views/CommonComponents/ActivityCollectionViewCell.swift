@@ -105,3 +105,31 @@ extension StatisticActivityCollectionViewCell:ConfirgurableCell{
     
     static var identifier:String = "StatisticActivityCollectionViewCell"
 }
+
+//MARK: - ConfigurableCollectionCell
+
+extension StatisticActivityCollectionViewCell:Configurable{
+	
+	func configureCell(with model: Item) {
+		switch model{
+			case .offer(let offer):
+			self.offer = offer
+			DispatchQueue.main.async {
+				if let title = offer.name,title != ""{
+					self.name.text = title
+				}else{
+					self.name.text = "XXXXXX"
+				}
+				if let imageURL = offer.image,imageURL != ""{
+					self.imageView.updateImageView(url: imageURL)
+				}
+				
+				if let time = offer.time{
+					self.transactionTimeLabel.text = "\(time) minutes ago"
+				}
+			}
+			default:
+				print("(DEBUG) user not provided!")
+		}
+	}
+}

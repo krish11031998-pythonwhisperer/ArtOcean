@@ -42,6 +42,7 @@
 		EF3BF92C287ACEBE0070CAE5 /* UILabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF3BF92B287ACEBE0070CAE5 /* UILabel.swift */; };
 		EF3C9A6F28999F6A007F5200 /* NFTLiveBidNavHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF3C9A6E28999F6A007F5200 /* NFTLiveBidNavHeader.swift */; };
 		EF3C9A71289B0E3D007F5200 /* UIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF3C9A70289B0E3D007F5200 /* UIImage.swift */; };
+		EF3C9A73289E81A8007F5200 /* CollectionSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF3C9A72289E81A8007F5200 /* CollectionSection.swift */; };
 		EF480E0F285F85D400FC0F3F /* NFTAttributeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF480E0E285F85D400FC0F3F /* NFTAttributeCell.swift */; };
 		EF527441284AC53A008C77EC /* SDWebImage in Frameworks */ = {isa = PBXBuildFile; productRef = EF527440284AC53A008C77EC /* SDWebImage */; };
 		EF527443284AC53A008C77EC /* SDWebImageMapKit in Frameworks */ = {isa = PBXBuildFile; productRef = EF527442284AC53A008C77EC /* SDWebImageMapKit */; };
@@ -209,6 +210,7 @@
 		EF3BF92B287ACEBE0070CAE5 /* UILabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UILabel.swift; sourceTree = "<group>"; };
 		EF3C9A6E28999F6A007F5200 /* NFTLiveBidNavHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NFTLiveBidNavHeader.swift; sourceTree = "<group>"; };
 		EF3C9A70289B0E3D007F5200 /* UIImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImage.swift; sourceTree = "<group>"; };
+		EF3C9A72289E81A8007F5200 /* CollectionSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionSection.swift; sourceTree = "<group>"; };
 		EF480E0E285F85D400FC0F3F /* NFTAttributeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NFTAttributeCell.swift; sourceTree = "<group>"; };
 		EF527491284BA4BD008C77EC /* SectionbasedData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionbasedData.swift; sourceTree = "<group>"; };
 		EF527493284BECF4008C77EC /* Bundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bundle.swift; sourceTree = "<group>"; };
@@ -365,6 +367,7 @@
 				EF3259F12880925E001B0CA6 /* CollectionColumn.swift */,
 				EF3259F22880925E001B0CA6 /* UICollectionLayoutExtension.swift */,
 				EF3259F32880925E001B0CA6 /* CollectionViewExtension.swift */,
+				EF3C9A72289E81A8007F5200 /* CollectionSection.swift */,
 			);
 			path = CollectionViewDataSource;
 			sourceTree = "<group>";
@@ -912,6 +915,7 @@
 				EF8B06DE283E7C2C0050E726 /* Container.swift in Sources */,
 				EF00F5D02846D460003D8683 /* CustomLabel.swift in Sources */,
 				EF7447BC284A300F00899476 /* PageViewController.swift in Sources */,
+				EF3C9A73289E81A8007F5200 /* CollectionSection.swift in Sources */,
 				EFD13C1C2843E1BD000E422E /* CustomLabelButton.swift in Sources */,
 				EF325A002880925F001B0CA6 /* TableView.swift in Sources */,
 				EF8B0675283BFA900050E726 /* NFTArtCollectionLiveBidViewCell.swift in Sources */,

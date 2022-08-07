@@ -73,10 +73,89 @@ class CustomSelectorCollectionView:UIView{
 extension CustomSelectorCollectionView:SlideSelectorDelegate{
     
     func handleSelect(_ id: String) {
-//        if let section = self.sections.first(where: {$0.type == id})?.type{
         self.customCollectionView.reloadCollectionView(id)
-//        }
     }
-    
 }
 
+//MARK: - Defination
+
+protocol CustomSelectorDynamicCollectionDelegate {
+	
+	func collectionSection(_ section: Section) -> CollectionSection?
+}
+
+//MARK: - Type
+
+class CustomSelectorDynamicCollectionView: UIView {
+	
+//MARK: - Properties
+	
+	private let sections: [Section]
+	
+	public var delegate: CustomSelectorDynamicCollectionDelegate? {
+		didSet {
+			reloadCollection()
+		}
+	}
+	
+	private var selectedSection: Section? {
+		didSet {
+			reloadCollection()
+		}
+	}
+	
+	private lazy var collectionView: UICollectionView = {
+		return .init(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout.standardFlow)
+	}()
+	
+	private lazy var selector:SliderSelector = {
+		let selector = SliderSelector(tabs: self.sections.compactMap({$0.type}))
+		selector.delegate = self
+		return selector
+	}()
+	
+	
+	
+	//MARK: - Constructors
+	
+	init(sections:[ Section]){
+		self.sections = sections
+		super.init(frame: .zero)
+		selectedSection = sections.first
+		setupUI()
+	}
+	
+	required init?(coder: NSCoder) {
+		fatalError("init(coder:) has not been implemented")
+	}
+	
+	//MARK: - Protected Methods
+
+	private func setupUI() {
+		let stack = UIStackView(arrangedSubviews: [selector,collectionView])
+		stack.axis = .vertical
+		stack.spacing = 20
+		selector.setHeightWithPriority(50,priority: .required)
+		addSubview(stack)
+		setContraintsToChild(stack, edgeInsets: .zero)
+	}
+	
+	private func reloadCollection() {
+		guard
+			let validSelectedSection = selectedSection,
+			let validCollectionSection = delegate?.collectionSection(validSelectedSection)
+		else { return }
+		collectionView.reload(with: .init(sections: [validCollectionSection], layout: validSelectedSection.layout,height: .infinity))
+	}
+}
+
+//MARK: - CustomSelectorDynamicCollectionView SlideSelectorDelegate
+extension CustomSelectorDynamicCollectionView:SlideSelectorDelegate{
+	
+	func handleSelect(_ id: String) {
+        if let section = self.sections.first(where: {$0.type == id}){
+			selectedSection = section
+        }
+	}
+	
+}

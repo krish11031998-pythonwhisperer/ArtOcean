@@ -15,10 +15,9 @@ class ProfileViewController: UIViewController {
 		return headerView
 	}()
     
-    private var assetsView:CustomSelectorCollectionView = {
-        let collection = CustomSelectorCollectionView(sections: [NFTArtOfferSection,NFTArtSection], layoutForSections: [NFTArtSection.type!:.standardVerticalTwoByTwoGrid,NFTArtOfferSection.type!:.basicLayout])
-		return collection
-    }()
+	private var assetsView:CustomSelectorDynamicCollectionView = {
+		.init(sections: [NFTArtOfferSection,NFTArtSection])
+	}()
 
     
     init(){
@@ -34,61 +33,40 @@ class ProfileViewController: UIViewController {
     
     override func viewDidLoad() {
         self.setupViews()
-        self.setupLayout()
+		assetsView.delegate = self
     }
     
     func setupViews(){
-        
-		view.addSubview(profileHeaderView)
-        
-        assetsView.collectionDelegate = self
-        
-        view.addSubview(self.assetsView)
+		let stack: UIStackView = .init(arrangedSubviews: [profileHeaderView, assetsView])
+		stack.spacing = 10
+		stack.axis = .vertical
+		stack.alignment = .center
+		stack.setWidthForChildWithPadding(profileHeaderView, paddingFactor: .zero)
+		stack.setWidthForChildWithPadding(assetsView, paddingFactor: 2)
+		view.addSubview(stack)
+		view.setContraintsToChild(stack, edgeInsets: .init(top: .zero, left: .zero, bottom: 50, right: .zero))
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationController?.setNavigationBarHidden(true, animated: animated)
     }
-    
-    func setupLayout(){
-		view.setWidthForChildWithPadding(assetsView,paddingFactor: 3)
-		assetsView.topAnchor.constraint(equalToSystemSpacingBelow: profileHeaderView.bottomAnchor, multiplier: 2).isActive = true
-        self.view.bottomAnchor.constraint(equalToSystemSpacingBelow: self.assetsView.bottomAnchor, multiplier: 4).isActive = true
-    }
-    
-
 }
 
-//MARK: - CustomCollectionSectionDelegate
-extension ProfileViewController:CustomComplexCollectionViewDelegate{
-    func registerCellToCollection(_ collection: UICollectionView) {
-        collection.register(NFTArtCollectionViewCell.self, forCellWithReuseIdentifier: NFTArtCollectionViewCell.identifier)
-        collection.register(StatisticActivityCollectionViewCell.self, forCellWithReuseIdentifier: StatisticActivityCollectionViewCell.identifier)
-    }
-    
-    func cellForCollection(_ collection: UICollectionView, _ section: SectionType, _ indexPath: IndexPath, _ item: Item) -> ConfirgurableCell? {
-        switch section{
-        case NFTArtSection.type!:
-            guard let cell = collection.dequeueReusableCell(withReuseIdentifier: NFTArtCollectionViewCell.identifier, for: indexPath) as? NFTArtCollectionViewCell else {
-                return nil
-            }
-            
-            cell.configure(item)
-            cell.delegate = self
-            return cell
-        case NFTArtOfferSection.type!:
-            guard let cell = collection.dequeueReusableCell(withReuseIdentifier: StatisticActivityCollectionViewCell.identifier, for: indexPath) as? StatisticActivityCollectionViewCell else{
-                return nil
-            }
-            
-            cell.configure(item)
-            cell.buttonDelegate = self
-            return cell
-        default:
-            return nil
-        }
-    }
+//MARK: - CustomSelectorDynamicCollection Delegate
+
+extension ProfileViewController: CustomSelectorDynamicCollectionDelegate {
+	
+	func collectionSection(_ section: Section) -> CollectionSection? {
+		guard let validItems = section.items else { return nil }
+		if section == NFTArtSection {
+			return .init(cells: validItems.compactMap { NFTArtCollectionViewCellData.decodedFromItem(item: $0) }.map { CollectionColumn<NFTArtCollectionViewCell>($0) })
+		} else if section == NFTArtOfferSection {
+			return .init(cells: validItems.map { CollectionColumn<StatisticActivityCollectionViewCell>($0) })
+		} else {
+			return nil
+		}
+	}
 }
 
 //MARK: - NFTArtDelegate

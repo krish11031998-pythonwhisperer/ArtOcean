@@ -21,7 +21,6 @@ class SliderSelector:UIView{
     init(tabs:[String]){
         self.tabs = tabs
         super.init(frame: .zero)
-        self.translatesAutoresizingMaskIntoConstraints = false
         self.layer.cornerRadius = 20
         self.backgroundColor = UIColor(red: 0.953, green: 0.969, blue: 0.976, alpha: 1)
         self.tabStackBuilder()
@@ -103,11 +102,4 @@ class SliderSelector:UIView{
         return .init(width: UIScreen.main.bounds.width - 20, height: 50)
     }
     
-//    private func setupLayout(){
-//        self.selectedHoverView.leadingAnchor.constraint(equalTo: self.leadingAnchor,constant: 2).isActive = true
-//        self.selectedHoverView.topAnchor.constraint(equalTo: self.topAnchor,constant: 2).isActive = true
-//        self.selectedHoverView.bottomAnchor.constraint(equalTo: self.bottomAnchor,constant: -2).isActive = true
-//        self.selectedHoverView.widthAnchor.constraint(equalTo: self.widthAnchor, multiplier: 0.5,constant: -4).isActive = true
-//    }
-//
 }
