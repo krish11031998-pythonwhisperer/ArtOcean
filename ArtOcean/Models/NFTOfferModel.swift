@@ -45,28 +45,3 @@ extension Array where Element == NFTArtOffer {
 
 typealias NFTArtOffers = [NFTArtOffer]
 
-let NFTArtOfferSection:Section = {
-	var items: [Item]?
-    Bundle.main.decodable(NFTDataResponse.self, for: "nft.json") { result in
-        switch result{
-        case .success(let nft):
-            guard let nfts = nft.ownedNfts else {return}
-			items = Array(nfts[0...25]).compactMap(NFTArtOffer.decodeFromNFTModel).sorted().map(NFTArtOffer.encodeToItem)
-        case .failure(let err):
-            print("(DEBUG) err : ",err.localizedDescription)
-        }
-    }
-	
-	let layout: UICollectionViewFlowLayout = .init()
-	layout.itemSize = CGSize(width: .totalWidth - 48, height: 50)
-	layout.scrollDirection = .vertical
-	layout.sectionInset = .init(vertical: .zero, horizontal: 24)
-	layout.minimumInteritemSpacing = 12
-	layout.minimumLineSpacing = 12
-	
-	return .init(
-		type: "OFFER",
-		items: items,
-		layout: layout
-	)
-}()

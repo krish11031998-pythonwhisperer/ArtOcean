@@ -6,76 +6,54 @@
 //
 
 import UIKit
+//MARK: - Type
 
 class StatisticsViewController: UIViewController {
-    
-    
-    private var pageVC:CustomPageSelectorViewController!
-    private var pages:[String:UIViewController] = .init()
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        self.setupPages()
-        self.setupPageViewController()
-        self.configNavbar()
-        self.setupLayout()
-    }
-    
-    
-    func setupPageViewController(){
-        self.pageVC = .init(pages: self.pages)
-        self.addChild(self.pageVC)
-        self.view.addSubview(self.pageVC.view)
-        self.pageVC.didMove(toParent: self)
-    }
-    
-    func setupPages(){
-        let ranking = StatisticCollectionView(cellType: .ranking)
-        ranking.buttonDelegate = self
-        let activity = StatisticCollectionView(cellType: .activity,data: NFTArtOfferSection.items)
-        activity.buttonDelegate = self
-        self.pages =  [StatisticsTab.ranking.rawValue:ranking,StatisticsTab.activity.rawValue: activity]
-    }
-
-    func configNavbar(){
+	
+//MARK: - Properties
+	
+	private let customSlideCollectionView: CustomSelectorDynamicCollectionView = {
+		.init(sections: [NFTArtOfferSection,UserSection])
+	}()
+	
+//MARK: - Overriden Methods
+	
+	override func viewDidLoad() {
+		super.viewDidLoad()
+		configNavbar()
+		setupUI()
+	}
+	
+//MARK: - Protected Methods
+	
+	private func setupUI() {
+		customSlideCollectionView.delegate = self
+		view.addSubview(customSlideCollectionView)
+		view.setSafeAreaConstraintsToChild(customSlideCollectionView, edgeInsets: .zero)
+	}
+	
+	private func configNavbar(){
 		let searchButton = CustomImageButton(name: .searchOutline, frame: .smallestSqaure, addBG: true, handler: nil)
-        let label = CustomLabel(text: "Statistics", size: 22, weight: .bold, color: .appBlackColor, numOfLines: 1)
-        label.translatesAutoresizingMaskIntoConstraints = true
-        self.navigationItem.leftBarButtonItem = .init(customView: label)
-        self.navigationItem.rightBarButtonItem = .init(customView: searchButton)
-    }
-    
-    func setupLayout(){
-        self.pageVC.view.leadingAnchor.constraint(equalToSystemSpacingAfter: self.view.leadingAnchor, multiplier: 3).isActive = true
-        self.view.trailingAnchor.constraint(equalToSystemSpacingAfter: self.pageVC.view.trailingAnchor, multiplier: 3).isActive = true
-        self.pageVC.view.topAnchor.constraint(equalTo:self.view.topAnchor, constant: 100).isActive = true
-        self.view.bottomAnchor.constraint(equalToSystemSpacingBelow: self.pageVC.view.bottomAnchor, multiplier: 3).isActive = true
-    }
-    
+		let label = CustomLabel(text: "Statistics", size: 22, weight: .bold, color: .appBlackColor, numOfLines: 1,autoLayout: false)
+		self.navigationItem.leftBarButtonItem = .init(customView: label)
+		self.navigationItem.rightBarButtonItem = .init(customView: searchButton)
+	}
 }
 
+//MARK: - StatisticViewControllerWithDynamic
 
-//MARK: - StatisticsViewController CustomButtonDelegate
-extension StatisticsViewController:CustomButtonDelegate{
-    
-    func handleTap(_ data: Any) {
-        print("(DEBUG) clicked on : ",data)
-        if let safeArt = data as? NFTArtOffer,let nft = safeArt.nft{
-            self.navigationController?.pushViewController(NFTDetailArtViewController(nftArt: nft), animated: true)
-        }else{
-            self.navigationController?.pushViewController(AccountViewController(), animated: true)
-        }
-    }
-    
+extension StatisticsViewController: CustomSelectorDynamicCollectionDelegate {
+	
+	func collectionSection(_ section: Section) -> CollectionSection? {
+		guard let validItems = section.items else { return nil }
+		if section == UserSection {
+			return .init(cells: validItems.map { CollectionColumn<StatisticRankingCollectionViewCell>($0) })
+		} else if section == NFTArtOfferSection {
+			return .init(cells: validItems.map { CollectionColumn<StatisticActivityCollectionViewCell>($0) })
+		} else {
+			return nil
+		}
+	}
 }
 
-//MARK: - SlideSelectorDelegate
-extension StatisticsViewController:SlideSelectorDelegate{
-    
-    func handleSelect(_ id: String) {
-        print("(DEBUG) clicked on id : ",id)
-        self.pageVC.movePages(page: id)
-    }
-    
-}
 

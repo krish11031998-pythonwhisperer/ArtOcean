@@ -36,7 +36,7 @@ class NFTAttributeCell:UIView{
 		stackView.translatesAutoresizingMaskIntoConstraints = false
 		stackView.spacing = 8
 		
-		trait_type = CustomLabel(text: "", size: 14, weight: .semibold, color: .appGrayColor, numOfLines: 1, adjustFontSize: false)
+		trait_type = CustomLabel(text: "", size: 14, weight: .medium, color: .appGrayColor, numOfLines: 1, adjustFontSize: false)
 		stackView.addArrangedSubview(trait_type!)
 		
 		stackView.addArrangedSubview(.spacer())

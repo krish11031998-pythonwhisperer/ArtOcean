@@ -41,7 +41,3 @@ let testUser:[User] = {
     return resultUsers
 }()
 
-
-let UserSection:Section = {
-    return Section(type: "USER", items: testUser.compactMap({Item.user($0)}))
-}()

@@ -47,7 +47,7 @@ class StackContainer:UIStackView{
 		}
 		
 		if let rightButtonText = rightButtonText {
-			rightButton = CustomLabel(text: rightButtonText, size: 15, weight: .semibold, color: .gray, numOfLines: 1)
+			rightButton = CustomLabel(text: rightButtonText, size: 15, weight: .medium, color: .gray, numOfLines: 1)
 			addArrangedSubview(rightButton)
 		}
 		

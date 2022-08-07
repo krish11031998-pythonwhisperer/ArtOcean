@@ -211,6 +211,8 @@ extension UIView {
 //		}
 	}
 	
+	func removeAllConstraints() { removeConstraints(constraints) }
+	
 	func addViewAndSetConstraints(_ innerView:UIView?,edgeInsets:UIEdgeInsets) {
 		guard let safeInnerView = innerView else { return }
 		addSubview(safeInnerView)
@@ -360,6 +362,21 @@ extension UIView {
 		NSLayoutConstraint.activate(constraints)
 		
 	}
+}
+
+//MARK: - Array Extension
+
+extension Array where Element: UIView {
+	
+	func first(where id: String?) -> UIView? {
+		guard let validFirst = id else { return nil }
+		return filter{ $0.accessibilityIdentifier == validFirst }.first
+	}
+	
+	func filterViews(exclude id: String) -> [Self.Element]? {
+		compactMap { $0.accessibilityIdentifier == id ? nil : $0 }
+	}
+	
 }
 
 extension NSLayoutConstraint{

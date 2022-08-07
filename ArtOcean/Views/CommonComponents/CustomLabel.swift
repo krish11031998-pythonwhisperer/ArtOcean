@@ -15,13 +15,16 @@ enum CustomFonts:String{
     case medium = "Satoshi-Medium"
     case light = "Satoshi-Light"
     
+	func fontBuilder(size: CGFloat) -> UIFont? {
+		.init(name: self.rawValue, size: size)
+	}
 }
 
 class CustomLabel:UILabel{
     init(
         text:String,
         size:CGFloat = 13,
-        weight:UIFont.Weight = .semibold,
+        weight:CustomFonts = .regular,
         color:UIColor,
         numOfLines:Int = 1,
         adjustFontSize:Bool = true,
@@ -29,25 +32,26 @@ class CustomLabel:UILabel{
     ){
         super.init(frame: .zero)
         self.text = text
-        switch weight{
-            case .black:
-            self.font = .init(name: "Satoshi-Black", size: size)
-                break
-            case .bold:
-            self.font = .init(name: "Satoshi-Bold", size: size)
-                break
-            case .regular:
-            self.font = .init(name: "Satoshi-Regular", size: size)
-                break
-            case .medium:
-            self.font = .init(name: "Satoshi-Medium", size: size)
-                break
-            case .light:
-            self.font = .init(name: "Satoshi-Light", size: size)
-                break
-            default:
-            self.font = .systemFont(ofSize: size, weight: .light)
-        }
+//        switch weight{
+//            case .black:
+//            self.font = .init(name: "Satoshi-Black", size: size)
+//                break
+//            case .bold:
+//            self.font = .init(name: "Satoshi-Bold", size: size)
+//                break
+//            case .regular:
+//            self.font = .init(name: "Satoshi-Regular", size: size)
+//                break
+//            case .medium:
+//            self.font = .init(name: "Satoshi-Medium", size: size)
+//                break
+//            case .light:
+//            self.font = .init(name: "Satoshi-Light", size: size)
+//                break
+//            default:
+//            self.font = .systemFont(ofSize: size, weight: .light)
+//        }
+		self.font = weight.fontBuilder(size: size)
         self.textColor = color
         self.numberOfLines = numOfLines
         self.adjustsFontSizeToFitWidth = adjustFontSize

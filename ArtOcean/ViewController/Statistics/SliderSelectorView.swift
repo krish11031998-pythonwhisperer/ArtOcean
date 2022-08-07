@@ -21,9 +21,9 @@ class SliderSelector:UIView{
     init(tabs:[String]){
         self.tabs = tabs
         super.init(frame: .zero)
-        self.layer.cornerRadius = 20
-        self.backgroundColor = UIColor(red: 0.953, green: 0.969, blue: 0.976, alpha: 1)
-        self.tabStackBuilder()
+        cornerRadius = 20
+        backgroundColor = UIColor(red: 0.953, green: 0.969, blue: 0.976, alpha: 1)
+        tabStackBuilder()
     }
     
     required init?(coder: NSCoder) {
@@ -32,69 +32,41 @@ class SliderSelector:UIView{
     
     private lazy var tabsIndicators:[UIView] = {
         let views:[UIView] = self.tabs.compactMap { tab in
-            let view = UIView()
-            let imageView = UIImageView(image: .init(named: tab.lowercased()))
-            
-            view.accessibilityIdentifier = tab
-            
-            imageView.translatesAutoresizingMaskIntoConstraints = false
-            imageView.tintColor = .appPurpleColor
-            imageView.contentMode = .scaleAspectFit
-            
-            let label = CustomLabel(text: tab.capitalized, size: 14, weight: .regular, color: .appGrayColor, numOfLines: 1, adjustFontSize: true)
-            
-            label.textAlignment = .left
-            
-            view.addSubview(imageView)
-            view.addSubview(label)
-            
-            NSLayoutConstraint.activate([
-                imageView.trailingAnchor.constraint(equalTo: view.centerXAnchor, constant: -15),
-                imageView.widthAnchor.constraint(equalToConstant: 15),
-                imageView.heightAnchor.constraint(equalToConstant:15),
-                imageView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-                
-                label.leadingAnchor.constraint(equalTo: imageView.trailingAnchor, constant: 6.5),
-                label.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -5),
-                label.centerYAnchor.constraint(equalTo: view.centerYAnchor)
-            ])
-            
-            let tapGesture = UITapGestureRecognizer(target: self, action: #selector(self.tapHandler(_:)))
-            view.addGestureRecognizer(tapGesture)
-            view.layer.cornerRadius = 15
-            
-            if let firstTab = self.tabs.first, firstTab == tab{
-                view.backgroundColor = .white
-            }
-            return view
+			let button = CustomLabelButton(title: tab.capitalized,
+										   image: .init(named:tab.lowercased()),
+										   font: CustomFonts.medium.fontBuilder(size: 15),
+										   color: .appBlackColor,
+										   backgroundColor: .clear)
+			button.accessibilityIdentifier = tab
+			button.handler = { [weak self] in
+				self?.tapHandler(tab)
+			}
+            return button
         }
+		if let first = views.first(where: tabs.first) {
+			first.backgroundColor = .white
+			first.cornerRadius = 15
+		}
         return views
     }()
     
-    @objc func tapHandler(_ recognizer:UITapGestureRecognizer){
-        guard let id = recognizer.view?.accessibilityIdentifier else {return}
-        UIViewPropertyAnimator(duration: 0.2, curve: .easeInOut) {
-            recognizer.view?.backgroundColor = .white
-            self.tabsIndicators.filter({$0 != recognizer.view!}).forEach({$0.backgroundColor = .clear})
-        }.startAnimation()
-        
-        self.delegate?.handleSelect(id)
-        print("(DEBUG) tab : ",id)
-    }
+	func tapHandler(_ tab: String) {
+		UIViewPropertyAnimator(duration: 0.2, curve: .easeInOut) {
+			guard let selectedView = self.tabsIndicators.first(where: tab) else { return }
+			selectedView.backgroundColor = .white
+			selectedView.cornerRadius = 15
+			self.tabsIndicators.filterViews(exclude: tab)?.forEach { $0.backgroundColor = .clear }
+		}.startAnimation()
+		self.delegate?.handleSelect(tab)
+	}
 
     
     func tabStackBuilder(){
         let ratios = Array(repeating: CGFloat(1)/CGFloat(tabsIndicators.count), count: tabsIndicators.count)
         print("(DEBUG) ratios : ",ratios)
         let stackView = UIView.StackBuilder(views: tabsIndicators, ratios: [0.5,0.5], spacing: 10, axis: .horizontal)
-        self.addSubview(stackView)
-        
-        NSLayoutConstraint.activate([
-            stackView.leadingAnchor.constraint(equalTo: self.leadingAnchor,constant: 5),
-            stackView.trailingAnchor.constraint(equalTo: self.trailingAnchor,constant: -5),
-            stackView.topAnchor.constraint(equalTo: self.topAnchor,constant: 5),
-            stackView.bottomAnchor.constraint(equalTo: self.bottomAnchor,constant: -5)
-        ])
+        addSubview(stackView)
+		setContraintsToChild(stackView, edgeInsets: .init(vertical: 5, horizontal: 5))
     }
     
     

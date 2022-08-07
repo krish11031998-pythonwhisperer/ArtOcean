@@ -12,7 +12,7 @@ protocol UserProtocol{
     func viewUser(_ data:Any)
 }
 
-class StatisticRankingCollectionViewCell:UICollectionViewCell,ConfirgurableCell{
+class StatisticRankingCollectionViewCell:UICollectionViewCell{
 
     static var identifier:String = "StatisticRankingCollectionViewCell"
     
@@ -92,17 +92,17 @@ class StatisticRankingCollectionViewCell:UICollectionViewCell,ConfirgurableCell{
 }
 
 
-////MARK: - ReusableConfigurableCell
+//MARK: - ReusableConfigurableCell
 extension StatisticRankingCollectionViewCell{
 
-    func configure(_ data: Item) {
-        switch data{
-        case .user(let user):
-            self.updateCellWithData(user)
-        default:
-            print("(DEBUG) Wrong Data Type Provided!")
-        }
-    }
+//    func configure(_ data: Item) {
+//        switch data{
+//        case .user(let user):
+//            updateCellWithData(user)
+//        default:
+//            print("(DEBUG) Wrong Data Type Provided!")
+////        }
+//    }
 
     
     func updateCellWithData(_ user:User){
@@ -141,4 +141,19 @@ extension StatisticRankingCollectionViewCell{
             }
         }
     }
+}
+
+//MARK: - StatisticRankingCollectionViewCell Configurable
+
+extension StatisticRankingCollectionViewCell: Configurable {
+	
+	func configureCell(with model: Item) {
+		switch model {
+		case .user(let user):
+			updateCellWithData(user)
+		default:
+			print("(DEBUG) Wrong Data Type Provided!")
+		}
+	}
+	
 }

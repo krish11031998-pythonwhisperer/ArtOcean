@@ -16,19 +16,31 @@ import UIKit
 class CustomLabelButton:UIButton{
     
     var delegate:CustomButtonDelegate? = nil
-    
-    init(title:String,color:UIColor,backgroundColor:UIColor = .clear,frame: CGRect = .zero) {
+	var handler: (() -> Void)? {
+		didSet { addTarget(self, action: #selector(tapHandler), for: .touchUpInside) }
+	}
+    init(
+		title:String,
+		image: UIImage? = nil,
+		font: UIFont? = CustomFonts.regular.fontBuilder(size: 13),
+		color:UIColor,
+		backgroundColor:UIColor = .clear,
+		frame: CGRect = .zero,
+		handler: (() -> Void)? = nil
+	) {
+		self.handler = handler
         super.init(frame: frame)
-        self.setTitle(title, for: .normal)
-        self.titleLabel?.font = .init(name: "Satoshi-Medium", size: 13)
-        self.titleLabel?.textColor = color
-        self.titleLabel?.adjustsFontSizeToFitWidth = true
-        self.backgroundColor = backgroundColor
-		self.layer.cornerRadius = 14.5
-        self.translatesAutoresizingMaskIntoConstraints = false
-        self.addTarget(self, action: #selector(self.tapHandler), for: .touchUpInside)
+        setTitle(title, for: .normal)
+        titleLabel?.font = font
+		setTitleColor(color, for: .normal)
+		setTitleColor(.appPurpleColor, for: .selected)
+		setImage(image?.resized(.squared(15)), for: .normal)
+		self.backgroundColor = backgroundColor
+		cornerRadius = 14.5
+        addTarget(self, action: #selector(self.tapHandler), for: .touchUpInside)
 		configuration = nil
 		contentEdgeInsets = .init(top: 7.5, left: 10, bottom: 7.5, right: 10)
+		titleEdgeInsets = .init(top: 0, left: 15, bottom: 0, right: 0)
     }
     
     required init?(coder: NSCoder) {
@@ -37,7 +49,7 @@ class CustomLabelButton:UIButton{
     
     @objc func tapHandler(){
         self.bouncyButtonClick {
-            self.delegate?.handleTap?()
+			self.delegate?.handleTap?() ?? self.handler?()
         }
     }
     

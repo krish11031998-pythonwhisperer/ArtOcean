@@ -135,7 +135,7 @@ class CustomSelectorDynamicCollectionView: UIView {
 		let stack = UIStackView(arrangedSubviews: [selector,collectionView])
 		stack.axis = .vertical
 		stack.spacing = 20
-		selector.setHeightWithPriority(50,priority: .required)
+		selector.setHeightWithPriority(50,priority: .defaultHigh)
 		addSubview(stack)
 		setContraintsToChild(stack, edgeInsets: .zero)
 	}
@@ -147,6 +147,22 @@ class CustomSelectorDynamicCollectionView: UIView {
 		else { return }
 		collectionView.reload(with: .init(sections: [validCollectionSection], layout: validSelectedSection.layout,height: .infinity))
 	}
+	
+//	private func setupLayout() {
+//		addSubview(selector)
+//		addSubview(collectionView)
+//		subviews.forEach { $0.translatesAutoresizingMaskIntoConstraints = false }
+//		let constraints: [NSLayoutConstraint] = [
+//			selector.topAnchor.constraint(equalTo: topAnchor),
+//			selector.widthAnchor.constraint(equalTo: widthAnchor),
+//			selector.heightAnchor.constraint(equalToConstant: 50),
+//			collectionView.topAnchor.constraint(equalTo: selector.bottomAnchor, constant: 20),
+//			collectionView.widthAnchor.constraint(equalTo: widthAnchor),
+//			collectionView.bottomAnchor.constraint(equalTo: bottomAnchor)
+//		]
+//
+//		NSLayoutConstraint.activate(constraints)
+//	}
 }
 
 //MARK: - CustomSelectorDynamicCollectionView SlideSelectorDelegate
