@@ -18,6 +18,13 @@ class ProfileViewController: UIViewController {
 	private var assetsView:CustomSelectorDynamicCollectionView = {
 		.init(sections: [NFTArtOfferSection,NFTArtSection])
 	}()
+	
+	private lazy var backdropImage: UIImageView = {
+		let imageView = UIImageView(frame: .init(origin: .zero, size: .init(width: UIScreen.main.bounds.width, height: 200)))
+		imageView.updateImageView(url: "https://gutterart.blob.core.windows.net/metadata/image/3.jpeg")
+		imageView.blurGradientBackDrop(size: .init(width: UIScreen.main.bounds.width, height: 200))
+		return imageView
+	}()
 
     
     init(){
@@ -37,6 +44,11 @@ class ProfileViewController: UIViewController {
     }
     
     func setupViews(){
+		
+		view.addSubview(backdropImage)
+		view.setWidthForChildWithPadding(backdropImage, paddingFactor: .zero)
+		backdropImage.setHeightWithPriority(200)
+		
 		let stack: UIStackView = .init(arrangedSubviews: [profileHeaderView, assetsView])
 		stack.spacing = 10
 		stack.axis = .vertical
@@ -44,7 +56,7 @@ class ProfileViewController: UIViewController {
 		stack.setWidthForChildWithPadding(profileHeaderView, paddingFactor: .zero)
 		stack.setWidthForChildWithPadding(assetsView, paddingFactor: 2)
 		view.addSubview(stack)
-		view.setContraintsToChild(stack, edgeInsets: .init(top: .zero, left: .zero, bottom: 50, right: .zero))
+		view.setSafeAreaConstraintsToChild(stack, edgeInsets: .zero)
     }
     
     override func viewWillAppear(_ animated: Bool) {

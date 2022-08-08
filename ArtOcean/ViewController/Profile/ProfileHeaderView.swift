@@ -52,7 +52,7 @@ class ProfileHeaderView:UIView {
 	
 	
 	private lazy var mainStack: UIStackView = {
-		let stack = UIStackView(arrangedSubviews: [.spacer(height: 56)])
+		let stack = UIStackView()
 		stack.axis = .vertical
 		stack.alignment = .center
 		return stack
@@ -68,7 +68,7 @@ class ProfileHeaderView:UIView {
 	}
 	
 	func setupView() {
-		setupBackdrop()
+//		setupBackdrop()
 		addViewAndSetConstraints(mainStack, edgeInsets: .zero)
 		setupTopHeaderView()
 		userProfileView()
@@ -77,17 +77,10 @@ class ProfileHeaderView:UIView {
 	
 //MARK: - Protected Methods
 	
-	private func setupBackdrop() {
-		let imageView = UIImageView(frame: .init(origin: .zero, size: .init(width: UIScreen.main.bounds.width, height: 200)))
-		imageView.image = .init(named: "userProfileDefaultbackground")
-		imageView.blurGradientBackDrop(size: .init(width: UIScreen.main.bounds.width, height: 200))
-		addSubview(imageView)
-	}
-	
 	private let userProfileImageView:UIImageView = {
-		let view = CustomImageView(named: "userProfileImage", cornerRadius: 32)
-		view.setHeightWithPriority(64,priority: .required)
-		view.setWidthWithPriority(64)
+		let view = CustomImageView(cornerRadius: 32)
+		view.updateImageView(url: "https://weathereport.mypinata.cloud/ipfs/QmZJ56QmQpXQJamofJJYbR5T1gQTxVMhN5uHYfhvAmdFr8/85.png")
+		view.setFrameConstraints(size: .squared(64))
 		return view
 	}()
 

@@ -98,13 +98,13 @@ class NFTLiveBidView : UIView {
         view.axis = .vertical
         view.spacing = 5
 		imageView.heightAnchor.constraint(equalTo: view.heightAnchor, constant: -117).isActive = true
-		view.addShadow()
         return view
     }()
     
 	override init(frame: CGRect) {
 		super.init(frame: frame)
 		addViewAndSetConstraints(card, edgeInsets: .zero)
+		addShadow()
 	}
 	
 	required init?(coder: NSCoder) {
