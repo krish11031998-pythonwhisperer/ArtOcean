@@ -112,7 +112,7 @@ class NFTDetailArtViewController:UIViewController{
         self.navigationController?.navigationBar.standardAppearance = .init(barAppearance: navbarAppearence)
         self.navigationController?.navigationBar.scrollEdgeAppearance = .init(barAppearance: navbarAppearence)
         self.navigationController?.navigationBar.isTranslucent = false
-		navHeader.configureHeader(image: .loadCache(nftArt?.metadata?.image ?? ""), title: nftArt?.Title ?? "")
+		navHeader.configureHeader(imageUrl: nftArt?.metadata?.image , title: nftArt?.Title ?? "")
         self.navigationItem.titleView = navHeader
         self.navigationItem.leftBarButtonItem = self.backBarButton
     }

@@ -25,9 +25,19 @@ class NFTAttributeCell:UIView{
 		fatalError("init(coder:) has not been implemented")
 	}
 	
+	private var seperator: UIView = {
+		let seperator: UIView = .init()
+		seperator.setHeightWithPriority(1)
+		seperator.backgroundColor = .appGrayColor.withAlphaComponent(0.35)
+		return seperator
+	}()
+	
 	func setupContentCell(){
 		let view = innerCardBuilder()
-		addViewAndSetConstraints(view, edgeInsets: .init(vertical: 8, horizontal: 16))
+		addViewAndSetConstraints(view, edgeInsets: .init(vertical: 16, horizontal: 16))
+		addSubview(seperator)
+		setWidthForChildWithPadding(seperator, paddingFactor: 2)
+		setFrameLayout(childView: seperator, alignment: .bottom)
 		backgroundColor = .clear
 	}
 	

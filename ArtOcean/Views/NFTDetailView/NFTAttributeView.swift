@@ -16,7 +16,7 @@ class NFTAttributeView:ConfigurableCell {
 		let stack = UIStackView()
 		stack.axis = .vertical
 		stack.spacing = 0
-		stack.bordered(cornerRadius: 20, borderWidth: 1.25, borderColor: UIColor.appBlackColor.withAlphaComponent(0.25))
+		stack.bordered(cornerRadius: 14, borderWidth: 1.25, borderColor: UIColor.appBlackColor.withAlphaComponent(0.25))
 		return stack
 	}()
 

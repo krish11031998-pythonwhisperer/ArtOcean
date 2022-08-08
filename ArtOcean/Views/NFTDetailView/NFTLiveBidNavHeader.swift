@@ -46,8 +46,8 @@ class NFTDetailNavHeader: UIView {
 
 //MARK: -  Exposed Methods
 	
-	public func configureHeader(image: UIImage? = nil, title: String) {
-		imageView.image = image
+	public func configureHeader(imageUrl: String? = nil, title: String) {
+		imageView.updateImageView(url: imageUrl)
 		titleView.text = title
 		imageView.transform = .init(scaleX: .zero, y: .zero)
 	}
