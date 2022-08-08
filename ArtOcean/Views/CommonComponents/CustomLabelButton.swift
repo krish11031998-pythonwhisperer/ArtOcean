@@ -40,7 +40,10 @@ class CustomLabelButton:UIButton{
         addTarget(self, action: #selector(self.tapHandler), for: .touchUpInside)
 		configuration = nil
 		contentEdgeInsets = .init(top: 7.5, left: 10, bottom: 7.5, right: 10)
-		titleEdgeInsets = .init(top: 0, left: 15, bottom: 0, right: 0)
+		if image != nil {
+			titleEdgeInsets = .init(top: 0, left: 15, bottom: 0, right: 0)
+		}
+		
     }
     
     required init?(coder: NSCoder) {
