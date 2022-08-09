@@ -43,9 +43,7 @@ class ProfileViewController: UIViewController {
 		assetsView.delegate = self
     }
     
-    func setupViews(){
-		
-		view.addSubview(backdropImage)
+    func setupViews(){		view.addSubview(backdropImage)
 		view.setWidthForChildWithPadding(backdropImage, paddingFactor: .zero)
 		backdropImage.setHeightWithPriority(200)
 		
@@ -113,6 +111,8 @@ extension ProfileViewController: ProfileHeaderEventDelegate {
 			onTapFavorites()
 		case "Draft":
 			onTapDrafts()
+		case "Profile":
+			onTapProfile()
 		default:
 			print("(DEBUG) No Action for this button has been assigned!")
 		}
@@ -133,4 +133,8 @@ extension ProfileViewController{
     func onTapWallet(){
         self.navigationController?.pushViewController(WalletDetailView(), animated: true)
     }
+	
+	func onTapProfile() {
+		self.navigationController?.pushViewController(SettingViewController(), animated: true)
+	}
 }

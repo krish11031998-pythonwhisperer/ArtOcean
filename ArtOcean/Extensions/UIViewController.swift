@@ -28,4 +28,16 @@ extension UIViewController{
 	var navBarOrigin: CGPoint { navigationController?.navigationBar.frame.origin ?? .zero }
     
 	var isNavBarHidden: Bool { navigationController?.navigationBar.isHidden ?? false }
+	
+	func showNavBar() {
+		if isNavBarHidden {
+			self.navigationController?.setNavigationBarHidden(false, animated: true)
+		}
+	}
+	
+	func hideNavBar() {
+		if !isNavBarHidden {
+			self.navigationController?.setNavigationBarHidden(true, animated: true)
+		}
+	}
 }

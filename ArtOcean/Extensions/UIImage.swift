@@ -236,6 +236,23 @@ extension UIImage {
 		return view.snapshot
 	}
 	
+	func roundedImage(cornerRadius: CGFloat = 16) -> UIImage? {
+		let imageView: UIImageView = .init(image: self)
+		imageView.bordered(cornerRadius: size.width.half(), borderWidth: 0, borderColor: .clear)
+		imageView.clipsToBounds = true
+		return imageView.snapshot
+	}
+	
+	static func customButtonImage(
+		name: UIImage.Catalogue,
+		size: CGSize = .squared(64),
+		tintColor: UIColor = .appGrayColor,
+		bgColor: UIColor = .appGrayColor.withAlphaComponent(0.5),
+		bordered: Bool = false
+	) -> UIImage? {
+		CustomImageButton(name: name, frame: size, addBG: true, tintColor: tintColor, bgColor: bgColor, bordered: bordered, handler: nil).snapshot
+	}
+	
 }
 
 //MARK: - UIImage Catalogue
@@ -252,9 +269,9 @@ extension UIImage {
 		case chartSquareBarOutline = "chart-square-bar-outline"
 		case chartSquareBar = "chart-square-bar"
 		case check = "check"
-		case chevronDown = "chevron-down"
-		case chevronLeft = "chevron-left"
-		case chevronRight = "chevron-right"
+		case chevronDown = "cheveron-down"
+		case chevronLeft = "cheveron-left"
+		case chevronRight = "cheveron-right"
 		case clock = "clock"
 		case cloudDownload = "cloud-download"
 		case cog = "cog"
@@ -292,7 +309,7 @@ extension UIImage {
 		case viewGrid = "view-grid"
 		case xMark = "x"
 		
-		var image: UIImage { .init(named: self.rawValue) ?? .solid(color: .appBlackColor, frame: .smallestSqaure) }
+		var image: UIImage { .init(named: self.rawValue) ?? .solid(color: .appBlackColor.withAlphaComponent(0.125), frame: .smallestSqaure) }
 	}
 	
 	static func buildCatalogueImage(name: Catalogue, size: CGSize) -> UIImage {

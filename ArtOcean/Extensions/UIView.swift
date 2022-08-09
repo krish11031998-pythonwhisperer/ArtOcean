@@ -220,8 +220,18 @@ extension UIView {
 	}
 	
 	func setContraintsToChild(_ childView:UIView,edgeInsets:UIEdgeInsets,withPriority: Float = 1000){
-		setHorizontalConstraintsToChild(childView, edgeInsets: edgeInsets, withPriority: withPriority)
-		setVerticalConstraintsToChild(childView, edgeInsets: edgeInsets,withPriority: withPriority)
+		let constraints = [
+			childView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: edgeInsets.left),
+			childView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -edgeInsets.right),
+			childView.topAnchor.constraint(equalTo: self.topAnchor, constant: edgeInsets.top),
+			childView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -edgeInsets.bottom)
+		].map { $0.setPriority(priority: withPriority) }
+		
+		removeConstraints(constraints)
+		childView.translatesAutoresizingMaskIntoConstraints = false
+		NSLayoutConstraint.activate(constraints)
+//		setHorizontalConstraintsToChild(childView, edgeInsets: edgeInsets, withPriority: withPriority)
+//		setVerticalConstraintsToChild(childView, edgeInsets: edgeInsets,withPriority: withPriority)
 	}
 	
 	func setHorizontalConstraintsToChild(_ childView: UIView, edgeInsets: UIEdgeInsets, withPriority: Float = 1000) {
