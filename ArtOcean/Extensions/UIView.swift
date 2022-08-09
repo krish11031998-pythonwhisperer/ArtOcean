@@ -230,8 +230,6 @@ extension UIView {
 		removeConstraints(constraints)
 		childView.translatesAutoresizingMaskIntoConstraints = false
 		NSLayoutConstraint.activate(constraints)
-//		setHorizontalConstraintsToChild(childView, edgeInsets: edgeInsets, withPriority: withPriority)
-//		setVerticalConstraintsToChild(childView, edgeInsets: edgeInsets,withPriority: withPriority)
 	}
 	
 	func setHorizontalConstraintsToChild(_ childView: UIView, edgeInsets: UIEdgeInsets, withPriority: Float = 1000) {

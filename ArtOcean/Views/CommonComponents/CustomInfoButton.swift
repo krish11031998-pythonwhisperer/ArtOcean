@@ -179,6 +179,7 @@ class CustomInfoButtonCell: ConfigurableCell {
 		button.infoTitle = model.infoTitle
 		button.infoSubTitle = model.infoSubTitle
 		button.trailingImage = model.trailingImage
+		backgroundColor = .clear
 
 	}
 	

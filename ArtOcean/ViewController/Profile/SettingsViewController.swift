@@ -85,6 +85,7 @@ class SettingViewController: UIViewController {
 		view.setSafeAreaConstraintsToChild(tableView, edgeInsets: .zero)
 		tableView.tableHeaderView = headerView
 		tableView.separatorStyle = .none
+		tableView.backgroundColor = .clear
 	}
 	
 }
