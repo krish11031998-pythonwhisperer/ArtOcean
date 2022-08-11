@@ -10,16 +10,16 @@ import UIKit
 
 extension UIStackView {
 	
-	static func VStack(spacing: CGFloat = .zero, aligmment: Alignment = .fill) -> UIStackView {
-		let stack = UIStackView()
+	static func VStack(views:[UIView] = [],spacing: CGFloat = .zero, aligmment: Alignment = .fill) -> UIStackView {
+		let stack = UIStackView(arrangedSubviews: views)
 		stack.axis = .vertical
 		stack.spacing = spacing
 		stack.alignment = aligmment
 		return stack
 	}
 	
-	static func HStack(spacing: CGFloat = .zero, aligmment: Alignment) -> UIStackView {
-		let stack = UIStackView()
+	static func HStack(views:[UIView] = [],spacing: CGFloat = .zero, aligmment: Alignment) -> UIStackView {
+		let stack = UIStackView(arrangedSubviews: views)
 		stack.axis = .horizontal
 		stack.spacing = spacing
 		stack.alignment = aligmment

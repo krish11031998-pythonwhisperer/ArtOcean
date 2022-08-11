@@ -13,6 +13,11 @@ protocol RenderableText {
 	func renderInto(target: Any?)
 }
 
+extension String {
+	
+	func replace(withDefault: String = "XXXXX") -> String { !self.isEmpty ? self : withDefault }
+}
+
 extension String: RenderableText {
 	
 	func styled(font: CustomFonts, color: UIColor, size: CGFloat) -> NSAttributedString {

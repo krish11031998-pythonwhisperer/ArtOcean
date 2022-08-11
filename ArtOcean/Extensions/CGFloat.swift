@@ -31,7 +31,6 @@ extension CGFloat {
 			return self
 		}
 	}
-	
 }
 
 extension ClosedRange {
@@ -54,5 +53,4 @@ extension ClosedRange where Bound == CGFloat {
 	func normalized(_ val:Bound) -> Bound {
 		(clamped(val) - lowerBound)/(upperBound - lowerBound)
 	}
-	
 }

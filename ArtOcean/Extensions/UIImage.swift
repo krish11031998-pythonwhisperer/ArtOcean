@@ -325,4 +325,18 @@ extension UIImage {
 		imageView.bordered(cornerRadius: borderRadius)
 		return imageView.snapshot
 	}
+	
+	static func loadImage<T:AnyObject>(url: String?,for object: T, at path: ReferenceWritableKeyPath<T,UIImage?>) {
+		guard let validUrlStr = url else { return }
+		ImageDownloader.shared.fetchImage(urlStr: validUrlStr) { result  in
+			switch result {
+				case .success(let image):
+					DispatchQueue.main.async {
+						object[keyPath: path] = image
+					}
+				case .failure(let err):
+					print("(DEBUG) err : ",err.localizedDescription)
+			}
+		}
+	}
 }

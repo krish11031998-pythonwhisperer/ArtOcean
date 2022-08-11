@@ -12,67 +12,76 @@ class StatisticActivityCollectionViewCell:UICollectionViewCell{
     
     private var offer:NFTArtOffer? = nil
     
-    private lazy var imageView:CustomImageView = CustomImageView(cornerRadius: 20)
+	private lazy var imageView: UIImageView = {
+		let imageView = UIImageView(frame: .init(origin: .zero, size: .squared(40)))
+		imageView.contentMode = .scaleAspectFill
+		imageView.image = .solid(color: .appGrayColor, frame: .squared(40))
+		imageView.cornerRadius = 8
+		imageView.clipsToBounds = true
+		return imageView
+	}()
     
     public var buttonDelegate:CustomButtonDelegate? = nil
     
     //UserInfo
-    private lazy var name:UILabel = CustomLabel(text: "Shapire Cole", size: 14, weight: .medium, color: .appBlackColor, numOfLines: 1, adjustFontSize: true)
+    private lazy var name:UILabel = { .init() }()
     
-    private lazy var userName:UILabel = CustomLabel(text: "@shpre", size: 12, weight: .medium, color: .appGrayColor, numOfLines: 1, adjustFontSize: true)
+    private lazy var userName:UILabel = { .init() }()
+	
+	private lazy var transactionTypeLabel:UILabel = { .init() }()
+	
+	private lazy var transactionTimeLabel:UILabel = { .init() }()
     
-    private lazy var userInfoView:UIStackView = UIView.StackBuilder(views: [name,userName], ratios: [0.5,0.5], spacing: 5, axis: .vertical)
-    
-    //PricePercentInfo
-    private lazy var transactionTypeLabel:UILabel = CustomLabel(text: "Sale", size: 14, weight: .medium, color: .appGreenColor, numOfLines: 1, adjustFontSize: true)
-    
-    private lazy var transactionTimeLabel:UILabel = CustomLabel(text: "2 minutes ago", size: 12, weight: .medium, color: .appGrayColor, numOfLines: 1, adjustFontSize: true)
-    
-    private lazy var transactionLabel:UIStackView = UIView.StackBuilder(views: [transactionTypeLabel,transactionTimeLabel], ratios: [0.5,0.5], spacing: 5, axis: .vertical)
+	private lazy var userInfoView:UIStackView = {
+		.VStack(views:[name,userName],spacing: 5, aligmment: .leading)
+	}()
+	
+	private lazy var transactionLabel:UIStackView = {
+		.VStack(views:[transactionTypeLabel,.spacer(),transactionTimeLabel],spacing: 5, aligmment: .trailing)
+	}()
     
     //MainStackView
     private lazy var stack:UIStackView = {
-        let stack = UIView.StackBuilder(views: [userInfoView,transactionLabel], ratios: [0.5,0.5], spacing: 10, axis: .horizontal)
-        return stack
+		let stack: UIStackView = .HStack(spacing: 10, aligmment: .center)
+		[imageView,userInfoView,transactionLabel].forEach(stack.addArrangedSubview)
+		return stack
     }()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        self.transactionTypeLabel.textAlignment = .right
-        self.transactionTimeLabel.textAlignment = .right
-        
-        self.addSubview(imageView)
+        transactionTypeLabel.textAlignment = .right
+        transactionTimeLabel.textAlignment = .right
+
         self.addSubview(stack)
+		imageView.setFrameConstraints(width: 40, height: 40)
+		setContraintsToChild(stack, edgeInsets: .zero)
         
         self.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.handleTap)))
-        
-        self.setupLayout()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func setupLayout(){
-        
-        self.imageView.heightAnchor.constraint(equalToConstant: 40).isActive = true
-        self.imageView.widthAnchor.constraint(equalToConstant: 40).isActive = true
-        self.imageView.leadingAnchor.constraint(equalTo: self.leadingAnchor).isActive = true
-        self.imageView.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
-        self.imageView.backgroundColor = .black
-        self.imageView.layer.cornerRadius = 8
-        
-        self.stack.leadingAnchor.constraint(equalToSystemSpacingAfter: self.imageView.trailingAnchor, multiplier: 1.5).isActive = true
-        self.stack.topAnchor.constraint(equalTo: self.topAnchor,constant: 2.5).isActive = true
-        self.stack.bottomAnchor.constraint(equalTo: self.bottomAnchor,constant: -2.5).isActive = true
-        self.stack.trailingAnchor.constraint(equalTo: self.trailingAnchor).isActive = true
-    }
-    
     @objc func handleTap(){
-//        self.bouncyButtonClick()
         self.buttonDelegate?.handleTap?(self.offer as Any)
     }
+	
+	private func updateUI(offer: NFTArtOffer? = nil) {
+		guard let validOffer = offer else { return }
+		self.offer = validOffer
+		UIImage.loadImage(url: validOffer.image ?? "", for: imageView, at: \.image)
+		(validOffer.name ?? "XXX").replace().styled(font: .medium, color: .appBlackColor, size: 14).renderInto(target: name)
+		"@\(validOffer.nft?.metadata?.compiler ?? "X")".styled(font: .medium, color: .appGrayColor, size: 12).renderInto(target: userName)
+		"Sale".styled(font: .medium, color: .appGreenColor, size: 14).renderInto(target: transactionTypeLabel)
+		"2 minutes ago".styled(font: .medium, color: .appGrayColor, size: 12).renderInto(target: transactionTimeLabel)
+	}
+	
+	internal override func prepareForReuse() {
+		super.prepareForReuse()
+		imageView.image = .solid(color: .appGrayColor, frame: .squared(40))
+	}
 }
 
 
@@ -82,21 +91,7 @@ extension StatisticActivityCollectionViewCell:ConfirgurableCell{
     func configure(_ data: Item) {
         switch data{
             case .offer(let offer):
-            self.offer = offer
-            DispatchQueue.main.async {
-                if let title = offer.name,title != ""{
-                    self.name.text = title
-                }else{
-                    self.name.text = "XXXXXX"
-                }
-                if let imageURL = offer.image,imageURL != ""{
-                    self.imageView.updateImageView(url: imageURL)
-                }
-                
-                if let time = offer.time{
-                    self.transactionTimeLabel.text = "\(time) minutes ago"
-                }
-            }
+				updateUI(offer: offer)
             default:
                 print("(DEBUG) user not provided!")
         }
@@ -114,20 +109,7 @@ extension StatisticActivityCollectionViewCell:Configurable{
 		switch model{
 			case .offer(let offer):
 			self.offer = offer
-			DispatchQueue.main.async {
-				if let title = offer.name,title != ""{
-					self.name.text = title
-				}else{
-					self.name.text = "XXXXXX"
-				}
-				if let imageURL = offer.image,imageURL != ""{
-					self.imageView.updateImageView(url: imageURL)
-				}
-				
-				if let time = offer.time{
-					self.transactionTimeLabel.text = "\(time) minutes ago"
-				}
-			}
+				updateUI(offer: offer)
 			default:
 				print("(DEBUG) user not provided!")
 		}

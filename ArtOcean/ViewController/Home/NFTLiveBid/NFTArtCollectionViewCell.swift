@@ -39,9 +39,10 @@ class NFTArtCollectionViewCell:UICollectionViewCell{
     
     public var delegate:NFTArtCellDelegate? = nil
     
-    private lazy var artTitle:UILabel = self.labelBuilder(text: "", size: 14, weight: .bold, color: .appBlackColor, numOfLines: 1)
-   
-    private lazy var priceLabel:UILabel = CustomLabel(text: "0.47 ETH", size: 12, weight: .medium, color: .black, numOfLines: 1)
+//    private lazy var artTitle:UILabel = labelBuilder(text: "", size: 14, weight: .bold, color: .appBlackColor, numOfLines: 1,adjustFontSize: false)
+	private lazy var artTitle:UILabel = { .init() }()
+    private lazy var priceLabel:UILabel = { .init() }()
+	private let likeLabel:UILabel = { .init() }()
     
     private lazy var priceView:UIView = {
 		let img:CustomImageView = .init(named: "eth", cornerRadius: 0)
@@ -52,9 +53,6 @@ class NFTArtCollectionViewCell:UICollectionViewCell{
         
         return view
     }()
-    
-    
-    private let likeLabel:UILabel = CustomLabel(text: "30", size: 12, weight: .medium, color: .appGrayColor, numOfLines: 1,adjustFontSize: true)
     
 	private lazy var likeView:UIView = {
 		let img:CustomImageView = .init(named: "heart", cornerRadius: 0)
@@ -116,21 +114,17 @@ class NFTArtCollectionViewCell:UICollectionViewCell{
         self.artTitle.text = ""
         self.priceLabel.text = ""
         self.likeLabel.text = ""
-        self.imageView.image = .init(named: "placeHolder")
+		self.imageView.image = .solid(color: .appGrayColor)
     }
     
     public func updateUIWithNFT(_ nft:NFTModel,idx:Int? = nil){
         self.resetCell()
         self.nft = nft
-		if let safeTitle = nft.title{
-			self.artTitle.text = safeTitle == "" ? "Title" : safeTitle
-		}
-
         //Simulating PriceLabel Change
-        self.priceLabel.text = "0.47"
-        self.likeLabel.text = "30"
-
-        self.imageView.updateImageView(url: nft.metadata?.image)
+		nft.title?.replace().styled(font: .bold, color: .appBlackColor, size: 14).renderInto(target: artTitle)
+		"0.47".styled(font: .medium, color: .appBlackColor, size: 12).renderInto(target: priceLabel)
+		"30".styled(font: .medium, color: .appGrayColor, size: 12).renderInto(target: likeLabel)
+		UIImage.loadImage(url: nft.metadata?.image, for: imageView, at: \.image)
     }
 	
 	override func prepareForReuse() {
