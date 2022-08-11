@@ -68,6 +68,12 @@
 		EF7447B8284A109300899476 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF7447B7284A109300899476 /* User.swift */; };
 		EF7447BC284A300F00899476 /* PageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF7447BB284A300F00899476 /* PageViewController.swift */; };
 		EF7447BE284A5B2600899476 /* CustomPageSelectorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF7447BD284A5B2600899476 /* CustomPageSelectorViewController.swift */; };
+		EF7EAFB028A1985300FDFFD3 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF7EAFAF28A1985300FDFFD3 /* SettingsViewController.swift */; };
+		EF7EAFB228A198E900FDFFD3 /* HeaderCaptionLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF7EAFB128A198E900FDFFD3 /* HeaderCaptionLabel.swift */; };
+		EF7EAFB428A1998E00FDFFD3 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF7EAFB328A1998E00FDFFD3 /* String.swift */; };
+		EF7EAFB628A2E7F400FDFFD3 /* CustomInfoButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF7EAFB528A2E7F400FDFFD3 /* CustomInfoButton.swift */; };
+		EF7EAFB828A2EA4400FDFFD3 /* UIStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF7EAFB728A2EA4400FDFFD3 /* UIStackView.swift */; };
+		EF7EAFBA28A5956000FDFFD3 /* Float.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF7EAFB928A5956000FDFFD3 /* Float.swift */; };
 		EF8B0631283BEAC10050E726 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF8B0630283BEAC10050E726 /* AppDelegate.swift */; };
 		EF8B0635283BEAC10050E726 /* MainTabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF8B0634283BEAC10050E726 /* MainTabViewController.swift */; };
 		EF8B0638283BEAC10050E726 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EF8B0636283BEAC10050E726 /* Main.storyboard */; };
@@ -236,6 +242,12 @@
 		EF7447B7284A109300899476 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		EF7447BB284A300F00899476 /* PageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageViewController.swift; sourceTree = "<group>"; };
 		EF7447BD284A5B2600899476 /* CustomPageSelectorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomPageSelectorViewController.swift; sourceTree = "<group>"; };
+		EF7EAFAF28A1985300FDFFD3 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		EF7EAFB128A198E900FDFFD3 /* HeaderCaptionLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderCaptionLabel.swift; sourceTree = "<group>"; };
+		EF7EAFB328A1998E00FDFFD3 /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
+		EF7EAFB528A2E7F400FDFFD3 /* CustomInfoButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomInfoButton.swift; sourceTree = "<group>"; };
+		EF7EAFB728A2EA4400FDFFD3 /* UIStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIStackView.swift; sourceTree = "<group>"; };
+		EF7EAFB928A5956000FDFFD3 /* Float.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Float.swift; sourceTree = "<group>"; };
 		EF8B062D283BEAC10050E726 /* ArtOcean.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ArtOcean.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EF8B0630283BEAC10050E726 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		EF8B0634283BEAC10050E726 /* MainTabViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabViewController.swift; sourceTree = "<group>"; };
@@ -383,6 +395,7 @@
 				EF3259F52880925E001B0CA6 /* TableRow.swift */,
 				EF3259F72880925E001B0CA6 /* TableSection.swift */,
 				EF3259F82880925E001B0CA6 /* TableView.swift */,
+				EF7EAFB928A5956000FDFFD3 /* Float.swift */,
 			);
 			path = TableViewDataSource;
 			sourceTree = "<group>";
@@ -411,6 +424,7 @@
 				EF69B6AC28529FD000ABDADA /* FavoriteViewController.swift */,
 				EF69B6AE2854965400ABDADA /* WalletDetailView.swift */,
 				EF3259D0287C211B001B0CA6 /* ProfileHeaderView.swift */,
+				EF7EAFAF28A1985300FDFFD3 /* SettingsViewController.swift */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -542,6 +556,8 @@
 				EF325A012880A02F001B0CA6 /* NotificationCenter.Name.swift */,
 				EF325A052880BFDA001B0CA6 /* Numeric.swift */,
 				EF3C9A7728A04080007F5200 /* UIButton.swift */,
+				EF7EAFB328A1998E00FDFFD3 /* String.swift */,
+				EF7EAFB728A2EA4400FDFFD3 /* UIStackView.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -645,6 +661,8 @@
 				EFAB445928639BCF00B33864 /* ChartView.swift */,
 				EFAB44622867912F00B33864 /* StackContainer.swift */,
 				EFAB446728686DCE00B33864 /* CustomSearchBar.swift */,
+				EF7EAFB128A198E900FDFFD3 /* HeaderCaptionLabel.swift */,
+				EF7EAFB528A2E7F400FDFFD3 /* CustomInfoButton.swift */,
 			);
 			path = CommonComponents;
 			sourceTree = "<group>";
@@ -862,6 +880,7 @@
 				EFD13C292844CF80000E422E /* NFTOfferModel.swift in Sources */,
 				EF8B07462840A8150050E726 /* UIViewController.swift in Sources */,
 				EF7447B028495A8700899476 /* AccountMetrics.swift in Sources */,
+				EF7EAFB628A2E7F400FDFFD3 /* CustomInfoButton.swift in Sources */,
 				EF3C9A71289B0E3D007F5200 /* UIImage.swift in Sources */,
 				EFAB44662868684600B33864 /* SearchViewController.swift in Sources */,
 				EF3C9A7528A01E39007F5200 /* SectionTestData.swift in Sources */,
@@ -876,11 +895,13 @@
 				EF325A062880BFDA001B0CA6 /* Numeric.swift in Sources */,
 				EF69B6B12854C11E00ABDADA /* StackedButtons.swift in Sources */,
 				EFAB446A2868840800B33864 /* UICollection.swift in Sources */,
+				EF7EAFB228A198E900FDFFD3 /* HeaderCaptionLabel.swift in Sources */,
 				EF325A022880A02F001B0CA6 /* NotificationCenter.Name.swift in Sources */,
 				EF00F5D7284805C1003D8683 /* StatisticCollectionView.swift in Sources */,
 				EF3259FA2880925F001B0CA6 /* CollectionColumn.swift in Sources */,
 				EF3C9A6F28999F6A007F5200 /* NFTLiveBidNavHeader.swift in Sources */,
 				EF7447B4284A0F8000899476 /* ActivityCollectionViewCell.swift in Sources */,
+				EF7EAFB028A1985300FDFFD3 /* SettingsViewController.swift in Sources */,
 				EF8B0677283C20820050E726 /* UIImageView.swift in Sources */,
 				EFD13C232844196F000E422E /* NFTLiveBidCollectionProtocol.swift in Sources */,
 				EF3BF92A287AB3D10070CAE5 /* NFTAttributeView.swift in Sources */,
@@ -907,6 +928,7 @@
 				EFAB44632867912F00B33864 /* StackContainer.swift in Sources */,
 				EF7447AE284902A300899476 /* AccountHeaderView.swift in Sources */,
 				EF69B6AD28529FD000ABDADA /* FavoriteViewController.swift in Sources */,
+				EF7EAFB828A2EA4400FDFFD3 /* UIStackView.swift in Sources */,
 				EF7447B8284A109300899476 /* User.swift in Sources */,
 				EF8B067D283C27020050E726 /* AlchemyAPI.swift in Sources */,
 				EF8B06D0283D60EC0050E726 /* TopCollectionTableCellViewTableViewCell.swift in Sources */,
@@ -919,6 +941,7 @@
 				EF3259D3287C2761001B0CA6 /* CGSize.swift in Sources */,
 				EF69B6B928562D5700ABDADA /* CustomAnimatedImage.swift in Sources */,
 				EF3259D1287C211B001B0CA6 /* ProfileHeaderView.swift in Sources */,
+				EF7EAFB428A1998E00FDFFD3 /* String.swift in Sources */,
 				EF8B06CC283D5B4C0050E726 /* TopCollectionView.swift in Sources */,
 				EF527496284C0608008C77EC /* CustomComplexCollectionView.swift in Sources */,
 				EF924CF5284CA454009E9C2A /* CustomSelectorCollectionView.swift in Sources */,
@@ -941,6 +964,7 @@
 				EF69B6B728550E3C00ABDADA /* TransactionModel.swift in Sources */,
 				EF3259FB2880925F001B0CA6 /* UICollectionLayoutExtension.swift in Sources */,
 				EFD13C2528442484000E422E /* CustomButton.swift in Sources */,
+				EF7EAFBA28A5956000FDFFD3 /* Float.swift in Sources */,
 				EF8B0668283BEF250050E726 /* UIColor.swift in Sources */,
 				EF00F5BE28453C30003D8683 /* NFTTypeCollectionCell.swift in Sources */,
 				EFD13C212843ECB3000E422E /* CustomImageView.swift in Sources */,
@@ -1130,6 +1154,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 8T963ZW2EJ;
@@ -1146,6 +1171,7 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.Krish.ArtOcean;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1157,6 +1183,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 8T963ZW2EJ;
@@ -1173,6 +1200,7 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.Krish.ArtOcean;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
