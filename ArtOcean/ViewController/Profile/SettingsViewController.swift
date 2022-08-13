@@ -44,16 +44,16 @@ class SettingViewController: UIViewController {
 	
 	private func configNavbar() {
 		let navbarAppearence = UINavigationBarAppearance()
-		navbarAppearence.backgroundColor = .white
-		self.navigationController?.navigationBar.standardAppearance = .init(barAppearance: navbarAppearence)
-		self.navigationController?.navigationBar.scrollEdgeAppearance = .init(barAppearance: navbarAppearence)
-		self.navigationController?.navigationBar.isTranslucent = false
+		navbarAppearence.backgroundColor = .clear
+		navigationController?.navigationBar.standardAppearance = .init(barAppearance: navbarAppearence)
+		navigationController?.navigationBar.scrollEdgeAppearance = .init(barAppearance: navbarAppearence)
+		navigationController?.navigationBar.isTranslucent = false
 		
 		let leftBarItem = UIBarButtonItem(customView: CustomImageButton.closeButton { [weak self] in self?.navigationController?.popViewController(animated: true) })
 		let titleView =  CustomLabel(text: "Settings", size: 22, weight: .bold, color: .black, numOfLines: 1)
 		
-		self.navigationItem.titleView = titleView
-		self.navigationItem.leftBarButtonItem = leftBarItem
+		navigationItem.titleView = titleView
+		navigationItem.leftBarButtonItem = leftBarItem
 		
 	}
 	
@@ -85,7 +85,7 @@ class SettingViewController: UIViewController {
 		view.setSafeAreaConstraintsToChild(tableView, edgeInsets: .zero)
 		tableView.tableHeaderView = headerView
 		tableView.separatorStyle = .none
-		tableView.backgroundColor = .clear
+		tableView.backgroundColor = .appWhiteBackgroundColor
 	}
 	
 }

@@ -39,7 +39,6 @@ class NFTArtCollectionViewCell:UICollectionViewCell{
     
     public var delegate:NFTArtCellDelegate? = nil
     
-//    private lazy var artTitle:UILabel = labelBuilder(text: "", size: 14, weight: .bold, color: .appBlackColor, numOfLines: 1,adjustFontSize: false)
 	private lazy var artTitle:UILabel = { .init() }()
     private lazy var priceLabel:UILabel = { .init() }()
 	private let likeLabel:UILabel = { .init() }()

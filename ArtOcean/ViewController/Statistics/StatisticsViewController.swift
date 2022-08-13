@@ -29,7 +29,7 @@ class StatisticsViewController: UIViewController {
 	private func setupUI() {
 		customSlideCollectionView.delegate = self
 		view.addSubview(customSlideCollectionView)
-		view.setSafeAreaConstraintsToChild(customSlideCollectionView, edgeInsets: .init(vertical: .zero, horizontal: 24))
+		view.setSafeAreaConstraintsToChild(customSlideCollectionView, edgeInsets: .init(top: 16, left: 8, bottom: 0, right: 8))
 	}
 	
 	private func configNavbar(){

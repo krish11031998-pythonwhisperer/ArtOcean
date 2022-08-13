@@ -58,7 +58,7 @@ class SearchViewController:UIViewController{
 	func setupCollectionView(){
 		view.addSubview(collectionView)
 		collectionView.dataSource = self
-		view.setContraintsToChild(collectionView, edgeInsets: .init(top: view.safeAreaInsets.top + searchBar.intrinsicContentSize.height + 34, left: 0, bottom: 24, right: 0))
+		view.setSafeAreaConstraintsToChild(collectionView, edgeInsets: .zero)
 	}
 	
 	//MARK: - Setting Up View
@@ -72,10 +72,12 @@ class SearchViewController:UIViewController{
 	
 	
 	func setupUI(){
-		let stackView = StackContainer(innerView: [searchBar,NFTArtTypeCollectionView()])
+		let stackView: UIStackView = .VStack(views: [.spacer(height: 25),searchBar,NFTArtTypeCollectionView()], spacing: 20, aligmment: .center)
+		searchBar.setHeightWithPriority(55,priority: .init(rawValue: 999))
 		view.addSubview(scrollView)
 		scrollView.addSubview(stackView)
-		scrollView.setContraintsToChild(stackView, edgeInsets: .init(top: view.safeAreaInsets.top + 24, left: 0, bottom: view.safeAreaInsets.bottom + 24, right: 0))
+		scrollView.setContraintsToChild(stackView, edgeInsets: .zero)
+		view.setSafeAreaConstraintsToChild(scrollView, edgeInsets: .zero)
 	}
 	
 }
