@@ -247,7 +247,7 @@ extension UIImage {
 		name: UIImage.Catalogue,
 		size: CGSize = .squared(64),
 		tintColor: UIColor = .appGrayColor,
-		bgColor: UIColor = .appGrayColor.withAlphaComponent(0.5),
+		bgColor: UIColor = .appGrayColor.withAlphaComponent(0.15),
 		bordered: Bool = false
 	) -> UIImage? {
 		CustomImageButton(name: name, frame: size, addBG: true, tintColor: tintColor, bgColor: bgColor, bordered: bordered, handler: nil).snapshot

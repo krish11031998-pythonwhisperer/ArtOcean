@@ -104,7 +104,6 @@ class NFTLiveBidView : UIView {
 	override init(frame: CGRect) {
 		super.init(frame: frame)
 		addViewAndSetConstraints(card, edgeInsets: .zero)
-		addShadow()
 	}
 	
 	required init?(coder: NSCoder) {

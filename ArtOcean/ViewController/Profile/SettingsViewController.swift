@@ -12,16 +12,72 @@ fileprivate extension String {
 	static var testUserImg: String { "https://weathereport.mypinata.cloud/ipfs/QmZJ56QmQpXQJamofJJYbR5T1gQTxVMhN5uHYfhvAmdFr8/85.png" }
 }
 
+enum SettingRowModel {
+	
+	case editProfile
+	case changePassword
+	case favorites
+	case draft
+	case wallet
+	case logOut
+}
+
+extension SettingRowModel {
+	
+	var title: RenderableText {
+		switch self {
+		case .editProfile:
+			return "Edit profile"
+		case .changePassword:
+			return "Change Password"
+		case .favorites:
+			return "Favorites"
+		case .draft:
+			return "Draft"
+		case .wallet:
+			return "Wallet"
+		case .logOut:
+			return "Log Out"
+		}
+	}
+	
+	var image: UIImage? {
+		switch self {
+		case .editProfile:
+			return .customButtonImage(name: .user)?.roundedImage()
+		case .changePassword:
+			return .customButtonImage(name: .shieldCheck)?.roundedImage()
+		case .favorites:
+			return .customButtonImage(name: .heart)?.roundedImage()
+		case .draft:
+			return .customButtonImage(name: .pencil)?.roundedImage()
+		case .wallet:
+			return .customButtonImage(name: .creditCard)?.roundedImage()
+		case .logOut:
+			return .customButtonImage(name: .lockClosed, tintColor: .appRedColor, bgColor: .appRedColor.withAlphaComponent(0.15))?.roundedImage()
+		}
+	}
+	
+	var customInfoModel: CustomInfoButtonModel {
+		let trailingImage: UIImage = .Catalogue.chevronRight.image.resized(.squared(16))
+		return .init(leadingImg: image, title: title.styled(font: .medium, color: .appBlackColor, size: 14), trailingImage: trailingImage)
+	}
+}
+
 class SettingViewController: UIViewController {
 	
 	private lazy var headerView: UIView = {
 		let headerCaptionLabel = HeaderCaptionLabel(frame: .init(origin: .zero, size: .init(width: .totalWidth, height: 100)))
-		headerCaptionLabel.configureLabel(img: .loadCache(.testUserImg)?.roundedImage(),title: "Krishna Venkatramani", subTitle: "@cryptoDon", info: "Interesting")
+		headerCaptionLabel.configureLabel(
+			img: .loadCache(.testUserImg)?.roundedImage(),
+			title: "Krishna Venkatramani",
+			subTitle: "@cryptoDon"
+		)
 		return headerCaptionLabel
 	}()
 	
 	private lazy var tableView: UITableView = {
-		.init()
+		.init(frame: .zero, style: .grouped)
 	}()
 	
 	
@@ -43,13 +99,9 @@ class SettingViewController: UIViewController {
 	}
 	
 	private func configNavbar() {
-		let navbarAppearence = UINavigationBarAppearance()
-		navbarAppearence.backgroundColor = .clear
-		navigationController?.navigationBar.standardAppearance = .init(barAppearance: navbarAppearence)
-		navigationController?.navigationBar.scrollEdgeAppearance = .init(barAppearance: navbarAppearence)
-		navigationController?.navigationBar.isTranslucent = false
-		
-		let leftBarItem = UIBarButtonItem(customView: CustomImageButton.closeButton { [weak self] in self?.navigationController?.popViewController(animated: true) })
+		let leftBarItem = UIBarButtonItem(customView: CustomImageButton.closeButton { [weak self] in
+			self?.navigationController?.popViewController(animated: true)
+		})
 		let titleView =  CustomLabel(text: "Settings", size: 22, weight: .bold, color: .black, numOfLines: 1)
 		
 		navigationItem.titleView = titleView
@@ -58,21 +110,13 @@ class SettingViewController: UIViewController {
 	}
 	
 	private var accountSettings: TableSection? {
-		let buttons: [CustomInfoButtonModel] = [
-			.init(leadingImg: .customButtonImage(name: .userOutline)?.roundedImage(),title: "Edit profile".styled(font: .medium, color: .appBlackColor, size: 14), trailingImage: .Catalogue.chevronRight.image.resized(.squared(16))),
-			.init(leadingImg: .customButtonImage(name: .shieldCheck)?.roundedImage(),title: "Change Password".styled(font: .medium, color: .appBlackColor, size: 14), trailingImage: .Catalogue.chevronRight.image.resized(.squared(16)))
-		]
-		return .init(title: "Account Settings", rows: buttons.map { TableRow<CustomInfoButtonCell>($0) })
+		let row: [SettingRowModel] = [.editProfile,.changePassword]
+		return .init(title: "Account Settings", rows: row.map { TableRow<CustomInfoButtonCell>($0.customInfoModel) })
 	}
 	
 	private var preferenceSettings: TableSection? {
-		let buttons: [CustomInfoButtonModel] = [
-			.init(leadingImg: .customButtonImage(name: .heart)?.roundedImage(),title: "Favorites".styled(font: .medium, color: .appBlackColor, size: 14), trailingImage: .Catalogue.chevronRight.image.resized(.squared(16))),
-			.init(leadingImg: .customButtonImage(name: .shieldCheck)?.roundedImage(),title: "Draft".styled(font: .medium, color: .appBlackColor, size: 14), trailingImage: .Catalogue.chevronRight.image.resized(.squared(16))),
-			.init(leadingImg: .customButtonImage(name: .creditCard)?.roundedImage(),title: "Wallet".styled(font: .medium, color: .appBlackColor, size: 14), trailingImage: .Catalogue.chevronRight.image.resized(.squared(16))),
-			.init(leadingImg: .customButtonImage(name: .lockClosed)?.roundedImage(),title: "Log Out".styled(font: .medium, color: .appBlackColor, size: 14), trailingImage: .Catalogue.chevronRight.image.resized(.squared(16)))
-		]
-		return .init(title: "Preferences", rows: buttons.map { TableRow<CustomInfoButtonCell>($0) })
+		let row: [SettingRowModel] = [.favorites,.draft,.wallet,.logOut]
+		return .init(title: "Preferences", rows: row.map { TableRow<CustomInfoButtonCell>($0.customInfoModel) })
 	}
 	
 	private func buildDataSource() -> TableViewDataSource {
