@@ -18,7 +18,13 @@ protocol ConfigurableStyling {
 	associatedtype Model
 	func configureView(with model:Model)
 	static var insetPadding: UIEdgeInsets { get }
+	static var cornerRadius: CGFloat { get }
 	func prepareCellForReuse()
+}
+
+extension ConfigurableStyling {
+	static var insetPadding: UIEdgeInsets { .zero }
+	static var cornerRadius: CGFloat { .zero }
 }
 
 typealias InnerConfigurableView = UIView & ConfigurableStyling

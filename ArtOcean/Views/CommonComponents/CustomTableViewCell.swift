@@ -20,6 +20,7 @@ class CustomTableWrapperView<Cell:InnerConfigurableView> : ConfigurableCell {
 		removeAllSubViews()
 		addViewAndSetConstraints(content, edgeInsets: Cell.insetPadding)
 		content.configureView(with: model)
+		content.cornerRadius = Cell.cornerRadius
 	}
 	
 	
@@ -41,6 +42,7 @@ class CustomCollectionWrapperView<Cell: InnerConfigurableView> : ConfigurableCol
 		removeAllSubViews()
 		addViewAndSetConstraints(content, edgeInsets: Cell.insetPadding)
 		content.configureView(with: model)
+		content.cornerRadius = Cell.cornerRadius
 	}
 	
 	override func prepareForReuse() {

@@ -28,7 +28,7 @@ class LiveBidDetailView: UIViewController  {
     private lazy var liveBidTableView:UITableView = {
         let tableView = UITableView(frame: .zero, style: .plain)
 		tableView.rowHeight = 320
-        tableView.backgroundColor = .clear
+        tableView.backgroundColor = .red
 		tableView.contentInsetAdjustmentBehavior = .never
         tableView.separatorStyle = .none
         tableView.showsVerticalScrollIndicator = false

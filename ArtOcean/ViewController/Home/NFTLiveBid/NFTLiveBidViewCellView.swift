@@ -90,6 +90,9 @@ class NFTLiveBidView : UIView {
 		])
 		
 		biddingStack.heightAnchor.constraint(equalToConstant: 29).isActive = true
+//		view.cornerRadius = 16
+//		view.layer.maskedCorners = [.layerMinXMaxYCorner,.layerMaxXMaxYCorner]
+//		view.backgroundColor = .white
         return view
     }()
     
@@ -136,7 +139,7 @@ class NFTLiveBidView : UIView {
     }
        
 	public func prepareForReuse() {
-		imageView.image = nil
+		imageView.image = .loadingBackgroundImage
 	}
 }
 
@@ -152,6 +155,8 @@ extension NFTLiveBidView: ConfigurableStyling {
 	static var insetPadding: UIEdgeInsets {
 		.init(vertical: 12, horizontal: 24)
 	}
+	
+	static var cornerRadius: CGFloat { 16 }
 	
 	func prepareCellForReuse() {
 		imageView.image = nil
