@@ -41,26 +41,26 @@ extension SettingRowModel {
 		}
 	}
 	
-	var image: UIImage? {
+	var leadingImage: UIImage? {
 		switch self {
 		case .editProfile:
-			return .customButtonImage(name: .user)?.roundedImage()
+			return .customButtonImage(name: .user)?.roundedImage(cornerRadius: 32)
 		case .changePassword:
-			return .customButtonImage(name: .shieldCheck)?.roundedImage()
+			return .customButtonImage(name: .shieldCheck)?.roundedImage(cornerRadius: 32)
 		case .favorites:
-			return .customButtonImage(name: .heart)?.roundedImage()
+			return .customButtonImage(name: .heart)?.roundedImage(cornerRadius: 32)
 		case .draft:
-			return .customButtonImage(name: .pencil)?.roundedImage()
+			return .customButtonImage(name: .pencil)?.roundedImage(cornerRadius: 32)
 		case .wallet:
-			return .customButtonImage(name: .creditCard)?.roundedImage()
+			return .customButtonImage(name: .creditCard)?.roundedImage(cornerRadius: 32)
 		case .logOut:
-			return .customButtonImage(name: .lockClosed, tintColor: .appRedColor, bgColor: .appRedColor.withAlphaComponent(0.15))?.roundedImage()
+			return .customButtonImage(name: .lockClosed, tintColor: .appRedColor, bgColor: .appRedColor.withAlphaComponent(0.15))?.roundedImage(cornerRadius: 32)
 		}
 	}
 	
 	var customInfoModel: CustomInfoButtonModel {
 		let trailingImage: UIImage = .Catalogue.chevronRight.image.resized(.squared(16))
-		return .init(leadingImg: image, title: title.styled(font: .medium, color: .appBlackColor, size: 14), trailingImage: trailingImage)
+		return .init(leadingImg: leadingImage, title: title.styled(font: .medium, color: .appBlackColor, size: 14), trailingImage: trailingImage)
 	}
 }
 

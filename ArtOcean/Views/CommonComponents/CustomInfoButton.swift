@@ -74,7 +74,7 @@ class CustomInfoButton: UIButton {
 		set {
 			leadingImageView.image = newValue
 			leadingImageView.isHidden = newValue == nil
-			if leadingImageView.superview == nil {
+			if leadingImageView.superview == nil && newValue != nil {
 				mainStack.insertArrangedSubview(leadingImageView, at: 0)
 			}
 		}
@@ -85,7 +85,7 @@ class CustomInfoButton: UIButton {
 		set {
 			trailingImageView.image = newValue
 			trailingImageView.isHidden = newValue == nil
-			if trailingImageView.superview == nil {
+			if trailingImageView.superview == nil && newValue != nil {
 				mainStack.addArrangedSubview(trailingImageView)
 			}
 		}
@@ -210,10 +210,14 @@ class CustomInfoButton: UIButton {
 		
 		if let _ =  buttonInfo.leadingImageUrl {
 			self.leadingImage = .loadingBackgroundImage.roundedImage(cornerRadius: 8)
+		} else if let leadingImage = buttonInfo.leadingImage {
+			self.leadingImage = leadingImage
 		}
 		
 		if let _ =  buttonInfo.trailingImageUrl {
 			self.trailingImage = .loadingBackgroundImage.roundedImage(cornerRadius: 8)
+		} else if let trailingImage = buttonInfo.trailingImage {
+			self.trailingImage = trailingImage
 		}
 		
 		if buttonInfo.style != .original {
