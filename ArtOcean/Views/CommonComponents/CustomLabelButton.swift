@@ -23,7 +23,7 @@ class CustomLabelButton:UIButton{
     init(
 		title:String,
 		image: UIImage? = nil,
-//		font: UIFont? = CustomFonts.regular.fontBuilder(size: 13),
+		imageSize:CGSize = .squared(15),
 		font: CustomFonts = CustomFonts.regular,
 		size: CGFloat = 13,
 		color:UIColor = .black,
@@ -36,7 +36,9 @@ class CustomLabelButton:UIButton{
 		configuration = .coloredBackground(backgroundColor)
 		configuration?.attributedTitle = .init(title.styled(font: font, color: color, size: size))
 		if let validImage = image {
-			configuration?.image = validImage.resized(.squared(15))
+			configuration?.image = validImage.resized(imageSize)
+			configuration?.imagePlacement = .leading
+			imageView?.contentMode = .scaleAspectFit
 		}
         addTarget(self, action: #selector(self.tapHandler), for: .touchUpInside)
 		

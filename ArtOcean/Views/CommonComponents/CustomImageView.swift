@@ -16,7 +16,10 @@ class CustomImageView:UIImageView{
     private var colors:[UIColor] = []
     private var named:String? = nil
     private var url:String? = nil
-    init(url:String? = nil,
+	
+	private lazy var gradientView: UIView = { .init() }()
+	
+	init(url:String? = nil,
          named:String? = nil,
          cornerRadius:CGFloat,
          maskedCorners:CACornerMask? = nil){
@@ -32,17 +35,13 @@ class CustomImageView:UIImageView{
     }
     
     
-    init(
+    convenience init(
         cornerRadius:CGFloat,
         maskedCorners:CACornerMask? = nil,
         gradientColors:[UIColor]
     ){
-        super.init(frame: .zero)
+		self.init(url: nil, named: nil, cornerRadius: cornerRadius, maskedCorners: maskedCorners)
         self.colors = gradientColors
-        self.layer.cornerRadius = cornerRadius
-        if let safeMaskedCorner = maskedCorners{
-            self.layer.maskedCorners = safeMaskedCorner
-        }
         self.setupImageView()
     }
     
@@ -62,12 +61,14 @@ class CustomImageView:UIImageView{
     private func setupImageView(){
         if let safeNamed = self.named{
             self.image = .init(named: safeNamed)
-        }else{
-            self.image = .init(named: "placeHolder")
-        }
-        
-        self.translatesAutoresizingMaskIntoConstraints = false
-        self.contentMode = .scaleAspectFill
+		} else if let validUrl = url {
+			UIImage.loadImage(url: validUrl, for: self, at: \.image)
+		} else {
+			backgroundColor = .appGrayColor.withAlphaComponent(0.15)
+		}
+		
+        translatesAutoresizingMaskIntoConstraints = false
+        contentMode = .scaleAspectFill
         if !self.colors.isEmpty{
             self.gradientView = UIView()
             self.gradient = CAGradientLayer()
@@ -75,23 +76,16 @@ class CustomImageView:UIImageView{
             self.buildGradientView()
         }
     }
-    
-    private var gradientView:UIView? = nil
-    
-    
+        
     func buildGradientView(){
-        self.gradientView = UIView()
-        self.gradientView!.translatesAutoresizingMaskIntoConstraints = false
-        self.gradientView!.layer.addSublayer(gradient!)
+	
+		guard let validGradient = gradient else { return }
+		
+		gradientView.layer.addSublayer(validGradient)
         
-        self.addSubview(self.gradientView!)
+        addSubview(gradientView)
         
-        NSLayoutConstraint.activate([
-            self.gradientView!.topAnchor.constraint(equalTo: self.topAnchor),
-            self.gradientView!.bottomAnchor.constraint(equalTo: self.bottomAnchor),
-            self.gradientView!.leadingAnchor.constraint(equalTo: self.leadingAnchor),
-            self.gradientView!.trailingAnchor.constraint(equalTo: self.trailingAnchor)
-        ])
+		setContraintsToChild(gradientView, edgeInsets: .zero)
     }
 
 }

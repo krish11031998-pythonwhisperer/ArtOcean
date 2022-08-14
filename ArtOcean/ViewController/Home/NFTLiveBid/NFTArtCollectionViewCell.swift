@@ -42,11 +42,12 @@ class NFTArtCollectionViewCell:UICollectionViewCell{
 	private lazy var artTitle:UILabel = { .init() }()
     
     private lazy var priceView:CustomLabelButton = {
-		return .init(title: "", image: .init(named: "eth"),color: .appBlackColor)
+		let imgSize: CGSize = .init(width: 6, height: 10)
+		return .init(title: "", image: .init(named: "eth")?.resized(imgSize),imageSize: imgSize, color: .appBlackColor)
     }()
     
 	private lazy var likeView:CustomLabelButton = {
-		return .init(title: "", image: .init(named: "heart"),color: .appBlackColor)
+		return .init(title: "", image: .init(named: "heart")?.resized(.squared(10)), color: .appBlackColor)
     }()
     
 	private lazy var infoView: UIStackView = {
@@ -98,7 +99,7 @@ class NFTArtCollectionViewCell:UICollectionViewCell{
     
     func resetCell(){
         self.artTitle.text = ""
-		self.imageView.image = .solid(color: .appGrayColor)
+		self.imageView.image = nil
     }
     
     public func updateUIWithNFT(_ nft:NFTModel,idx:Int? = nil){
