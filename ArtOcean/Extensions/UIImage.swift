@@ -236,9 +236,10 @@ extension UIImage {
 		return view.snapshot
 	}
 	
-	func roundedImage(cornerRadius: CGFloat = 16) -> UIImage? {
+	func roundedImage(cornerRadius: CGFloat = 8) -> UIImage? {
 		let imageView: UIImageView = .init(image: self)
-		imageView.bordered(cornerRadius: size.width.half(), borderWidth: 0, borderColor: .clear)
+		imageView.contentMode = .scaleAspectFill
+		imageView.bordered(cornerRadius: cornerRadius, borderWidth: 0, borderColor: .clear)
 		imageView.clipsToBounds = true
 		return imageView.snapshot
 	}
@@ -326,7 +327,7 @@ extension UIImage {
 		return imageView.snapshot
 	}
 	
-	static func loadImage<T:AnyObject>(url: String?,for object: T, at path: ReferenceWritableKeyPath<T,UIImage?>) {
+	static func loadImage<T:AnyObject>(url: String?, for object: T, at path: ReferenceWritableKeyPath<T,UIImage?>) {
 		guard let validUrlStr = url else { return }
 		ImageDownloader.shared.fetchImage(urlStr: validUrlStr) { result  in
 			switch result {
@@ -339,4 +340,29 @@ extension UIImage {
 			}
 		}
 	}
+	
+	static var loadingBackgroundImage: UIImage {
+		.solid(color: .appGrayColor.withAlphaComponent(0.15),frame: .squared(40))
+	}
 }
+
+//MARK: - UIImageStylist
+
+enum ImageStyle {
+	case rounded
+	case circle
+	case original
+	
+	func cornerRadius(_ size: CGSize) -> CGFloat {
+		switch self {
+		case .rounded:
+			return 8
+		case .circle:
+			return size.width * 0.5
+		case .original:
+			return 0
+		}
+	}
+	
+}
+

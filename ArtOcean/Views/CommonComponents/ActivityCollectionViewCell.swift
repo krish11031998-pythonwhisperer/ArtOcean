@@ -8,56 +8,42 @@
 import Foundation
 import UIKit
 
+fileprivate extension NFTArtOffer {
+	
+	var parseCustomInfoButtonModel: CustomInfoButtonModel {
+		let title = (name ?? "XXX").replace().styled(font: .medium, color: .appBlackColor, size: 14)
+		let subTitle = "@\(nft?.metadata?.compiler ?? "X")".styled(font: .medium, color: .appGrayColor, size: 12)
+		let infoTitle = "2 minutes ago".styled(font: .medium, color: .appGrayColor, size: 12)
+		let infoSubTitle = "Sale".styled(font: .medium, color: .appGreenColor, size: 14)
+		let size: CGSize = .squared(40)
+		let imgUrl = image ?? ""
+		return .init(title: title,
+					 subTitle: subTitle,
+					 infoTitle: infoTitle,
+					 infoSubTitle: infoSubTitle,
+					 leadingImageUrl: imgUrl,
+					 style: .rounded,
+					 imgSize: size
+		)
+	}
+	
+}
+
 class StatisticActivityCollectionViewCell:UICollectionViewCell{
     
     private var offer:NFTArtOffer? = nil
     
-	private lazy var imageView: UIImageView = {
-		let imageView = UIImageView(frame: .init(origin: .zero, size: .squared(40)))
-		imageView.contentMode = .scaleAspectFill
-		imageView.image = .solid(color: .appGrayColor, frame: .squared(40))
-		imageView.cornerRadius = 8
-		imageView.clipsToBounds = true
-		return imageView
+	private lazy var button: CustomInfoButton = {
+		CustomInfoButton()
 	}()
-    
+	
     public var buttonDelegate:CustomButtonDelegate? = nil
-    
-    //UserInfo
-    private lazy var name:UILabel = { .init() }()
-    
-    private lazy var userName:UILabel = { .init() }()
-	
-	private lazy var transactionTypeLabel:UILabel = { .init() }()
-	
-	private lazy var transactionTimeLabel:UILabel = { .init() }()
-    
-	private lazy var userInfoView:UIStackView = {
-		.VStack(views:[name,userName],spacing: 5, aligmment: .leading)
-	}()
-	
-	private lazy var transactionLabel:UIStackView = {
-		.VStack(views:[transactionTypeLabel,.spacer(),transactionTimeLabel],spacing: 5, aligmment: .trailing)
-	}()
-    
-    //MainStackView
-    private lazy var stack:UIStackView = {
-		let stack: UIStackView = .HStack(spacing: 10, aligmment: .center)
-		[imageView,userInfoView,transactionLabel].forEach(stack.addArrangedSubview)
-		return stack
-    }()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        transactionTypeLabel.textAlignment = .right
-        transactionTimeLabel.textAlignment = .right
-
-        self.addSubview(stack)
-		imageView.setFrameConstraints(width: 40, height: 40)
-		setContraintsToChild(stack, edgeInsets: .zero)
-        
-        self.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.handleTap)))
+		contentView.addSubview(button)
+		contentView.setContraintsToChild(button, edgeInsets: .zero)
     }
     
     required init?(coder: NSCoder) {
@@ -71,16 +57,12 @@ class StatisticActivityCollectionViewCell:UICollectionViewCell{
 	private func updateUI(offer: NFTArtOffer? = nil) {
 		guard let validOffer = offer else { return }
 		self.offer = validOffer
-		UIImage.loadImage(url: validOffer.image ?? "", for: imageView, at: \.image)
-		(validOffer.name ?? "XXX").replace().styled(font: .medium, color: .appBlackColor, size: 14).renderInto(target: name)
-		"@\(validOffer.nft?.metadata?.compiler ?? "X")".styled(font: .medium, color: .appGrayColor, size: 12).renderInto(target: userName)
-		"Sale".styled(font: .medium, color: .appGreenColor, size: 14).renderInto(target: transactionTypeLabel)
-		"2 minutes ago".styled(font: .medium, color: .appGrayColor, size: 12).renderInto(target: transactionTimeLabel)
+		button.updateUIButton(validOffer.parseCustomInfoButtonModel)
 	}
 	
 	internal override func prepareForReuse() {
 		super.prepareForReuse()
-		imageView.image = .solid(color: .appGrayColor, frame: .squared(40))
+		button.leadingImage = .loadingBackgroundImage.roundedImage(cornerRadius: 8)
 	}
 }
 

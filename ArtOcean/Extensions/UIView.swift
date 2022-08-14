@@ -385,6 +385,12 @@ extension Array where Element: UIView {
 		compactMap { $0.accessibilityIdentifier == id ? nil : $0 }
 	}
 	
+	static func + (lhs: [Self.Element], rhs: [Self.Element]) -> [Self.Element] {
+		var views: [Self.Element] = []
+		views.append(contentsOf: lhs)
+		views.append(contentsOf: rhs)
+		return views
+	}
 }
 
 extension NSLayoutConstraint{

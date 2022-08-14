@@ -16,13 +16,21 @@ struct CustomInfoButtonModel {
 	let infoTitle: RenderableText?
 	let infoSubTitle: RenderableText?
 	let trailingImage: UIImage?
+	let leadingImageUrl: String?
+	let trailingImageUrl: String?
+	let imgSize: CGSize
+	let style: ImageStyle
 	
 	init(leadingImg: UIImage? = nil,
 		 title: RenderableText? = nil,
 		 subTitle: RenderableText? = nil,
 		 infoTitle: RenderableText? = nil,
 		 infoSubTitle: RenderableText? = nil,
-		 trailingImage: UIImage? = nil
+		 trailingImage: UIImage? = nil,
+		 leadingImageUrl: String? = nil,
+		 trailingImageUrl: String? = nil,
+		 style: ImageStyle = .original,
+		 imgSize: CGSize = .squared(32)
 	) {
 		self.leadingImage = leadingImg
 		self.title = title
@@ -30,6 +38,10 @@ struct CustomInfoButtonModel {
 		self.infoTitle = infoTitle
 		self.infoSubTitle = infoSubTitle
 		self.trailingImage = trailingImage
+		self.leadingImageUrl = leadingImageUrl
+		self.trailingImageUrl = trailingImageUrl
+		self.style = style
+		self.imgSize = imgSize
 	}
 }
 
@@ -41,14 +53,17 @@ class CustomInfoButton: UIButton {
 	private var bottomLeadingLabel: UILabel = { .init() }()
 	private var topTrailingLabel: UILabel = { .init() }()
 	private var bottomTrailingLabel: UILabel = { .init() }()
+	
 	private var leadingImageView: UIImageView = {
 		let imgView: UIImageView = .init()
-		imgView.contentMode = .scaleAspectFit
+		imgView.contentMode = .scaleAspectFill
+		imgView.clipsToBounds = true
 		return imgView
 	}()
 	private var trailingImageView: UIImageView = {
 		let imgView: UIImageView = .init()
-		imgView.contentMode = .scaleAspectFit
+		imgView.contentMode = .scaleAspectFill
+		imgView.clipsToBounds = true
 		return imgView
 	}()
 
@@ -59,6 +74,9 @@ class CustomInfoButton: UIButton {
 		set {
 			leadingImageView.image = newValue
 			leadingImageView.isHidden = newValue == nil
+			if leadingImageView.superview == nil {
+				mainStack.insertArrangedSubview(leadingImageView, at: 0)
+			}
 		}
 	}
 	
@@ -67,6 +85,9 @@ class CustomInfoButton: UIButton {
 		set {
 			trailingImageView.image = newValue
 			trailingImageView.isHidden = newValue == nil
+			if trailingImageView.superview == nil {
+				mainStack.addArrangedSubview(trailingImageView)
+			}
 		}
 	}
 	
@@ -102,11 +123,14 @@ class CustomInfoButton: UIButton {
 		}
 	}
 	
+	private lazy var mainStack: UIStackView = { .HStack(spacing: 16,aligmment: .center) }()
+	
 //MARK: - Constructors
 	
 	override init(frame: CGRect) {
 		super.init(frame: frame)
 		buildButton()
+		setImageSize()
 	}
 	
 	required init?(coder: NSCoder) {
@@ -116,7 +140,7 @@ class CustomInfoButton: UIButton {
 //MARK: - Protected Methods
 	
 	private func buildButton() {
-		let mainStack = mainStackBuilder()
+		mainStackBuilder()
 		addSubview(mainStack)
 		setContraintsToChild(mainStack, edgeInsets: .zero)
 		addTarget(self, action: #selector(handleTap), for: .touchUpInside)
@@ -133,31 +157,75 @@ class CustomInfoButton: UIButton {
 		}
 	}
 	private func leadingStack() -> UIStackView? {
-		let stack: UIStackView = .VStack(spacing: 0)
+		let stack: UIStackView = .VStack(spacing: 8)
 		let views: [UIView] = [topLeadingLabel,bottomLeadingLabel]
-		views.forEach { stack.addArrangedSubViewsWithSpacing(view: $0, spacing: 8) }
+		views.forEach(stack.addArrangedSubview)
 		return stack
 	}
 	
 	private func trailingStack() -> UIStackView? {
-		let stack: UIStackView = .VStack(spacing: 0)
+		let stack: UIStackView = .VStack(spacing: 8)
 		let views: [UIView] = [topTrailingLabel,bottomTrailingLabel]
-		views.forEach { stack.addArrangedSubViewsWithSpacing(view: $0, spacing: 8) }
+		bottomTrailingLabel.textAlignment = .right
+		topTrailingLabel.textAlignment = .right
+		views.forEach(stack.addArrangedSubview)
 		return stack
 	}
 	
-	private func mainStackBuilder() -> UIStackView {
-		let mainStack: UIStackView = .HStack(spacing: 16,aligmment: .center)
+	private func mainStackBuilder() {
 		mainStack.isUserInteractionEnabled = false
-		let views: [UIView] = [leadingImageView,leadingStack(),.spacer(),trailingStack(),trailingImageView].compactMap { $0 }
-		leadingImageView.widthAnchor.constraint(lessThanOrEqualToConstant: 32).isActive = true
-		leadingImageView.heightAnchor.constraint(lessThanOrEqualToConstant: 32).isActive = true
-		trailingImageView.widthAnchor.constraint(lessThanOrEqualToConstant: 32).isActive = true
-		trailingImageView.heightAnchor.constraint(lessThanOrEqualToConstant: 32).isActive = true
+		var views: [UIView] = [leadingStack(),.spacer(),trailingStack()].compactMap { $0 }
+		if leadingImage != nil { views.insert(leadingImageView, at: 0) }
+		if trailingImage != nil { views.append(trailingImageView) }
 		views.forEach(mainStack.addArrangedSubview)
-		return mainStack
+		mainStack.accessibilityIdentifier = "MainStack"
 	}
 	
+	public func setImageSize(size: CGSize = .squared(32)) {
+		leadingImageView.removeAllConstraints()
+		trailingImageView.removeAllConstraints()
+		leadingImageView.widthAnchor.constraint(lessThanOrEqualToConstant: size.width).isActive = true
+		leadingImageView.heightAnchor.constraint(lessThanOrEqualToConstant: size.height).isActive = true
+		trailingImageView.widthAnchor.constraint(lessThanOrEqualToConstant: size.width).isActive = true
+		trailingImageView.heightAnchor.constraint(lessThanOrEqualToConstant: size.height).isActive = true
+	}
+	
+	public func loadImageForButton(leading: String? = nil, trailing: String? = nil, style: ImageStyle = .original) {
+		
+		if let validLeadingImg = leading {
+			UIImage.loadImage(url: validLeadingImg, for: leadingImageView, at: \.image)
+		}
+		
+		if let validTrailingImg = trailing {
+			UIImage.loadImage(url: validTrailingImg, for: trailingImageView, at: \.image)
+		}
+		
+	}
+	
+	public func updateUIButton(_ buttonInfo: CustomInfoButtonModel) {
+		titleText = buttonInfo.title
+		subTitleText = buttonInfo.subTitle
+		infoTitle = buttonInfo.infoTitle
+		infoSubTitle = buttonInfo.infoSubTitle
+		
+		if let _ =  buttonInfo.leadingImageUrl {
+			self.leadingImage = .loadingBackgroundImage.roundedImage(cornerRadius: 8)
+		}
+		
+		if let _ =  buttonInfo.trailingImageUrl {
+			self.trailingImage = .loadingBackgroundImage.roundedImage(cornerRadius: 8)
+		}
+		
+		if buttonInfo.style != .original {
+			self.leadingImageView.cornerRadius = buttonInfo.style.cornerRadius(.squared(40))
+			self.trailingImageView.cornerRadius = buttonInfo.style.cornerRadius(.squared(40))
+		}
+		
+		setImageSize(size: buttonInfo.imgSize)
+		
+		loadImageForButton(leading: buttonInfo.leadingImageUrl, trailing: buttonInfo.trailingImageUrl, style: buttonInfo.style)
+		
+	}
 	
 //MARK: - Exposed Methods
 }
@@ -173,12 +241,7 @@ class CustomInfoButtonCell: ConfigurableCell {
 		contentView.setContraintsToChild(button, edgeInsets: .init(vertical: 10, horizontal: 16))
 		
 		button.isUserInteractionEnabled = false
-		button.leadingImage = model.leadingImage
-		button.titleText = model.title
-		button.subTitleText = model.subTitle
-		button.infoTitle = model.infoTitle
-		button.infoSubTitle = model.infoSubTitle
-		button.trailingImage = model.trailingImage
+		button.updateUIButton(model)
 		backgroundColor = .clear
 
 	}
