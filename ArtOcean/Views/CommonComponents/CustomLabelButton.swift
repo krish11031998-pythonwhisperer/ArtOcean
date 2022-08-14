@@ -19,30 +19,26 @@ class CustomLabelButton:UIButton{
 	var handler: (() -> Void)? {
 		didSet { addTarget(self, action: #selector(tapHandler), for: .touchUpInside) }
 	}
+
     init(
 		title:String,
 		image: UIImage? = nil,
-		font: UIFont? = CustomFonts.regular.fontBuilder(size: 13),
-		color:UIColor,
+//		font: UIFont? = CustomFonts.regular.fontBuilder(size: 13),
+		font: CustomFonts = CustomFonts.regular,
+		size: CGFloat = 13,
+		color:UIColor = .black,
 		backgroundColor:UIColor = .clear,
 		frame: CGRect = .zero,
 		handler: (() -> Void)? = nil
 	) {
 		self.handler = handler
         super.init(frame: frame)
-        setTitle(title, for: .normal)
-        titleLabel?.font = font
-		setTitleColor(color, for: .normal)
-		setTitleColor(.appPurpleColor, for: .selected)
-		setImage(image?.resized(.squared(15)), for: .normal)
-		self.backgroundColor = backgroundColor
-		cornerRadius = 14.5
-        addTarget(self, action: #selector(self.tapHandler), for: .touchUpInside)
-		configuration = nil
-		contentEdgeInsets = .init(top: 7.5, left: 10, bottom: 7.5, right: 10)
-		if image != nil {
-			titleEdgeInsets = .init(top: 0, left: 15, bottom: 0, right: 0)
+		configuration = .coloredBackground(backgroundColor)
+		configuration?.attributedTitle = .init(title.styled(font: font, color: color, size: size))
+		if let validImage = image {
+			configuration?.image = validImage.resized(.squared(15))
 		}
+        addTarget(self, action: #selector(self.tapHandler), for: .touchUpInside)
 		
     }
     
@@ -55,5 +51,32 @@ class CustomLabelButton:UIButton{
 			self.delegate?.handleTap?() ?? self.handler?()
         }
     }
-    
+	
+	public func updateUI(title: RenderableText?, image: UIImage?) {
+		if let safeTitle = title {
+			safeTitle.renderInto(target: self)
+		}
+		
+		if let safeImage = image {
+			setImage(safeImage.resized(.squared(15)), for: .normal)
+		}
+	}
+	
+}
+
+extension UIButton.Configuration {
+	
+	static func coloredBackground(_ color: UIColor = .appBlueColor) -> Self {
+		var style = Self.plain()
+		style.contentInsets = .init(top: 7.5, leading: 10, bottom: 7.5, trailing: 10)
+		style.imagePadding = 5
+		
+		var background = Self.plain().background
+		background.backgroundColor = color
+		background.cornerRadius = 14.5
+		
+		style.background = background
+		
+		return style
+	}
 }

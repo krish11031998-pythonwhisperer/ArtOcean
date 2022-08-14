@@ -58,6 +58,8 @@ extension NSAttributedString: RenderableText {
 		switch target {
 		case let label as UILabel:
 			label.attributedText = self
+		case let button as UIButton:
+			button.configuration?.attributedTitle = .init(self)
 		default:
 			break
 		}

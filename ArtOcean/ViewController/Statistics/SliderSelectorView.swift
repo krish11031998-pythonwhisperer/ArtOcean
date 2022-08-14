@@ -34,7 +34,8 @@ class SliderSelector:UIView{
         let views:[UIView] = self.tabs.compactMap { tab in
 			let button = CustomLabelButton(title: tab.capitalized,
 										   image: .init(named:tab.lowercased()),
-										   font: CustomFonts.medium.fontBuilder(size: 15),
+										   font: CustomFonts.medium,
+										   size: 15,
 										   color: .appBlackColor,
 										   backgroundColor: .clear)
 			button.accessibilityIdentifier = tab

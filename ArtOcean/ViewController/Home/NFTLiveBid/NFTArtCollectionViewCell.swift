@@ -40,26 +40,13 @@ class NFTArtCollectionViewCell:UICollectionViewCell{
     public var delegate:NFTArtCellDelegate? = nil
     
 	private lazy var artTitle:UILabel = { .init() }()
-    private lazy var priceLabel:UILabel = { .init() }()
-	private let likeLabel:UILabel = { .init() }()
     
-    private lazy var priceView:UIView = {
-		let img:CustomImageView = .init(named: "eth", cornerRadius: 0)
-		img.contentMode = .scaleAspectFit
-		img.setFrameConstraints(width: 10, height: 20)
-		let view = UIStackView(arrangedSubviews: [img,priceLabel])
-		view.spacing = 4
-        
-        return view
+    private lazy var priceView:CustomLabelButton = {
+		return .init(title: "", image: .init(named: "eth"),color: .appBlackColor)
     }()
     
-	private lazy var likeView:UIView = {
-		let img:CustomImageView = .init(named: "heart", cornerRadius: 0)
-		img.contentMode = .scaleAspectFit
-		img.setFrameConstraints(width: 10, height: 20)
-        let view = UIStackView(arrangedSubviews: [img,likeLabel])
-		view.spacing = 4
-        return view
+	private lazy var likeView:CustomLabelButton = {
+		return .init(title: "", image: .init(named: "heart"),color: .appBlackColor)
     }()
     
 	private lazy var infoView: UIStackView = {
@@ -111,8 +98,6 @@ class NFTArtCollectionViewCell:UICollectionViewCell{
     
     func resetCell(){
         self.artTitle.text = ""
-        self.priceLabel.text = ""
-        self.likeLabel.text = ""
 		self.imageView.image = .solid(color: .appGrayColor)
     }
     
@@ -121,8 +106,8 @@ class NFTArtCollectionViewCell:UICollectionViewCell{
         self.nft = nft
         //Simulating PriceLabel Change
 		nft.title?.replace().styled(font: .bold, color: .appBlackColor, size: 14).renderInto(target: artTitle)
-		"0.47".styled(font: .medium, color: .appBlackColor, size: 12).renderInto(target: priceLabel)
-		"30".styled(font: .medium, color: .appGrayColor, size: 12).renderInto(target: likeLabel)
+		priceView.updateUI(title: "0.47".styled(font: .medium, color: .appBlackColor, size: 12), image: nil)
+		likeView.updateUI(title: "30".styled(font: .medium, color: .appBlackColor, size: 12), image: nil)
 		UIImage.loadImage(url: nft.metadata?.image, for: imageView, at: \.image)
     }
 	

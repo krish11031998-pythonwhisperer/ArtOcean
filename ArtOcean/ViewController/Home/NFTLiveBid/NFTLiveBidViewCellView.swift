@@ -56,7 +56,7 @@ class NFTLiveBidView : UIView {
     }()
 
     private lazy var bidButton:UIView = {
-        var button = CustomLabelButton(title: "Place a bid", color: .white, backgroundColor: .init(hexString: "2281E3",alpha: 1))
+		var button = CustomLabelButton(title: "Place a bid",font: .medium, size: 12, color: .white, backgroundColor: .init(hexString: "2281E3",alpha: 1))
         button.delegate = self
 		return button
     }()
@@ -90,9 +90,6 @@ class NFTLiveBidView : UIView {
 		])
 		
 		biddingStack.heightAnchor.constraint(equalToConstant: 29).isActive = true
-//		view.cornerRadius = 16
-//		view.layer.maskedCorners = [.layerMinXMaxYCorner,.layerMaxXMaxYCorner]
-//		view.backgroundColor = .white
         return view
     }()
     
