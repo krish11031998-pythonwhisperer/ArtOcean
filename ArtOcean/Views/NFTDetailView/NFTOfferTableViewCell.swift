@@ -78,7 +78,7 @@ class NFTOfferTableViewCell:ConfigurableCell{
 		stack.spacing = 12
 		stack.alignment = .center
 		contentView.addSubview(stack)
-		contentView.setContraintsToChild(stack, edgeInsets: .init(vertical: 10, horizontal: 15))
+		contentView.setConstraintsToChild(stack, edgeInsets: .init(vertical: 10, horizontal: 15))
 	}
 	
 	func configureCell(with model: NFTArtOffer) {

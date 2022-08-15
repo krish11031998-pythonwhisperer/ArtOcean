@@ -77,7 +77,7 @@ class NFTLiveBidView : UIView {
         stack.setCustomSpacing(12, after: artPriceAndTitleStack)
 		
 		view.addSubview(stack)
-		view.setContraintsToChild(stack, edgeInsets: .init(vertical: 10, horizontal: 12),withPriority: 750)
+		view.setConstraintsToChild(stack, edgeInsets: .init(vertical: 10, horizontal: 12),withPriority: 750)
 		
 		view.addSubview(loveButton)
 		view.addSubview(shareButton)

@@ -37,7 +37,7 @@ class NFTChartViewCell:ConfigurableCell{
 		backgroundColor = .clear
 		contentView.subviews.forEach { $0.removeFromSuperview() }
 		contentView.addSubview(chartView!)
-		contentView.setContraintsToChild(chartView!, edgeInsets: .init(top: 0, left: 16, bottom: 0, right: 16))
+		contentView.setConstraintsToChild(chartView!, edgeInsets: .init(top: 0, left: 16, bottom: 0, right: 16))
 	}
 	
 }
@@ -111,8 +111,8 @@ class NFTChartView:UIView{
 	private func setupUI(){
 		addSubview(mainContainer)
 		addSubview(loadingView)
-		setContraintsToChild(loadingView, edgeInsets: .zero)
-		setContraintsToChild(mainContainer, edgeInsets: .zero)
+		setConstraintsToChild(loadingView, edgeInsets: .zero)
+		setConstraintsToChild(mainContainer, edgeInsets: .zero)
 	}
 	
 	private func resetView(){

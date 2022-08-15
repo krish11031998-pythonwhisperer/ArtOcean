@@ -20,8 +20,21 @@ class CustomLabelButton:UIButton{
 		didSet { addTarget(self, action: #selector(tapHandler), for: .touchUpInside) }
 	}
 
+	public var title: RenderableText? {
+		get { configuration?.attributedTitle?.description }
+		set {
+			if let validNewValue = newValue as? NSAttributedString {
+				configuration?.attributedTitle = .init(validNewValue)
+			}
+		}
+	}
+	
+	public var image: UIImage? {
+		get { configuration?.image }
+		set { configuration?.image = newValue }
+	}
     init(
-		title:String,
+		title:String = "",
 		image: UIImage? = nil,
 		imageSize:CGSize = .squared(15),
 		font: CustomFonts = CustomFonts.regular,

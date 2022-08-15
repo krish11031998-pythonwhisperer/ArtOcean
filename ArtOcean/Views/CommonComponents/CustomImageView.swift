@@ -66,7 +66,7 @@ class CustomImageView:UIImageView{
 		} else {
 			backgroundColor = .appGrayColor.withAlphaComponent(0.15)
 		}
-		
+		clipsToBounds = true
         translatesAutoresizingMaskIntoConstraints = false
         contentMode = .scaleAspectFill
         if !self.colors.isEmpty{
@@ -85,7 +85,7 @@ class CustomImageView:UIImageView{
         
         addSubview(gradientView)
         
-		setContraintsToChild(gradientView, edgeInsets: .zero)
+		setConstraintsToChild(gradientView, edgeInsets: .zero)
     }
 
 }

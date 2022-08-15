@@ -41,7 +41,7 @@ class NFTDetailNavHeader: UIView {
 		addSubview(stack)
 		imageView.setWidthWithPriority(32)
 		stack.setHeightWithPriority(32)
-		setContraintsToChild(stack, edgeInsets: .zero)
+		setConstraintsToChild(stack, edgeInsets: .zero)
 	}
 
 //MARK: -  Exposed Methods

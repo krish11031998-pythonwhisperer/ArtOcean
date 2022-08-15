@@ -99,7 +99,7 @@ class SettingViewController: UIViewController {
 	}
 	
 	private func configNavbar() {
-		let leftBarItem = UIBarButtonItem(customView: CustomImageButton.closeButton { [weak self] in
+		let leftBarItem = UIBarButtonItem(customView: CustomImageButton.backButton { [weak self] in
 			self?.navigationController?.popViewController(animated: true)
 		})
 		let titleView =  CustomLabel(text: "Settings", size: 22, weight: .bold, color: .black, numOfLines: 1)

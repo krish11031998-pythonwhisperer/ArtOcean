@@ -67,7 +67,7 @@ class SliderSelector:UIView{
         print("(DEBUG) ratios : ",ratios)
         let stackView = UIView.StackBuilder(views: tabsIndicators, ratios: [0.5,0.5], spacing: 10, axis: .horizontal)
         addSubview(stackView)
-		setContraintsToChild(stackView, edgeInsets: .init(vertical: 5, horizontal: 5))
+		setConstraintsToChild(stackView, edgeInsets: .init(vertical: 5, horizontal: 5))
     }
     
     

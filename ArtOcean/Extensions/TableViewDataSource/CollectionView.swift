@@ -23,7 +23,7 @@ class CollectionViewTableCell:ConfigurableCell{
 		let collection = UICollectionView(frame: .zero,collectionViewLayout: .init())
 		collection.backgroundColor = .clear
 		contentView.addSubview(collection)
-		contentView.setContraintsToChild(collection, edgeInsets: .zero)
+		contentView.setConstraintsToChild(collection, edgeInsets: .zero)
 		collection.reload(with: model)
 	}
     

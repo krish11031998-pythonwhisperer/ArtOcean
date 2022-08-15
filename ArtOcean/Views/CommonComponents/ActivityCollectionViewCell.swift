@@ -43,7 +43,7 @@ class StatisticActivityCollectionViewCell:UICollectionViewCell{
         super.init(frame: frame)
         
 		contentView.addSubview(button)
-		contentView.setContraintsToChild(button, edgeInsets: .zero)
+		contentView.setConstraintsToChild(button, edgeInsets: .zero)
     }
     
     required init?(coder: NSCoder) {

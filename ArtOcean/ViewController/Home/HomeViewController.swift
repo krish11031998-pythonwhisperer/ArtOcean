@@ -96,7 +96,7 @@ class HomeViewController: UIViewController {
 		tableView?.tableHeaderView = tableHeaderView
 		tableView?.separatorStyle = .none
 		view.addSubview(tableView!)
-		view.setContraintsToChild(tableView!, edgeInsets: .zero)
+		view.setConstraintsToChild(tableView!, edgeInsets: .zero)
 	}
 	
 	func loadNFT(){
@@ -147,7 +147,7 @@ class HomeViewController: UIViewController {
 		])
 		
 		view.addSubview(stackView)
-		view.setContraintsToChild(stackView, edgeInsets: .zero)
+		view.setConstraintsToChild(stackView, edgeInsets: .zero)
 		
 		return view
 	}

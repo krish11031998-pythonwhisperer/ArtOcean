@@ -37,7 +37,7 @@ class NFTArtTypeCollectionViewCell:ConfigurableCell{
 		collection = NFTArtTypeCollectionView()
 		collection!.configureCollection(model)
 		contentView.addSubview(collection!)
-		contentView.setContraintsToChild(collection!, edgeInsets: .zero)
+		contentView.setConstraintsToChild(collection!, edgeInsets: .zero)
 		collection?.heightAnchor.constraint(equalToConstant: 60).isActive = true
 	}
 	

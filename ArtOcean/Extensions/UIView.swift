@@ -216,10 +216,10 @@ extension UIView {
 	func addViewAndSetConstraints(_ innerView:UIView?,edgeInsets:UIEdgeInsets) {
 		guard let safeInnerView = innerView else { return }
 		addSubview(safeInnerView)
-		setContraintsToChild(safeInnerView, edgeInsets: edgeInsets)
+		setConstraintsToChild(safeInnerView, edgeInsets: edgeInsets)
 	}
 	
-	func setContraintsToChild(_ childView:UIView,edgeInsets:UIEdgeInsets,withPriority: Float = 1000){
+	func setConstraintsToChild(_ childView:UIView,edgeInsets:UIEdgeInsets,withPriority: Float = 1000){
 		let constraints = [
 			childView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: edgeInsets.left),
 			childView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -edgeInsets.right),

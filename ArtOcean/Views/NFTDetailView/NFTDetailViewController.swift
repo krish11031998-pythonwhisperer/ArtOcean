@@ -86,7 +86,7 @@ class NFTDetailArtViewController:UIViewController{
     
 	override func viewDidLayoutSubviews() {
 		super.viewDidLayoutSubviews()
-		view.setContraintsToChild(tableView, edgeInsets: .init(top: 0, left: 0, bottom: view.safeAreaInsets.bottom, right: 0))
+		view.setConstraintsToChild(tableView, edgeInsets: .init(top: 0, left: 0, bottom: view.safeAreaInsets.bottom, right: 0))
 	}
 	
 	override func viewWillAppear(_ animated: Bool) {
@@ -185,7 +185,7 @@ class NFTDetailArtViewController:UIViewController{
 	}
 	
 	func buildDataSource() -> TableViewDataSource{
-		.init(section: [artIntroduction, priceHistorySection, attributeSection, offerSection].compactMap{ $0 })
+		.init(section: [artIntroduction, priceHistorySection, attributeSection, offerSection, modalButton].compactMap{ $0 })
 	}
 	
 	private var artIntroduction:TableSection? {
@@ -208,6 +208,16 @@ class NFTDetailArtViewController:UIViewController{
 		return .init(title:"Offers",rows: offers.compactMap{ TableRow<NFTOfferTableViewCell>($0) })
 	}
 	
+	private var modalButton: TableSection? {
+		return .init(rows: [TableRow<CustomTableWrapperView<ButtonViewCell>>(.init(title:"Bid".styled(font: .medium, color: .white, size: 15)) { [weak self] in
+			let target = TestViewController(nftArtModel: self?.nftArt)
+			let presentationController = PresentationViewController(target: target, from: self, clickOnDismiss: true)
+			target.transitioningDelegate = presentationController
+			target.modalPresentationStyle = .custom
+			self?.present(target, animated: true) { presentationController }
+		})])
+	}
+//
 	private var backgroundimgView:CustomImageView = {
 		let imageView = CustomImageView(cornerRadius: 0)
 		return imageView
@@ -312,4 +322,71 @@ extension NFTDetailArtViewController:NFTChartViewDelegate{
 		tableView.isScrollEnabled = true
 	}
 
+}
+
+
+//MARK: - testing Toast VC
+
+extension UIBarButtonItem {
+	
+	static func leftTitle(title: RenderableText) -> UIBarButtonItem {
+		let label = UILabel()
+		title.renderInto(target: label)
+		return .init(customView: label)
+	}
+	
+}
+
+class TestViewController: UIViewController {
+	
+	private var nftArt: NFTModel?
+
+	private lazy var mainStack: UIStackView = { .VStack(views: [], spacing: 10) }()
+	
+	init(nftArtModel: NFTModel?) {
+		self.nftArt = nftArtModel
+		super.init(nibName: nil, bundle: nil)
+	}
+	
+	required init?(coder: NSCoder) {
+		super.init(coder: coder)
+	}
+	
+	private func setupNavBar() {
+		let title: UILabel = .init()
+		let closeButton: CustomImageButton = .closeButton { [weak self] in
+			self?.presentingViewController?.dismiss(animated: true)
+		}
+		
+		let stack: UIStackView = .HStack(views: [title,.spacer(),closeButton], spacing: 10, aligmment: .center)
+		
+		(nftArt?.Title ?? "No Title").styled(font: .bold, color: .appBlackColor, size: 22.5).renderInto(target: title)
+		
+		mainStack.addArrangedSubview(stack)
+		mainStack.setCustomSpacing(20, after: stack)
+	}
+	
+	override func viewDidLoad() {
+		view.backgroundColor = .white
+		view.cornerRadius = 32
+		view.layer.maskedCorners = [.layerMinXMinYCorner,.layerMaxXMinYCorner]
+		preferredContentSize = .init(width: .totalWidth, height: .totalHeight * 0.8)
+		view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(onTap)))
+		view.addSubview(mainStack)
+		view.setConstraintsToChild(mainStack, edgeInsets: .init(top: 24, left: 16, bottom: 16, right: 16))
+		setupNavBar()
+		setupImageView()
+		mainStack.addArrangedSubview(.spacer())
+	}
+	
+	private func setupImageView() {
+		let imageView = CustomImageView(url: nftArt?.metadata?.image, cornerRadius: 16)
+		imageView.setHeightWithPriority(preferredContentSize.height * 0.45,priority: .required)
+		mainStack.addArrangedSubview(imageView)
+	}
+	
+	@objc private func onTap() {
+		presentingViewController?.dismiss(animated: true)
+	}
+	
 }

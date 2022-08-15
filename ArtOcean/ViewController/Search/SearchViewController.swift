@@ -76,7 +76,7 @@ class SearchViewController:UIViewController{
 		searchBar.setHeightWithPriority(55,priority: .init(rawValue: 999))
 		view.addSubview(scrollView)
 		scrollView.addSubview(stackView)
-		scrollView.setContraintsToChild(stackView, edgeInsets: .zero)
+		scrollView.setConstraintsToChild(stackView, edgeInsets: .zero)
 		view.setSafeAreaConstraintsToChild(scrollView, edgeInsets: .zero)
 	}
 	

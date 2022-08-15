@@ -41,7 +41,7 @@ class LiveBidDetailView: UIViewController  {
 		
         let label = CustomLabel(text: "Live\nBid", size: 50, weight: .bold, color: .black, numOfLines: 2, adjustFontSize: false)
         
-		let backButton = CustomImageButton.closeButton {
+		let backButton = CustomImageButton.backButton {
 			self.navigationController?.popViewController(animated: true)
 		}
 		
@@ -58,7 +58,7 @@ class LiveBidDetailView: UIViewController  {
 		
 		view.addSubview(stack)
 		
-		view.setContraintsToChild(stack, edgeInsets: .init(top: 65, left: 24, bottom: 0, right: 10),withPriority: 750)
+		view.setConstraintsToChild(stack, edgeInsets: .init(top: 65, left: 24, bottom: 0, right: 10),withPriority: 750)
 		
         return view
     }()
@@ -117,7 +117,7 @@ class LiveBidDetailView: UIViewController  {
     private lazy var backBarButton:UIBarButtonItem = {
         let barButton = UIBarButtonItem()
         
-		let backButton = CustomImageButton.closeButton {
+		let backButton = CustomImageButton.backButton {
 			self.navigationController?.popViewController(animated: true)
 		}
         

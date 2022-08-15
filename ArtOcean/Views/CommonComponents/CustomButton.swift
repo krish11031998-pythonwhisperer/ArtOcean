@@ -170,8 +170,13 @@ class CustomImageButton: UIButton {
 		return imageView.snapshot
 	}
 	
-	static func closeButton(handler: @escaping () -> Void) -> CustomImageButton {
+	static func backButton(handler: @escaping () -> Void) -> CustomImageButton {
 		let button: CustomImageButton = .init(name: .chevronLeft, frame: .squared(32), handler: handler)
+		return button
+	}
+	
+	static func closeButton(handler: @escaping () -> Void) -> CustomImageButton {
+		let button: CustomImageButton = .init(name: .xMark, frame: .squared(32), handler: handler)
 		return button
 	}
 	

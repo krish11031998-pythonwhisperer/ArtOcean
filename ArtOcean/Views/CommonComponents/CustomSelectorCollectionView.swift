@@ -138,7 +138,7 @@ class CustomSelectorDynamicCollectionView: UIView {
 		stack.spacing = 20
 		selector.setHeightWithPriority(50,priority: .defaultHigh)
 		addSubview(stack)
-		setContraintsToChild(stack, edgeInsets: .zero)
+		setConstraintsToChild(stack, edgeInsets: .zero)
 	}
 	
 	private func reloadCollection() {

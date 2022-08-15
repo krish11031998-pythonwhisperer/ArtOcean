@@ -95,7 +95,7 @@ class CustomInfoButton: UIButton {
 		get { topLeadingLabel.attributedText }
 		set {
 			newValue?.renderInto(target: topLeadingLabel)
-			topLeadingLabel.isHighlighted = newValue == nil
+//			topLeadingLabel.isHighlighted = newValue == nil
 		}
 	}
 	
@@ -103,7 +103,7 @@ class CustomInfoButton: UIButton {
 		get { bottomLeadingLabel.attributedText }
 		set {
 			newValue?.renderInto(target: bottomLeadingLabel)
-			bottomLeadingLabel.isHighlighted = newValue == nil
+//			bottomLeadingLabel.isHighlighted = newValue == nil
 		}
 	}
 	
@@ -111,7 +111,7 @@ class CustomInfoButton: UIButton {
 		get { topTrailingLabel.attributedText }
 		set {
 			newValue?.renderInto(target: topTrailingLabel)
-			topTrailingLabel.isHighlighted = newValue == nil
+//			topTrailingLabel.isHighlighted = newValue == nil
 		}
 	}
 	
@@ -119,7 +119,7 @@ class CustomInfoButton: UIButton {
 		get { bottomTrailingLabel.attributedText }
 		set {
 			newValue?.renderInto(target: bottomTrailingLabel)
-			bottomTrailingLabel.isHighlighted = newValue == nil
+//			bottomTrailingLabel.isHighlighted = newValue == nil
 		}
 	}
 	
@@ -142,7 +142,7 @@ class CustomInfoButton: UIButton {
 	private func buildButton() {
 		mainStackBuilder()
 		addSubview(mainStack)
-		setContraintsToChild(mainStack, edgeInsets: .zero)
+		setConstraintsToChild(mainStack, edgeInsets: .zero)
 		addTarget(self, action: #selector(handleTap), for: .touchUpInside)
 	}
 	
@@ -242,7 +242,7 @@ class CustomInfoButtonCell: ConfigurableCell {
 	func configureCell(with model: CustomInfoButtonModel) {
 		
 		contentView.addSubview(button)
-		contentView.setContraintsToChild(button, edgeInsets: .init(vertical: 10, horizontal: 16))
+		contentView.setConstraintsToChild(button, edgeInsets: .init(vertical: 10, horizontal: 16))
 		
 		button.isUserInteractionEnabled = false
 		button.updateUIButton(model)

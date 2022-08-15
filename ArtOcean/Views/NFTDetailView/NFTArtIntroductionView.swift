@@ -53,7 +53,7 @@ class NFTArtIntroduction:ConfigurableCell{
 		[interactiveView, titleDescriptionView].compactMap{ $0 }.forEach { stackView.addArrangedSubview($0) }
 		
 		contentView.addSubview(stackView)
-		contentView.setContraintsToChild(stackView,edgeInsets: .init(top: 0, left: 16, bottom: 0, right: 16))
+		contentView.setConstraintsToChild(stackView,edgeInsets: .init(top: 0, left: 16, bottom: 0, right: 16))
 	}
 	
 }
