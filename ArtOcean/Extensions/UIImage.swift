@@ -282,6 +282,7 @@ extension UIImage {
 		case duplicate = "duplicate"
 		case eyeOff = "eye-off"
 		case eye = "eye"
+		case eth = "eth"
 		case heartOutline = "heart-outline"
 		case heart = "heart"
 		case homeOutline = "home-outline"

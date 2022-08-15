@@ -136,9 +136,7 @@ class NFTDetailArtViewController:UIViewController{
     
 	private func buildHeroHeaderView(){
 		guard let safeNFTArt = nftArt else { return }
-		heroHeaderView = .init(nft: safeNFTArt, height: headerHeight, handler: { [weak self] in
-			self?.navigationController?.popViewController(animated: true)
-		})
+		heroHeaderView = .init(nft: safeNFTArt, height: headerHeight)
 		view.insertSubview(heroHeaderView!, at: 0)
 	}
 	
@@ -341,7 +339,17 @@ class TestViewController: UIViewController {
 	
 	private var nftArt: NFTModel?
 
-	private lazy var mainStack: UIStackView = { .VStack(views: [], spacing: 10) }()
+	private lazy var mainStack: UIStackView = { .VStack(spacing: 10,aligmment: .center) }()
+	
+	private lazy var imageView: CustomImageView = {
+//		let frame: CGRect = .init(origin: .zero, size: .init(width: preferredContentSize.width * 0.25, height: preferredContentSize.height * 0.15))
+		let imageView: CustomImageView = .init(url: nftArt?.metadata?.image, cornerRadius: 16)
+		imageView.setHeightWithPriority(preferredContentSize.height * 0.15,priority: .required)
+		imageView.setWidthWithPriority(preferredContentSize.width * 0.25,priority: .required)
+		return imageView
+	}()
+	
+	private lazy var headerInfoLabel: HeaderCaptionLabel = { .init() }()
 	
 	init(nftArtModel: NFTModel?) {
 		self.nftArt = nftArtModel
@@ -360,9 +368,10 @@ class TestViewController: UIViewController {
 		
 		let stack: UIStackView = .HStack(views: [title,.spacer(),closeButton], spacing: 10, aligmment: .center)
 		
-		(nftArt?.Title ?? "No Title").styled(font: .bold, color: .appBlackColor, size: 22.5).renderInto(target: title)
+		"Place A Bid".styled(font: .bold, color: .appBlackColor, size: 22.5).renderInto(target: title)
 		
 		mainStack.addArrangedSubview(stack)
+		mainStack.setWidthForChildWithPadding(stack, paddingFactor: 0)
 		mainStack.setCustomSpacing(20, after: stack)
 	}
 	
@@ -375,14 +384,45 @@ class TestViewController: UIViewController {
 		view.addSubview(mainStack)
 		view.setConstraintsToChild(mainStack, edgeInsets: .init(top: 24, left: 16, bottom: 16, right: 16))
 		setupNavBar()
-		setupImageView()
+		setupNFTDetailSection()
+		setupPriceIndicator()
 		mainStack.addArrangedSubview(.spacer())
 	}
 	
-	private func setupImageView() {
-		let imageView = CustomImageView(url: nftArt?.metadata?.image, cornerRadius: 16)
-		imageView.setHeightWithPriority(preferredContentSize.height * 0.45,priority: .required)
-		mainStack.addArrangedSubview(imageView)
+	private func setupNFTDetailSection() {
+		
+		guard let validNFT = nftArt else { return }
+		
+		let stack: UIStackView = .HStack(aligmment: .top)
+		stack.addArrangedSubview(imageView)
+		
+		headerInfoLabel.configureLabel(title: validNFT.Title.styled(font: .medium, color: .appBlackColor, size: 20), subTitle: (validNFT.id?.tokenId ?? "").styled(font: .regular, color: .appGrayColor, size: 13))
+		stack.addArrangedSubview(headerInfoLabel)
+		mainStack.addArrangedSubview(stack)
+		mainStack.setWidthForChildWithPadding(stack, paddingFactor: 0)
+	}
+	
+	private func  setupPriceIndicator() {
+		let stack: UIStackView = .HStack(spacing: 8,aligmment: .fill)
+		
+		let plusButton: CustomImageButton = .init(name: .plus, frame: .smallestSqaure, addBG: false, tintColor: .appBlackColor, bgColor: .clear, bordered: true) {
+			print("(DEBUG) Clicked on Plus!")
+		}
+		
+		let minusButton: CustomImageButton = .init(name: .minus, frame: .smallestSqaure, addBG: false, tintColor: .appBlackColor, bgColor: .clear, bordered: true) {
+			print("(DEBUG) Clicked on Plus!")
+		}
+		
+		let label: UILabel = .init()
+		"0.038 ETH".styled(font: .bold, color: .appBlackColor, size: 24).renderInto(target: label)
+		
+		let img = UIImageView(image: UIImage.Catalogue.eth.image.resized(.init(width: 12, height: 20)))
+		img.contentMode = .scaleAspectFit
+		[plusButton,.spacer(width: 16),img,label,.spacer(width: 16),minusButton].forEach { stack.addArrangedSubview($0) }
+		
+		mainStack.addArrangedSubview(.spacer(height: 25))
+		mainStack.addArrangedSubview(stack)
+		stack.setHeightWithPriority(40)
 	}
 	
 	@objc private func onTap() {

@@ -212,7 +212,16 @@ extension UIView {
 	}
 	
 	func removeAllConstraints() { removeConstraints(constraints) }
+
+	func updateConstraint(anchor: AnyObject, to newValue: CGFloat) {
+		guard let constraint = constraints.filter{ $0.firstAnchor === anchor }.first else { return }
+		constraint.constant = newValue
+	}
 	
+	func cornerRadius(_ value: CGFloat, at corners: CACornerMask) {
+		cornerRadius = value
+		layer.maskedCorners = corners
+	}
 	func addViewAndSetConstraints(_ innerView:UIView?,edgeInsets:UIEdgeInsets) {
 		guard let safeInnerView = innerView else { return }
 		addSubview(safeInnerView)

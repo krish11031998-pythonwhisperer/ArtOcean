@@ -31,20 +31,13 @@ class NFTHeroHeaderView:UIView{
     
     
     private lazy var imageView:CustomImageView = .init(cornerRadius: 16)
-    
-//	private lazy var backButton:CustomButton = {
-//		let button = CustomButton.backButton
-//		button.translatesAutoresizingMaskIntoConstraints = false
-//		return button
-//	}()
-//
+
     //MARK: - View LifeCycle and Init
     
-    init(nft:NFTModel,height:CGFloat,handler:@escaping (() -> Void)){
+    init(nft:NFTModel,height:CGFloat){
 		self.height = height
 		nftArt = nft
 		super.init(frame:.init(origin: .zero, size: .init(width: UIScreen.main.bounds.width, height: height)))
-//		backButton.handler = handler
         setupViews()
         setupLayout()
 		isUserInteractionEnabled = true

@@ -30,7 +30,7 @@ extension UIImageView {
 		let blurEffectView = UIVisualEffectView(effect: blurEffect)
 		blurEffectView.frame = .init(origin: .zero, size: size)
 		blurEffectView.autoresizingMask = [.flexibleWidth,.flexibleHeight]
-		addSubview(blurEffectView)
+		insertSubview(blurEffectView, at: 0)
 		
 		let gradient = CAGradientLayer()
 		gradient.colors = [UIColor.clear.cgColor,UIColor.white.cgColor,UIColor.white.cgColor]

@@ -20,10 +20,12 @@ class CustomImageView:UIImageView{
 	private lazy var gradientView: UIView = { .init() }()
 	
 	init(url:String? = nil,
+		 frame: CGRect = .zero,
          named:String? = nil,
          cornerRadius:CGFloat,
-         maskedCorners:CACornerMask? = nil){
-        super.init(frame: .zero)
+         maskedCorners:CACornerMask? = nil
+	){
+        super.init(frame: frame)
         self.named = named
         self.url = url
         self.clipsToBounds = true

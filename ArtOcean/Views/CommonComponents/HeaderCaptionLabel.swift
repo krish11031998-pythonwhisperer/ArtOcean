@@ -36,36 +36,36 @@ class HeaderCaptionLabel: UIView {
 		return stack
 	}()
 	
-	private func leadingStack(title: String? = nil, subTitle: String? = nil) -> UIStackView? {
+	private func leadingStack(title: RenderableText? = nil, subTitle: RenderableText? = nil) -> UIStackView? {
 		let leadingStack: UIStackView = .init()
 		leadingStack.axis = .vertical
 		leadingStack.spacing = 10
 		
 		if let validTitle = title {
-			validTitle.styled(font: .medium, color: .appBlackColor, size: 18).renderInto(target: leadingTopLabel)
+			validTitle.renderInto(target: leadingTopLabel)
 			leadingStack.addArrangedSubview(leadingTopLabel)
 		}
 		
 		if let validSubtitle = subTitle {
-			validSubtitle.styled(font: .regular, color: .appGrayColor, size: 12).renderInto(target: leadingBottomLabel)
+			validSubtitle.renderInto(target: leadingBottomLabel)
 			leadingStack.addArrangedSubview(leadingBottomLabel)
 		}
 		
 		return leadingStack
 	}
 	
-	private func trailingStack(info: String? = nil, footer: String? = nil) -> UIStackView? {
+	private func trailingStack(info: RenderableText? = nil, footer: RenderableText? = nil) -> UIStackView? {
 		let trailingStack: UIStackView = .init()
 		trailingStack.axis = .vertical
 		trailingStack.spacing = 10
 		
 		if let validTitle = info {
-			validTitle.styled(font: .medium, color: .appBlackColor, size: 15).renderInto(target: trailingTopLabel)
+			validTitle.renderInto(target: trailingTopLabel)
 			trailingStack.addArrangedSubview(trailingTopLabel)
 		}
 		
 		if let validSubtitle = footer {
-			validSubtitle.styled(font: .regular, color: .appGrayColor, size: 10).renderInto(target: trailingBottomLabel)
+			validSubtitle.renderInto(target: trailingBottomLabel)
 			trailingStack.addArrangedSubview(trailingBottomLabel)
 		}
 		
@@ -74,10 +74,10 @@ class HeaderCaptionLabel: UIView {
 	
 	public func configureLabel(
 		img: UIImage? = nil,
-		title: String? = nil,
-		subTitle: String? = nil,
-		info: String? = nil,
-		footer: String? = nil
+		title: RenderableText? = nil,
+		subTitle: RenderableText? = nil,
+		info: RenderableText? = nil,
+		footer: RenderableText? = nil
 	) {
 		if let img = img {
 			imageView = CustomImageView(cornerRadius: 32)
