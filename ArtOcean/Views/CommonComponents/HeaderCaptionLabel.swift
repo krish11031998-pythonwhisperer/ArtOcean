@@ -85,7 +85,7 @@ class HeaderCaptionLabel: UIView {
 			imageView?.setFrameConstraints(size: .squared(64))
 		}
 		
-		let views = [imageView,leadingStack(title: title, subTitle: subTitle),.spacer(),trailingStack(info: info, footer: footer)]
+		let views = [imageView,leadingStack(title: title, subTitle: subTitle),.spacer(width: .zero),trailingStack(info: info, footer: footer)]
 		views.compactMap { $0 }.forEach {
 			mainStack.addArrangedSubview($0)
 		}

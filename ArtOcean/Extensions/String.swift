@@ -37,6 +37,16 @@ extension String: RenderableText {
 			break
 		}
 	}
+	
+	func label() -> UILabel {
+		let label = UILabel()
+		renderInto(target: label)
+		return label
+	}
+	
+	func replace(val: String) -> String {
+		return replacingOccurrences(of: "{}", with: val)
+	}
 }
 
 
@@ -63,5 +73,11 @@ extension NSAttributedString: RenderableText {
 		default:
 			break
 		}
+	}
+	
+	func label() -> UILabel {
+		let label = UILabel()
+		renderInto(target: label)
+		return label
 	}
 }

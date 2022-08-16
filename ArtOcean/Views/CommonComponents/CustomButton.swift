@@ -111,15 +111,36 @@ class CustomImageButton: UIButton {
 		fatalError("init(coder:) has not been implemented")
 	}
 	
-	convenience init(name:UIImage.Catalogue?,frame:CGSize = .squared(32),addBG: Bool = true,tintColor: UIColor = .black, bgColor: UIColor = .appWhiteBackgroundColor, bordered: Bool = true,handler:(() -> Void)?) {
+	convenience init(
+		name:UIImage.Catalogue?,
+		frame:CGSize = .squared(32),
+		addBG: Bool = true,
+		tintColor: UIColor = .black,
+		bgColor: UIColor = .appWhiteBackgroundColor,
+		bordered: Bool = true,
+		handler:(() -> Void)? = nil) {
 		self.init(name: name, systemName: nil,url: nil, frame: frame, addBG: addBG,tintColor: tintColor,bgColor: bgColor,bordered: bordered, handler: handler)
 	}
 	
-	convenience init(systemName:String?,frame:CGSize = .squared(32),addBG: Bool = true,tintColor: UIColor = .black, bgColor: UIColor = .appWhiteBackgroundColor, bordered: Bool = true,handler:(() -> Void)?) {
+	convenience init(
+		systemName:String?,
+		frame:CGSize = .squared(32),
+		addBG: Bool = true,
+		tintColor: UIColor = .black,
+		bgColor: UIColor = .appWhiteBackgroundColor,
+		bordered: Bool = true,
+		handler:(() -> Void)? = nil) {
 		self.init(name: nil, systemName: systemName,url: nil, frame: frame, addBG: addBG,tintColor: tintColor,bgColor: bgColor,bordered: bordered, handler: handler)
 	}
 	
-	convenience init(url:String?,frame:CGSize = .squared(32),addBG: Bool = true,tintColor: UIColor = .black, bgColor: UIColor = .appWhiteBackgroundColor, bordered: Bool = true,handler:(() -> Void)?) {
+	convenience init(
+		url:String?,
+		frame:CGSize = .squared(32),
+		addBG: Bool = true,
+		tintColor: UIColor = .black,
+		bgColor: UIColor = .appWhiteBackgroundColor,
+		bordered: Bool = true,
+		handler:(() -> Void)? = nil) {
 		self.init(name: nil, systemName: nil,url: url, frame: frame, addBG: addBG,tintColor: tintColor,bgColor: bgColor,bordered: bordered, handler: handler)
 	}
 	

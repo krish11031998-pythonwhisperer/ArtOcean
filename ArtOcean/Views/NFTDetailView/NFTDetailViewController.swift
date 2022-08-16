@@ -340,6 +340,16 @@ class TestViewController: UIViewController {
 	private var nftArt: NFTModel?
 
 	private lazy var mainStack: UIStackView = { .VStack(spacing: 10,aligmment: .center) }()
+	private lazy var priceLabel: UILabel = { .init() }()
+	private lazy var balanceLabel: UILabel = { .init() }()
+	
+	private lazy var plusButton: CustomImageButton = {
+		.init(name: .plus, addBG: false, tintColor: .appBlackColor, bgColor: .clear)
+	}()
+	
+	private lazy var minusButton: CustomImageButton = {
+		.init(name: .minus, addBG: false, tintColor: .appBlackColor, bgColor: .clear)
+	}()
 	
 	private lazy var imageView: CustomImageView = {
 //		let frame: CGRect = .init(origin: .zero, size: .init(width: preferredContentSize.width * 0.25, height: preferredContentSize.height * 0.15))
@@ -380,11 +390,11 @@ class TestViewController: UIViewController {
 		view.cornerRadius = 32
 		view.layer.maskedCorners = [.layerMinXMinYCorner,.layerMaxXMinYCorner]
 		preferredContentSize = .init(width: .totalWidth, height: .totalHeight * 0.8)
-		view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(onTap)))
 		view.addSubview(mainStack)
 		view.setConstraintsToChild(mainStack, edgeInsets: .init(top: 24, left: 16, bottom: 16, right: 16))
 		setupNavBar()
 		setupNFTDetailSection()
+		attributes()
 		setupPriceIndicator()
 		mainStack.addArrangedSubview(.spacer())
 	}
@@ -396,7 +406,10 @@ class TestViewController: UIViewController {
 		let stack: UIStackView = .HStack(aligmment: .top)
 		stack.addArrangedSubview(imageView)
 		
-		headerInfoLabel.configureLabel(title: validNFT.Title.styled(font: .medium, color: .appBlackColor, size: 20), subTitle: (validNFT.id?.tokenId ?? "").styled(font: .regular, color: .appGrayColor, size: 13))
+		let title: RenderableText = validNFT.Title.styled(font: .medium, color: .appBlackColor, size: 20)
+		let subTitle: RenderableText = (validNFT.id?.tokenId ?? "").styled(font: .regular, color: .appGrayColor, size: 13)
+		
+		headerInfoLabel.configureLabel(title: title, subTitle: subTitle)
 		stack.addArrangedSubview(headerInfoLabel)
 		mainStack.addArrangedSubview(stack)
 		mainStack.setWidthForChildWithPadding(stack, paddingFactor: 0)
@@ -405,24 +418,56 @@ class TestViewController: UIViewController {
 	private func  setupPriceIndicator() {
 		let stack: UIStackView = .HStack(spacing: 8,aligmment: .fill)
 		
-		let plusButton: CustomImageButton = .init(name: .plus, frame: .smallestSqaure, addBG: false, tintColor: .appBlackColor, bgColor: .clear, bordered: true) {
-			print("(DEBUG) Clicked on Plus!")
-		}
-		
-		let minusButton: CustomImageButton = .init(name: .minus, frame: .smallestSqaure, addBG: false, tintColor: .appBlackColor, bgColor: .clear, bordered: true) {
-			print("(DEBUG) Clicked on Plus!")
-		}
-		
-		let label: UILabel = .init()
-		"0.038 ETH".styled(font: .bold, color: .appBlackColor, size: 24).renderInto(target: label)
+		"0.038 ETH".styled(font: .bold, color: .appBlackColor, size: 24).renderInto(target: priceLabel)
 		
 		let img = UIImageView(image: UIImage.Catalogue.eth.image.resized(.init(width: 12, height: 20)))
 		img.contentMode = .scaleAspectFit
-		[plusButton,.spacer(width: 16),img,label,.spacer(width: 16),minusButton].forEach { stack.addArrangedSubview($0) }
+		[plusButton,.spacer(width: 16),img,priceLabel,.spacer(width: 16),minusButton].forEach { stack.addArrangedSubview($0) }
+		
+		stack.setHeightWithPriority(40)
+		let borderedView = stack.marginedBorderedCard(borderColor: .appPurpleColor.withAlphaComponent(0.35))
+	
+		"Balance: {} ETH".replace(val: "0.045").styled(font: .medium, color: .appGrayColor, size: 14).renderInto(target: balanceLabel)
 		
 		mainStack.addArrangedSubview(.spacer(height: 25))
-		mainStack.addArrangedSubview(stack)
-		stack.setHeightWithPriority(40)
+		mainStack.addArrangedSubview(borderedView)
+		mainStack.addArrangedSubview(balanceLabel)
+	}
+	
+	private func attributes() {
+		
+		guard let validAttributes = nftArt?.metadata?.attributes else { return }
+		
+		let scrollView: UIScrollView = .init()
+		scrollView.showsHorizontalScrollIndicator = false
+		let stack: UIStackView = .HStack(spacing: 8, aligmment: .center)
+		
+		var maxHeight: CGFloat = .zero
+		
+		let blobMargin: UIEdgeInsets = .init(vertical: 5, horizontal: 10)
+		
+		validAttributes.compactMap { $0.Value }.forEach {
+			let label = $0.styled(font: .black, color: .appPurpleColor, size: 15)
+				.label()
+			let size = label.systemLayoutSizeFitting(.init(width: .totalWidth, height: 100))
+			let marginedHeight = size.height + 2 * blobMargin.vertical
+			
+			let blob = label
+				.marginedBorderedCard(edge: blobMargin, cornerRadius: marginedHeight * 0.275)
+			if marginedHeight > maxHeight {
+				maxHeight = marginedHeight
+			}
+			stack.addArrangedSubview(blob)
+			
+		}
+		
+		scrollView.addViewAndSetConstraints(stack, edgeInsets: .init(vertical: 2.5, horizontal: 0))
+		
+		mainStack.addArrangedSubview(scrollView)
+		
+		scrollView.setHeightWithPriority(maxHeight + 5)
+		
+		mainStack.setWidthForChildWithPadding(scrollView, paddingFactor: 0)
 	}
 	
 	@objc private func onTap() {
