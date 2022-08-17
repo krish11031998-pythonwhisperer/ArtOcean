@@ -34,6 +34,15 @@ extension NFTArtOffer {
 	static func encodeToItem(_ offer: NFTArtOffer) -> Item {
 		Item.offer(offer)
 	}
+	
+	static func decodeFromItem(_  item: Item) -> Self? {
+		switch item {
+		case .offer(let nFTArtOffer):
+			return nFTArtOffer
+		default:
+			return nil
+		}
+	}
 }
 
 extension Array where Element == NFTArtOffer {
@@ -59,22 +68,36 @@ extension NFTArtOffers {
 
 extension CustomInfoButtonModel {
 	
-	init(_ offer: NFTArtOffer) {
-		let initialImage: CustomLabel = .init(size: .squared(40))
-		offer.name?.initials().styled(font: .bold, color: .white, size: 14).renderInto(target: initialImage)
-		initialImage.backgroundColor = .appGrayColor
-		initialImage.textAlignment = .center
-		let img = initialImage.snapshot
+	init(_ offer: NFTArtOffer, withArtImage: Bool = false) {
+		var img: UIImage? = nil
+		var style: ImageStyle
+		var url: String? = nil
+
+		if !withArtImage {
+			let initialImage: CustomLabel = .init(size: .squared(40))
+			offer.name?.initials().styled(font: .bold, color: .white, size: 14).renderInto(target: initialImage)
+			initialImage.backgroundColor = .appGrayColor
+			initialImage.textAlignment = .center
+			img = initialImage.snapshot
+			style = .circle(.squared(40))
+		} else {
+			style = .rounded(8)
+			url = offer.image
+		}
+		
 		self.init(
 			leadingImg: img,
-			title: offer.name?.body2Medium(),
+			title: offer.name?.replace().body2Medium(),
 			subTitle: "Expired in \(offer.time?.toString() ?? "0") days".body3Regular(),
 			infoTitle: offer.price?.toString().body2Medium(),
 			infoSubTitle: offer.percent?.body3Regular(),
-			style: .circle,
+			leadingImageUrl: url,
+			style: style,
 			imgSize: .squared(40)) {
 				print("(DEBUG) clicked on Offer!")
 			}
 	}
+	
+	
 	
 }

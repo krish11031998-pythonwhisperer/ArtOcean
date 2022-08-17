@@ -43,7 +43,8 @@ class ProfileViewController: UIViewController {
 		assetsView.delegate = self
     }
     
-    func setupViews(){		view.addSubview(backdropImage)
+    func setupViews(){
+		view.addSubview(backdropImage)
 		view.setWidthForChildWithPadding(backdropImage, paddingFactor: .zero)
 		backdropImage.setHeightWithPriority(200)
 		
@@ -70,9 +71,11 @@ extension ProfileViewController: CustomSelectorDynamicCollectionDelegate {
 	func collectionSection(_ section: Section) -> CollectionSection? {
 		guard let validItems = section.items else { return nil }
 		if section == NFTArtSection {
-			return .init(cells: validItems.compactMap { NFTArtCollectionViewCellData.decodedFromItem(item: $0) }.map { CollectionColumn<NFTArtCollectionViewCell>($0) })
+			let art: [NFTArtCollectionViewCellData] = validItems.compactMap { NFTArtCollectionViewCellData.decodedFromItem(item: $0) }
+			return .init(cells: art.map { CollectionColumn<NFTArtCollectionViewCell>($0) })
 		} else if section == NFTArtOfferSection {
-			return .init(cells: validItems.map { CollectionColumn<StatisticActivityCollectionViewCell>($0) })
+			let offers: NFTArtOffers = validItems.compactMap { NFTArtOffer.decodeFromItem($0) }
+			return .init(cells: offers.map { CollectionColumn<CustomInfoButtonCollectionCell>(.init($0, withArtImage: true)) })
 		} else {
 			return nil
 		}

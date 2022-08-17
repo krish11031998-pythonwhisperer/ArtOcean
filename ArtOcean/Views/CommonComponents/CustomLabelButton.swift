@@ -33,14 +33,43 @@ class CustomLabelButton:UIButton{
 		get { configuration?.image }
 		set { configuration?.image = newValue }
 	}
-    init(
+	
+	public func updateTitle(font: CustomFonts? = nil, color: UIColor? = nil, size: CGFloat? = nil) {
+		if let validFont = font, let validSize = size {
+			configuration?.attributedTitle?.font = validFont.fontBuilder(size: validSize)
+		}
+		
+		if let validColor = color {
+			configuration?.attributedTitle?.foregroundColor = validColor
+		}
+	}
+	
+	
+	public override var isSelected: Bool {
+		didSet {
+			let color: UIColor = isSelected ? .appPurpleColor : .black
+			configuration?.image = configuration?.image?.withTintColor(color)
+			updateTitle(color: color)
+			cornerRadius = 15
+			if isSelected {
+				backgroundColor = .white
+				cornerRadius = 15
+			} else {
+				backgroundColor = .clear
+				cornerRadius = 0
+			}
+			
+		}
+	}
+    
+	init(
 		title:String = "",
 		image: UIImage? = nil,
 		imageSize:CGSize = .squared(15),
 		font: CustomFonts = CustomFonts.regular,
 		size: CGFloat = 13,
 		color:UIColor = .black,
-		backgroundColor:UIColor = .appPurpleColor,
+		backgroundColor:UIColor = .clear,
 		frame: CGRect = .zero,
 		handler: (() -> Void)? = nil
 	) {

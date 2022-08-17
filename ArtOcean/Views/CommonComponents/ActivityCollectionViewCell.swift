@@ -22,7 +22,7 @@ fileprivate extension NFTArtOffer {
 					 infoTitle: infoTitle,
 					 infoSubTitle: infoSubTitle,
 					 leadingImageUrl: imgUrl,
-					 style: .rounded,
+					 style: .rounded(8),
 					 imgSize: size
 		)
 	}

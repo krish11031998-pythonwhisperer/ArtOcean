@@ -232,10 +232,9 @@ class CustomInfoButton: UIButton {
 			self.trailingImage = trailingImage
 		}
 		
-		if buttonInfo.style != .original {
-			self.leadingImageView.cornerRadius = buttonInfo.style.cornerRadius(buttonInfo.imgSize)
-			self.trailingImageView.cornerRadius = buttonInfo.style.cornerRadius(buttonInfo.imgSize)
-		}
+
+		self.leadingImageView.cornerRadius = buttonInfo.style.cornerRadius
+		self.trailingImageView.cornerRadius = buttonInfo.style.cornerRadius
 		
 		setImageSize(size: buttonInfo.imgSize)
 		
@@ -246,6 +245,7 @@ class CustomInfoButton: UIButton {
 //MARK: - Exposed Methods
 }
 
+//MARK: - CustomInfoButtonTableCell
 
 class CustomInfoButtonCell: ConfigurableCell {
 	
@@ -260,6 +260,21 @@ class CustomInfoButtonCell: ConfigurableCell {
 		button.updateUIButton(model)
 		backgroundColor = .clear
 
+	}
+	
+}
+
+class CustomInfoButtonCollectionCell: ConfigurableCollectionCell {
+	
+	private lazy var button: CustomInfoButton = { .init() }()
+	
+	func configureCell(with model: CustomInfoButtonModel) {
+		contentView.addSubview(button)
+		contentView.setConstraintsToChild(button, edgeInsets: .init(vertical: 10, horizontal: 16))
+		
+		button.isUserInteractionEnabled = false
+		button.updateUIButton(model)
+		backgroundColor = .clear
 	}
 	
 }

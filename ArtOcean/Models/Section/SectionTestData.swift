@@ -8,7 +8,7 @@
 import UIKit
 
 //MARK: - NFTArtSection Section
-let NFTArtSection:Section = {
+let NFTArtSection: Section = {
 	var artItems: [Item]?
 	
 	Bundle.main.decodable(NFTDataResponse.self, for: "nft.json") { result in
@@ -25,10 +25,10 @@ let NFTArtSection:Section = {
 	}
 	
 	let layout: UICollectionViewFlowLayout = .standardVGridFlow
-	layout.itemSize.width = (.totalWidth - 48).half() - layout.minimumInteritemSpacing
-	layout.sectionInset = .init(vertical: 10, horizontal: 10)
+	layout.itemSize.width = (.totalWidth - 28).half() - layout.minimumInteritemSpacing
+	layout.sectionInset = .init(vertical: 10)
 	
-	return .init(type: "ART", items: artItems, layout: layout)
+	return .init(type: "ART", items: artItems, layout: layout, selectorItem: .init(title: "Items", image: .Catalogue.viewGrid.image))
 }()
 
 //MARK: - NFTArtOfferSection Section
@@ -46,16 +46,17 @@ let NFTArtOfferSection:Section = {
 	}
 	
 	let layout: UICollectionViewFlowLayout = .init()
-	layout.itemSize = CGSize(width: .totalWidth - 48, height: 50)
+	layout.itemSize = CGSize(width: .totalWidth - 10, height: 60)
 	layout.scrollDirection = .vertical
-	layout.sectionInset = .init(vertical: .zero, horizontal: 24)
+	layout.sectionInset = .init(horizontal: 5)
 	layout.minimumInteritemSpacing = 12
 	layout.minimumLineSpacing = 12
 	
 	return .init(
 		type: "OFFER",
 		items: items,
-		layout: layout
+		layout: layout,
+		selectorItem: .init(title: "Offers", image: .Catalogue.user.image)
 	)
 }()
 
@@ -64,11 +65,11 @@ let NFTArtOfferSection:Section = {
 
 let UserSection:Section = {
 	let layout: UICollectionViewFlowLayout = .init()
-	layout.itemSize = CGSize(width: .totalWidth - 48, height: 50)
+	layout.itemSize = CGSize(width: .totalWidth, height: 60)
 	layout.scrollDirection = .vertical
-	layout.sectionInset = .init(vertical: .zero, horizontal: 24)
+	layout.sectionInset = .init(horizontal: 0)
 	layout.minimumInteritemSpacing = 12
 	layout.minimumLineSpacing = 12
 	
-	return Section(type: "USER", items: testUser.compactMap{ Item.user($0) },layout: layout)
+	return Section(type: "USER", items: testUser.compactMap{ Item.user($0) },layout: layout, selectorItem: .init(title: "User", image: .Catalogue.user.image))
 }()

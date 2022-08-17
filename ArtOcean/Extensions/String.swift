@@ -13,6 +13,12 @@ protocol RenderableText {
 	func renderInto(target: Any?)
 }
 
+extension RenderableText {
+	
+	static func + (lhs: RenderableText, rhs: RenderableText) -> Self { lhs + rhs }
+	
+}
+
 extension String {
 	
 	func replace(withDefault: String = "XXXXX") -> String { !self.isEmpty ? self : withDefault }

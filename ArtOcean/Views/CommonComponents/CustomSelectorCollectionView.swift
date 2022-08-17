@@ -42,7 +42,7 @@ class CustomSelectorCollectionView:UIView{
     }()
     
     public lazy var selector:SliderSelector = {
-        let selector = SliderSelector(tabs: self.sections.compactMap({$0.type}))
+		let selector = SliderSelector(tabs: self.sections.compactMap({$0.selectorItem}))
         selector.delegate = self
         return selector
     }()
@@ -93,9 +93,7 @@ class CustomSelectorDynamicCollectionView: UIView {
 	private let sections: [Section]
 	
 	public var delegate: CustomSelectorDynamicCollectionDelegate? {
-		didSet {
-			reloadCollection()
-		}
+		didSet { reloadCollection() }
 	}
 	
 	private var selectedSection: Section? {
@@ -109,7 +107,7 @@ class CustomSelectorDynamicCollectionView: UIView {
 	}()
 	
 	private lazy var selector:SliderSelector = {
-		let selector = SliderSelector(tabs: self.sections.compactMap({$0.type}))
+		let selector = SliderSelector(tabs: self.sections.compactMap({$0.selectorItem}))
 		selector.delegate = self
 		return selector
 	}()
@@ -154,7 +152,7 @@ class CustomSelectorDynamicCollectionView: UIView {
 extension CustomSelectorDynamicCollectionView:SlideSelectorDelegate{
 	
 	func handleSelect(_ id: String) {
-        if let section = self.sections.first(where: {$0.type == id}){
+		if let section = self.sections.first(where: {$0.selectorItem?.title == id}){
 			selectedSection = section
         }
 	}

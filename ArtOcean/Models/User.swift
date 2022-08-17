@@ -41,3 +41,33 @@ let testUser:[User] = {
     return resultUsers
 }()
 
+
+extension CustomInfoButtonModel {
+	
+	init(_ user: User) {
+		self.init(
+			title: user.name?.body2Medium(),
+			subTitle: user.username?.body3Medium(),
+			infoTitle: (user.profit?.toString() ?? "" + NSAttributedString(string: "ETH")).body2Medium(),
+			infoSubTitle: (user.profit?.toString() ?? "0").body3Medium(),
+			leadingImageUrl: user.image,
+			style: .circle(.squared(40)),
+			imgSize: .squared(40)) {
+				print("(DEBUG) Clicked on the user")
+			}
+	}
+}
+
+extension User {
+	
+	var row: CellProvider { TableRow<CustomInfoButtonCell>(.init(self)) }
+	
+	static func decodeFromItem(_ item: Item) -> User? {
+		switch item {
+		case .user(let user):
+			return user
+		default:
+			return nil
+		}
+	}
+}

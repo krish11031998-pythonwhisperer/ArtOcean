@@ -214,13 +214,13 @@ extension UIImage {
 		return newImage
 	}
 	
-	func resized(to size: CGSize) -> UIImage {
-		
-		let renderer = UIGraphicsImageRenderer(size: size)
-		let img = renderer.image { _ in self.draw(in: .init(origin: .zero, size: size)) }
-		
-		return img
-	}
+//	func resized(to size: CGSize) -> UIImage {
+//		
+//		let renderer = UIGraphicsImageRenderer(size: size)
+//		let img = renderer.image { _ in self.draw(in: .init(origin: .zero, size: size)) }
+//		
+//		return img
+//	}
 	
 	static func loadCache(_ urlString:String) -> UIImage? {
 		guard
@@ -350,15 +350,15 @@ extension UIImage {
 //MARK: - UIImageStylist
 
 enum ImageStyle {
-	case rounded
-	case circle
+	case rounded(CGFloat)
+	case circle(CGSize)
 	case original
 	
-	func cornerRadius(_ size: CGSize) -> CGFloat {
+	var cornerRadius : CGFloat {
 		switch self {
-		case .rounded:
-			return 8
-		case .circle:
+		case .rounded(let radius):
+			return radius
+		case .circle(let size):
 			return size.width * 0.5
 		case .original:
 			return 0

@@ -15,11 +15,18 @@ struct Section {
     let type: SectionType?
     let items: [Item]?
 	let layout: UICollectionViewFlowLayout
+	let selectorItem: SlideSelectorItem?
 	
-	init(type: SectionType?, items: [Item]?, layout: UICollectionViewFlowLayout = .standardFlow) {
+	init(
+		type: SectionType?,
+		items: [Item]?,
+		layout: UICollectionViewFlowLayout = .standardFlow,
+		selectorItem: SlideSelectorItem? = nil
+	) {
 		self.type = type
 		self.items = items
 		self.layout = layout
+		self.selectorItem = selectorItem
 	}
 }
 
@@ -31,7 +38,6 @@ extension Section: Hashable {
 		hasher.combine(type)
 	}
 }
-
 
 struct Empty: Hashable,Codable {
 	

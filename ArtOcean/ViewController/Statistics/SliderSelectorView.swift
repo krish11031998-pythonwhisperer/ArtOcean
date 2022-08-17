@@ -12,13 +12,24 @@ protocol SlideSelectorDelegate{
     func handleSelect(_ id:String)
 }
 
+struct SlideSelectorItem {
+	var title: String
+	var image: UIImage?
+}
+
+extension SlideSelectorItem: Hashable {
+	
+	func hash(into hasher: inout Hasher) {
+		hasher.combine(title)
+	}
+}
 class SliderSelector:UIView{
     
     public var delegate:SlideSelectorDelegate? = nil
     private var hoverViewCenterX:NSLayoutConstraint? = nil
-    private var tabs:[String]
+    private var tabs:[SlideSelectorItem]
     
-    init(tabs:[String]){
+    init(tabs:[SlideSelectorItem]){
         self.tabs = tabs
         super.init(frame: .zero)
         cornerRadius = 20
@@ -30,33 +41,36 @@ class SliderSelector:UIView{
         fatalError("init(coder:) has not been implemented")
     }
     
-    private lazy var tabsIndicators:[UIView] = {
-        let views:[UIView] = self.tabs.compactMap { tab in
-			let button = CustomLabelButton(title: tab.capitalized,
-										   image: .init(named:tab.lowercased()),
-										   font: CustomFonts.medium,
-										   size: 15,
-										   color: .appBlackColor,
-										   backgroundColor: .clear)
-			button.accessibilityIdentifier = tab
+    private lazy var tabsIndicators:[UIButton] = {
+        let views:[UIButton] = self.tabs.compactMap { tab in
+			let button = CustomLabelButton()
+			button.title = tab.title.heading5()
+			button.image = tab.image?.resized(.squared(15))
+			button.accessibilityIdentifier = tab.title
 			button.handler = { [weak self] in
-				self?.tapHandler(tab)
+				self?.tapHandler(tab.title)
 			}
             return button
         }
-		if let first = views.first(where: tabs.first) {
-			first.backgroundColor = .white
-			first.cornerRadius = 15
+		if let first = views.first(where: tabs.first?.title) as? CustomLabelButton {
+//			first.backgroundColor = .white
+//			first.cornerRadius = 15
+//			first.image = first.image?.withTintColor(.appPurpleColor)
+//			first.tintColor = .appPurpleColor
+			first.isSelected = true
 		}
         return views
     }()
     
 	func tapHandler(_ tab: String) {
 		UIViewPropertyAnimator(duration: 0.2, curve: .easeInOut) {
-			guard let selectedView = self.tabsIndicators.first(where: tab) else { return }
-			selectedView.backgroundColor = .white
-			selectedView.cornerRadius = 15
-			self.tabsIndicators.filterViews(exclude: tab)?.forEach { $0.backgroundColor = .clear }
+			guard let selectedView = self.tabsIndicators.first(where: tab) as? CustomLabelButton else { return }
+//			selectedView.backgroundColor = .white
+			selectedView.isSelected = true
+//			selectedView.updateTitle(color: .appPurpleColor)
+//			selectedView.image = selectedView.image?.withTintColor(.appPurpleColor)
+//			selectedView.cornerRadius = 15
+			self.tabsIndicators.filterViews(exclude: tab)?.forEach { $0.isSelected = false }
 		}.startAnimation()
 		self.delegate?.handleSelect(tab)
 	}

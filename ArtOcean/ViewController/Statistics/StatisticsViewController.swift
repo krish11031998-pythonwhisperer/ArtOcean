@@ -6,32 +6,58 @@
 //
 
 import UIKit
+
+//MARK: - Definations
+
+enum Sections: String {
+	case Offers
+	case Users
+	
+	var slideSelectorItem: SlideSelectorItem {
+		switch self {
+		case .Offers:
+			return .init(title: rawValue, image: .Catalogue.menu.image)
+		case .Users:
+			return .init(title: rawValue, image: .Catalogue.user.image)
+		}
+	}
+	
+}
+
+
 //MARK: - Type
 
 class StatisticsViewController: UIViewController {
-	
+
 //MARK: - Properties
-	
-	private let customSlideCollectionView: CustomSelectorDynamicCollectionView = {
-		.init(sections: [NFTArtOfferSection,UserSection])
+
+	private lazy var customSlideCollectionView: CustomSelectorDynamicCollectionView = {
+		.init(sections: [customArtSection,UserSection])
 	}()
 	
+	private let customArtSection: Section = {
+		let nfArtOfferSection = NFTArtOfferSection
+		nfArtOfferSection.layout.itemSize = .init(width: .totalWidth, height: 60)
+		nfArtOfferSection.layout.sectionInset = .zero
+		return nfArtOfferSection
+	}()
+
 //MARK: - Overriden Methods
-	
+
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		configNavbar()
 		setupUI()
 	}
-	
+
 //MARK: - Protected Methods
-	
+
 	private func setupUI() {
 		customSlideCollectionView.delegate = self
 		view.addSubview(customSlideCollectionView)
 		view.setSafeAreaConstraintsToChild(customSlideCollectionView, edgeInsets: .init(top: 16, left: 8, bottom: 0, right: 8))
 	}
-	
+
 	private func configNavbar(){
 		let searchButton = CustomImageButton(name: .searchOutline, frame: .smallestSqaure, addBG: true, handler: nil)
 		let label = CustomLabel(text: "Statistics", size: 22, weight: .bold, color: .appBlackColor, numOfLines: 1,autoLayout: false)
@@ -43,17 +69,17 @@ class StatisticsViewController: UIViewController {
 //MARK: - StatisticViewControllerWithDynamic
 
 extension StatisticsViewController: CustomSelectorDynamicCollectionDelegate {
-	
+
 	func collectionSection(_ section: Section) -> CollectionSection? {
 		guard let validItems = section.items else { return nil }
 		if section == UserSection {
-			return .init(cells: validItems.map { CollectionColumn<StatisticRankingCollectionViewCell>($0) })
+			let users: [User] = validItems.compactMap { User.decodeFromItem($0) }
+			return .init(cells: users.map { CollectionColumn<CustomInfoButtonCollectionCell>(.init($0)) })
 		} else if section == NFTArtOfferSection {
-			return .init(cells: validItems.map { CollectionColumn<StatisticActivityCollectionViewCell>($0) })
+			let offers: NFTArtOffers = validItems.compactMap { NFTArtOffer.decodeFromItem($0) }
+			return .init(cells: offers.map { CollectionColumn<CustomInfoButtonCollectionCell>(.init($0, withArtImage: true)) })
 		} else {
 			return nil
 		}
 	}
 }
-
-
