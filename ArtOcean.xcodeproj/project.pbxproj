@@ -22,6 +22,7 @@
 		EF018307287376F500064F60 /* Number.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF018306287376F500064F60 /* Number.swift */; };
 		EF22D0CB285A378200555179 /* NFTLiveBidViewCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF22D0CA285A378200555179 /* NFTLiveBidViewCellView.swift */; };
 		EF22D0CD285A714F00555179 /* CustomTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF22D0CC285A714F00555179 /* CustomTableViewCell.swift */; };
+		EF2425C328AD6B3E00A1D378 /* Int.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF2425C228AD6B3E00A1D378 /* Int.swift */; };
 		EF3259D1287C211B001B0CA6 /* ProfileHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF3259D0287C211B001B0CA6 /* ProfileHeaderView.swift */; };
 		EF3259D3287C2761001B0CA6 /* CGSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF3259D2287C2761001B0CA6 /* CGSize.swift */; };
 		EF3259D5287C79A2001B0CA6 /* CGFloat.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF3259D4287C79A2001B0CA6 /* CGFloat.swift */; };
@@ -200,6 +201,7 @@
 		EF018306287376F500064F60 /* Number.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Number.swift; sourceTree = "<group>"; };
 		EF22D0CA285A378200555179 /* NFTLiveBidViewCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NFTLiveBidViewCellView.swift; sourceTree = "<group>"; };
 		EF22D0CC285A714F00555179 /* CustomTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTableViewCell.swift; sourceTree = "<group>"; };
+		EF2425C228AD6B3E00A1D378 /* Int.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Int.swift; sourceTree = "<group>"; };
 		EF3259D0287C211B001B0CA6 /* ProfileHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileHeaderView.swift; sourceTree = "<group>"; };
 		EF3259D2287C2761001B0CA6 /* CGSize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGSize.swift; sourceTree = "<group>"; };
 		EF3259D4287C79A2001B0CA6 /* CGFloat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGFloat.swift; sourceTree = "<group>"; };
@@ -563,6 +565,7 @@
 				EF3C9A7728A04080007F5200 /* UIButton.swift */,
 				EF7EAFB328A1998E00FDFFD3 /* String.swift */,
 				EF7EAFB728A2EA4400FDFFD3 /* UIStackView.swift */,
+				EF2425C228AD6B3E00A1D378 /* Int.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -964,6 +967,7 @@
 				EF00F5CC28465DD7003D8683 /* TopSellerCollectionCell.swift in Sources */,
 				EF00F5D22846D781003D8683 /* NFTArtInteractiveInfoView.swift in Sources */,
 				EF3BF928287813E80070CAE5 /* UIEdgeInsets.swift in Sources */,
+				EF2425C328AD6B3E00A1D378 /* Int.swift in Sources */,
 				EF00F5B72844F4A7003D8683 /* NFTBiddingModal.swift in Sources */,
 				EF00F5D52847A660003D8683 /* SliderSelectorView.swift in Sources */,
 				EF8B0683283C2CA10050E726 /* AlchemyNFTDataModel.swift in Sources */,

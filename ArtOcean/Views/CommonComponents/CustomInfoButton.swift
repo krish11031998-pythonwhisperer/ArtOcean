@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-struct CustomInfoButtonModel {
+struct CustomInfoButtonModel: ActionProvider {
 	
 	let leadingImage: UIImage?
 	let title: RenderableText?
@@ -20,6 +20,7 @@ struct CustomInfoButtonModel {
 	let trailingImageUrl: String?
 	let imgSize: CGSize
 	let style: ImageStyle
+	var action: Callback?
 	
 	init(leadingImg: UIImage? = nil,
 		 title: RenderableText? = nil,
@@ -30,7 +31,8 @@ struct CustomInfoButtonModel {
 		 leadingImageUrl: String? = nil,
 		 trailingImageUrl: String? = nil,
 		 style: ImageStyle = .original,
-		 imgSize: CGSize = .squared(32)
+		 imgSize: CGSize = .squared(32),
+		 action: Callback? = nil
 	) {
 		self.leadingImage = leadingImg
 		self.title = title
@@ -174,7 +176,17 @@ class CustomInfoButton: UIButton {
 	
 	private func mainStackBuilder() {
 		mainStack.isUserInteractionEnabled = false
-		var views: [UIView] = [leadingStack(),.spacer(),trailingStack()].compactMap { $0 }
+		var views: [UIView] = []
+		
+		if let validLeadingStack = leadingStack() {
+			views.append(validLeadingStack)
+		}
+		
+		if let validTrailingStack = trailingStack() {
+			views.append(.spacer())
+			views.append(validTrailingStack)
+		}
+		
 		if leadingImage != nil { views.insert(leadingImageView, at: 0) }
 		if trailingImage != nil { views.append(trailingImageView) }
 		views.forEach(mainStack.addArrangedSubview)
@@ -209,20 +221,20 @@ class CustomInfoButton: UIButton {
 		infoSubTitle = buttonInfo.infoSubTitle
 		
 		if let _ =  buttonInfo.leadingImageUrl {
-			self.leadingImage = .loadingBackgroundImage.roundedImage(cornerRadius: 8)
+			leadingImage = .loadingBackgroundImage.roundedImage(cornerRadius: 8)
 		} else if let leadingImage = buttonInfo.leadingImage {
 			self.leadingImage = leadingImage
 		}
 		
 		if let _ =  buttonInfo.trailingImageUrl {
-			self.trailingImage = .loadingBackgroundImage.roundedImage(cornerRadius: 8)
+			trailingImage = .loadingBackgroundImage.roundedImage(cornerRadius: 8)
 		} else if let trailingImage = buttonInfo.trailingImage {
 			self.trailingImage = trailingImage
 		}
 		
 		if buttonInfo.style != .original {
-			self.leadingImageView.cornerRadius = buttonInfo.style.cornerRadius(.squared(40))
-			self.trailingImageView.cornerRadius = buttonInfo.style.cornerRadius(.squared(40))
+			self.leadingImageView.cornerRadius = buttonInfo.style.cornerRadius(buttonInfo.imgSize)
+			self.trailingImageView.cornerRadius = buttonInfo.style.cornerRadius(buttonInfo.imgSize)
 		}
 		
 		setImageSize(size: buttonInfo.imgSize)

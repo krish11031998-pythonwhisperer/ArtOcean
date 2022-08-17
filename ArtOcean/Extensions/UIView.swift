@@ -228,6 +228,11 @@ extension UIView {
 		setConstraintsToChild(safeInnerView, edgeInsets: edgeInsets)
 	}
 	
+	func setConstraintsWithParent(edgeInsets: UIEdgeInsets, withPriority: Float = 1000) {
+		guard let validParentView = superview else { return }
+		validParentView.setConstraintsToChild(self, edgeInsets: edgeInsets,withPriority: withPriority)
+	}
+	
 	func setConstraintsToChild(_ childView:UIView,edgeInsets:UIEdgeInsets,withPriority: Float = 1000){
 		let constraints = [
 			childView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: edgeInsets.left),
@@ -321,6 +326,22 @@ extension UIView {
 	func setWidthForChildWithPadding(_ childView:UIView,paddingFactor:CGFloat) {
 		childView.leadingAnchor.constraint(equalToSystemSpacingAfter: leadingAnchor, multiplier: paddingFactor).isActive = true
 		trailingAnchor.constraint(equalToSystemSpacingAfter: childView.trailingAnchor, multiplier: paddingFactor).isActive = true
+	}
+	
+	func setEqualWidth(_ childView: UIView) {
+		let constraints = childView.widthAnchor.constraint(equalTo: widthAnchor)
+		activateConstraints([constraints])
+	}
+	
+	func setEqualHeight(_ childView: UIView) {
+		let constraints = childView.heightAnchor.constraint(equalTo: heightAnchor)
+		activateConstraints([constraints])
+	}
+	
+	func activateConstraints(_ constraints: [NSLayoutConstraint]) {
+		removeConstraints(constraints)
+		translatesAutoresizingMaskIntoConstraints = false
+		constraints.forEach { $0.isActive = true }
 	}
 	
 	func setHeightForChildWithPadding(_ childView:UIView,paddingFactor:CGFloat) {

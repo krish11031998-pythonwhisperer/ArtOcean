@@ -45,3 +45,36 @@ extension Array where Element == NFTArtOffer {
 
 typealias NFTArtOffers = [NFTArtOffer]
 
+extension NFTArtOffer {
+	
+	var buttonCell: CellProvider { TableRow<CustomInfoButtonCell>(.init(self)) }
+	
+}
+
+extension NFTArtOffers {
+	
+	var rows: [CellProvider] { map(\.buttonCell) }
+	
+}
+
+extension CustomInfoButtonModel {
+	
+	init(_ offer: NFTArtOffer) {
+		let initialImage: CustomLabel = .init(size: .squared(40))
+		offer.name?.initials().styled(font: .bold, color: .white, size: 14).renderInto(target: initialImage)
+		initialImage.backgroundColor = .appGrayColor
+		initialImage.textAlignment = .center
+		let img = initialImage.snapshot
+		self.init(
+			leadingImg: img,
+			title: offer.name?.body2Medium(),
+			subTitle: "Expired in \(offer.time?.toString() ?? "0") days".body3Regular(),
+			infoTitle: offer.price?.toString().body2Medium(),
+			infoSubTitle: offer.percent?.body3Regular(),
+			style: .circle,
+			imgSize: .squared(40)) {
+				print("(DEBUG) clicked on Offer!")
+			}
+	}
+	
+}

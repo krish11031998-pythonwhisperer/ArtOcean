@@ -8,6 +8,7 @@
 import Foundation
 import UIKit
 
+
 class NFTOfferTableViewCell:ConfigurableCell{
     
     private var offer:NFTArtOffer = .init()
@@ -100,6 +101,6 @@ extension NFTOfferTableViewCell{
 		nameLabel.text = offer.name ?? "No Name"
 		priceLabel.text = "\(offer.price ?? 0)"
 		percentLabel.text = offer.percent ?? "0"
-		initialLabel.text = (offer.name ?? "No Name").split(separator: " ").compactMap({$0.first}).reduce("", {$0.isEmpty ? String($1) : $0 + String($1)})
+		initialLabel.text = offer.name?.initials()
 	}
 }

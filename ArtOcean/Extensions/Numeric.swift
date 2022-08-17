@@ -8,6 +8,20 @@
 import Foundation
 import UIKit
 
+extension Numeric {
+	
+	func toString() -> String {
+		if let intVal = self as? Int {
+			return "\(intVal)"
+		} else if let floatVal = self as? Float {
+			return String(format: "%.2f", floatVal)
+		} else if let doubleVal = self as? Double {
+			return String(format: "%.2f", doubleVal)
+		} else { return "" }
+	}
+	
+}
+
 extension Array where Element == CGFloat {
 	
 	var normalized: [CGFloat] {

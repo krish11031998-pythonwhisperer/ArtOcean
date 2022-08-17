@@ -40,7 +40,7 @@ class CustomLabelButton:UIButton{
 		font: CustomFonts = CustomFonts.regular,
 		size: CGFloat = 13,
 		color:UIColor = .black,
-		backgroundColor:UIColor = .clear,
+		backgroundColor:UIColor = .appPurpleColor,
 		frame: CGRect = .zero,
 		handler: (() -> Void)? = nil
 	) {

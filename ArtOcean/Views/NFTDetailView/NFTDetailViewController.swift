@@ -203,7 +203,7 @@ class NFTDetailArtViewController:UIViewController{
 	
 	private var offerSection:TableSection? {
 		guard !offers.isEmpty else { return nil }
-		return .init(title:"Offers",rows: offers.compactMap{ TableRow<NFTOfferTableViewCell>($0) })
+		return .init(title:"Offers",rows: offers.rows)
 	}
 	
 	private var modalButton: TableSection? {
@@ -342,6 +342,7 @@ class TestViewController: UIViewController {
 	private lazy var mainStack: UIStackView = { .VStack(spacing: 10,aligmment: .center) }()
 	private lazy var priceLabel: UILabel = { .init() }()
 	private lazy var balanceLabel: UILabel = { .init() }()
+	private lazy var scrollView: UIScrollView = { .init() }()
 	
 	private lazy var plusButton: CustomImageButton = {
 		.init(name: .plus, addBG: false, tintColor: .appBlackColor, bgColor: .clear)
@@ -352,7 +353,6 @@ class TestViewController: UIViewController {
 	}()
 	
 	private lazy var imageView: CustomImageView = {
-//		let frame: CGRect = .init(origin: .zero, size: .init(width: preferredContentSize.width * 0.25, height: preferredContentSize.height * 0.15))
 		let imageView: CustomImageView = .init(url: nftArt?.metadata?.image, cornerRadius: 16)
 		imageView.setHeightWithPriority(preferredContentSize.height * 0.15,priority: .required)
 		imageView.setWidthWithPriority(preferredContentSize.width * 0.25,priority: .required)
@@ -390,13 +390,23 @@ class TestViewController: UIViewController {
 		view.cornerRadius = 32
 		view.layer.maskedCorners = [.layerMinXMinYCorner,.layerMaxXMinYCorner]
 		preferredContentSize = .init(width: .totalWidth, height: .totalHeight * 0.8)
-		view.addSubview(mainStack)
-		view.setConstraintsToChild(mainStack, edgeInsets: .init(top: 24, left: 16, bottom: 16, right: 16))
+		
+		view.addSubview(scrollView)
+		scrollView.setConstraintsWithParent(edgeInsets: .init(top: 24, left: 16, bottom: 16, right: 16),withPriority: 1000)
+		scrollView.scrollIndicatorInsets = .init(vertical: 25, horizontal: 0)
+		scrollView.addSubview(mainStack)
+		scrollView.showsVerticalScrollIndicator = false
+		
+		mainStack.translatesAutoresizingMaskIntoConstraints = false
+		scrollView.setConstraintsToChild(mainStack, edgeInsets: .zero)
+		scrollView.setEqualWidth(mainStack)
+		
 		setupNavBar()
 		setupNFTDetailSection()
 		attributes()
 		setupPriceIndicator()
-		mainStack.addArrangedSubview(.spacer())
+		placeBidButton()
+		
 	}
 	
 	private func setupNFTDetailSection() {
@@ -432,6 +442,7 @@ class TestViewController: UIViewController {
 		mainStack.addArrangedSubview(.spacer(height: 25))
 		mainStack.addArrangedSubview(borderedView)
 		mainStack.addArrangedSubview(balanceLabel)
+		mainStack.setCustomSpacing(25, after: balanceLabel)
 	}
 	
 	private func attributes() {
@@ -446,32 +457,61 @@ class TestViewController: UIViewController {
 		
 		let blobMargin: UIEdgeInsets = .init(vertical: 5, horizontal: 10)
 		
-		validAttributes.compactMap { $0.Value }.forEach {
-			let label = $0.styled(font: .black, color: .appPurpleColor, size: 15)
-				.label()
+		let labels: [UILabel] = validAttributes.filter { $0.trait_type != nil && $0.Value != nil }.map {
+			
+			let trait = $0.trait_type ?? ""
+			let value = $0.Value ?? ""
+			
+			let traitLabel = trait.styled(font: .medium, color: .appPurpleColor, size: 15)
+			let valueLabel = value.styled(font: .bold, color: .appPurpleColor, size: 15)
+			
+			let label = (traitLabel + NSAttributedString(" : ") + valueLabel).label()
+			
 			let size = label.systemLayoutSizeFitting(.init(width: .totalWidth, height: 100))
 			let marginedHeight = size.height + 2 * blobMargin.vertical
-			
-			let blob = label
-				.marginedBorderedCard(edge: blobMargin, cornerRadius: marginedHeight * 0.275)
+
 			if marginedHeight > maxHeight {
 				maxHeight = marginedHeight
 			}
-			stack.addArrangedSubview(blob)
+			
+			return label
 			
 		}
 		
-		scrollView.addViewAndSetConstraints(stack, edgeInsets: .init(vertical: 2.5, horizontal: 0))
-		
-		mainStack.addArrangedSubview(scrollView)
-		
-		scrollView.setHeightWithPriority(maxHeight + 5)
-		
-		mainStack.setWidthForChildWithPadding(scrollView, paddingFactor: 0)
+		labels.sizeFittingStack(for: preferredContentSize.width - 32, with: 10, padding: 15).forEach { rowLabels in
+			let stack: UIStackView = .HStack(spacing: 5, aligmment: .fill)
+			
+			rowLabels.forEach {
+				let marginedLabel = $0.marginedBorderedCard(edge: .init(vertical: 5, horizontal: 12),cornerRadius: 10)
+				marginedLabel.backgroundColor = .appPurple50Color.withAlphaComponent(0.5)
+				stack.addArrangedSubview(marginedLabel)
+			}
+			stack.addArrangedSubview(.spacer())
+			
+			mainStack.addArrangedSubview(stack)
+			mainStack.setWidthForChildWithPadding(stack, paddingFactor: .zero)
+		}
+	}
+	
+	private func placeBidButton() {
+		let button = CustomLabelButton(title: "Place a bid", font: .medium, size: 14, color: .white, handler: nil)
+		mainStack.addArrangedSubview(button)
+		mainStack.setWidthForChildWithPadding(button, paddingFactor: 0)
+		button.setHeightWithPriority(40, priority: .required)
 	}
 	
 	@objc private func onTap() {
 		presentingViewController?.dismiss(animated: true)
+	}
+	
+}
+
+extension NSAttributedString {
+	
+	static func + (lhs: NSAttributedString, rhs: NSAttributedString) -> NSAttributedString {
+		var copy = NSMutableAttributedString(attributedString: lhs)
+		copy.append(rhs)
+		return NSAttributedString(attributedString: copy)
 	}
 	
 }
