@@ -113,35 +113,3 @@ extension NSAttributedString: RenderableText {
 		return label
 	}
 }
-
-extension Array where Element == UILabel {
-	
-	func sizeFittingStack(for width: CGFloat, with spacing: CGFloat, padding: CGFloat) -> [[UIView]] {
-		var result: [[UIView]] = []
-		
-		var rowStack: [UIView] = []
-		var remainingSpace = width
-		
-		forEach {
-
-			let size = $0.sizeThatFits(.init(width: width, height: .totalHeight))
-			let itemSize = remainingSpace - spacing - padding
-			
-			if size.width == width {
-				result.append([$0])
-			} else if size.width >= itemSize {
-				if !rowStack.isEmpty { result.append(rowStack) }
-				rowStack.removeAll()
-				remainingSpace = width
-			}
-			
-			rowStack.append($0)
-			remainingSpace -= size.width + spacing
-		}
-		
-		if !rowStack.isEmpty { result.append(rowStack) }
-		
-		return result
-	}
-	
-}

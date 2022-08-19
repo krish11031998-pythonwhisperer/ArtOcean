@@ -449,48 +449,9 @@ class TestViewController: UIViewController {
 		
 		guard let validAttributes = nftArt?.metadata?.attributes else { return }
 		
-		let scrollView: UIScrollView = .init()
-		scrollView.showsHorizontalScrollIndicator = false
-		let stack: UIStackView = .HStack(spacing: 8, aligmment: .center)
+		let labels: [UIView] = validAttributes.filter { $0.trait_type != nil && $0.Value != nil }.map(\.attributeBlob)
 		
-		var maxHeight: CGFloat = .zero
-		
-		let blobMargin: UIEdgeInsets = .init(vertical: 5, horizontal: 10)
-		
-		let labels: [UILabel] = validAttributes.filter { $0.trait_type != nil && $0.Value != nil }.map {
-			
-			let trait = $0.trait_type ?? ""
-			let value = $0.Value ?? ""
-			
-			let traitLabel = trait.styled(font: .medium, color: .appPurpleColor, size: 15)
-			let valueLabel = value.styled(font: .bold, color: .appPurpleColor, size: 15)
-			
-			let label = (traitLabel + NSAttributedString(" : ") + valueLabel).label()
-			
-			let size = label.systemLayoutSizeFitting(.init(width: .totalWidth, height: 100))
-			let marginedHeight = size.height + 2 * blobMargin.vertical
-
-			if marginedHeight > maxHeight {
-				maxHeight = marginedHeight
-			}
-			
-			return label
-			
-		}
-		
-		labels.sizeFittingStack(for: preferredContentSize.width - 32, with: 10, padding: 15).forEach { rowLabels in
-			let stack: UIStackView = .HStack(spacing: 5, aligmment: .fill)
-			
-			rowLabels.forEach {
-				let marginedLabel = $0.marginedBorderedCard(edge: .init(vertical: 5, horizontal: 12),cornerRadius: 10)
-				marginedLabel.backgroundColor = .appPurple50Color.withAlphaComponent(0.5)
-				stack.addArrangedSubview(marginedLabel)
-			}
-			stack.addArrangedSubview(.spacer())
-			
-			mainStack.addArrangedSubview(stack)
-			mainStack.setWidthForChildWithPadding(stack, paddingFactor: .zero)
-		}
+		mainStack.buildFlexibleGrid(labels, innerSize: .init(width: preferredContentSize.width - 32, height: .zero), with: 10)
 	}
 	
 	private func placeBidButton() {

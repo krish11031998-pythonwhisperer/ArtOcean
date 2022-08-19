@@ -404,10 +404,12 @@ extension UIView {
 	func marginedBorderedCard(edge: UIEdgeInsets = .init(vertical: 10, horizontal: 15),
 							  borderWidth: CGFloat = 1.0,
 							  borderColor: UIColor = .appPurpleColor,
+							  backgroundColor: UIColor = .clear,
 							  cornerRadius: CGFloat = 16) -> UIView {
 		let holderView = UIView()
 		holderView.addViewAndSetConstraints(self, edgeInsets: .init(vertical: edge.vertical, horizontal: edge.horizontal))
 		holderView.bordered(cornerRadius: cornerRadius, borderWidth: borderWidth, borderColor: borderColor)
+		holderView.backgroundColor = backgroundColor
 		return holderView
 	}
 }
