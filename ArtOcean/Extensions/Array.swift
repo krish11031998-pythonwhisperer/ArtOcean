@@ -8,6 +8,14 @@
 import Foundation
 import UIKit
 
+extension Array {
+	
+	func limit(to: Int) -> [Self.Element] {
+		return count <= to ? self : Array(self[0..<to])
+	}
+	
+}
+
 //MARK: - Element == CGPoint
 extension Array where Element == CGPoint{
     

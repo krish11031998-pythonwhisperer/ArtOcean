@@ -230,7 +230,7 @@ extension UIImage {
 		return img
 	}
 	
-	static func solid(color: UIColor, frame: CGSize = .zero) -> UIImage {
+	static func solid(color: UIColor, frame: CGSize = .smallestSqaure) -> UIImage {
 		let view = UIView(frame: .init(origin: .zero, size: frame))
 		view.backgroundColor = color
 		return view.snapshot

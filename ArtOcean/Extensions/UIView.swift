@@ -183,6 +183,33 @@ extension UIView{
 		self.borderWidth = borderWidth
 		self.borderColor = borderColor
 	}
+	
+	func marginedBorderedCard(edge: UIEdgeInsets = .init(vertical: 10, horizontal: 15),
+							  borderWidth: CGFloat = 1.0,
+							  borderColor: UIColor = .appPurpleColor,
+							  backgroundColor: UIColor = .clear,
+							  cornerRadius: CGFloat = 16) -> UIView {
+		let holderView = UIView()
+		holderView.addViewAndSetConstraints(self, edgeInsets: edge)
+		holderView.bordered(cornerRadius: cornerRadius, borderWidth: borderWidth, borderColor: borderColor)
+		holderView.backgroundColor = backgroundColor
+		return holderView
+	}
+	
+	func paddingView(edges: UIEdgeInsets) -> UIView {
+		let holder: UIView = .init()
+		holder.backgroundColor = .clear
+		holder.addSubview(self)
+		holder.setConstraintsToChild(self, edgeInsets: edges)
+		return holder
+	}
+	
+	
+	static func solidColorView(color: UIColor = .appGrayColor, size: CGSize = .smallestSqaure) -> UIView {
+		let view = UIView(frame: .init(origin: .zero, size: size))
+		view.backgroundColor = color
+		return view
+	}
 }
 
 //MARK: - UIView Constaint Extension
@@ -228,9 +255,9 @@ extension UIView {
 		setConstraintsToChild(safeInnerView, edgeInsets: edgeInsets)
 	}
 	
-	func setConstraintsWithParent(edgeInsets: UIEdgeInsets, withPriority: Float = 1000) {
+	func setConstraintsWithParent(edgeInsets: UIEdgeInsets, withPriority: UILayoutPriority = .required) {
 		guard let validParentView = superview else { return }
-		validParentView.setConstraintsToChild(self, edgeInsets: edgeInsets,withPriority: withPriority)
+		validParentView.setConstraintsToChild(self, edgeInsets: edgeInsets,withPriority: withPriority.rawValue)
 	}
 	
 	func setConstraintsToChild(_ childView:UIView,edgeInsets:UIEdgeInsets,withPriority: Float = 1000){
@@ -328,13 +355,13 @@ extension UIView {
 		trailingAnchor.constraint(equalToSystemSpacingAfter: childView.trailingAnchor, multiplier: paddingFactor).isActive = true
 	}
 	
-	func setEqualWidth(_ childView: UIView) {
-		let constraints = childView.widthAnchor.constraint(equalTo: widthAnchor)
+	func setEqualWidth(_ childView: UIView, padding constant: CGFloat = .zero) {
+		let constraints = childView.widthAnchor.constraint(equalTo: widthAnchor, constant: constant)
 		activateConstraints([constraints])
 	}
 	
-	func setEqualHeight(_ childView: UIView) {
-		let constraints = childView.heightAnchor.constraint(equalTo: heightAnchor)
+	func setEqualHeight(_ childView: UIView, padding constant: CGFloat = .zero) {
+		let constraints = childView.heightAnchor.constraint(equalTo: heightAnchor, constant: constant)
 		activateConstraints([constraints])
 	}
 	
@@ -401,16 +428,13 @@ extension UIView {
 		
 	}
 	
-	func marginedBorderedCard(edge: UIEdgeInsets = .init(vertical: 10, horizontal: 15),
-							  borderWidth: CGFloat = 1.0,
-							  borderColor: UIColor = .appPurpleColor,
-							  backgroundColor: UIColor = .clear,
-							  cornerRadius: CGFloat = 16) -> UIView {
-		let holderView = UIView()
-		holderView.addViewAndSetConstraints(self, edgeInsets: .init(vertical: edge.vertical, horizontal: edge.horizontal))
-		holderView.bordered(cornerRadius: cornerRadius, borderWidth: borderWidth, borderColor: borderColor)
-		holderView.backgroundColor = backgroundColor
-		return holderView
+	
+	func removeConstraintsLike(firstAnchor: NSLayoutAnchor<AnyObject>) {
+		constraints.filter { $0.firstAnchor === firstAnchor }.forEach { removeConstraint($0) }
+	}
+	
+	func removeConstraintsLike(firstAnchor: NSLayoutAnchor<NSLayoutDimension>) {
+		constraints.filter { $0.firstAnchor === firstAnchor }.forEach { removeConstraint($0) }
 	}
 }
 
@@ -449,6 +473,6 @@ extension NSLayoutConstraint{
 		constraintWithPriority.priority = .init(rawValue: priority)
 		return constraintWithPriority
 	}
-
+	
 }
 

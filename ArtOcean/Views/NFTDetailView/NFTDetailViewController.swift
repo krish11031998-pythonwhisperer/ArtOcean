@@ -202,20 +202,21 @@ class NFTDetailArtViewController:UIViewController{
 	}
 	
 	private var offerSection:TableSection? {
+		return nil
 		guard !offers.isEmpty else { return nil }
 		return .init(title:"Offers",rows: offers.rows)
 	}
 	
 	private var modalButton: TableSection? {
 		return .init(rows: [TableRow<CustomTableWrapperView<ButtonViewCell>>(.init(title:"Bid".styled(font: .medium, color: .white, size: 15)) { [weak self] in
-			let target = TestViewController(nftArtModel: self?.nftArt)
+			let target = UINavigationController(rootViewController: NFTBiddingViewController(nftArtModel: self?.nftArt))
 			let presentationController = PresentationViewController(target: target, from: self, clickOnDismiss: true)
 			target.transitioningDelegate = presentationController
 			target.modalPresentationStyle = .custom
 			self?.present(target, animated: true) { presentationController }
 		})])
 	}
-//
+
 	private var backgroundimgView:CustomImageView = {
 		let imageView = CustomImageView(cornerRadius: 0)
 		return imageView
@@ -335,14 +336,18 @@ extension UIBarButtonItem {
 	
 }
 
-class TestViewController: UIViewController {
+class NFTBiddingViewController: UIViewController {
 	
 	private var nftArt: NFTModel?
 
-	private lazy var mainStack: UIStackView = { .VStack(spacing: 10,aligmment: .center) }()
 	private lazy var priceLabel: UILabel = { .init() }()
 	private lazy var balanceLabel: UILabel = { .init() }()
-	private lazy var scrollView: UIScrollView = { .init() }()
+	private lazy var scrollStackView: ScrollableStackView = {
+		let view = ScrollableStackView()
+		view.aligment = .center
+		view.spacing = 10
+		return view
+	}()
 	
 	private lazy var plusButton: CustomImageButton = {
 		.init(name: .plus, addBG: false, tintColor: .appBlackColor, bgColor: .clear)
@@ -376,88 +381,78 @@ class TestViewController: UIViewController {
 			self?.presentingViewController?.dismiss(animated: true)
 		}
 		
-		let stack: UIStackView = .HStack(views: [title,.spacer(),closeButton], spacing: 10, aligmment: .center)
-		
 		"Place A Bid".styled(font: .bold, color: .appBlackColor, size: 22.5).renderInto(target: title)
 		
-		mainStack.addArrangedSubview(stack)
-		mainStack.setWidthForChildWithPadding(stack, paddingFactor: 0)
-		mainStack.setCustomSpacing(20, after: stack)
+		navigationItem.leftBarButtonItem = .init(customView: title)
+		navigationItem.rightBarButtonItem = .init(customView: closeButton)
+		setupStatusBar(color: nil)
+		navigationController?.additionalSafeAreaInsets.top = 20
 	}
 	
 	override func viewDidLoad() {
 		view.backgroundColor = .white
-		view.cornerRadius = 32
-		view.layer.maskedCorners = [.layerMinXMinYCorner,.layerMaxXMinYCorner]
+		view.cornerRadius(32, at: [.layerMinXMinYCorner,.layerMaxXMinYCorner])
 		preferredContentSize = .init(width: .totalWidth, height: .totalHeight * 0.8)
-		
-		view.addSubview(scrollView)
-		scrollView.setConstraintsWithParent(edgeInsets: .init(top: 24, left: 16, bottom: 16, right: 16),withPriority: 1000)
-		scrollView.scrollIndicatorInsets = .init(vertical: 25, horizontal: 0)
-		scrollView.addSubview(mainStack)
-		scrollView.showsVerticalScrollIndicator = false
-		
-		mainStack.translatesAutoresizingMaskIntoConstraints = false
-		scrollView.setConstraintsToChild(mainStack, edgeInsets: .zero)
-		scrollView.setEqualWidth(mainStack)
-		
+	
+		view.addSubview(scrollStackView)
+		view.setSafeAreaConstraintsToChild(scrollStackView, edgeInsets: .zero)
+
 		setupNavBar()
 		setupNFTDetailSection()
 		attributes()
 		setupPriceIndicator()
 		placeBidButton()
-		
 	}
 	
 	private func setupNFTDetailSection() {
 		
 		guard let validNFT = nftArt else { return }
 		
-		let stack: UIStackView = .HStack(aligmment: .top)
-		stack.addArrangedSubview(imageView)
-		
 		let title: RenderableText = validNFT.Title.styled(font: .medium, color: .appBlackColor, size: 20)
 		let subTitle: RenderableText = (validNFT.id?.tokenId ?? "").styled(font: .regular, color: .appGrayColor, size: 13)
-		
 		headerInfoLabel.configureLabel(title: title, subTitle: subTitle)
-		stack.addArrangedSubview(headerInfoLabel)
-		mainStack.addArrangedSubview(stack)
-		mainStack.setWidthForChildWithPadding(stack, paddingFactor: 0)
+		let stack: UIStackView = .HStack(views:[imageView, headerInfoLabel], spacing: 8,aligmment: .center)
+
+		scrollStackView.addArrangedSubview(stack, withWidthFactor: 2)
+		scrollStackView.setCustomSpacing(25, after: stack)
 	}
 	
 	private func  setupPriceIndicator() {
 		let stack: UIStackView = .HStack(spacing: 8,aligmment: .fill)
-		
+
 		"0.038 ETH".styled(font: .bold, color: .appBlackColor, size: 24).renderInto(target: priceLabel)
-		
+
 		let img = UIImageView(image: UIImage.Catalogue.eth.image.resized(.init(width: 12, height: 20)))
 		img.contentMode = .scaleAspectFit
 		[plusButton,.spacer(width: 16),img,priceLabel,.spacer(width: 16),minusButton].forEach { stack.addArrangedSubview($0) }
-		
+
 		stack.setHeightWithPriority(40)
 		let borderedView = stack.marginedBorderedCard(borderColor: .appPurpleColor.withAlphaComponent(0.35))
-	
+
 		"Balance: {} ETH".replace(val: "0.045").styled(font: .medium, color: .appGrayColor, size: 14).renderInto(target: balanceLabel)
-		
-		mainStack.addArrangedSubview(.spacer(height: 25))
-		mainStack.addArrangedSubview(borderedView)
-		mainStack.addArrangedSubview(balanceLabel)
-		mainStack.setCustomSpacing(25, after: balanceLabel)
+
+		let holderStack: UIStackView = .VStack(views: [borderedView, balanceLabel], spacing: 8, aligmment: .center)
+
+		scrollStackView.addArrangedSubview(holderStack, withWidthFactor: 2)
+		scrollStackView.setCustomSpacing(25, after: holderStack)
 	}
-	
+
 	private func attributes() {
-		
+
 		guard let validAttributes = nftArt?.metadata?.attributes else { return }
-		
+
 		let labels: [UIView] = validAttributes.filter { $0.trait_type != nil && $0.Value != nil }.map(\.attributeBlob)
-		
-		mainStack.buildFlexibleGrid(labels, innerSize: .init(width: preferredContentSize.width - 32, height: .zero), with: 10)
+		let stack = UIStackView.VStack(spacing: 8,aligmment: .center)
+		stack.buildFlexibleGrid(labels, innerSize: .init(width: preferredContentSize.width - 32, height: .zero), with: 10)
+		scrollStackView.addArrangedSubview(stack, withWidthFactor: 2)
+		scrollStackView.setCustomSpacing(25, after: stack)
 	}
-	
+
 	private func placeBidButton() {
-		let button = CustomLabelButton(title: "Place a bid", font: .medium, size: 14, color: .white, handler: nil)
-		mainStack.addArrangedSubview(button)
-		mainStack.setWidthForChildWithPadding(button, paddingFactor: 0)
+		let button = CustomLabelButton(title: "Place a bid", font: .medium, size: 14, color: .white, backgroundColor: .appBlueColor, handler: nil)
+		scrollStackView.addArrangedSubview(button, withWidthFactor: 2)
+		let bottomInset: CGFloat = UIWindow.safeAreaInset.bottom + scrollStackView.scrollViewInset.vertical
+		scrollStackView.addArrangedSubview(.solidColorView(color: .clear, size: .init(width: .totalWidth.half(), height: bottomInset * 5)), withWidthFactor: 2)
 		button.setHeightWithPriority(40, priority: .required)
 	}
 	

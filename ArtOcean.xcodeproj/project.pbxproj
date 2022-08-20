@@ -69,6 +69,8 @@
 		EF7447B8284A109300899476 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF7447B7284A109300899476 /* User.swift */; };
 		EF7447BC284A300F00899476 /* PageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF7447BB284A300F00899476 /* PageViewController.swift */; };
 		EF7E59EC28B031DD008C7EC6 /* NFTDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF7E59EB28B031DD008C7EC6 /* NFTDetailViewModel.swift */; };
+		EF7E59EE28B0CED6008C7EC6 /* ScrollableStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF7E59ED28B0CED6008C7EC6 /* ScrollableStackView.swift */; };
+		EF7E59F028B156F0008C7EC6 /* UIWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF7E59EF28B156F0008C7EC6 /* UIWindow.swift */; };
 		EF7EAFB028A1985300FDFFD3 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF7EAFAF28A1985300FDFFD3 /* SettingsViewController.swift */; };
 		EF7EAFB228A198E900FDFFD3 /* HeaderCaptionLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF7EAFB128A198E900FDFFD3 /* HeaderCaptionLabel.swift */; };
 		EF7EAFB428A1998E00FDFFD3 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF7EAFB328A1998E00FDFFD3 /* String.swift */; };
@@ -245,6 +247,8 @@
 		EF7447B7284A109300899476 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		EF7447BB284A300F00899476 /* PageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageViewController.swift; sourceTree = "<group>"; };
 		EF7E59EB28B031DD008C7EC6 /* NFTDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NFTDetailViewModel.swift; sourceTree = "<group>"; };
+		EF7E59ED28B0CED6008C7EC6 /* ScrollableStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollableStackView.swift; sourceTree = "<group>"; };
+		EF7E59EF28B156F0008C7EC6 /* UIWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIWindow.swift; sourceTree = "<group>"; };
 		EF7EAFAF28A1985300FDFFD3 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		EF7EAFB128A198E900FDFFD3 /* HeaderCaptionLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderCaptionLabel.swift; sourceTree = "<group>"; };
 		EF7EAFB328A1998E00FDFFD3 /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
@@ -564,6 +568,7 @@
 				EF7EAFB328A1998E00FDFFD3 /* String.swift */,
 				EF7EAFB728A2EA4400FDFFD3 /* UIStackView.swift */,
 				EF2425C228AD6B3E00A1D378 /* Int.swift */,
+				EF7E59EF28B156F0008C7EC6 /* UIWindow.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -668,6 +673,7 @@
 				EF7EAFB128A198E900FDFFD3 /* HeaderCaptionLabel.swift */,
 				EF7EAFB528A2E7F400FDFFD3 /* CustomInfoButton.swift */,
 				EF415A9928AA021900400A5A /* ButtonCell.swift */,
+				EF7E59ED28B0CED6008C7EC6 /* ScrollableStackView.swift */,
 			);
 			path = CommonComponents;
 			sourceTree = "<group>";
@@ -896,6 +902,7 @@
 				EF7447B028495A8700899476 /* AccountMetrics.swift in Sources */,
 				EF7EAFB628A2E7F400FDFFD3 /* CustomInfoButton.swift in Sources */,
 				EF3C9A71289B0E3D007F5200 /* UIImage.swift in Sources */,
+				EF7E59EE28B0CED6008C7EC6 /* ScrollableStackView.swift in Sources */,
 				EFAB44662868684600B33864 /* SearchViewController.swift in Sources */,
 				EF3C9A7528A01E39007F5200 /* SectionTestData.swift in Sources */,
 				EF00F5BC284539CE003D8683 /* NFTArtTypeCollection.swift in Sources */,
@@ -904,6 +911,7 @@
 				EF018307287376F500064F60 /* Number.swift in Sources */,
 				EF69B6B528550D9F00ABDADA /* UITableViewCell.swift in Sources */,
 				EF527498284C1E5B008C77EC /* NSCollectionLayout.swift in Sources */,
+				EF7E59F028B156F0008C7EC6 /* UIWindow.swift in Sources */,
 				EF22D0CB285A378200555179 /* NFTLiveBidViewCellView.swift in Sources */,
 				EF325A062880BFDA001B0CA6 /* Numeric.swift in Sources */,
 				EF69B6B12854C11E00ABDADA /* StackedButtons.swift in Sources */,

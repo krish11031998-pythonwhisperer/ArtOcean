@@ -14,14 +14,14 @@ extension Attribute {
 		let trait = trait_type ?? ""
 		let value = Value ?? ""
 		
-		let traitLabel = trait.styled(font: .medium, color: .appPurpleColor, size: 15)
-		let valueLabel = value.styled(font: .bold, color: .appPurpleColor, size: 15)
-		
+		let traitLabel = trait.styled(font: .medium, color: .appPurpleColor, size: 14)
+		let valueLabel = value.styled(font: .bold, color: .appPurpleColor, size: 14)
+		let insets: UIEdgeInsets = .init(top: 5, left: 12, bottom: 6, right: 12)
 		let label = (traitLabel + NSAttributedString(" : ") + valueLabel)
 					.label()
-					.marginedBorderedCard(edge: .init(vertical: 5, horizontal: 12),backgroundColor: .appPurple50Color.withAlphaComponent(0.5), cornerRadius: 10)
-	
-		return label
+		label.textAlignment = .center
+		
+		return label.marginedBorderedCard(edge: insets, backgroundColor: .appPurple50Color.withAlphaComponent(0.5), cornerRadius: 10)
 	}
 	
 }
