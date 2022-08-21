@@ -39,7 +39,7 @@ let NFTArtOfferSection:Section = {
 		switch result{
 		case .success(let nft):
 			guard let nfts = nft.ownedNfts else {return}
-			items = Array(nfts[0...25]).compactMap(NFTArtOffer.decodeFromNFTModel).sorted().map(NFTArtOffer.encodeToItem)
+			items = Array(nfts[0...50]).compactMap(NFTArtOffer.decodeFromNFTModel).sorted().filter { $0.image != nil }.map(NFTArtOffer.encodeToItem)
 		case .failure(let err):
 			print("(DEBUG) err : ",err.localizedDescription)
 		}

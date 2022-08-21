@@ -8,6 +8,30 @@
 import Foundation
 import UIKit
 
+extension UIImageView {
+	
+	func updateImage(url: String? = nil, img: UIImage? = nil, cornerRadius: CGFloat) {
+		image = nil
+		if let validImage = img {
+			image = validImage
+		} else if let validUrl = url {
+			image = .loadingBackgroundImage
+			UIImage.loadImage(url: validUrl, for: self, at: \.image)
+		}
+		self.cornerRadius = cornerRadius
+	}
+	
+}
+
+extension UIStackView {
+	
+	func setPaddingAfterViewAt(idx: Int, with padding: CGFloat) {
+		guard arrangedSubviews.count > idx && idx >= 0 else { return }
+		setCustomSpacing(padding, after: arrangedSubviews[idx])
+	}
+	
+}
+
 struct CustomInfoButtonModel: ActionProvider {
 	
 	let leadingImage: UIImage?
@@ -77,9 +101,6 @@ class CustomInfoButton: UIButton {
 		set {
 			leadingImageView.image = newValue
 			leadingImageView.isHidden = newValue == nil
-			if leadingImageView.superview == nil && newValue != nil {
-				mainStack.insertArrangedSubview(leadingImageView, at: 0)
-			}
 		}
 	}
 	
@@ -88,9 +109,6 @@ class CustomInfoButton: UIButton {
 		set {
 			trailingImageView.image = newValue
 			trailingImageView.isHidden = newValue == nil
-			if trailingImageView.superview == nil && newValue != nil {
-				mainStack.addArrangedSubview(trailingImageView)
-			}
 		}
 	}
 	
@@ -98,7 +116,6 @@ class CustomInfoButton: UIButton {
 		get { topLeadingLabel.attributedText }
 		set {
 			newValue?.renderInto(target: topLeadingLabel)
-//			topLeadingLabel.isHighlighted = newValue == nil
 		}
 	}
 	
@@ -106,7 +123,6 @@ class CustomInfoButton: UIButton {
 		get { bottomLeadingLabel.attributedText }
 		set {
 			newValue?.renderInto(target: bottomLeadingLabel)
-//			bottomLeadingLabel.isHighlighted = newValue == nil
 		}
 	}
 	
@@ -114,7 +130,6 @@ class CustomInfoButton: UIButton {
 		get { topTrailingLabel.attributedText }
 		set {
 			newValue?.renderInto(target: topTrailingLabel)
-//			topTrailingLabel.isHighlighted = newValue == nil
 		}
 	}
 	
@@ -122,11 +137,10 @@ class CustomInfoButton: UIButton {
 		get { bottomTrailingLabel.attributedText }
 		set {
 			newValue?.renderInto(target: bottomTrailingLabel)
-//			bottomTrailingLabel.isHighlighted = newValue == nil
 		}
 	}
 	
-	private lazy var mainStack: UIStackView = { .HStack(spacing: 16,aligmment: .center) }()
+	private lazy var mainStack: UIStackView = { .HStack(spacing: 0,aligmment: .center) }()
 	
 //MARK: - Constructors
 	
@@ -188,8 +202,8 @@ class CustomInfoButton: UIButton {
 			views.append(validTrailingStack)
 		}
 		
-		if leadingImage != nil { views.insert(leadingImageView, at: 0) }
-		if trailingImage != nil { views.append(trailingImageView) }
+		views.insert(leadingImageView, at: 0)
+		views.append(trailingImageView)
 		views.forEach(mainStack.addArrangedSubview)
 		mainStack.accessibilityIdentifier = "MainStack"
 	}
@@ -197,10 +211,12 @@ class CustomInfoButton: UIButton {
 	public func setImageSize(size: CGSize = .squared(32)) {
 		leadingImageView.removeAllConstraints()
 		trailingImageView.removeAllConstraints()
-		leadingImageView.widthAnchor.constraint(lessThanOrEqualToConstant: size.width).isActive = true
-		leadingImageView.heightAnchor.constraint(lessThanOrEqualToConstant: size.height).isActive = true
-		trailingImageView.widthAnchor.constraint(lessThanOrEqualToConstant: size.width).isActive = true
-		trailingImageView.heightAnchor.constraint(lessThanOrEqualToConstant: size.height).isActive = true
+
+		leadingImageView.setFrameLessThanEqualTo(size: leadingImageView.image == nil ? .zero : size)
+		mainStack.setCustomSpacing(leadingImageView.image == nil ? .zero : 16, after: leadingImageView)
+
+		trailingImageView.setFrameConstraints(size: trailingImageView.image == nil ? .zero : size)
+		mainStack.setPaddingAfterViewAt(idx: mainStack.arrangedSubviews.count - 2, with: trailingImageView.image == nil ? .zero : 16)
 	}
 	
 	public func loadImageForButton(leading: String? = nil, trailing: String? = nil, style: ImageStyle = .original) {
@@ -221,26 +237,12 @@ class CustomInfoButton: UIButton {
 		infoTitle = buttonInfo.infoTitle
 		infoSubTitle = buttonInfo.infoSubTitle
 		
-		if let _ =  buttonInfo.leadingImageUrl {
-			leadingImage = .loadingBackgroundImage.roundedImage(cornerRadius: 8)
-		} else if let leadingImage = buttonInfo.leadingImage {
-			self.leadingImage = leadingImage
-		}
-		
-		if let _ =  buttonInfo.trailingImageUrl {
-			trailingImage = .loadingBackgroundImage.roundedImage(cornerRadius: 8)
-		} else if let trailingImage = buttonInfo.trailingImage {
-			self.trailingImage = trailingImage
-		}
-		
+		leadingImageView.updateImage(url: buttonInfo.leadingImageUrl, img: buttonInfo.leadingImage, cornerRadius: buttonInfo.style.cornerRadius)
 
-		self.leadingImageView.cornerRadius = buttonInfo.style.cornerRadius
-		self.trailingImageView.cornerRadius = buttonInfo.style.cornerRadius
-		
+		trailingImageView.updateImage(url: buttonInfo.trailingImageUrl, img: buttonInfo.trailingImage, cornerRadius: buttonInfo.style.cornerRadius)
+
 		setImageSize(size: buttonInfo.imgSize)
-		
-		loadImageForButton(leading: buttonInfo.leadingImageUrl, trailing: buttonInfo.trailingImageUrl, style: buttonInfo.style)
-		
+
 	}
 	
 //MARK: - Exposed Methods
@@ -253,7 +255,6 @@ class CustomInfoButtonCell: ConfigurableCell {
 	private lazy var button: CustomInfoButton = { .init() }()
 	
 	func configureCell(with model: CustomInfoButtonModel) {
-		
 		contentView.addSubview(button)
 		contentView.setConstraintsToChild(button, edgeInsets: .init(vertical: 10, horizontal: 16))
 		

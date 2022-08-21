@@ -333,9 +333,25 @@ extension UIView {
 	}
 	
 	func setFrameConstraints(size:CGSize) {
-		widthAnchor.constraint(equalToConstant: size.width).isActive = true
-		heightAnchor.constraint(equalToConstant: size.height).isActive = true
+		let constraints: [NSLayoutConstraint] = [
+			widthAnchor.constraint(equalToConstant: size.width),
+			heightAnchor.constraint(equalToConstant: size.height)
+		]
+		
+		removeSimilarConstraints(constraints)
 		translatesAutoresizingMaskIntoConstraints = false
+		NSLayoutConstraint.activate(constraints)
+	}
+	
+	func setFrameLessThanEqualTo(size: CGSize) {
+		let constraints: [NSLayoutConstraint] = [
+			widthAnchor.constraint(lessThanOrEqualToConstant: size.width),
+			heightAnchor.constraint(lessThanOrEqualToConstant: size.height)
+		]
+		
+		removeSimilarConstraints(constraints)
+		translatesAutoresizingMaskIntoConstraints = false
+		NSLayoutConstraint.activate(constraints)
 	}
 	
 	func setWidthWithPriority(_ width:CGFloat,priority:UILayoutPriority = .defaultHigh) {
@@ -393,7 +409,13 @@ extension UIView {
 	}
 	
 	func removeAllSubViews() {
-		subviews.forEach { $0.removeFromSuperview() }
+		switch self {
+		case let stack as UIStackView :
+			stack.arrangedSubviews.forEach { $0.removeFromSuperview() }
+		default:
+			subviews.forEach { $0.removeFromSuperview() }
+		}
+		
 	}
 	
 	func setFrameLayout(childView: UIView,alignment: Alignment, paddingFactor: UIEdgeInsets = .zero) {

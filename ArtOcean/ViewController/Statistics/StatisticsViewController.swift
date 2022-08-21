@@ -69,8 +69,9 @@ class StatisticsViewController: UIViewController {
 	private func configNavbar(){
 		let searchButton = CustomImageButton(name: .searchOutline, frame: .smallestSqaure, addBG: true, handler: nil)
 		let label = CustomLabel(text: "Statistics", size: 22, weight: .bold, color: .appBlackColor, numOfLines: 1,autoLayout: false)
-		self.navigationItem.leftBarButtonItem = .init(customView: label)
-		self.navigationItem.rightBarButtonItem = .init(customView: searchButton)
+		navigationItem.leftBarButtonItem = .init(customView: label)
+		navigationItem.rightBarButtonItem = .init(customView: searchButton)
+		setupStatusBar()
 	}
 }
 
