@@ -31,7 +31,7 @@ struct NFTDataResponse:Decodable{
 }
 
 // MARK: - OwnedNft
-struct NFTModel:Decodable,Hashable{
+struct NFTModel:Codable,Hashable{
     let contract: Contract?
     let id: ID?
     let balance: String?
@@ -103,7 +103,7 @@ struct TokenURI:Codable,Hashable {
 }
 
 // MARK: - Metadata
-struct Metadata:Decodable,Hashable {
+struct Metadata:Codable,Hashable {
 //    var name: String?
     var description: String?
     var image: String?
@@ -135,7 +135,7 @@ struct AnimationDetails:Codable{
 }
 
 // MARK: - Attribute
-struct Attribute:Decodable,Hashable{
+struct Attribute:Codable,Hashable{
     static func == (lhs: Attribute, rhs: Attribute) -> Bool {
         return lhs.trait_type == rhs.trait_type
     }
@@ -180,6 +180,14 @@ struct Attribute:Decodable,Hashable{
             }
         }
     }
+	
+	func encode(to encoder: Encoder) throws {
+		var container = encoder.container(keyedBy: CodingKeys.self)
+		try container.encodeIfPresent(str_value, forKey: .value)
+		try container.encodeIfPresent(int_value, forKey: .value)
+		try container.encodeIfPresent(trait_type, forKey: .trait_type)
+		try container.encodeIfPresent(display_type, forKey: .display_type)
+	}
 	
 	var Value:String?{
 		return str_value != nil ? str_value! : int_value != nil ? "\(int_value!)" : nil

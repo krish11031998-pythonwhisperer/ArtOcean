@@ -43,4 +43,17 @@ extension UIViewController{
 			self.navigationController?.setNavigationBarHidden(true, animated: true)
 		}
 	}
+	
+	var topMost: UIViewController? {
+		switch self {
+		case let navigation as UINavigationController:
+			return navigation.visibleViewController?.topMost
+		case let tab as UITabBarController:
+			return tab.selectedViewController?.topMost
+		case let presentation where presentedViewController != nil:
+			return presentation.presentedViewController?.topMost
+		default:
+			 return self
+		}
+	}
 }

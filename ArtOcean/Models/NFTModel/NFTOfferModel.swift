@@ -68,7 +68,7 @@ extension NFTArtOffers {
 
 extension CustomInfoButtonModel {
 	
-	init(_ offer: NFTArtOffer, withArtImage: Bool = false) {
+	init(_ offer: NFTArtOffer, withArtImage: Bool = false, action: Callback? = nil) {
 		var img: UIImage? = nil
 		var style: ImageStyle
 		var url: String? = nil
@@ -93,9 +93,9 @@ extension CustomInfoButtonModel {
 			infoSubTitle: offer.percent?.body3Regular(),
 			leadingImageUrl: url,
 			style: style,
-			imgSize: .squared(40)) {
-				print("(DEBUG) clicked on Offer!")
-			}
+			imgSize: .squared(40),
+			action: action
+		)
 	}
 	
 	

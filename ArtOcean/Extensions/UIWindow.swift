@@ -23,4 +23,13 @@ extension UIWindow {
 		return windows?.first(where: { $0.isKeyWindow }) ?? windows?.last
 	}
 	
+	static var topMostViewController: UIViewController? {
+		key?.rootViewController?.topMost ?? key?.rootViewController
+	}
+	
+	static var topMostNavigation: UINavigationController? {
+		let topMost = topMostViewController
+		return (topMost as? UINavigationController) ?? topMost?.navigationController
+	}
+	
 }

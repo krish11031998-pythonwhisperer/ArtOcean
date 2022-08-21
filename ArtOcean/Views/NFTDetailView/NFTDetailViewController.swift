@@ -14,7 +14,7 @@ class NFTDetailArtViewController:UIViewController{
 	
 	private var tableObserver:NSKeyValueObservation?
 	private var navbarObserver:NSKeyValueObservation?
-    private var nftArt:NFTModel?
+	private var nftArt:NFTModel? = NFTStorage.selectedArt
     private var placeBidModalLeadingAnchor:NSLayoutConstraint? = nil
     private var leadingOffScreen:CGFloat = 1000
     private let leadingOnScreen:CGFloat = 24
@@ -71,8 +71,8 @@ class NFTDetailArtViewController:UIViewController{
 	}()
 	
 // MARK: -  Constructors
-    init(nftArt:NFTModel) {
-        self.nftArt = nftArt
+    init(nftArt:NFTModel? = nil) {
+		self.nftArt = nftArt ?? NFTStorage.selectedArt
         super.init(nibName: nil, bundle: nil)
         self.configNavigationBar()
         self.setupView()

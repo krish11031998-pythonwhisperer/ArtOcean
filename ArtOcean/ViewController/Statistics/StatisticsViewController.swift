@@ -49,6 +49,14 @@ class StatisticsViewController: UIViewController {
 		configNavbar()
 		setupUI()
 	}
+	
+	override func viewWillAppear(_ animated: Bool) {
+		super.viewWillAppear(animated)
+		if self.navigationController?.navigationBar.frame.origin.y != .zero {
+			self.navigationController?.navigationBar.transform = .init(translationX: 0, y: 0)
+		}
+		
+	}
 
 //MARK: - Protected Methods
 
@@ -77,7 +85,12 @@ extension StatisticsViewController: CustomSelectorDynamicCollectionDelegate {
 			return .init(cells: users.map { CollectionColumn<CustomInfoButtonCollectionCell>(.init($0)) })
 		} else if section == NFTArtOfferSection {
 			let offers: NFTArtOffers = validItems.compactMap { NFTArtOffer.decodeFromItem($0) }
-			return .init(cells: offers.map { CollectionColumn<CustomInfoButtonCollectionCell>(.init($0, withArtImage: true)) })
+			return .init(cells: offers.map { offer in
+				CollectionColumn<CustomInfoButtonCollectionCell>(.init(offer, withArtImage: true, action: {
+					NFTStorage.selectedArt = offer.nft
+					NotificationCenter.default.post(name: .showArt, object: nil)
+				}))
+			})
 		} else {
 			return nil
 		}

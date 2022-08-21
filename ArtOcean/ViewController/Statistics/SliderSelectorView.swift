@@ -53,10 +53,6 @@ class SliderSelector:UIView{
             return button
         }
 		if let first = views.first(where: tabs.first?.title) as? CustomLabelButton {
-//			first.backgroundColor = .white
-//			first.cornerRadius = 15
-//			first.image = first.image?.withTintColor(.appPurpleColor)
-//			first.tintColor = .appPurpleColor
 			first.isSelected = true
 		}
         return views
@@ -65,11 +61,7 @@ class SliderSelector:UIView{
 	func tapHandler(_ tab: String) {
 		UIViewPropertyAnimator(duration: 0.2, curve: .easeInOut) {
 			guard let selectedView = self.tabsIndicators.first(where: tab) as? CustomLabelButton else { return }
-//			selectedView.backgroundColor = .white
 			selectedView.isSelected = true
-//			selectedView.updateTitle(color: .appPurpleColor)
-//			selectedView.image = selectedView.image?.withTintColor(.appPurpleColor)
-//			selectedView.cornerRadius = 15
 			self.tabsIndicators.filterViews(exclude: tab)?.forEach { $0.isSelected = false }
 		}.startAnimation()
 		self.delegate?.handleSelect(tab)

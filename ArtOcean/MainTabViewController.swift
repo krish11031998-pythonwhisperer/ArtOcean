@@ -12,18 +12,19 @@ class MainTabController: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.view.backgroundColor = .init(hexString: "FFFFFF")
-        self.setViewControllers(self.tabs.compactMap({self.tabViewBuilder(tab: $0)}), animated: true)
-        self.tabBar.layer.cornerRadius = 10
+        view.backgroundColor = .init(hexString: "FFFFFF")
+        setViewControllers(self.tabs.compactMap({self.tabViewBuilder(tab: $0)}), animated: true)
+        tabBar.layer.cornerRadius = 10
 
         let appearance = UITabBarAppearance()
         appearance.backgroundColor = .appWhiteBackgroundColor
         appearance.selectionIndicatorTintColor = .appBlueColor
         
-        self.tabBar.standardAppearance = appearance
-        self.tabBar.scrollEdgeAppearance = appearance
+        tabBar.standardAppearance = appearance
+        tabBar.scrollEdgeAppearance = appearance
         
-        self.setupStatusBar()
+        setupStatusBar()
+		addObservers()
     }
     
     private var tabs:[Tabs]{
@@ -50,5 +51,15 @@ class MainTabController: UITabBarController {
                 return navView
         }
     }
+	
+	func addObservers() {
+		NotificationCenter.default.addObserver(self, selector: #selector(showArt), name: .showArt, object: nil)
+	}
+	
+	@objc
+	func showArt() {
+		print("(DEBUG) showArt is called!")
+		UIWindow.topMostNavigation?.pushViewController(NFTDetailArtViewController(), animated: true)
+	}
 
 }

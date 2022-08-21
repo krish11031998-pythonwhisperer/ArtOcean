@@ -44,6 +44,7 @@ struct CustomInfoButtonModel: ActionProvider {
 		self.trailingImageUrl = trailingImageUrl
 		self.style = style
 		self.imgSize = imgSize
+		self.action = action
 	}
 }
 
