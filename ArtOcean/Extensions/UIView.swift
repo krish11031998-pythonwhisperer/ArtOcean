@@ -268,7 +268,7 @@ extension UIView {
 			childView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -edgeInsets.bottom)
 		].map { $0.setPriority(priority: withPriority) }
 		
-		removeConstraints(constraints)
+		removeSimilarConstraints(constraints)
 		childView.translatesAutoresizingMaskIntoConstraints = false
 		NSLayoutConstraint.activate(constraints)
 	}
@@ -279,7 +279,7 @@ extension UIView {
 			childView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -edgeInsets.right)
 		].map { $0.setPriority(priority: withPriority) }
 		
-		removeConstraints(constraints)
+		removeSimilarConstraints(constraints)
 		childView.translatesAutoresizingMaskIntoConstraints = false
 		NSLayoutConstraint.activate(constraints)
 	}
@@ -290,7 +290,7 @@ extension UIView {
 			childView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -edgeInsets.bottom),
 		].map { $0.setPriority(priority: withPriority) }
 		
-		removeConstraints(constraints)
+		removeSimilarConstraints(constraints)
 		childView.translatesAutoresizingMaskIntoConstraints = false
 		NSLayoutConstraint.activate(constraints)
 	}
@@ -303,7 +303,7 @@ extension UIView {
 			childView.trailingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.trailingAnchor, constant: -edgeInsets.right)
 		]
 
-		removeConstraints(constraints)
+		removeSimilarConstraints(constraints)
 		childView.translatesAutoresizingMaskIntoConstraints = false
 		NSLayoutConstraint.activate(constraints)
 	}
@@ -314,7 +314,7 @@ extension UIView {
 			childView.centerYAnchor.constraint(equalTo: self.centerYAnchor)
 		]
 
-		removeConstraints(constraints)
+		removeSimilarConstraints(constraints)
 		childView.translatesAutoresizingMaskIntoConstraints = false
 		NSLayoutConstraint.activate(constraints)
 	}
@@ -339,16 +339,32 @@ extension UIView {
 	}
 	
 	func setWidthWithPriority(_ width:CGFloat,priority:UILayoutPriority = .defaultHigh) {
-		let anchor = widthAnchor.constraint(equalToConstant: width)
-		anchor.priority = priority
-		anchor.isActive = true
+		let constraint = widthAnchor.constraint(equalToConstant: width)
+		removeConstraint(constraint)
+		constraint.priority = priority
+		constraint.isActive = true
+	}
+	
+	func updateHeight(_ height: CGFloat, withPriority: UILayoutPriority = .defaultHigh) {
+		guard let firstAnchor = findConstraint(firstAttribute: .height).first else { return }
+		firstAnchor.constant = height
+		if firstAnchor.priority != withPriority { firstAnchor.priority = withPriority }
 	}
 	
 	func setHeightWithPriority(_ height:CGFloat,priority:UILayoutPriority = .defaultHigh) {
-		let anchor = heightAnchor.constraint(equalToConstant: height)
-		anchor.priority = priority
-		anchor.isActive = true
+		let constraint = heightAnchor.constraint(equalToConstant: height)
+		removeConstraint(constraint)
+		constraint.priority = priority
+		constraint.isActive = true
 	}
+	
+	func updateWidth(_ width: CGFloat, withPriority: UILayoutPriority = .defaultHigh) {
+		guard let firstAnchor = findConstraint(firstAttribute: .width).first else { return }
+		firstAnchor.constant = width
+		if firstAnchor.priority != withPriority { firstAnchor.priority = withPriority }
+	}
+	
+//	func findAnchor(firstAnchor: )
 	
 	func setWidthForChildWithPadding(_ childView:UIView,paddingFactor:CGFloat) {
 		childView.leadingAnchor.constraint(equalToSystemSpacingAfter: leadingAnchor, multiplier: paddingFactor).isActive = true
@@ -436,6 +452,43 @@ extension UIView {
 	func removeConstraintsLike(firstAnchor: NSLayoutAnchor<NSLayoutDimension>) {
 		constraints.filter { $0.firstAnchor === firstAnchor }.forEach { removeConstraint($0) }
 	}
+	
+	func fittingSize(_ size: CGSize = UIView.layoutFittingCompressedSize) -> CGSize {
+//		if self is UIStackView{
+//			return (self as! UIStackView).stackFittingSize()
+//		} else {
+			return systemLayoutSizeFitting(size)
+//		}
+	}
+	
+	func setCompactHeight() {
+		let compactSize = fittingSize()
+		setHeightWithPriority(compactSize.height)
+	}
+	
+	func findConstraint(firstAttribute: NSLayoutConstraint.Attribute) -> [NSLayoutConstraint]{
+		constraints.filter { $0.firstAttribute == firstAttribute }
+	}
+}
+
+//MARK: - UIView Animation
+
+extension TimeInterval {
+	static var defaultAnimationDuration: TimeInterval = 0.6
+}
+
+extension UIView {
+	
+	static func viewAnimation(
+		duration: TimeInterval = .defaultAnimationDuration,
+		delay: TimeInterval = 0,
+		option: UIView.AnimationOptions = .curveEaseInOut,
+		animation: @escaping () -> Void,
+		completion: ((Bool) -> Void)? = nil
+	) {
+		UIView.animate(withDuration: duration, delay: delay, options: option, animations: animation, completion: completion)
+	}
+	
 }
 
 //MARK: - Array Extension

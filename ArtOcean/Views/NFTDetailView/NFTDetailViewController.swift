@@ -342,6 +342,7 @@ class NFTBiddingViewController: UIViewController {
 
 	private lazy var priceLabel: UILabel = { .init() }()
 	private lazy var balanceLabel: UILabel = { .init() }()
+	private lazy var accordian: AccordianStackView = { .init() }()
 	private lazy var scrollStackView: ScrollableStackView = {
 		let view = ScrollableStackView()
 		view.aligment = .center
@@ -442,17 +443,17 @@ class NFTBiddingViewController: UIViewController {
 		guard let validAttributes = nftArt?.metadata?.attributes else { return }
 
 		let labels: [UIView] = validAttributes.filter { $0.trait_type != nil && $0.Value != nil }.map(\.attributeBlob)
-		let stack = UIStackView.VStack(spacing: 8,aligmment: .center)
-		stack.buildFlexibleGrid(labels, innerSize: .init(width: preferredContentSize.width - 32, height: .zero), with: 10)
-		scrollStackView.addArrangedSubview(stack, withWidthFactor: 2)
-		scrollStackView.setCustomSpacing(25, after: stack)
+		accordian.configureAccordian(labels, innerSize: .init(width: preferredContentSize.width - 32, height: .zero), with: 10)
+		scrollStackView.addArrangedSubview(accordian, withWidthFactor: 2)
+		accordian.hideElement(2)
+		scrollStackView.setCustomSpacing(25, after: accordian)
 	}
 
 	private func placeBidButton() {
 		let button = CustomLabelButton(title: "Place a bid", font: .medium, size: 14, color: .white, backgroundColor: .appBlueColor, handler: nil)
 		scrollStackView.addArrangedSubview(button, withWidthFactor: 2)
 		let bottomInset: CGFloat = UIWindow.safeAreaInset.bottom + scrollStackView.scrollViewInset.vertical
-		scrollStackView.addArrangedSubview(.solidColorView(color: .clear, size: .init(width: .totalWidth.half(), height: bottomInset * 5)), withWidthFactor: 2)
+		scrollStackView.addArrangedSubview(.solidColorView(color: .clear, size: .init(width: .totalWidth.half(), height: 200)), withWidthFactor: 2)
 		button.setHeightWithPriority(40, priority: .required)
 	}
 	

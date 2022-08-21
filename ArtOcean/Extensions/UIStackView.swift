@@ -30,6 +30,41 @@ extension UIStackView {
 		addArrangedSubview(view)
 		setCustomSpacing(spacing, after: view)
 	}
+	
+	func hideStackElements(limit: Int) {
+		guard arrangedSubviews.count > limit else { return }
+		Array(arrangedSubviews[(limit - 1)...]).forEach {
+//			$0.isHidden = true
+			$0.hideView()
+			$0.alpha = 0
+		}
+	}
+	
+	func unHideStackElements(limit: Int) {
+		guard arrangedSubviews.count > limit else { return }
+		Array(arrangedSubviews[(limit - 1)...]).forEach {
+//			$0.isHidden = false
+			$0.showView()
+			$0.alpha = 1
+		}
+	}
+	
+	func stackFittingSize() -> CGSize {
+		guard axis == .vertical else { return systemLayoutSizeFitting(UIView.layoutFittingCompressedSize) }
+		var finalSize: CGSize = .zero
+		arrangedSubviews.forEach {
+			let fittingSize = $0.fittingSize()
+			if !$0.isHidden {
+				if finalSize == .zero {
+					finalSize = fittingSize
+				} else {
+					finalSize.height +=  fittingSize.height
+				}
+			}
+		}
+		return finalSize
+	}
+	
 }
 
 //MARK: CustomStackBuilder
@@ -78,6 +113,11 @@ extension Array where Element : UIView {
 		if !rowStack.isEmpty { result.append(rowStack) }
 		
 		return result
+	}
+	
+	func lastNViews(_ limit: Int) -> [Self.Element] {
+		guard count > limit else { return self }
+		return Array(self[(limit - 1)...])
 	}
 	
 }

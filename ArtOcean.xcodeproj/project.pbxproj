@@ -71,6 +71,7 @@
 		EF7E59EC28B031DD008C7EC6 /* NFTDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF7E59EB28B031DD008C7EC6 /* NFTDetailViewModel.swift */; };
 		EF7E59EE28B0CED6008C7EC6 /* ScrollableStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF7E59ED28B0CED6008C7EC6 /* ScrollableStackView.swift */; };
 		EF7E59F028B156F0008C7EC6 /* UIWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF7E59EF28B156F0008C7EC6 /* UIWindow.swift */; };
+		EF7E59F228B16F8C008C7EC6 /* AcoordianStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF7E59F128B16F8C008C7EC6 /* AcoordianStackView.swift */; };
 		EF7EAFB028A1985300FDFFD3 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF7EAFAF28A1985300FDFFD3 /* SettingsViewController.swift */; };
 		EF7EAFB228A198E900FDFFD3 /* HeaderCaptionLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF7EAFB128A198E900FDFFD3 /* HeaderCaptionLabel.swift */; };
 		EF7EAFB428A1998E00FDFFD3 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF7EAFB328A1998E00FDFFD3 /* String.swift */; };
@@ -249,6 +250,7 @@
 		EF7E59EB28B031DD008C7EC6 /* NFTDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NFTDetailViewModel.swift; sourceTree = "<group>"; };
 		EF7E59ED28B0CED6008C7EC6 /* ScrollableStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollableStackView.swift; sourceTree = "<group>"; };
 		EF7E59EF28B156F0008C7EC6 /* UIWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIWindow.swift; sourceTree = "<group>"; };
+		EF7E59F128B16F8C008C7EC6 /* AcoordianStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcoordianStackView.swift; sourceTree = "<group>"; };
 		EF7EAFAF28A1985300FDFFD3 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		EF7EAFB128A198E900FDFFD3 /* HeaderCaptionLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderCaptionLabel.swift; sourceTree = "<group>"; };
 		EF7EAFB328A1998E00FDFFD3 /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
@@ -674,6 +676,7 @@
 				EF7EAFB528A2E7F400FDFFD3 /* CustomInfoButton.swift */,
 				EF415A9928AA021900400A5A /* ButtonCell.swift */,
 				EF7E59ED28B0CED6008C7EC6 /* ScrollableStackView.swift */,
+				EF7E59F128B16F8C008C7EC6 /* AcoordianStackView.swift */,
 			);
 			path = CommonComponents;
 			sourceTree = "<group>";
@@ -954,6 +957,7 @@
 				EF7EAFB828A2EA4400FDFFD3 /* UIStackView.swift in Sources */,
 				EF7447B8284A109300899476 /* User.swift in Sources */,
 				EF8B067D283C27020050E726 /* AlchemyAPI.swift in Sources */,
+				EF7E59F228B16F8C008C7EC6 /* AcoordianStackView.swift in Sources */,
 				EF8B06D0283D60EC0050E726 /* TopCollectionTableCellViewTableViewCell.swift in Sources */,
 				EF3BF92C287ACEBE0070CAE5 /* UILabel.swift in Sources */,
 				EF8B0665283BED350050E726 /* HomeViewController.swift in Sources */,

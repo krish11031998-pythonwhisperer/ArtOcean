@@ -39,6 +39,11 @@ class ScrollableStackView: UIView {
 		setDimensionConstraints()
 	}
 	
+	private func updateScrollContentSize(_ view: UIView) {
+		let newHeight = view.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize).height
+		scrollView.contentSize.height += newHeight
+	}
+	
 //MARK: - Overriden Methods
 	override init(frame: CGRect) {
 		super.init(frame: frame)
@@ -96,13 +101,9 @@ extension ScrollableStackView {
 	}
 	
 	public func addArrangedSubview(_ view: UIView) {
-		let compactSize = view.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize)
-		if stackView.axis == .vertical {
-			view.setHeightWithPriority(compactSize.height, priority: .defaultHigh)
-		} else {
-			view.setWidthWithPriority(compactSize.width, priority: .defaultHigh)
-		}
+//		view.setCompactHeight()
 		stackView.addArrangedSubview(view)
+		updateScrollContentSize(view)
 	}
 	
 	public func addArrangedSubview(_ view: UIView, withWidthFactor: CGFloat) {
