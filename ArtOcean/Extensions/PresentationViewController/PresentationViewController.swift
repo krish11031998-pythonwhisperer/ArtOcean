@@ -8,6 +8,19 @@
 import Foundation
 import UIKit
 
+
+extension UIBarButtonItem {
+	
+	static func leftTitle(title: RenderableText) -> UIBarButtonItem {
+		let label = UILabel()
+		title.renderInto(target: label)
+		return .init(customView: label)
+	}
+	
+}
+
+//MARK: - Type
+
 class PresentationViewController: UIPresentationController {
 	
 	private lazy var dimmingView: UIView = {
@@ -40,8 +53,6 @@ class PresentationViewController: UIPresentationController {
 	}
 	
 	override var frameOfPresentedViewInContainerView: CGRect{
-//		let origin: CGPoint = .init(x: .zero, y: .totalHeight * 0.6)
-//		let size: CGSize = .init(width: .totalWidth, height: .totalHeight * 0.4)
 		let pSize = presentedViewController.preferredContentSize
 		let origin: CGPoint = .init(x: .zero, y: .totalHeight - pSize.height)
 		let size: CGSize = preferredContentSize
