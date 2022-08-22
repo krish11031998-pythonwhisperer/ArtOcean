@@ -81,13 +81,13 @@ class HomeViewController: UIViewController {
         super.viewDidLoad()
 		buildTableView()
 		tableView?.reload(with: datasource)
-        self.setupStatusBar()
+        setupStatusBar()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 		loadNFT()
-        navigationController?.setNavigationBarHidden(true, animated: animated)
+		hideNavBar()
     }
 	
 	func buildTableView(){

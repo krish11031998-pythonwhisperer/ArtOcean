@@ -54,12 +54,20 @@ class MainTabController: UITabBarController {
 	
 	func addObservers() {
 		NotificationCenter.default.addObserver(self, selector: #selector(showArt), name: .showArt, object: nil)
+		NotificationCenter.default.addObserver(self, selector: #selector(showAccount), name: .showAccount, object: nil)
 	}
 	
 	@objc
 	func showArt() {
 		print("(DEBUG) showArt is called!")
 		UIWindow.topMostNavigation?.pushViewController(NFTDetailArtViewController(), animated: true)
+	}
+
+	
+	@objc
+	func showAccount() {
+		print("(DEBUG) showArt is called!")
+		UIWindow.topMostNavigation?.pushViewController(AccountViewController(), animated: true)
 	}
 
 }

@@ -18,7 +18,10 @@ extension NFTArtCollectionViewCellData {
 	static func decodedFromItem(item: Item) -> Self? {
 		switch item {
 		case .artData(let nFTModel):
-			return .init(nft: nFTModel)
+			return .init(nft: nFTModel) {
+				NFTStorage.selectedArt  = nFTModel
+				NotificationCenter.default.post(name: .showArt, object: nil)
+			}
 		default:
 			return nil
 		}

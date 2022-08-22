@@ -53,7 +53,8 @@ extension CustomInfoButtonModel {
 			leadingImageUrl: user.image,
 			style: .circle(.squared(40)),
 			imgSize: .squared(40)) {
-				print("(DEBUG) Clicked on the user")
+				UserStorage.selectedUser = user
+				NotificationCenter.default.post(name: .showAccount, object: nil)
 			}
 	}
 }

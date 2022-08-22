@@ -86,12 +86,7 @@ extension StatisticsViewController: CustomSelectorDynamicCollectionDelegate {
 			return .init(cells: users.map { CollectionColumn<CustomInfoButtonCollectionCell>(.init($0)) })
 		} else if section == NFTArtOfferSection {
 			let offers: NFTArtOffers = validItems.compactMap { NFTArtOffer.decodeFromItem($0) }
-			return .init(cells: offers.map { offer in
-				CollectionColumn<CustomInfoButtonCollectionCell>(.init(offer, withArtImage: true, action: {
-					NFTStorage.selectedArt = offer.nft
-					NotificationCenter.default.post(name: .showArt, object: nil)
-				}))
-			})
+			return .init(cells: offers.map { CollectionColumn<CustomInfoButtonCollectionCell>(.init($0, withArtImage: true))})
 		} else {
 			return nil
 		}

@@ -78,6 +78,8 @@ class NFTDetailArtViewController:UIViewController{
         self.setupView()
     }
     
+	//MARK: - Overriden Methods
+	
     override func viewDidLoad() {
         super.viewDidLoad()
 		buildTable()
@@ -91,9 +93,8 @@ class NFTDetailArtViewController:UIViewController{
 	
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
-		if let safeNavBar = self.navigationController?.navigationBar.isHidden,safeNavBar{
-			self.navigationController?.setNavigationBarHidden(false, animated: true)
-		}
+		showNavBar()
+		setupStatusBar()
 		updateOnScroll(tableView)
 		tableObserver = tableView.observe(\.contentOffset, changeHandler: {[weak self] target, _ in self?.updateOnScroll(target) })
 		navbarObserver = navigationController?.navigationBar.observe(\.frame) {[weak self] target,_ in self?.updateNavBarOnTransformation(target)}
@@ -102,6 +103,7 @@ class NFTDetailArtViewController:UIViewController{
 	
 	override func viewWillDisappear(_ animated: Bool) {
 		super.viewWillDisappear(animated)
+		navigationController?.navigationBar.transform = .init(translationX: 0, y: 0)
 	}
 	
     
