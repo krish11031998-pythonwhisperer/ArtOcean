@@ -145,8 +145,15 @@ extension UIView{
 		self.layer.shadowOpacity = 0
 		self.layer.shadowOffset = .zero
 		self.layer.shadowRadius = 0
-		
 	}
+	
+	func addGradientView(colors: [UIColor] = [.clear,.white,.white], size: CGSize) {
+		let gradient = CAGradientLayer()
+		gradient.colors = colors.map { $0.cgColor }
+		gradient.frame = .init(origin: .zero, size: .init(width:size.width,height:size.height))
+		layer.insertSublayer(gradient, at: 0)
+	}
+	
 	
 	static func spacer(width:CGFloat? = nil,height:CGFloat? = nil) -> UIView{
 		let view = UIView(frame: .init(origin: .zero, size: .init(width: width ?? 0, height: height ?? 0)))
@@ -361,6 +368,14 @@ extension UIView {
 		constraint.isActive = true
 	}
 	
+	
+	func setAspectRatio(_ factor: CGFloat) {
+		let constraints = widthAnchor.constraint(equalTo: heightAnchor, multiplier: factor)
+		removeSimilarConstraints([constraints])
+		constraints.priority = .required
+		constraints.isActive = true
+	}
+	
 	func updateHeight(_ height: CGFloat, withPriority: UILayoutPriority = .defaultHigh) {
 		guard let firstAnchor = findConstraint(firstAttribute: .height).first else { return }
 		firstAnchor.constant = height
@@ -431,7 +446,7 @@ extension UIView {
 		case .topTrailing:
 			constraints = [
 				childView.topAnchor.constraint(equalTo: topAnchor,constant: paddingFactor.vertical),
-				childView.trailingAnchor.constraint(equalTo: trailingAnchor,constant: paddingFactor.horizontal)
+				childView.trailingAnchor.constraint(equalTo: trailingAnchor,constant: -paddingFactor.horizontal)
 			]
 		case .leading:
 			constraints = [childView.leadingAnchor.constraint(equalTo: leadingAnchor,constant: paddingFactor.horizontal)]
@@ -445,18 +460,18 @@ extension UIView {
 		case .centerY:
 			constraints = [childView.centerYAnchor.constraint(equalTo: centerYAnchor,constant: paddingFactor.vertical)]
 		case .trailing:
-			constraints = [childView.trailingAnchor.constraint(equalTo: trailingAnchor,constant: paddingFactor.horizontal)]
+			constraints = [childView.trailingAnchor.constraint(equalTo: trailingAnchor,constant: -paddingFactor.horizontal)]
 		case .bottomLeading:
 			constraints = [
-				childView.bottomAnchor.constraint(equalTo: bottomAnchor,constant: paddingFactor.vertical),
+				childView.bottomAnchor.constraint(equalTo: bottomAnchor,constant: -paddingFactor.vertical),
 				childView.leadingAnchor.constraint(equalTo: leadingAnchor,constant: paddingFactor.horizontal)
 			]
 		case .bottom:
-			constraints = [childView.bottomAnchor.constraint(equalTo: bottomAnchor,constant: paddingFactor.vertical)]
+			constraints = [childView.bottomAnchor.constraint(equalTo: bottomAnchor,constant: -paddingFactor.vertical)]
 		case .bottomTrailing:
 			constraints = [
-				childView.bottomAnchor.constraint(equalTo: bottomAnchor,constant: paddingFactor.vertical),
-				childView.trailingAnchor.constraint(equalTo: trailingAnchor,constant: paddingFactor.horizontal)
+				childView.bottomAnchor.constraint(equalTo: bottomAnchor,constant: -paddingFactor.vertical),
+				childView.trailingAnchor.constraint(equalTo: trailingAnchor,constant: -paddingFactor.horizontal)
 			]
 		}
 		

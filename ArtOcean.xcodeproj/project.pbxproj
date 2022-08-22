@@ -19,6 +19,8 @@
 		EF00F5D52847A660003D8683 /* SliderSelectorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF00F5D42847A660003D8683 /* SliderSelectorView.swift */; };
 		EF00F5DA2848BB6B003D8683 /* AccountsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF00F5D92848BB6B003D8683 /* AccountsViewController.swift */; };
 		EF018307287376F500064F60 /* Number.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF018306287376F500064F60 /* Number.swift */; };
+		EF12304C28B3E0BB000DCAB2 /* RedesignAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF12304B28B3E0BB000DCAB2 /* RedesignAccountViewController.swift */; };
+		EF12304E28B3EAB6000DCAB2 /* ClosedRange.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF12304D28B3EAB6000DCAB2 /* ClosedRange.swift */; };
 		EF22D0CB285A378200555179 /* NFTLiveBidViewCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF22D0CA285A378200555179 /* NFTLiveBidViewCellView.swift */; };
 		EF22D0CD285A714F00555179 /* CustomTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF22D0CC285A714F00555179 /* CustomTableViewCell.swift */; };
 		EF2425C328AD6B3E00A1D378 /* Int.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF2425C228AD6B3E00A1D378 /* Int.swift */; };
@@ -202,6 +204,8 @@
 		EF00F5D42847A660003D8683 /* SliderSelectorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SliderSelectorView.swift; sourceTree = "<group>"; };
 		EF00F5D92848BB6B003D8683 /* AccountsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountsViewController.swift; sourceTree = "<group>"; };
 		EF018306287376F500064F60 /* Number.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Number.swift; sourceTree = "<group>"; };
+		EF12304B28B3E0BB000DCAB2 /* RedesignAccountViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RedesignAccountViewController.swift; sourceTree = "<group>"; };
+		EF12304D28B3EAB6000DCAB2 /* ClosedRange.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClosedRange.swift; sourceTree = "<group>"; };
 		EF22D0CA285A378200555179 /* NFTLiveBidViewCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NFTLiveBidViewCellView.swift; sourceTree = "<group>"; };
 		EF22D0CC285A714F00555179 /* CustomTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTableViewCell.swift; sourceTree = "<group>"; };
 		EF2425C228AD6B3E00A1D378 /* Int.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Int.swift; sourceTree = "<group>"; };
@@ -384,6 +388,7 @@
 				EF00F5D92848BB6B003D8683 /* AccountsViewController.swift */,
 				EF7447AD284902A300899476 /* AccountHeaderView.swift */,
 				EF7447AF28495A8700899476 /* AccountMetrics.swift */,
+				EF12304B28B3E0BB000DCAB2 /* RedesignAccountViewController.swift */,
 			);
 			path = Accounts;
 			sourceTree = "<group>";
@@ -593,6 +598,7 @@
 				EF7E59EF28B156F0008C7EC6 /* UIWindow.swift */,
 				EF7E59F528B234FF008C7EC6 /* StateStorage.swift */,
 				EF7E59FD28B246C7008C7EC6 /* NotificationCenter.swift */,
+				EF12304D28B3EAB6000DCAB2 /* ClosedRange.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -976,6 +982,7 @@
 				EFAB44632867912F00B33864 /* StackContainer.swift in Sources */,
 				EF7447AE284902A300899476 /* AccountHeaderView.swift in Sources */,
 				EF69B6AD28529FD000ABDADA /* FavoriteViewController.swift in Sources */,
+				EF12304C28B3E0BB000DCAB2 /* RedesignAccountViewController.swift in Sources */,
 				EF7EAFB828A2EA4400FDFFD3 /* UIStackView.swift in Sources */,
 				EF7447B8284A109300899476 /* User.swift in Sources */,
 				EF8B067D283C27020050E726 /* AlchemyAPI.swift in Sources */,
@@ -1000,6 +1007,7 @@
 				EF00F5D22846D781003D8683 /* NFTArtInteractiveInfoView.swift in Sources */,
 				EF3BF928287813E80070CAE5 /* UIEdgeInsets.swift in Sources */,
 				EF2425C328AD6B3E00A1D378 /* Int.swift in Sources */,
+				EF12304E28B3EAB6000DCAB2 /* ClosedRange.swift in Sources */,
 				EF00F5B72844F4A7003D8683 /* NFTBiddingModal.swift in Sources */,
 				EF00F5D52847A660003D8683 /* SliderSelectorView.swift in Sources */,
 				EF8B0683283C2CA10050E726 /* AlchemyNFTDataModel.swift in Sources */,

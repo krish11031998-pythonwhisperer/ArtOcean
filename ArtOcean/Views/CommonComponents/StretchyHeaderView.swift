@@ -8,59 +8,68 @@
 import Foundation
 import UIKit
 
+extension Array where Element == UIColor {
+	
+	static var gradientColors: [UIColor] =  [.clear, .white.withAlphaComponent(0.5), .white]
+	
+}
+
 class StreachyHeaderView:UIView{
     
     private var viewHeightConstraint:NSLayoutConstraint? = nil
     private var viewTopConstraint:NSLayoutConstraint? = nil
-    private var height:CGFloat
+	private var height:CGFloat = .zero
     private let innerView:UIView
-    
-	init(width:CGFloat = UIScreen.main.bounds.width,height:CGFloat,innerView:UIView){
-        self.height = height
-        self.innerView = innerView
-        self.innerView.clipsToBounds = true
-		super.init(frame: .init(origin: .zero, size: .init(width: width, height: height)))
-		autoresizingMask = [.flexibleWidth,.flexibleHeight]
-        addSubview(innerView)
-        layer.addSublayer(gradient)
-        setupLayout()
+	private let gradientColors: [UIColor]
+	private var gradientView: UIView = { .init() }()
+	
+	private var viewSize: CGSize { .init(width: .totalWidth, height: height) }
+	
+	init(height:CGFloat, innerView:UIView, gradientColors: [UIColor] = .gradientColors){
+		self.gradientColors = gradientColors
+		self.height = height
+		self.innerView = innerView
+		super.init(frame: .zero)
+		setupView()
+		setupLayout()
     }
     
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-        
+		innerView = .init()
+		gradientColors = .gradientColors
+		super.init(coder: coder)
     }
     
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        gradient.frame = frame
-    }
-    private var gradient:CAGradientLayer = {
-       let gradient = CAGradientLayer()
-        gradient.colors = [UIColor.clear,UIColor.white.withAlphaComponent(0.2).cgColor,UIColor.white.withAlphaComponent(0.6).cgColor,UIColor.white.withAlphaComponent(1).cgColor]
-        return gradient
-    }()
-    
+	private func setupView() {
+		addSubview(innerView)
+		addSubview(gradientView)
+	}
+	
     func setupLayout(){
-        innerView.leadingAnchor.constraint(equalTo: self.leadingAnchor).isActive = true
-        viewTopConstraint = innerView.topAnchor.constraint(equalTo: self.topAnchor)
+		setWidthForChildWithPadding(innerView, paddingFactor: 0)
+		
+        viewTopConstraint = innerView.topAnchor.constraint(equalTo: topAnchor)
         viewTopConstraint?.isActive = true
-        innerView.trailingAnchor.constraint(equalTo: self.trailingAnchor).isActive = true
         viewHeightConstraint =  innerView.heightAnchor.constraint(equalToConstant: height)
         viewHeightConstraint?.isActive = true
+		
+		gradientView.setConstraintsWithParent(edgeInsets: .zero)
+		gradientView.addGradientView(colors: gradientColors, size: viewSize)
+		
+		setFrameConstraints(size: viewSize)
     }
     
     
     //MARK: - StretchOnScroll
     
-    public func StretchOnScroll(_ scrollView:UIScrollView) -> CGFloat {
+	public func stretchOnScroll(_ scrollView:UIScrollView) {
+		guard scrollView.contentOffset.y < 0 else { return }
 		let y_offset = scrollView.contentOffset.y
-
-        if y_offset < 0{
-			let computedHeight = max(height - y_offset,height)
-            viewHeightConstraint?.constant = computedHeight
-			return computedHeight
-        }
-        return height
-    }
+		innerView.clipsToBounds = true
+		let computedHeight = max(height - y_offset,height)
+		viewHeightConstraint?.constant = computedHeight
+		viewTopConstraint?.constant =  y_offset
+		let alpha: CGFloat = 1 - (0...20).precent(abs(scrollView.contentOffset.y))
+		gradientView.alpha = alpha
+	}
 }

@@ -25,19 +25,16 @@ extension UIImageView {
 		}
 	}
 	
-	func blurGradientBackDrop(size:CGSize){
+	func blurGradientBackDrop(size: CGSize) {
 		let blurEffect = UIBlurEffect(style: .light)
 		let blurEffectView = UIVisualEffectView(effect: blurEffect)
 		blurEffectView.frame = .init(origin: .zero, size: size)
 		blurEffectView.autoresizingMask = [.flexibleWidth,.flexibleHeight]
 		insertSubview(blurEffectView, at: 0)
 		
-		let gradient = CAGradientLayer()
-		gradient.colors = [UIColor.clear.cgColor,UIColor.white.cgColor,UIColor.white.cgColor]
-		gradient.frame = .init(origin: .zero, size: .init(width:size.width,height:size.height))
-		layer.insertSublayer(gradient, at: 0)
+		addGradientView(size: size)
 	}
-	
+
 	static func buildCatalogueImageView(name: UIImage.Catalogue, size: CGSize) -> UIImageView {
 		let imageView = UIImageView(frame: .init(origin: .zero, size: size))
 		imageView.image = name.image

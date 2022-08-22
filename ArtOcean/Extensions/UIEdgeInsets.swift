@@ -15,10 +15,10 @@ extension UIEdgeInsets {
 	}
 	
 	var vertical: CGFloat {
-		top == bottom ? top : .zero
+		max(top,bottom)
 	}
 	
 	var horizontal: CGFloat {
-		self.left == self.right ? self.left : .zero
+		max(self.left,self.right)
 	}
 }

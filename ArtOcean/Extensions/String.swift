@@ -25,23 +25,24 @@ extension String {
 	
 	func initials() -> String { split(separator: " ").compactMap { $0.first }.reduceToString() }
 	
-	func heading1() -> RenderableText { styled(font: .black, color: .black, size: 32) }
-	func heading2() -> RenderableText { styled(font: .black, color: .black, size: 24) }
-	func heading3() -> RenderableText { styled(font: .bold, color: .black, size: 22) }
-	func heading4() -> RenderableText { styled(font: .bold, color: .black, size: 18) }
-	func heading5() -> RenderableText { styled(font: .bold, color: .black, size: 14) }
-	func heading6() -> RenderableText { styled(font: .bold, color: .black, size: 12) }
-	func body1Bold() -> RenderableText { styled(font: .bold, color: .black, size: 16) }
-	func body1Medium() -> RenderableText { styled(font: .medium, color: .black, size: 16) }
-	func body1Regular() -> RenderableText { styled(font: .regular, color: .black, size: 16) }
-	func body2Medium() -> RenderableText { styled(font: .medium, color: .black, size: 14) }
-	func body2Regular() -> RenderableText { styled(font: .regular, color: .black, size: 14) }
-	func body3Medium() -> RenderableText { styled(font: .medium, color: .black, size: 12) }
-	func body3Regular() -> RenderableText { styled(font: .regular, color: .black, size: 12) }
-	func bodySmallRegular() -> RenderableText { styled(font: .regular, color: .black, size: 11) }
-	func largeBodyRegular() -> RenderableText { styled(font: .regular, color: .black, size: 16) }
+	func heading1(color: UIColor = .black) -> RenderableText { styled(font: .black, color: color, size: 32) }
+	func heading2(color: UIColor = .black) -> RenderableText { styled(font: .black, color: color, size: 24) }
+	func heading3(color: UIColor = .black) -> RenderableText { styled(font: .bold, color: color, size: 22) }
+	func heading4(color: UIColor = .black) -> RenderableText { styled(font: .bold, color: color, size: 18) }
+	func heading5(color: UIColor = .black) -> RenderableText { styled(font: .bold, color: color, size: 14) }
+	func heading6(color: UIColor = .black) -> RenderableText { styled(font: .bold, color: color, size: 12) }
+	func body1Bold(color: UIColor = .black) -> RenderableText { styled(font: .bold, color: color, size: 16) }
+	func body1Medium(color: UIColor = .black) -> RenderableText { styled(font: .medium, color: color, size: 16) }
+	func body1Regular(color: UIColor = .black) -> RenderableText { styled(font: .regular, color: color, size: 16) }
+	func body2Medium(color: UIColor = .black) -> RenderableText { styled(font: .medium, color: color, size: 14) }
+	func body2Regular(color: UIColor = .black) -> RenderableText { styled(font: .regular, color: color, size: 14) }
+	func body3Medium(color: UIColor = .black) -> RenderableText { styled(font: .medium, color: color, size: 12) }
+	func body3Regular(color: UIColor = .black) -> RenderableText { styled(font: .regular, color: color, size: 12) }
+	func bodySmallRegular(color: UIColor = .black) -> RenderableText { styled(font: .regular, color: color, size: 11) }
+	func largeBodyRegular(color: UIColor = .black) -> RenderableText { styled(font: .regular, color: color, size: 16) }
 	
-	
+	static var testProfileImage: String = "https://weathereport.mypinata.cloud/ipfs/QmZJ56QmQpXQJamofJJYbR5T1gQTxVMhN5uHYfhvAmdFr8/85.png"
+	static var testBackdropImage: String = "https://gutterart.blob.core.windows.net/metadata/image/3.jpeg"
 }
 
 extension Array where Element == Character {
