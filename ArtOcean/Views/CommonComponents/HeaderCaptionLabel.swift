@@ -91,7 +91,8 @@ class HeaderCaptionLabel: UIView {
 		}
 		
 		addSubview(mainStack)
-		setConstraintsToChild(mainStack, edgeInsets: .init(vertical: 5, horizontal: 10),withPriority: 999)
+		mainStack.setConstraintsWithParent(edgeInsets: .zero,withPriority: .init(rawValue: 999))
+		//setConstraintsToChild(mainStack, edgeInsets: .init(vertical: 0, horizontal: 10),withPriority: 999)
 	}
 	
 }

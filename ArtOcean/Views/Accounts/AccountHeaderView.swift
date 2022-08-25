@@ -15,7 +15,8 @@ class AccountHeaderView: UIView {
     private var imgTopAnchor:NSLayoutConstraint? = nil
     private var height:CGFloat = .zero
 	private var headerHeight: CGFloat = .zero
-    
+	private var currentUser: User? { UserStorage.selectedUser }
+	
     private lazy var headerImageView: CustomImageView = {
         let image = CustomImageView(cornerRadius: 0, maskedCorners: nil)
         return image
@@ -38,8 +39,12 @@ class AccountHeaderView: UIView {
 		return imageView
 	}()
 	
+	private var nameUsernamelabel: HeaderCaptionLabel = {
+		.init()
+	}()
+	
 	private lazy var userHeader: UIStackView = {
-		let stack: UIStackView = .HStack(views: [userProfileImage, artTitleLabel], spacing: 12, aligmment: .center)
+		let stack: UIStackView = .HStack(views: [userProfileImage, nameUsernamelabel], spacing: 12, aligmment: .center)
 		userProfileImage.setAspectRatio(1)
 		return stack
 	}()
@@ -61,9 +66,9 @@ class AccountHeaderView: UIView {
     }
     
     required init?(coder: NSCoder) {
+		super.init(coder: coder)
         fatalError("init(coder:) has not been implemented")
     }
-    
     
 	func setupViews(){
 		addSubview(stretchyHeader)
@@ -74,7 +79,8 @@ class AccountHeaderView: UIView {
 	func buildUI(){
 		UIImage.loadImage(url: .testBackdropImage, for: headerImageView, at: \.image)
 		UIImage.loadImage(url: .testProfileImage, for: userProfileImage, at: \.image)
-		"CryptoDon".heading1(color: .appBlackColor).renderInto(target: artTitleLabel)
+		nameUsernamelabel.configureLabel(title: currentUser?.name?.heading3(color: .black), subTitle: currentUser?.username?.body1Medium())
+//		(currentUser?.username ?? "CryptoDon").heading1(color: .appBlackColor).renderInto(target: artTitleLabel)
 	}
     
     func setupLayout(){

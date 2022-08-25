@@ -8,6 +8,14 @@
 import Foundation
 import UIKit
 
+fileprivate extension UIScrollView {
+	
+	func updateContentSize() {
+		contentSize = subviews.map {$0.frame}.reduce(CGRect.zero, { $0.union($1) }).size
+	}
+	
+}
+
 class ScrollableStackView: UIView {
 	
 //MARK: - Properties
@@ -18,7 +26,6 @@ class ScrollableStackView: UIView {
 		scroll.backgroundColor = .clear
 		return scroll
 	}()
-	
 	
 //MARK: - Protected Methods
 	
@@ -39,12 +46,9 @@ class ScrollableStackView: UIView {
 		setDimensionConstraints()
 	}
 	
-	private func updateScrollContentSize(_ view: UIView) {
-		let newHeight = view.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize).height
-		scrollView.contentSize.height += newHeight
-	}
 	
 //MARK: - Overriden Methods
+	
 	override init(frame: CGRect) {
 		super.init(frame: frame)
 		setupUI()
@@ -53,6 +57,11 @@ class ScrollableStackView: UIView {
 	required init?(coder: NSCoder) {
 		super.init(coder: coder)
 		setupUI()
+	}
+	override func layoutSubviews() {
+		super.layoutSubviews()
+		print(#function)
+		scrollView.updateContentSize()
 	}
 }
 
@@ -103,7 +112,7 @@ extension ScrollableStackView {
 	public func addArrangedSubview(_ view: UIView) {
 //		view.setCompactHeight()
 		stackView.addArrangedSubview(view)
-		updateScrollContentSize(view)
+//		updateScrollContentSize(view)
 	}
 	
 	public func addArrangedSubview(_ view: UIView, withWidthFactor: CGFloat) {
@@ -127,5 +136,9 @@ extension ScrollableStackView {
 	public func setCustomSpacing(_ spacing: CGFloat?, after view: UIView) {
 		guard let validSpacing = spacing else { return }
 		stackView.setCustomSpacing(validSpacing, after: view)
+	}
+	
+	public var stackHeight: CGFloat {
+		stackView.arrangedSubviews.map { $0.fittingSize().height + spacing }.reduce(0, { $0 + $1 })
 	}
 }

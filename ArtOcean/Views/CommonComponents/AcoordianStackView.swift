@@ -33,12 +33,13 @@ class AccordianStackView: UIStackView {
 	
 	private var showAll: Bool = false
 	private var limit: Int = 0
-	
+	private var handler: ((Bool) -> Void)?
 //MARK: Constructors
 	
-	override init(frame: CGRect) {
-		super.init(frame: frame)
+	init(handler: ((Bool) -> Void)?) {
+		super.init(frame: .zero)
 		setupStack()
+		self.handler = handler
 	}
 	
 	required init(coder: NSCoder) {
@@ -56,9 +57,9 @@ class AccordianStackView: UIStackView {
 	}
 	
 	@objc
-	private func handleTap() {
+	public func handleTap() {
 		showAll.toggle()
-		let isHidden = !showAll
+		
 		let opacity: CGFloat = showAll ? 1 : 0
 		
 		let opacityDuration: TimeInterval = 0.4
@@ -66,11 +67,15 @@ class AccordianStackView: UIStackView {
 		let animatableViews = self.arrangedSubviews.lastNViews(self.limit)
 		
 		UIView.viewAnimation {
-			
 			if self.showAll {
 				animatableViews.forEach { $0.showView() }
 			} else {
 				animatableViews.forEach { $0.alpha = opacity }
+			}
+			self.layoutIfNeeded()
+		} completion: { [weak self] _ in
+			DispatchQueue.main.async {
+				self?.handler?(self?.showAll ?? false)
 			}
 		}
 		
@@ -80,6 +85,7 @@ class AccordianStackView: UIStackView {
 			} else {
 				animatableViews.forEach { $0.hideView() }
 			}
+			self.layoutIfNeeded()
 		}
 	}
 	

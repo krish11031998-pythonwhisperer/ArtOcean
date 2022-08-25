@@ -234,15 +234,20 @@ extension UIView {
 		case bottomLeading
 		case bottom
 		case bottomTrailing
-
-//		var anchors:[NSLayoutAnchor<AnyObject>] {
-//			switch self {
-//			case .topLeading :
-//				return [topAnchor,leadingAnchor]
-//			default:
-//				return [centerXAnchor]
-//			}
-//		}
+	}
+	
+	enum CornerRadius {
+		case top
+		case bottom
+		case all
+		
+		var corners: CACornerMask {
+			switch self {
+			case .top: return [.layerMinXMinYCorner,.layerMaxXMinYCorner]
+			case .bottom: return [.layerMinXMaxYCorner,.layerMaxXMaxYCorner]
+			case .all: return [.layerMinXMinYCorner,.layerMaxXMinYCorner,.layerMinXMaxYCorner,.layerMaxXMaxYCorner]
+			}
+		}
 	}
 	
 	func removeAllConstraints() { removeConstraints(constraints) }
@@ -252,10 +257,11 @@ extension UIView {
 		constraint.constant = newValue
 	}
 	
-	func cornerRadius(_ value: CGFloat, at corners: CACornerMask) {
+	func cornerRadius(_ value: CGFloat, at corners: CornerRadius) {
 		cornerRadius = value
-		layer.maskedCorners = corners
+		layer.maskedCorners = corners.corners
 	}
+	
 	func addViewAndSetConstraints(_ innerView:UIView?,edgeInsets:UIEdgeInsets) {
 		guard let safeInnerView = innerView else { return }
 		addSubview(safeInnerView)
@@ -264,7 +270,7 @@ extension UIView {
 	
 	func setConstraintsWithParent(edgeInsets: UIEdgeInsets, withPriority: UILayoutPriority = .required) {
 		guard let validParentView = superview else { return }
-		validParentView.setConstraintsToChild(self, edgeInsets: edgeInsets,withPriority: withPriority.rawValue)
+		validParentView.setConstraintsToChild(self, edgeInsets: edgeInsets, withPriority: withPriority.rawValue)
 	}
 	
 	func setConstraintsToChild(_ childView:UIView,edgeInsets:UIEdgeInsets,withPriority: Float = 1000){

@@ -14,6 +14,10 @@ extension UIEdgeInsets {
 		self.init(top: vertical, left: horizontal, bottom: vertical, right: horizontal)
 	}
 	
+	init(by: CGFloat) {
+		self.init(top: by, left: by, bottom: by, right: by)
+	}
+	
 	var vertical: CGFloat {
 		max(top,bottom)
 	}

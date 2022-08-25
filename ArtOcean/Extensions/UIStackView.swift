@@ -95,7 +95,7 @@ extension Array where Element : UIView {
 		
 		forEach {
 
-			let size = $0.systemLayoutSizeFitting(UIView.layoutFittingExpandedSize)
+			let size = $0.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize)
 			let itemSize = remainingSpace
 			
 			if size.width == width {
@@ -116,7 +116,7 @@ extension Array where Element : UIView {
 	}
 	
 	func lastNViews(_ limit: Int) -> [Self.Element] {
-		guard count > limit else { return self }
+		guard limit < count && limit > 0 else { return self }
 		return Array(self[(limit - 1)...])
 	}
 	
