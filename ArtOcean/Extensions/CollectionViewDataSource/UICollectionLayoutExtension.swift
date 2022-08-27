@@ -58,7 +58,7 @@ extension UICollectionViewFlowLayout {
 		layout.sectionInset = .init(vertical: 0, horizontal: 16)
 		layout.minimumInteritemSpacing = 10
 		layout.minimumLineSpacing = 24
-		layout.itemSize = .init(width: .totalWidth.half() - layout.minimumInteritemSpacing.multiple(factor: 2), height: 250)
+		layout.itemSize = .init(width: .totalWidth.half - layout.minimumInteritemSpacing.multiple(factor: 2), height: 250)
 		return layout
 	}
 	

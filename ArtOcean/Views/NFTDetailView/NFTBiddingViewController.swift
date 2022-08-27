@@ -28,6 +28,7 @@ extension UIView {
 		func configureCell(with model: CustomWrapperConfigurableModel) {
 			selectionStyle = .none
 			backgroundColor = .clear
+			contentView.removeAllSubViews()
 			model.innerView.isUserInteractionEnabled = model.isUserInteractionEnabled
 			contentView.addSubview(model.innerView)
 			contentView.setConstraintsToChild(model.innerView, edgeInsets: model.edges)

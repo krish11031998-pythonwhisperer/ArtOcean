@@ -29,6 +29,14 @@ class AccountHeaderView: UIView {
 		return button
 	}()
 	
+	private lazy var stackView: UIStackView = {
+		let stack: UIStackView = .init(arrangedSubviews: [stretchyHeader, userHeader])
+		stack.alignment = .center
+		stack.spacing = 12
+		stack.axis = .vertical
+		return stack
+	}()
+	
 	private lazy var stretchyHeader: StreachyHeaderView = { .init(height: headerHeight, innerView: headerImageView) }()
 	
 	private lazy var userProfileImage: UIImageView = {
@@ -55,8 +63,8 @@ class AccountHeaderView: UIView {
     
 	private var viewSize: CGSize { .init(width: .totalWidth, height: height) }
 	
-	init(height:CGFloat = 200, headerHeight: CGFloat = 180,handler:@escaping (() -> Void)) {
-		super.init(frame: .zero)
+	init(height:CGFloat = 200, headerHeight: CGFloat = 180, handler:@escaping (() -> Void)) {
+		super.init(frame: .init(origin: .zero, size: .init(width: .totalWidth, height: height)))
 		self.height = height
 		self.headerHeight = headerHeight
         self.handler = handler
@@ -71,35 +79,28 @@ class AccountHeaderView: UIView {
     }
     
 	func setupViews(){
-		addSubview(stretchyHeader)
+		addSubview(stackView)
 		addSubview(backButton)
-		addSubview(userHeader)
 	}
 	
 	func buildUI(){
 		UIImage.loadImage(url: .testBackdropImage, for: headerImageView, at: \.image)
 		UIImage.loadImage(url: .testProfileImage, for: userProfileImage, at: \.image)
 		nameUsernamelabel.configureLabel(title: currentUser?.name?.heading3(color: .black), subTitle: currentUser?.username?.body1Medium())
-//		(currentUser?.username ?? "CryptoDon").heading1(color: .appBlackColor).renderInto(target: artTitleLabel)
 	}
     
     func setupLayout(){
-		setFrameLayout(childView: stretchyHeader, alignment: .top)
-        
+		setConstraintsToChild(stackView, edgeInsets: .zero)
 		setFrameLayout(childView: backButton, alignment: .topLeading, paddingFactor: .init(top: 40, left: 16, bottom: 0, right: 0))
 		setFrameConstraints(size: .init(width: .totalWidth, height: height))
-		
-		setWidthForChildWithPadding(userHeader, paddingFactor: 2)
-		setFrameLayout(childView: userHeader, alignment: .bottom, paddingFactor: .init(vertical: 24))
-		userHeader.setHeightWithPriority(60,priority: .required)
+		stackView.setWidthForChildWithPadding(userHeader, paddingFactor: 2)
     }
     
 	public func viewAnimationWithScroll(_ scrollView:UIScrollView){
 		guard scrollView.contentOffset.y < 0  else { return }
 		stretchyHeader.stretchOnScroll(scrollView)
-		let alpha: CGFloat = 1 - (0...100).precent(abs(scrollView.contentOffset.y))
+		let alpha: CGFloat = 1 - (0...(100 + UIWindow.safeAreaInset.top)).precent(abs(scrollView.contentOffset.y)).clamp(1)
 		gradientView.alpha = alpha
 		backButton.alpha = alpha
-		userHeader.alpha = alpha
 	}
 }

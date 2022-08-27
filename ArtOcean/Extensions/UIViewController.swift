@@ -18,6 +18,8 @@ extension UIViewController{
 		navigationController?.navigationBar.standardAppearance = appearance
     }
     
+	static var safeAreaInset: UIEdgeInsets { UIWindow.safeAreaInset }
+	
     func hideNavigationBarLine() {
         guard let navigationBar = self.navigationController?.navigationBar else {return}
         let img = UIImage()

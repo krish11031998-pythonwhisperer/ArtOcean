@@ -215,8 +215,32 @@ extension UIView{
 	static func solidColorView(color: UIColor = .appGrayColor, size: CGSize = .smallestSqaure) -> UIView {
 		let view = UIView(frame: .init(origin: .zero, size: size))
 		view.backgroundColor = color
+//		view.setFrameConstraints(size: size)
 		return view
 	}
+	
+	func embedInView(edges: UIEdgeInsets) -> UIView {
+		let view = UIView()
+		view.addSubview(self)
+		view.setConstraintsToChild(self, edgeInsets: edges)
+		return view
+	}
+	
+	func background(_ color: UIColor) -> UIView {
+		backgroundColor = color
+		return self
+	}
+	
+	func background(_ view: UIView,edgeInsets: UIEdgeInsets?) -> UIView {
+		view.addSubview(self)
+		if let validEdgeInsets = edgeInsets {
+			view.setConstraintsToChild(self, edgeInsets: validEdgeInsets)
+		} else {
+			view.setCentralizedChild(self)
+		}
+		return view
+	}
+	
 }
 
 //MARK: - UIView Constaint Extension

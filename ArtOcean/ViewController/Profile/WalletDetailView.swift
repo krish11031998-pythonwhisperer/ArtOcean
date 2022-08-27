@@ -12,7 +12,7 @@ fileprivate extension CustomImageButton {
 	
 	static func walletButton(name: UIImage.Catalogue) -> CustomImageButton {
 		let button = CustomImageButton(name: name, frame: .squared(55), addBG: true, tintColor: .appPurpleColor, bgColor: .appPurple50Color, bordered: false, handler: nil)
-		button.imageView?.cornerRadius = CGFloat(55).half()
+		button.imageView?.cornerRadius = CGFloat(55).half
 		return button
 	}
 }

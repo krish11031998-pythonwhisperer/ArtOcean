@@ -25,7 +25,7 @@ let NFTArtSection: Section = {
 	}
 	
 	let layout: UICollectionViewFlowLayout = .standardVGridFlow
-	layout.itemSize.width = (.totalWidth - 28).half() - layout.minimumInteritemSpacing
+	layout.itemSize.width = (.totalWidth - 28).half - layout.minimumInteritemSpacing
 	layout.sectionInset = .init(vertical: 10)
 	
 	return .init(type: "ART", items: artItems, layout: layout, selectorItem: .init(title: "Items", image: .Catalogue.viewGrid.image))

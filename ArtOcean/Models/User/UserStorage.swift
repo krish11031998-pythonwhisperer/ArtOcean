@@ -18,6 +18,4 @@ class UserStorage: StateStorage {
 		get { Self.shared.getValue(for: Key.selectedUser.rawValue) }
 		set { Self.shared.setValue(for: Key.selectedUser.rawValue, value: newValue) }
 	}
-	
-	
 }

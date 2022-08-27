@@ -67,7 +67,7 @@ class MainTabController: UITabBarController {
 	@objc
 	func showAccount() {
 		print("(DEBUG) showArt is called!")
-		UIWindow.topMostNavigation?.pushViewController(NewAccountViewController(), animated: true)
+		UIWindow.topMostNavigation?.pushViewController(AccountViewController(), animated: true)
 	}
 
 }

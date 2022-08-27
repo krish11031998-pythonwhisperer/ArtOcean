@@ -184,7 +184,7 @@ class CustomImageButton: UIButton {
 		}
 		
 		if bordered {
-			imageView.bordered(cornerRadius: frame.width.half(), borderWidth: 1, borderColor: .appGrayColor)
+			imageView.bordered(cornerRadius: frame.width.half, borderWidth: 1, borderColor: .appGrayColor)
 		}
 		
 		imageView.image = img?.withTintColor(buttonTintColor)

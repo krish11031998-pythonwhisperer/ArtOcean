@@ -17,9 +17,8 @@
 		EF00F5D02846D460003D8683 /* CustomLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF00F5CF2846D460003D8683 /* CustomLabel.swift */; };
 		EF00F5D22846D781003D8683 /* NFTArtInteractiveInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF00F5D12846D781003D8683 /* NFTArtInteractiveInfoView.swift */; };
 		EF00F5D52847A660003D8683 /* SliderSelectorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF00F5D42847A660003D8683 /* SliderSelectorView.swift */; };
-		EF00F5DA2848BB6B003D8683 /* AccountsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF00F5D92848BB6B003D8683 /* AccountsViewController.swift */; };
 		EF018307287376F500064F60 /* Number.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF018306287376F500064F60 /* Number.swift */; };
-		EF12304C28B3E0BB000DCAB2 /* RedesignAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF12304B28B3E0BB000DCAB2 /* RedesignAccountViewController.swift */; };
+		EF12304C28B3E0BB000DCAB2 /* AccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF12304B28B3E0BB000DCAB2 /* AccountViewController.swift */; };
 		EF12304E28B3EAB6000DCAB2 /* ClosedRange.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF12304D28B3EAB6000DCAB2 /* ClosedRange.swift */; };
 		EF22D0CB285A378200555179 /* NFTLiveBidViewCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF22D0CA285A378200555179 /* NFTLiveBidViewCellView.swift */; };
 		EF22D0CD285A714F00555179 /* CustomTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF22D0CC285A714F00555179 /* CustomTableViewCell.swift */; };
@@ -202,9 +201,8 @@
 		EF00F5CF2846D460003D8683 /* CustomLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomLabel.swift; sourceTree = "<group>"; };
 		EF00F5D12846D781003D8683 /* NFTArtInteractiveInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NFTArtInteractiveInfoView.swift; sourceTree = "<group>"; };
 		EF00F5D42847A660003D8683 /* SliderSelectorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SliderSelectorView.swift; sourceTree = "<group>"; };
-		EF00F5D92848BB6B003D8683 /* AccountsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountsViewController.swift; sourceTree = "<group>"; };
 		EF018306287376F500064F60 /* Number.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Number.swift; sourceTree = "<group>"; };
-		EF12304B28B3E0BB000DCAB2 /* RedesignAccountViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RedesignAccountViewController.swift; sourceTree = "<group>"; };
+		EF12304B28B3E0BB000DCAB2 /* AccountViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountViewController.swift; sourceTree = "<group>"; };
 		EF12304D28B3EAB6000DCAB2 /* ClosedRange.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClosedRange.swift; sourceTree = "<group>"; };
 		EF22D0CA285A378200555179 /* NFTLiveBidViewCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NFTLiveBidViewCellView.swift; sourceTree = "<group>"; };
 		EF22D0CC285A714F00555179 /* CustomTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTableViewCell.swift; sourceTree = "<group>"; };
@@ -385,10 +383,9 @@
 		EF00F5D82848BB4A003D8683 /* Accounts */ = {
 			isa = PBXGroup;
 			children = (
-				EF00F5D92848BB6B003D8683 /* AccountsViewController.swift */,
 				EF7447AD284902A300899476 /* AccountHeaderView.swift */,
 				EF7447AF28495A8700899476 /* AccountMetrics.swift */,
-				EF12304B28B3E0BB000DCAB2 /* RedesignAccountViewController.swift */,
+				EF12304B28B3E0BB000DCAB2 /* AccountViewController.swift */,
 			);
 			path = Accounts;
 			sourceTree = "<group>";
@@ -982,7 +979,7 @@
 				EFAB44632867912F00B33864 /* StackContainer.swift in Sources */,
 				EF7447AE284902A300899476 /* AccountHeaderView.swift in Sources */,
 				EF69B6AD28529FD000ABDADA /* FavoriteViewController.swift in Sources */,
-				EF12304C28B3E0BB000DCAB2 /* RedesignAccountViewController.swift in Sources */,
+				EF12304C28B3E0BB000DCAB2 /* AccountViewController.swift in Sources */,
 				EF7EAFB828A2EA4400FDFFD3 /* UIStackView.swift in Sources */,
 				EF7447B8284A109300899476 /* User.swift in Sources */,
 				EF8B067D283C27020050E726 /* AlchemyAPI.swift in Sources */,
@@ -992,7 +989,6 @@
 				EF7E59FE28B246C7008C7EC6 /* NotificationCenter.swift in Sources */,
 				EF7E59FC28B238FD008C7EC6 /* NFTStorage.swift in Sources */,
 				EF8B0665283BED350050E726 /* HomeViewController.swift in Sources */,
-				EF00F5DA2848BB6B003D8683 /* AccountsViewController.swift in Sources */,
 				EF3C9A7828A04080007F5200 /* UIButton.swift in Sources */,
 				EF00F5C7284638E7003D8683 /* NFTArtCollectionViewCell.swift in Sources */,
 				EF3259F92880925F001B0CA6 /* CollectionViewDataSource.swift in Sources */,
