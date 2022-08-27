@@ -13,12 +13,12 @@ typealias CollectionSectionDataSource = NSObject & UICollectionViewDelegate & UI
 class CollectionSection: CollectionSectionDataSource {
 	
 	let headerView: UIView?
-	let cells: [CellProviderColumn]
+	let cells: [CollectionCellProvider]
 	
 	
 	init(
 		headerView: UIView? = nil,
-		cells: [CellProviderColumn]
+		cells: [CollectionCellProvider]
 	) {
 		self.headerView = headerView
 		self.cells = cells

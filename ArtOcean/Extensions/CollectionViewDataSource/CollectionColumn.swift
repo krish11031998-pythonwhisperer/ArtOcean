@@ -10,13 +10,13 @@ import UIKit
 
 typealias ConfigurableCollectionCell = UICollectionViewCell & Configurable
 
-protocol CellProviderColumn{
+protocol CollectionCellProvider{
     var cellModel: Any { get }
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell
     func didSelect(_ collectionView: UICollectionView)
 }
 
-class CollectionColumn<Cell:ConfigurableCollectionCell>:CellProviderColumn{
+class CollectionColumn<Cell:ConfigurableCollectionCell>:CollectionCellProvider{
 	
     var cellModel: Any { model }
     

@@ -63,6 +63,8 @@ extension User {
 	
 	var row: CellProvider { TableRow<CustomInfoButtonCell>(.init(self)) }
 	
+	var collectionCell: CollectionCellProvider { CollectionColumn<CustomInfoButtonCollectionCell>(.init(self)) }
+	
 	static func decodeFromItem(_ item: Item) -> User? {
 		switch item {
 		case .user(let user):

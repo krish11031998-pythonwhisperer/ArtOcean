@@ -82,13 +82,10 @@ extension StatisticsViewController: CustomSelectorDynamicCollectionDelegate {
 	func collectionSection(_ section: Section) -> CollectionSection? {
 		guard let validItems = section.items else { return nil }
 		if section == UserSection {
-			let users: [User] = validItems.compactMap { User.decodeFromItem($0) }
-			return .init(cells: users.map { CollectionColumn<CustomInfoButtonCollectionCell>(.init($0)) })
+			return .init(cells: validItems.compactMap(\.nftUser?.collectionCell))
 		} else if section == NFTArtOfferSection {
-			let offers: NFTArtOffers = validItems.compactMap { NFTArtOffer.decodeFromItem($0) }
-			return .init(cells: offers.map { CollectionColumn<CustomInfoButtonCollectionCell>(.init($0, withArtImage: true))})
-		} else {
-			return nil
+			return .init(cells: validItems.compactMap(\.nftOffer?.collectionCell))
 		}
+		return nil
 	}
 }

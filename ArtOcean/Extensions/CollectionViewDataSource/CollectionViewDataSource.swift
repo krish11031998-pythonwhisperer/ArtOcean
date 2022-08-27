@@ -28,7 +28,7 @@ class CollectionDataSource:NSObject{
 	}
 	
 	convenience init(
-		columns:[CellProviderColumn],
+		columns:[CollectionCellProvider],
 		layout:UICollectionViewFlowLayout,
 		width: CGFloat = .zero,
 		height: CGFloat = .zero

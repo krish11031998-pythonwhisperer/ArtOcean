@@ -56,14 +56,21 @@ typealias NFTArtOffers = [NFTArtOffer]
 
 extension NFTArtOffer {
 	
-	var buttonCell: CellProvider { TableRow<CustomInfoButtonCell>(.init(self)) }
-	
+	var tableCell: CellProvider { TableRow<CustomInfoButtonCell>(.init(self, withArtImage: true)) }
+	var collectionCell: CollectionCellProvider { CollectionColumn<CustomInfoButtonCollectionCell>(.init(self, withArtImage: true)) }
+	var buttonView: CustomInfoButton {
+		let button = CustomInfoButton()
+		button.updateUIButton(.init(self, withArtImage: true, action: {
+			NFTStorage.selectedArt = nft
+		}))
+		return button
+	}
 }
 
 extension NFTArtOffers {
 	
-	var rows: [CellProvider] { map(\.buttonCell) }
-	
+	var rows: [CellProvider] { map(\.tableCell) }
+	var collectionRows: [CollectionCellProvider] { map(\.collectionCell) }
 }
 
 extension CustomInfoButtonModel {

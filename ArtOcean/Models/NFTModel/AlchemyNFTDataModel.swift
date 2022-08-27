@@ -221,3 +221,14 @@ struct ImageDetails:Codable{
 struct Property:Codable{
     let value, traitType: String
 }
+
+
+//MARK: - NFTArtModel Extension
+
+extension NFTModel {
+	
+	var collectionCell: CollectionCellProvider { CollectionColumn<NFTArtCollectionViewCell>(.init(nft: self, action: {
+		NFTStorage.selectedArt = self
+	})) }
+	
+}

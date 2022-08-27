@@ -46,14 +46,14 @@ class TableSection:TableSectionDataSource{
 //MARK: - CollectionSection
 class TableCollectionSection:TableSectionDataSource {
 
-	let columns:[CellProviderColumn]
+	let columns:[CollectionCellProvider]
 	let layout:UICollectionViewFlowLayout
 	let headerView:UIView?
 	let size:CGSize
 	
 	init(
 		headerView:UIView?,
-		columns:[CellProviderColumn],
+		columns:[CollectionCellProvider],
 		layout:UICollectionViewFlowLayout = .standardFlow,
 		size:CGSize = .zero
 	) {
@@ -64,11 +64,11 @@ class TableCollectionSection:TableSectionDataSource {
 	}
 	
 
-	convenience init (headerView:UIView?, columns:[CellProviderColumn],layout:UICollectionViewFlowLayout, height: CGFloat) {
+	convenience init (headerView:UIView?, columns:[CollectionCellProvider],layout:UICollectionViewFlowLayout, height: CGFloat) {
 		self.init(headerView: headerView, columns: columns, layout:layout, size:.init(width: .totalWidth, height: height))
 	}
 
-	convenience init (title:String,columns:[CellProviderColumn],layout:UICollectionViewFlowLayout,height:CGFloat) {
+	convenience init (title:String,columns:[CollectionCellProvider],layout:UICollectionViewFlowLayout,height:CGFloat) {
 		let headerView = ContainerHeaderView(title: title)
 		self.init(headerView:headerView, columns: columns, layout: layout, height: height)
 	}
@@ -76,13 +76,17 @@ class TableCollectionSection:TableSectionDataSource {
 	convenience init (
 		title:String,
 		rightTitle:String,
-		columns:[CellProviderColumn],
+		columns:[CollectionCellProvider],
 		layout:UICollectionViewFlowLayout,
 		height:CGFloat = .zero,
 		handler:(() -> Void)? = nil
 	) {
 		let headerView = ContainerHeaderView(title: title, rightButtonTitle: rightTitle, buttonHandler: handler)
 		self.init(headerView:headerView, columns: columns, layout: layout, height: height)
+	}
+	
+	convenience init (columns: [CollectionCellProvider], layout: UICollectionViewFlowLayout, height: CGFloat = .zero) {
+		self.init(headerView: nil, columns: columns, layout: layout, height: height)
 	}
 	
 	private var collectionDataSource: CollectionDataSource { .init(columns: columns,layout: layout,width: size.width,height: size.height) }

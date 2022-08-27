@@ -99,7 +99,7 @@ class AccountHeaderView: UIView {
 	public func viewAnimationWithScroll(_ scrollView:UIScrollView){
 		guard scrollView.contentOffset.y < 0  else { return }
 		stretchyHeader.stretchOnScroll(scrollView)
-		let alpha: CGFloat = 1 - (0...(100 + UIWindow.safeAreaInset.top)).precent(abs(scrollView.contentOffset.y)).clamp(1)
+		let alpha: CGFloat = 1 - (0...(100)).precent(abs(scrollView.contentOffset.y)).clamp(1)
 		gradientView.alpha = alpha
 		backButton.alpha = alpha
 	}

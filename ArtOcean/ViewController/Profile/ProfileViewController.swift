@@ -71,11 +71,9 @@ extension ProfileViewController: CustomSelectorDynamicCollectionDelegate {
 	func collectionSection(_ section: Section) -> CollectionSection? {
 		guard let validItems = section.items else { return nil }
 		if section == NFTArtSection {
-			let art: [NFTArtCollectionViewCellData] = validItems.compactMap { NFTArtCollectionViewCellData.decodedFromItem(item: $0) }
-			return .init(cells: art.map { CollectionColumn<NFTArtCollectionViewCell>($0) })
+			return .init(cells: validItems.compactMap(\.nftArtData?.collectionCell))
 		} else if section == NFTArtOfferSection {
-			let offers: NFTArtOffers = validItems.compactMap { NFTArtOffer.decodeFromItem($0) }
-			return .init(cells: offers.map { CollectionColumn<CustomInfoButtonCollectionCell>(.init($0, withArtImage: true))})
+			return .init(cells: validItems.compactMap(\.nftOffer?.collectionCell))
 		} else {
 			return nil
 		}

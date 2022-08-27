@@ -40,6 +40,13 @@ class AccountViewController: UIViewController {
 	}()
 	
 	private var segmentControlOrigin: CGPoint = .zero
+	private var tabs: [SlideSelectorItem] { [NFTArtOfferSection.selectorItem, NFTArtSection.selectorItem].compactMap {$0} }
+	
+	private var selectedTab: String? = nil {
+		didSet {
+			tableView.reload(with: buildDataSource())
+		}
+	}
 	
 	private lazy var tableHeaderView: AccountHeaderView = {
 		return AccountHeaderView(height: 250, headerHeight: 180, handler: { [weak self] in
@@ -50,13 +57,23 @@ class AccountViewController: UIViewController {
 	private var observer: NSKeyValueObservation?
 	
 	private lazy var segmentedControl: UIView = {
-		let slider = SliderSelector(tabs: [NFTArtOfferSection.selectorItem, NFTArtSection.selectorItem].compactMap {$0})
+		let slider = SliderSelector(tabs: tabs)
+		slider.delegate = self
 		return slider.embedInView(edges: .init(top: 20, left: 10, bottom: 10, right: 10))
 	}()
 	
 	//MARK: - Constructors
 	
 	//MARK: - Overriden Methods
+	
+	override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
+		super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+		self.selectedTab = self.tabs.first?.title ?? ""
+	}
+	
+	required init?(coder: NSCoder) {
+		super.init(coder: coder)
+	}
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -80,22 +97,36 @@ class AccountViewController: UIViewController {
 	//MARK: - Protected Methods
 	
 	private func buildDataSource() -> TableViewDataSource {
-		.init(section: [offers].compactMap { $0 })
+		if selectedTab == NFTArtOfferSection.selectorItem?.title {
+			return .init(section: [offers].compactMap { $0 })
+		} else if selectedTab == NFTArtSection.selectorItem?.title {
+			return .init(section: items ?? [])
+		} else {
+			return .init(section: [])
+		}
 	}
 	
 	private var offers: TableSection? {
 		guard let items = NFTArtOfferSection.items else { return nil }
-		let stackedCells: [UIView] = items.compactMap { NFTArtOffer.decodeFromItem($0) }.map {
-			let button = CustomInfoButton()
-			button.updateUIButton(.init($0, withArtImage: true))
-			return button
-		}
+		let stackedCells: [UIView] = items.compactMap(\.nftOffer?.buttonView)
 		return .init(headerView: segmentedControl, rows: stackedCells.compactMap { $0.TableRowBuilder(edges: .init(vertical: 20, horizontal: 16)) })
+	}
+	
+	private var items: [TableCollectionSection]? {
+		guard let items = NFTArtSection.items?.multiDimension(dim: 2) else { return nil }
+		let rowViews: [TableCollectionSection] = items.enumerated().compactMap {
+			let layout = UICollectionViewFlowLayout.standardFlow
+			layout.itemSize.width = (.totalWidth - 30).half - layout.minimumInteritemSpacing
+			layout.sectionInset = .init(vertical: 10,horizontal: 10)
+			let headerView = $0.offset == .zero ? segmentedControl : nil
+			let columns = $0.element.compactMap(\.nftArtData?.collectionCell)
+			return TableCollectionSection(headerView: headerView, columns: columns, layout: layout)
+		}
+		return rowViews
 	}
 	
 	private func setupUI() {
 		view.addSubview(tableView)
-//		view.setSafeAreaConstraintsToChild(tableView, edgeInsets: .zero)
 		setConstraintsWithSafeAreaBottom()
 		tableView.contentInsetAdjustmentBehavior = .never
 		tableView.tableHeaderView = tableHeaderView
@@ -117,5 +148,14 @@ class AccountViewController: UIViewController {
 	
 	private func updateOnScroll(_ scrollView: UIScrollView) {
 		tableHeaderView.viewAnimationWithScroll(scrollView)
+	}
+}
+
+//MARK: AccountViewController SliderDelegate
+
+extension AccountViewController: SlideSelectorDelegate {
+	
+	func handleSelect(_ id: String) {
+		selectedTab = id
 	}
 }

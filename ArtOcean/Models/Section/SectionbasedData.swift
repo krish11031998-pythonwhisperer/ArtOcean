@@ -53,6 +53,32 @@ enum Item:Decodable,Hashable{
     case user(User)
     case offer(NFTArtOffer)
 	case empty(Empty)
+	
+	var nftArtData: NFTModel? {
+		switch self {
+		case .artData(let nftModel):
+			return nftModel
+		default:
+			return nil
+		}
+	}
+	
+	var nftUser: User? {
+		switch self {
+		case .user(let user):
+			return user
+		default:
+			return nil
+		}
+	}
+	
+	var nftOffer: NFTArtOffer? {
+		switch self {
+		case .offer(let offer):
+			return offer
+		default: return nil
+		}
+	}
 }
 
 protocol ConfirgurableCell:UICollectionViewCell{
