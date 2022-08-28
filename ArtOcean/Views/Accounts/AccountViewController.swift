@@ -40,7 +40,7 @@ class AccountViewController: UIViewController {
 	}()
 	
 	private var segmentControlOrigin: CGPoint = .zero
-	private var tabs: [SlideSelectorItem] { [NFTArtOfferSection.selectorItem, NFTArtSection.selectorItem].compactMap {$0} }
+	private var tabs: [SlideSelectorItem] { [NFTArtOfferSection.selectorItem, NFTArtSection.selectorItem].reversed().compactMap {$0} }
 	
 	private var selectedTab: String? = nil {
 		didSet {
@@ -93,6 +93,11 @@ class AccountViewController: UIViewController {
 			segmentControlOrigin = segmentedControl.frame.origin
 		}
 	}
+	
+	override func viewWillAppear(_ animated: Bool) {
+		super.viewWillAppear(animated)
+		hideNavBar()
+	}
 
 	//MARK: - Protected Methods
 	
@@ -116,11 +121,11 @@ class AccountViewController: UIViewController {
 		guard let items = NFTArtSection.items?.multiDimension(dim: 2) else { return nil }
 		let rowViews: [TableCollectionSection] = items.enumerated().compactMap {
 			let layout = UICollectionViewFlowLayout.standardFlow
-			layout.itemSize.width = (.totalWidth - 30).half - layout.minimumInteritemSpacing
-			layout.sectionInset = .init(vertical: 10,horizontal: 10)
+			layout.itemSize.width = (.totalWidth - 20 - layout.minimumLineSpacing).half
+			layout.sectionInset = .init(vertical: 0,horizontal: 10)
 			let headerView = $0.offset == .zero ? segmentedControl : nil
 			let columns = $0.element.compactMap(\.nftArtData?.collectionCell)
-			return TableCollectionSection(headerView: headerView, columns: columns, layout: layout)
+			return TableCollectionSection(headerView: headerView, columns: columns, layout: layout, enableScroll: false)
 		}
 		return rowViews
 	}

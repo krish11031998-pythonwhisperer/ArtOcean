@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-struct NFTArtCollectionViewCellData:ActionProvider {
+struct NFTArtCollectionViewCellData: ActionProvider {
 	var nft:NFTModel
 	var action: Callback?
 }

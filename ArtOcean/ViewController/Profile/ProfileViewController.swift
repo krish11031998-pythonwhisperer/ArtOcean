@@ -9,6 +9,11 @@ import UIKit
 
 class ProfileViewController: UIViewController {
 	
+//	private lazy var tableView: UITableView = {
+//		let tableView = UITableView(frame: .zero, style: .)
+//		tableView.
+//	}()
+	
 	private lazy var profileHeaderView: UIView = {
 		let headerView = ProfileHeaderView(frame: .init(origin: .zero, size: .init(width: .totalWidth ,height: 375)))
 		headerView.delegate = self

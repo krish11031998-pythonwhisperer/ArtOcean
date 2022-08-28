@@ -12,12 +12,14 @@ class CollectionDataSource:NSObject{
     
 	let sections:[CollectionSection]
 	let layout:UICollectionViewFlowLayout
+	let enableScroll: Bool
 	private let height:CGFloat
 	private let width:CGFloat
     
 	init(
 		sections:[CollectionSection],
 		layout:UICollectionViewFlowLayout,
+		enableScroll: Bool = true,
 		width: CGFloat = .zero,
 		height: CGFloat = .zero
 	){
@@ -25,15 +27,17 @@ class CollectionDataSource:NSObject{
 		self.layout = layout
 		self.width = width
 		self.height = height
+		self.enableScroll = enableScroll
 	}
 	
 	convenience init(
 		columns:[CollectionCellProvider],
 		layout:UICollectionViewFlowLayout,
+		enableScroll: Bool = true,
 		width: CGFloat = .zero,
 		height: CGFloat = .zero
 	){
-		self.init(sections: [.init(cells: columns)], layout: layout, width: width, height: height)
+		self.init(sections: [.init(cells: columns)], layout: layout, enableScroll: enableScroll, width: width, height: height)
 	}
 	
 	var collectionHeight: CGFloat? { height == .zero ? layout.itemSize.height + 20 : height != .infinity ? height : nil }

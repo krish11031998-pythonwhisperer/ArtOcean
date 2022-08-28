@@ -21,6 +21,7 @@ class CollectionViewTableCell:ConfigurableCell{
 	
 	func configureCell(with model: CollectionDataSource) {
 		let collection = UICollectionView(frame: .zero,collectionViewLayout: .init())
+		collection.isScrollEnabled = model.enableScroll
 		collection.backgroundColor = .clear
 		contentView.addSubview(collection)
 		contentView.setConstraintsToChild(collection, edgeInsets: .zero)

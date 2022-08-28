@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 
 struct NFTDataResponse:Decodable{
     let ownedNfts: [NFTModel]?
@@ -227,8 +228,40 @@ struct Property:Codable{
 
 extension NFTModel {
 	
-	var collectionCell: CollectionCellProvider { CollectionColumn<NFTArtCollectionViewCell>(.init(nft: self, action: {
-		NFTStorage.selectedArt = self
-	})) }
+	var collectionCell: CollectionCellProvider {
+		CollectionColumn<NFTArtCollectionViewCell>(.init(nft: self) {
+			NFTStorage.selectedArt = self
+			NotificationCenter.default.post(name: .showArt, object: nil)
+		})
+	}
 	
+	var biddingArtView: UIView {
+		let view = NFTLiveBidView()
+		view.updateUIWithNFT(self)
+		return view
+	}
+	
+	var smallArtView: UIView {
+		let view = NFTArtCollectionViewCell()
+		view.updateUIWithNFT(self)
+		return view.contentView
+	}
+	
+	var smallArtDetailView: UIView {
+		let imageView = UIImageView()
+		imageView.image = .loadingBackgroundImage
+		imageView.contentMode = .scaleAspectFill
+		imageView.clipsToBounds = true
+		imageView.cornerRadius(16, at: .all)
+		UIImage.loadImage(url: metadata?.image, for: imageView, at: \.image)
+		
+		let label = HeaderCaptionLabel()
+		label.configureLabel(img: nil, title: Title.body1Medium(), subTitle: testUser.first?.username?.body3Regular())
+		
+		imageView.addSubview(label)
+		imageView.setWidthForChildWithPadding(label, paddingFactor: 2)
+		imageView.setFrameLayout(childView: label, alignment: .bottom, paddingFactor: .init(top: 0, left: 0, bottom: 8, right: 0))
+		
+		return imageView
+	}
 }

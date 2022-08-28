@@ -50,17 +50,20 @@ class TableCollectionSection:TableSectionDataSource {
 	let layout:UICollectionViewFlowLayout
 	let headerView:UIView?
 	let size:CGSize
+	let enableScroll: Bool
 	
 	init(
 		headerView:UIView?,
 		columns:[CollectionCellProvider],
 		layout:UICollectionViewFlowLayout = .standardFlow,
-		size:CGSize = .zero
+		size:CGSize = .zero,
+		enableScroll: Bool = true
 	) {
 		self.headerView = headerView
 		self.columns = columns
 		self.layout = layout
 		self.size = size
+		self.enableScroll = enableScroll
 	}
 	
 
@@ -89,7 +92,7 @@ class TableCollectionSection:TableSectionDataSource {
 		self.init(headerView: nil, columns: columns, layout: layout, height: height)
 	}
 	
-	private var collectionDataSource: CollectionDataSource { .init(columns: columns,layout: layout,width: size.width,height: size.height) }
+	private var collectionDataSource: CollectionDataSource { .init(columns: columns,layout: layout, enableScroll: enableScroll, width: size.width, height: size.height) }
 
 	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		let cell = CollectionViewTableCell()
