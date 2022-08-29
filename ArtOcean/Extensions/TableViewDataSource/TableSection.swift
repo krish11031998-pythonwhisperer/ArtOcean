@@ -43,7 +43,7 @@ class TableSection: TableSectionDataSource{
 	
 	func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? { headerView }
 	
-	func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat { headerView?.compressedFittingSize.height ?? .zero }
+	func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat { UITableView.automaticDimension }
 	
 	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 		let row = rows[indexPath.row]
@@ -114,6 +114,7 @@ class TableCollectionSection:TableSectionDataSource {
 	
 	func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? { headerView }
 	
+	func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat { UITableView.automaticDimension }
 	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int { 1 }
 	
 }

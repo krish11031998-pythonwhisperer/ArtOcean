@@ -33,9 +33,9 @@ class ProfileHeaderView:UIView {
 	
 	public var delegate:ProfileHeaderEventDelegate?
 	
-	private let name:UILabel = CustomLabel(text: "Krishna Venkat", size: 18, weight: .bold, color: .black)
+	private let name:UILabel = CustomLabel(text: "Krishna Venkat", size: 18, weight: .bold, color: .black, adjustFontSize: false)
 	
-	private let username:UILabel = CustomLabel(text: "@cryptoPython", size: 14, weight: .medium, color: .gray)
+	private let username:UILabel = CustomLabel(text: "@cryptoPython", size: 14, weight: .medium, color: .gray, adjustFontSize: false)
 	
 	private let profileHeader:UILabel =  CustomLabel(text: "Profile", size: 22, weight: .bold, color: .white)
 	
@@ -97,6 +97,7 @@ class ProfileHeaderView:UIView {
 	private func setupTopHeaderView() {
 		let stack: UIStackView = .init(arrangedSubviews: [profileHeader,.spacer(),settingButton])
 //		stack.compressVerticalFit()
+		settingButton.setFrameConstraints(size: .squared(40), withPriority: .defaultHigh)
 		mainStack.addArrangedSubview(stack)
 		mainStack.setHorizontalConstraintsToChild(stack, edgeInsets: .init(vertical: .zero, horizontal: 20), withPriority: 999)
 		mainStack.setCustomSpacing(46, after: stack)
