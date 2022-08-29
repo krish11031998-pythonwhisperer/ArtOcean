@@ -12,7 +12,16 @@ import UIKit
 
 typealias TableSectionDataSource = NSObject & UITableViewDelegate & UITableViewDataSource
 
-class TableSection:TableSectionDataSource{
+extension Array where Element == TableSectionDataSource {
+	 
+	static func + (lhs: [Self.Element], rhs: [Self.Element]) -> [Self.Element] {
+		var result = lhs
+		result.append(contentsOf: rhs)
+		return result
+	}
+}
+
+class TableSection: TableSectionDataSource{
 	
 	var headerView:UIView?
 	var rows:[CellProvider]
@@ -33,6 +42,8 @@ class TableSection:TableSectionDataSource{
 	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell { rows[indexPath.row].tableView(tableView, cellForRowAt: indexPath) }
 	
 	func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? { headerView }
+	
+	func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat { headerView?.compressedFittingSize.height ?? .zero }
 	
 	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 		let row = rows[indexPath.row]

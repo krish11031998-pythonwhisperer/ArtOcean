@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-fileprivate extension Array {
+extension Array {
 	
 	func multiDimension(dim: Int) -> [[Self.Element]] {
 		var result: [[Self.Element]] = []

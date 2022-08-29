@@ -65,6 +65,18 @@ extension UIStackView {
 		return finalSize
 	}
 	
+	func compressVerticalFit() {
+		if axis == .vertical {
+			arrangedSubviews.forEach { $0.setHeightWithPriority($0.compressedFittingSize.height, priority: .required) }
+		} else if axis == .horizontal {
+			setHeightWithPriority(arrangedSubviews.map(\.compressedFittingSize.height).reduce(CGFloat.leastNormalMagnitude, { $0 < $1 ? $1 : $0 }), priority: .required)
+		}
+		
+	}
+	
+	func compressHorizontalFit() {
+		arrangedSubviews.forEach { $0.setWidthWithPriority($0.compressedFittingSize.width, priority: .required) }
+	}
 }
 
 //MARK: CustomStackBuilder

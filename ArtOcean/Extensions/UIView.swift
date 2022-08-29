@@ -220,7 +220,7 @@ extension UIView{
 	}
 	
 	func embedInView(edges: UIEdgeInsets) -> UIView {
-		let view = UIView()
+		let view = UIView(frame: bounds.expand(edges: edges))
 		view.addSubview(self)
 		view.setConstraintsToChild(self, edgeInsets: edges)
 		return view
@@ -369,11 +369,11 @@ extension UIView {
 		translatesAutoresizingMaskIntoConstraints = false
 	}
 	
-	func setFrameConstraints(size:CGSize) {
+	func setFrameConstraints(size:CGSize, withPriority priority: UILayoutPriority = .required) {
 		let constraints: [NSLayoutConstraint] = [
 			widthAnchor.constraint(equalToConstant: size.width),
 			heightAnchor.constraint(equalToConstant: size.height)
-		]
+		].map { $0.setPriority(priority: priority.rawValue) } 
 		
 		removeSimilarConstraints(constraints)
 		translatesAutoresizingMaskIntoConstraints = false
@@ -527,6 +527,8 @@ extension UIView {
 			return systemLayoutSizeFitting(size)
 //		}
 	}
+	
+	var compressedFittingSize: CGSize { fittingSize(UIView.layoutFittingCompressedSize) }
 	
 	func setCompactHeight() {
 		let compactSize = fittingSize()

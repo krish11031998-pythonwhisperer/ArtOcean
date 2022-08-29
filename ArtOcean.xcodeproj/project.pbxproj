@@ -37,6 +37,7 @@
 		EF325A022880A02F001B0CA6 /* NotificationCenter.Name.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF325A012880A02F001B0CA6 /* NotificationCenter.Name.swift */; };
 		EF325A062880BFDA001B0CA6 /* Numeric.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF325A052880BFDA001B0CA6 /* Numeric.swift */; };
 		EF358377284D371C00783D75 /* StretchyHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF358376284D371C00783D75 /* StretchyHeaderView.swift */; };
+		EF35CD7728BD366100DE1872 /* CGRect.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF35CD7628BD366100DE1872 /* CGRect.swift */; };
 		EF3B4D51287073E400DD57DB /* NFTArtIntroductionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF3B4D50287073E400DD57DB /* NFTArtIntroductionView.swift */; };
 		EF3BF928287813E80070CAE5 /* UIEdgeInsets.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF3BF927287813E80070CAE5 /* UIEdgeInsets.swift */; };
 		EF3BF92A287AB3D10070CAE5 /* NFTAttributeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF3BF929287AB3D10070CAE5 /* NFTAttributeView.swift */; };
@@ -221,6 +222,7 @@
 		EF325A012880A02F001B0CA6 /* NotificationCenter.Name.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationCenter.Name.swift; sourceTree = "<group>"; };
 		EF325A052880BFDA001B0CA6 /* Numeric.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Numeric.swift; sourceTree = "<group>"; };
 		EF358376284D371C00783D75 /* StretchyHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StretchyHeaderView.swift; sourceTree = "<group>"; };
+		EF35CD7628BD366100DE1872 /* CGRect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGRect.swift; sourceTree = "<group>"; };
 		EF3B4D50287073E400DD57DB /* NFTArtIntroductionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NFTArtIntroductionView.swift; sourceTree = "<group>"; };
 		EF3BF927287813E80070CAE5 /* UIEdgeInsets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIEdgeInsets.swift; sourceTree = "<group>"; };
 		EF3BF929287AB3D10070CAE5 /* NFTAttributeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NFTAttributeView.swift; sourceTree = "<group>"; };
@@ -596,6 +598,7 @@
 				EF7E59F528B234FF008C7EC6 /* StateStorage.swift */,
 				EF7E59FD28B246C7008C7EC6 /* NotificationCenter.swift */,
 				EF12304D28B3EAB6000DCAB2 /* ClosedRange.swift */,
+				EF35CD7628BD366100DE1872 /* CGRect.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -971,6 +974,7 @@
 				EF7447B6284A0F9F00899476 /* UICollectionView.swift in Sources */,
 				EF527492284BA4BD008C77EC /* SectionbasedData.swift in Sources */,
 				EF00F5CE2846D2AB003D8683 /* NFTDetailHeroHeaderSection.swift in Sources */,
+				EF35CD7728BD366100DE1872 /* CGRect.swift in Sources */,
 				EF480E0F285F85D400FC0F3F /* NFTAttributeCell.swift in Sources */,
 				EF8B06D5283E3A4B0050E726 /* LiveBidDetailView.swift in Sources */,
 				EF8B066C283BF0E70050E726 /* ProfileViewController.swift in Sources */,

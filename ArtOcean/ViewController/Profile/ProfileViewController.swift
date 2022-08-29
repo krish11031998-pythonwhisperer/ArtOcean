@@ -9,28 +9,39 @@ import UIKit
 
 class ProfileViewController: UIViewController {
 	
-//	private lazy var tableView: UITableView = {
-//		let tableView = UITableView(frame: .zero, style: .)
-//		tableView.
-//	}()
+	private lazy var tableView: UITableView = {
+		let tableView = UITableView(frame: .zero, style: .grouped)
+		tableView.backgroundColor = UIColor.clear
+		tableView.separatorStyle = .none
+		return tableView
+	}()
 	
 	private lazy var profileHeaderView: UIView = {
-		let headerView = ProfileHeaderView(frame: .init(origin: .zero, size: .init(width: .totalWidth ,height: 375)))
+		let headerView = ProfileHeaderView(frame: .init(origin: .zero, size: .init(width: .totalWidth ,height: 300)))
 		headerView.delegate = self
 		return headerView
 	}()
-    
-	private var assetsView:CustomSelectorDynamicCollectionView = {
-		.init(sections: [NFTArtOfferSection,NFTArtSection])
-	}()
-	
+
 	private lazy var backdropImage: UIImageView = {
 		let imageView = UIImageView(frame: .init(origin: .zero, size: .init(width: UIScreen.main.bounds.width, height: 200)))
 		imageView.updateImageView(url: "https://gutterart.blob.core.windows.net/metadata/image/3.jpeg")
 		imageView.blurGradientBackDrop(size: .init(width: UIScreen.main.bounds.width, height: 200))
 		return imageView
 	}()
-
+	
+	private var tabs: [SlideSelectorItem] { [NFTArtOfferSection.selectorItem, NFTArtSection.selectorItem].compactMap {$0} }
+	
+	private var selectedTab: String? = nil {
+		didSet { tableView.reload(with: buildDataSource()) }
+	}
+	
+	private lazy var segmentedControl: UIView = {
+		let slider = SliderSelector(tabs: tabs)
+		slider.delegate = self
+		return slider.embedInView(edges: .init(top: 20, left: 10, bottom: 10, right: 10))
+	}()
+	
+	private var observer: NSKeyValueObservation?
     
     init(){
         super.init(nibName: nil, bundle: nil)
@@ -45,28 +56,67 @@ class ProfileViewController: UIViewController {
     
     override func viewDidLoad() {
         self.setupViews()
-		assetsView.delegate = self
+		//tableView.reload(with: buildDataSource())
+		selectedTab = tabs.first?.title
+		self.observer = tableView.observe(\.contentOffset) { [weak self] scrollView, _ in self?.scrollViewObserver(scrollView) }
     }
     
     func setupViews(){
 		view.addSubview(backdropImage)
 		view.setWidthForChildWithPadding(backdropImage, paddingFactor: .zero)
 		backdropImage.setHeightWithPriority(200)
-		
-		let stack: UIStackView = .init(arrangedSubviews: [profileHeaderView, assetsView])
-		stack.spacing = 10
-		stack.axis = .vertical
-		stack.alignment = .center
-		stack.setWidthForChildWithPadding(profileHeaderView, paddingFactor: .zero)
-		stack.setWidthForChildWithPadding(assetsView, paddingFactor: 2)
-		view.addSubview(stack)
-		view.setSafeAreaConstraintsToChild(stack, edgeInsets: .zero)
+
+		view.addSubview(tableView)
+		view.setConstraintsToChild(tableView, edgeInsets: .zero)
+		tableView.tableHeaderView = profileHeaderView
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationController?.setNavigationBarHidden(true, animated: animated)
     }
+	
+//MARK: Protected Methods
+		
+	private func scrollViewObserver(_ scrollView: UIScrollView) {
+		guard scrollView.contentOffset.y > Self.safeAreaInset.top else { return }
+		let yOff = scrollView.contentOffset.y
+		let height: CGFloat = 200
+		backdropImage.transform = .init(translationX: 0, y: -height * (Self.safeAreaInset.top...height).percent(abs(yOff)).clamp(1))
+	}
+	
+	private func buildDataSource() -> TableViewDataSource {
+		if selectedTab == NFTArtOfferSection.selectorItem?.title {
+			return .init(section: [offers].compactMap { $0 })
+		} else if selectedTab == NFTArtSection.selectorItem?.title {
+			return .init(section: (items ?? []))
+		} else {
+			return .init(section: [])
+		}
+	}
+	
+	private var segmentedControlSection: TableSection {
+		.init(headerView: segmentedControl, rows: [])
+	}
+
+	private var offers: TableSection? {
+		guard let items = NFTArtOfferSection.items else { return nil }
+		let stackedCells: [UIView] = items.compactMap(\.nftOffer?.buttonView)
+		return .init(headerView: segmentedControl, rows: stackedCells.compactMap { $0.TableRowBuilder(edges: .init(vertical: 20, horizontal: 16)) })
+	}
+	
+	private var items: [TableCollectionSection]? {
+		guard let items = NFTArtSection.items?.multiDimension(dim: 2) else { return nil }
+		let rowViews: [TableCollectionSection] = items.enumerated().compactMap {
+			let layout = UICollectionViewFlowLayout.standardFlow
+			layout.itemSize.width = (.totalWidth - 20 - layout.minimumLineSpacing).half
+			layout.sectionInset = .init(vertical: 0,horizontal: 10)
+			let headerView = $0.offset == .zero ? segmentedControl : nil
+			let columns = $0.element.compactMap(\.nftArtData?.collectionCell)
+			return TableCollectionSection(headerView: headerView, columns: columns, layout: layout, enableScroll: false)
+		}
+		return rowViews
+	}
 }
 
 //MARK: - CustomSelectorDynamicCollection Delegate
@@ -93,18 +143,6 @@ extension ProfileViewController:NFTArtCellDelegate{
         self.navigationController?.pushViewController(NFTDetailArtViewController(nftArt: art), animated: true)
     }
     
-}
-
-
-//MARK: - CustomButtonDelegate
-extension ProfileViewController:CustomButtonDelegate{
-    
-    func handleTap(_ data: Any) {
-        if let art = data as? NFTArtOffer,let nft = art.nft{
-            self.setupStatusBar()
-            self.navigationController?.pushViewController(NFTDetailArtViewController(nftArt: nft), animated: true)
-        }
-    }
 }
 
 //MARK: - ProfileHeaderDelegate
@@ -142,5 +180,14 @@ extension ProfileViewController{
 	
 	func onTapProfile() {
 		self.navigationController?.pushViewController(SettingViewController(), animated: true)
+	}
+}
+
+//MARK: AccountViewController SliderDelegate
+
+extension ProfileViewController: SlideSelectorDelegate {
+	
+	func handleSelect(_ id: String) {
+		selectedTab = id
 	}
 }

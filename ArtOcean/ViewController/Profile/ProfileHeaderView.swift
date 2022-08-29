@@ -52,10 +52,7 @@ class ProfileHeaderView:UIView {
 	
 	
 	private lazy var mainStack: UIStackView = {
-		let stack = UIStackView()
-		stack.axis = .vertical
-		stack.alignment = .center
-		return stack
+		.VStack(aligmment: .center)
 	}()
 	
 	override init(frame: CGRect) {
@@ -68,11 +65,12 @@ class ProfileHeaderView:UIView {
 	}
 	
 	func setupView() {
-//		setupBackdrop()
-		addViewAndSetConstraints(mainStack, edgeInsets: .zero)
 		setupTopHeaderView()
 		userProfileView()
 		profileOptionsView()
+//		mainStack.addArrangedSubview(.spacer())
+		addViewAndSetConstraints(mainStack, edgeInsets: .zero)
+		
 	}
 	
 //MARK: - Protected Methods
@@ -80,7 +78,8 @@ class ProfileHeaderView:UIView {
 	private let userProfileImageView:UIImageView = {
 		let view = CustomImageView(cornerRadius: 32)
 		view.updateImageView(url: "https://weathereport.mypinata.cloud/ipfs/QmZJ56QmQpXQJamofJJYbR5T1gQTxVMhN5uHYfhvAmdFr8/85.png")
-		view.setFrameConstraints(size: .squared(64))
+		view.setWidthWithPriority(64, priority: .defaultHigh)
+		view.setHeightWithPriority(64, priority: .required)
 		return view
 	}()
 
@@ -89,6 +88,7 @@ class ProfileHeaderView:UIView {
 		stack.axis = .vertical
 		stack.spacing = 4
 		stack.alignment = .center
+//		stack.compressVerticalFit()
 		stack.setCustomSpacing(16, after: userProfileImageView)
 		mainStack.addArrangedSubview(stack)
 		mainStack.setCustomSpacing(32, after: stack)
@@ -96,6 +96,7 @@ class ProfileHeaderView:UIView {
 	
 	private func setupTopHeaderView() {
 		let stack: UIStackView = .init(arrangedSubviews: [profileHeader,.spacer(),settingButton])
+//		stack.compressVerticalFit()
 		mainStack.addArrangedSubview(stack)
 		mainStack.setHorizontalConstraintsToChild(stack, edgeInsets: .init(vertical: .zero, horizontal: 20), withPriority: 999)
 		mainStack.setCustomSpacing(46, after: stack)
@@ -106,6 +107,7 @@ class ProfileHeaderView:UIView {
 		stack.alignment = .center
 		stack.distribution = .fillEqually
 		stack.spacing = 0
+//		stack.compressVerticalFit()
 		mainStack.addArrangedSubview(stack)
 		mainStack.setHorizontalConstraintsToChild(stack, edgeInsets: .init(vertical: .zero, horizontal: 20), withPriority: 999)
 	}

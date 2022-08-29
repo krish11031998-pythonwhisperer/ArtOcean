@@ -50,7 +50,6 @@ class CustomLabelButton:UIButton{
 			let color: UIColor = isSelected ? .appPurpleColor : .black
 			configuration?.image = configuration?.image?.withTintColor(color)
 			updateTitle(color: color)
-			cornerRadius = 15
 			if isSelected {
 				backgroundColor = .white
 				cornerRadius = 15
