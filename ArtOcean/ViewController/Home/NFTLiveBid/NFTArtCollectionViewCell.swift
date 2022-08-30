@@ -44,7 +44,11 @@ class NFTArtCollectionViewCell:UICollectionViewCell{
     
     public var delegate:NFTArtCellDelegate? = nil
     
-	private lazy var artTitle:UILabel = { .init() }()
+	private lazy var artTitle:UILabel = {
+		let label : UILabel = .init()
+		"XXX".styled(font: .bold, color: .black, size: 14).renderInto(target: label)
+		return label
+	}()
     
     private lazy var priceView:CustomLabelButton = {
 		let imgSize: CGSize = .init(width: 6, height: 10)
@@ -59,8 +63,7 @@ class NFTArtCollectionViewCell:UICollectionViewCell{
 		let stack: UIStackView = .VStack(views: [artTitle, infoDetails], spacing: 4, aligmment: .leading)
 		
 		stack.distribution = .fill
-		stack.setHeightWithPriority(58, priority: .required)
-		
+		stack.compressVerticalFit()
 		let result = stack.embedInView(edges: .init(top: 12, left: 8, bottom: 16, right: 8))
 		return result.background(.white)
 	}()

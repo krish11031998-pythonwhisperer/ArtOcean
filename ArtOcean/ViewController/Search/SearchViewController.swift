@@ -33,7 +33,7 @@ class SearchViewController:UIViewController{
 	
 	//MARK: - Views
 	
-	private var collectionLayout: UICollectionViewFlowLayout { .standardLayout(size:CGSize(width: .totalWidth - 20, height: 306)) }
+	private var collectionLayout: UICollectionViewFlowLayout { .standardLayout(size:CGSize(width: (.totalWidth - 20).half - 10, height: 225)) }
 	
 	private let scrollView:UIScrollView = {
 		let scrollView = UIScrollView()
