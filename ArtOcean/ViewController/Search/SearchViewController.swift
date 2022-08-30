@@ -33,6 +33,8 @@ class SearchViewController:UIViewController{
 	
 	//MARK: - Views
 	
+	private var collectionLayout: UICollectionViewFlowLayout { .standardLayout(size:CGSize(width: .totalWidth - 20, height: 306)) }
+	
 	private let scrollView:UIScrollView = {
 		let scrollView = UIScrollView()
 		scrollView.showsVerticalScrollIndicator = false
@@ -46,19 +48,16 @@ class SearchViewController:UIViewController{
 	}()
 	
 	private let collectionView:UICollectionView = {
-		let layout:UICollectionViewFlowLayout = .standardLayout(size:CGSize(width: UIScreen.main.bounds.width - 20, height: 306))
-		let collection = UICollectionView(frame: .zero, collectionViewLayout: layout)
+		let collection = UICollectionView(frame: .zero, collectionViewLayout: .init())
 		collection.showsVerticalScrollIndicator = false
 		collection.showsHorizontalScrollIndicator = false
-		collection.register(NFTArtCollectionLiveBidViewCell.self, forCellWithReuseIdentifier: NFTArtCollectionLiveBidViewCell.identifier)
 		collection.backgroundColor = .white
 		return collection
 	}()
 	
 	func setupCollectionView(){
 		view.addSubview(collectionView)
-		collectionView.dataSource = self
-		view.setSafeAreaConstraintsToChild(collectionView, edgeInsets: .zero)
+		view.setSafeAreaConstraintsToChild(collectionView, edgeInsets: .init(top: searchBar.compressedFittingSize.height + 40, left: 0, bottom: 0, right: 0))
 	}
 	
 	//MARK: - Setting Up View
@@ -72,8 +71,8 @@ class SearchViewController:UIViewController{
 	
 	
 	func setupUI(){
-		let stackView: UIStackView = .VStack(views: [.spacer(height: 25),searchBar,NFTArtTypeCollectionView()], spacing: 20, aligmment: .center)
-		searchBar.setHeightWithPriority(55,priority: .init(rawValue: 999))
+		let stackView: UIStackView = .VStack(views: [.spacer(height: 12).background(.red),searchBar,NFTArtTypeCollectionView()], spacing: 20, aligmment: .center)
+		searchBar.setHeightWithPriority(55,priority: .required)
 		view.addSubview(scrollView)
 		scrollView.addSubview(stackView)
 		scrollView.setConstraintsToChild(stackView, edgeInsets: .zero)
@@ -95,29 +94,8 @@ extension SearchViewController:CustomSearchBarDelegate{
 		guard let safeTestData = NFTModel.testsArtData else {return}
 		let searchFilterData = safeTestData.filter({$0.Title.contains(word)})
 		print("(DEBUG) searchedText : \(word) and results : \(searchFilterData.compactMap({$0.Title}))")
-		searchedNFT = searchFilterData
-		collectionView.reloadData()
+		collectionView.reload(with: .init(columns: searchFilterData.map(\.collectionCell), layout: collectionLayout, height: .infinity))
 		setupCollectionView()
-	}
-	
-}
-
-//MARK: - UICollectionViewDelegate
-extension SearchViewController:UICollectionViewDataSource{
-	
-	func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-		guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: NFTArtCollectionLiveBidViewCell.identifier, for: indexPath) as? NFTArtCollectionLiveBidViewCell else {return UICollectionViewCell()}
-		let data = searchedNFT[indexPath.row]
-		cell.updateUIWithNFT(data)
-		return cell
-	}
-	
-	func numberOfSections(in collectionView: UICollectionView) -> Int {
-		return 1
-	}
-	
-	func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-		return searchedNFT.count
 	}
 	
 }

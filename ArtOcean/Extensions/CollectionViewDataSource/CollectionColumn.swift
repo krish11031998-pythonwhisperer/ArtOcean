@@ -22,12 +22,10 @@ class CollectionColumn<Cell:ConfigurableCollectionCell>:CollectionCellProvider{
     
     var model:Cell.Model
 	
-    
 	init(_ model:Cell.Model){
         self.model = model
     }
 
-	
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell:Cell = collectionView.dequeueCell(for: indexPath)
         cell.configureCell(with: model)

@@ -88,7 +88,6 @@ class ProfileHeaderView:UIView {
 		stack.axis = .vertical
 		stack.spacing = 4
 		stack.alignment = .center
-//		stack.compressVerticalFit()
 		stack.setCustomSpacing(16, after: userProfileImageView)
 		mainStack.addArrangedSubview(stack)
 		mainStack.setCustomSpacing(32, after: stack)
@@ -96,7 +95,6 @@ class ProfileHeaderView:UIView {
 	
 	private func setupTopHeaderView() {
 		let stack: UIStackView = .init(arrangedSubviews: [profileHeader,.spacer(),settingButton])
-//		stack.compressVerticalFit()
 		settingButton.setFrameConstraints(size: .squared(40), withPriority: .defaultHigh)
 		mainStack.addArrangedSubview(stack)
 		mainStack.setHorizontalConstraintsToChild(stack, edgeInsets: .init(vertical: .zero, horizontal: 20), withPriority: 999)
@@ -108,7 +106,6 @@ class ProfileHeaderView:UIView {
 		stack.alignment = .center
 		stack.distribution = .fillEqually
 		stack.spacing = 0
-//		stack.compressVerticalFit()
 		mainStack.addArrangedSubview(stack)
 		mainStack.setHorizontalConstraintsToChild(stack, edgeInsets: .init(vertical: .zero, horizontal: 20), withPriority: 999)
 	}

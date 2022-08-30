@@ -53,19 +53,15 @@ class NFTArtCollectionViewCell:UICollectionViewCell{
 		return .init(title: "", image: .init(named: "heart")?.resized(.squared(10)), color: .appBlackColor)
     }()
     
-	private lazy var infoView: UIStackView = {
-		let stack = StackContainer(innerView: [artTitle,infoDetails])
-		stack.spacing = 4
-		stack.backgroundColor = .white
-		stack.layer.cornerRadius = 16
-		stack.layer.maskedCorners = [.layerMaxXMaxYCorner,.layerMinXMaxYCorner]
+	private lazy var infoView: UIView = {
+		let stack: UIStackView = .VStack(views: [artTitle, infoDetails], spacing: 4, aligmment: .leading)
 		
-		stack.isLayoutMarginsRelativeArrangement = true
-		stack.layoutMargins = .init(top: 12, left: 8, bottom: 16, right: 8)
+		stack.distribution = .fill
+		stack.setHeightWithPriority(58, priority: .required)
+		let result = stack.embedInView(edges: .init(top: 12, left: 8, bottom: 16, right: 8))
+		result.cornerRadius(16, at: .all)
 		
-		stack.heightAnchor.constraint(equalToConstant: 76).isActive = true
-		
-		return stack
+		return result
 	}()
 	
 	private lazy var infoDetails: UIStackView = {
@@ -74,7 +70,7 @@ class NFTArtCollectionViewCell:UICollectionViewCell{
 	}()
 	
 	private func setupView() {
-		let stack: UIStackView = .init(arrangedSubviews: [imageView,infoView])
+		let stack: UIStackView = .init(arrangedSubviews: [imageView,infoView.background(.white)])
 		stack.axis = .vertical
 		addViewAndSetConstraints(stack, edgeInsets: .zero)
 		backgroundColor = .white
@@ -102,7 +98,7 @@ class NFTArtCollectionViewCell:UICollectionViewCell{
     
     func resetCell(){
         self.artTitle.text = ""
-		self.imageView.image = nil
+		self.imageView.image = .loadingBackgroundImage
     }
     
     public func updateUIWithNFT(_ nft:NFTModel,idx:Int? = nil){
