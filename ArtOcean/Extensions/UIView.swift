@@ -26,7 +26,7 @@ extension UIView{
 	func addGradientLayer(_ color:[CGColor] =  [UIColor.clear.cgColor,UIColor.black.cgColor]){
 		let gradient = gradientLayerBuilder(color)
 		layer.addSublayer(gradient)
-		gradient.frame = frame
+		gradient.frame = .init(origin: .zero, size: fittingSize())
 	}
     
     public func bouncyButtonClick(scaleDownTo:CGFloat = 0.95,completion:(() -> Void)? = nil){

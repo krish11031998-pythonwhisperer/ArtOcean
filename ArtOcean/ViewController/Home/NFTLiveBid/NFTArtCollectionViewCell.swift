@@ -35,8 +35,10 @@ class NFTArtCollectionViewCell:UICollectionViewCell{
     
     public static let identifier = "NFTArtCollectionViewCell"
     
-    private lazy var imageView:CustomImageView = {
-        let imgView = CustomImageView(cornerRadius: 16,maskedCorners: [.layerMinXMinYCorner,.layerMaxXMinYCorner])
+    private lazy var imageView: UIImageView = {
+        let imgView = UIImageView()
+		imgView.clipsToBounds = true
+		imgView.contentMode = .scaleAspectFill
         return imgView
     }()
     
@@ -58,10 +60,9 @@ class NFTArtCollectionViewCell:UICollectionViewCell{
 		
 		stack.distribution = .fill
 		stack.setHeightWithPriority(58, priority: .required)
-		let result = stack.embedInView(edges: .init(top: 12, left: 8, bottom: 16, right: 8))
-		result.cornerRadius(16, at: .all)
 		
-		return result
+		let result = stack.embedInView(edges: .init(top: 12, left: 8, bottom: 16, right: 8))
+		return result.background(.white)
 	}()
 	
 	private lazy var infoDetails: UIStackView = {
@@ -70,18 +71,18 @@ class NFTArtCollectionViewCell:UICollectionViewCell{
 	}()
 	
 	private func setupView() {
-		let stack: UIStackView = .init(arrangedSubviews: [imageView,infoView.background(.white)])
-		stack.axis = .vertical
+		let stack: UIStackView = .VStack(views: [imageView, infoView], spacing: 0, aligmment: .fill)
+		stack.clipsToBounds = true
+		stack.cornerRadius(16, at: .all)
 		addViewAndSetConstraints(stack, edgeInsets: .zero)
 		backgroundColor = .white
-		layer.cornerRadius = 16
+		cornerRadius(16, at: .all)
 		addShadow()
 	}
     
     override init(frame: CGRect) {
         super.init(frame: frame)
 		setupView()
-//        addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleTap)))
     }
     
     required init?(coder: NSCoder) {
@@ -97,7 +98,6 @@ class NFTArtCollectionViewCell:UICollectionViewCell{
     }
     
     func resetCell(){
-        self.artTitle.text = ""
 		self.imageView.image = .loadingBackgroundImage
     }
     
