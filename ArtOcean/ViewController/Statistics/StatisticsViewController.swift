@@ -32,14 +32,22 @@ class StatisticsViewController: UIViewController {
 //MARK: - Properties
 
 	private lazy var customSlideCollectionView: CustomSelectorDynamicCollectionView = {
-		.init(sections: [customArtSection,UserSection])
+		.init(sections: [customArtSection,customUserSection])
 	}()
 	
 	private let customArtSection: Section = {
-		let nfArtOfferSection = NFTArtOfferSection
-		nfArtOfferSection.layout.itemSize = .init(width: .totalWidth, height: 60)
-		nfArtOfferSection.layout.sectionInset = .zero
-		return nfArtOfferSection
+		let section = NFTArtOfferSection
+		section.layout.itemSize = .init(width: .totalWidth, height: 60)
+		section.layout.sectionInset = .zero
+		section.layout.minimumLineSpacing = 0
+		return section
+	}()
+	
+	private let customUserSection: Section = {
+		let section = UserSection
+		section.layout.sectionInset = .zero
+		section.layout.minimumLineSpacing = 0
+		return section
 	}()
 
 //MARK: - Overriden Methods

@@ -297,7 +297,6 @@ extension NFTDetailArtViewController{
 		let navBarOffset = min(scrollView.contentOffset.y - headerHeight * 0.75,0)
 		self.navigationController?.navigationBar.transform = .init(translationX: 0, y: navBarOffset)
 		navHeader.animateIn(offset: navBarOffset)
-//		let _ = heroHeaderView?.animateHeaderView(scrollView)
 		heroHeaderView?.animateHeaderView(scrollView)
     }
 	

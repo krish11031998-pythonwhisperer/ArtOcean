@@ -38,6 +38,7 @@
 		EF325A062880BFDA001B0CA6 /* Numeric.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF325A052880BFDA001B0CA6 /* Numeric.swift */; };
 		EF358377284D371C00783D75 /* StretchyHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF358376284D371C00783D75 /* StretchyHeaderView.swift */; };
 		EF35CD7728BD366100DE1872 /* CGRect.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF35CD7628BD366100DE1872 /* CGRect.swift */; };
+		EF35CD7928BF3FB300DE1872 /* UIBarButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF35CD7828BF3FB300DE1872 /* UIBarButton.swift */; };
 		EF3B4D51287073E400DD57DB /* NFTArtIntroductionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF3B4D50287073E400DD57DB /* NFTArtIntroductionView.swift */; };
 		EF3BF928287813E80070CAE5 /* UIEdgeInsets.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF3BF927287813E80070CAE5 /* UIEdgeInsets.swift */; };
 		EF3BF92A287AB3D10070CAE5 /* NFTAttributeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF3BF929287AB3D10070CAE5 /* NFTAttributeView.swift */; };
@@ -223,6 +224,7 @@
 		EF325A052880BFDA001B0CA6 /* Numeric.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Numeric.swift; sourceTree = "<group>"; };
 		EF358376284D371C00783D75 /* StretchyHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StretchyHeaderView.swift; sourceTree = "<group>"; };
 		EF35CD7628BD366100DE1872 /* CGRect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGRect.swift; sourceTree = "<group>"; };
+		EF35CD7828BF3FB300DE1872 /* UIBarButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIBarButton.swift; sourceTree = "<group>"; };
 		EF3B4D50287073E400DD57DB /* NFTArtIntroductionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NFTArtIntroductionView.swift; sourceTree = "<group>"; };
 		EF3BF927287813E80070CAE5 /* UIEdgeInsets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIEdgeInsets.swift; sourceTree = "<group>"; };
 		EF3BF929287AB3D10070CAE5 /* NFTAttributeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NFTAttributeView.swift; sourceTree = "<group>"; };
@@ -599,6 +601,7 @@
 				EF7E59FD28B246C7008C7EC6 /* NotificationCenter.swift */,
 				EF12304D28B3EAB6000DCAB2 /* ClosedRange.swift */,
 				EF35CD7628BD366100DE1872 /* CGRect.swift */,
+				EF35CD7828BF3FB300DE1872 /* UIBarButton.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -946,6 +949,7 @@
 				EF527498284C1E5B008C77EC /* NSCollectionLayout.swift in Sources */,
 				EF7E59F028B156F0008C7EC6 /* UIWindow.swift in Sources */,
 				EF22D0CB285A378200555179 /* NFTLiveBidViewCellView.swift in Sources */,
+				EF35CD7928BF3FB300DE1872 /* UIBarButton.swift in Sources */,
 				EF325A062880BFDA001B0CA6 /* Numeric.swift in Sources */,
 				EF69B6B12854C11E00ABDADA /* StackedButtons.swift in Sources */,
 				EFAB446A2868840800B33864 /* UICollection.swift in Sources */,
