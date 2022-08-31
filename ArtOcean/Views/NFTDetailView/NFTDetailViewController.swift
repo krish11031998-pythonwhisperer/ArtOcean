@@ -19,7 +19,7 @@ class NFTDetailArtViewController:UIViewController{
     private var leadingOffScreen:CGFloat = 1000
     private let leadingOnScreen:CGFloat = 24
     private var imageScale:CGFloat = 1
-	private let headerHeight:CGFloat = 460
+	private let headerHeight:CGFloat = 360
     private var prices:[Double]? = []
 	private var offers:NFTArtOffers = .init(repeating: .init(name: "John Doe", percent: "5.93", price: 12.03, time: 5), count: 5)
 	private var navHeader: NFTDetailNavHeader = { NFTDetailNavHeader() }()
@@ -46,7 +46,7 @@ class NFTDetailArtViewController:UIViewController{
 
 	private var heroHeaderView:NFTHeroHeaderView?
 	
-	private lazy var artInteractiveInfoView:NFTArtInteractiveInfoView = .init(nft: self.nftArt ?? .init(contract: nil, id: nil, balance: nil, title: nil, description: nil, metadata: nil))
+	private lazy var artInteractiveInfoView:NFTArtInteractiveInfoView = .init()
 	
 	private var imageView:CustomImageView = CustomImageView(cornerRadius: 16)
 	
@@ -99,11 +99,13 @@ class NFTDetailArtViewController:UIViewController{
 		tableObserver = tableView.observe(\.contentOffset, changeHandler: {[weak self] target, _ in self?.updateOnScroll(target) })
 		navbarObserver = navigationController?.navigationBar.observe(\.frame) {[weak self] target,_ in self?.updateNavBarOnTransformation(target)}
 		loadChartData()
+		showFooter()
 	}
 	
 	override func viewWillDisappear(_ animated: Bool) {
 		super.viewWillDisappear(animated)
 		navigationController?.navigationBar.transform = .init(translationX: 0, y: 0)
+		hideFooter()
 	}
 	
     
@@ -138,6 +140,42 @@ class NFTDetailArtViewController:UIViewController{
 		view.insertSubview(heroHeaderView!, at: 0)
 	}
 	
+	private lazy var placeBidButtonFooter: UIView = {
+		let view: CustomLabelButton = .init(title: "Place a bid",
+											font: .bold, size: 14,
+											color: .Catalogue.greyscale50.color,
+											backgroundColor: .Catalogue.purple900.color) { [weak self] in
+			self?.showBiddingView()
+		}
+		view.setHeightWithPriority(50, priority: .required)
+		let result = view.embedInView(edges: .init(top: 12, left: 24, bottom: Self.safeAreaInset.bottom.ifZero(val: 12), right: 24)).background(.Catalogue.greyscale50.color)
+		return result
+	}()
+	
+	private func showFooter() {
+		guard let window = UIWindow.key else { return }
+		
+		window.addSubview(placeBidButtonFooter)
+		window.setWidthForChildWithPadding(placeBidButtonFooter, paddingFactor: 0)
+		window.setFrameLayout(childView: placeBidButtonFooter, alignment: .bottom)
+		
+		placeBidButtonFooter.transform = .init(translationX: 0, y: placeBidButtonFooter.compressedFittingSize.height)
+		
+		UIView.animate(withDuration: 0.25, delay: 0, options: .curveEaseInOut) {
+			self.placeBidButtonFooter.transform = .init(translationX: 0, y: 0)
+		}
+	}
+	
+	private func hideFooter() {
+		
+		UIView.animate(withDuration: 0.25, delay: 0, options: .curveEaseInOut) {
+			self.placeBidButtonFooter.transform = .init(translationX: 0, y: self.placeBidButtonFooter.compressedFittingSize.height)
+		} completion: { isFinished in
+			if isFinished { self.placeBidButtonFooter.removeFromSuperview() }
+		}
+
+		
+	}
         
 //    private var creatorLabel:UILabel = {
 //        return CustomLabel(text: "Pablo", size: 14, weight: .bold, color: .appBlueColor, numOfLines: 1,adjustFontSize: false)
@@ -206,14 +244,18 @@ class NFTDetailArtViewController:UIViewController{
 	
 	private var modalButton: TableSection? {
 		return .init(rows: [TableRow<CustomTableWrapperView<ButtonViewCell>>(.init(title:"Bid".styled(font: .medium, color: .white, size: 15)) { [weak self] in
-			let target = UINavigationController(rootViewController: NFTBiddingViewController(nftArtModel: self?.nftArt))
-			let presentationController = PresentationViewController(target: target, from: self, clickOnDismiss: true)
-			target.transitioningDelegate = presentationController
-			target.modalPresentationStyle = .custom
-			self?.present(target, animated: true) { presentationController }
+			self?.showBiddingView()
 		})])
 	}
 
+	private func showBiddingView() {
+		let target = UINavigationController(rootViewController: NFTBiddingViewController(nftArtModel: self.nftArt))
+		let presentationController = PresentationViewController(target: target, from: self, clickOnDismiss: true)
+		target.transitioningDelegate = presentationController
+		target.modalPresentationStyle = .custom
+		present(target, animated: true) { presentationController }
+	}
+	
 	private var backgroundimgView:CustomImageView = {
 		let imageView = CustomImageView(cornerRadius: 0)
 		return imageView

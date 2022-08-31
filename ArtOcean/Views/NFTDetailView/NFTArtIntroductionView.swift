@@ -38,7 +38,7 @@ class NFTArtIntroduction:ConfigurableCell{
 	func configureCell(with model: NFTModel) {
 		titleView = CustomLabel(text: model.Title, size: 18, weight: .bold, color: .appBlackColor, numOfLines: 1, adjustFontSize: true)
 		descriptionView = CustomLabel(text: model.Description, size: 14, weight: .medium, color: .appGrayColor, numOfLines: 3, adjustFontSize: false)
-		interactiveView = .init(nft: model)
+		interactiveView = .init()
 		backgroundColor = .clear
 		buildContentView()
 	}

@@ -79,6 +79,7 @@ class HomeViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+		view.backgroundColor = .Catalogue.greyscale50.color
 		buildTableView()
 		tableView?.reload(with: datasource)
         setupStatusBar()

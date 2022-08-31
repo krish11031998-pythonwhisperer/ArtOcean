@@ -43,7 +43,7 @@ class NFTArtInteractiveInfoView:UIView{
 		return stack
 	}()
     
-    init(nft:NFTModel){
+	override init(frame: CGRect){
         super.init(frame: .zero)
 		addViewAndSetConstraints(stackView, edgeInsets: .zero)
     }

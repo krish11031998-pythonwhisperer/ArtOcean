@@ -15,7 +15,7 @@ class NFTHeroHeaderView:UIView{
 	private var height:CGFloat
 	private var imageScale:CGFloat = 1
 	private let originalImageWidth:CGFloat = UIScreen.main.bounds.width - 32
-	public let originalImageHeight:CGFloat = UIScreen.main.bounds.height * 0.35
+	public let originalImageHeight:CGFloat = 230
 	private let imageViewTopPadding:CGFloat = 132
 	private var imageWidthConstraint:NSLayoutConstraint? = nil
 	private var imageHeightConstraint:NSLayoutConstraint? = nil

@@ -36,6 +36,8 @@ extension CGFloat {
 			return self
 		}
 	}
+	
+	func ifZero(val: CGFloat) -> CGFloat { self == 0 ? val : self }
 }
 
 extension ClosedRange {

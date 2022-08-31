@@ -45,4 +45,35 @@ extension UIColor {
     static var appDarkGrayColor:UIColor = .init(hexString: "3C3C3C")
     static var appPurpleColor:UIColor = .init(hexString: "5D5FEF")
     static var appPurple50Color:UIColor = .init(hexString: "EFEFFD")
+	
+	enum Catalogue: String {
+		case greyscale50
+		case greyscale100
+		case greyscale200
+		case greyscale300
+		case greyscale400
+		case greyscale500
+		case greyscale600
+		case greyscale700
+		case greyscale800
+		case greyscale900
+		case purple50
+		case purple100
+		case purple200
+		case purple300
+		case purple400
+		case purple500
+		case purple600
+		case purple700
+		case purple800
+		case purple900
+		case appBlue
+		case appGreen
+		case appRed
+		case appOrange
+		
+		var color: UIColor {
+			.init(named: self.rawValue) ?? .black
+		}
+	}
 }
