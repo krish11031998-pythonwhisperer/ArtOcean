@@ -31,7 +31,7 @@ class SliderSelector:UIView{
     
     init(tabs:[SlideSelectorItem]){
         self.tabs = tabs
-        super.init(frame: .zero)
+		super.init(frame: .init(origin: .zero, size: .init(width: UIScreen.main.bounds.width - 20, height: 50)))
         cornerRadius = 20
         backgroundColor = UIColor(red: 0.953, green: 0.969, blue: 0.976, alpha: 1)
         tabStackBuilder()

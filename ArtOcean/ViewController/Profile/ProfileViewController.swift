@@ -38,7 +38,7 @@ class ProfileViewController: UIViewController {
 	private lazy var segmentedControl: UIView = {
 		let slider = SliderSelector(tabs: tabs)
 		slider.delegate = self
-		return slider.embedInView(edges: .init(top: 20, left: 10, bottom: 10, right: 10))
+		return slider.embedInView(edges: .init(top: 20, left: 10, bottom: 10, right: 10), priority: .init(999))
 	}()
 	
 	private var observer: NSKeyValueObservation?
@@ -101,8 +101,8 @@ class ProfileViewController: UIViewController {
 
 	private var offers: TableSection? {
 		guard let items = NFTArtOfferSection.items else { return nil }
-		let stackedCells: [UIView] = items.compactMap(\.nftOffer?.buttonView)
-		return .init(headerView: segmentedControl, rows: stackedCells.compactMap { $0.TableRowBuilder(edges: .init(vertical: 20, horizontal: 16)) })
+		let stackedCells: [CellProvider] = items.compactMap(\.nftOffer?.tableCell)
+		return .init(headerView: segmentedControl, rows: stackedCells)
 	}
 	
 	private var items: [TableCollectionSection]? {

@@ -219,10 +219,10 @@ extension UIView{
 		return view
 	}
 	
-	func embedInView(edges: UIEdgeInsets) -> UIView {
+	func embedInView(edges: UIEdgeInsets, priority: UILayoutPriority = .required) -> UIView {
 		let view = UIView(frame: bounds.expand(edges: edges))
 		view.addSubview(self)
-		view.setConstraintsToChild(self, edgeInsets: edges)
+		view.setConstraintsToChild(self, edgeInsets: edges, withPriority: priority.rawValue)
 		return view
 	}
 	
