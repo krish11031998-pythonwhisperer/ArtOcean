@@ -62,7 +62,7 @@ class NFTArtTypeCollectionView:UICollectionView{
         
         showsVerticalScrollIndicator = false
         showsHorizontalScrollIndicator = false
-        backgroundColor = .white
+        backgroundColor = .surfaceBackground
 		heightAnchor.constraint(equalToConstant: layout.itemSize.height + 10).isActive = true
     }
     

@@ -12,7 +12,7 @@ class ContainerHeaderView: UIView{
     private var buttonHandler:(() -> Void)? = nil
     private var includeButton:Bool = false
     
-    private lazy var headerLabel:UILabel = self.labelBuilder(text: "Live Bidding", size: 16, weight: .bold, color: .black, numOfLines: 1)
+    private lazy var headerLabel:UILabel = self.labelBuilder(text: "Live Bidding", size: 16, weight: .bold, color: .textColor, numOfLines: 1)
     
     private lazy var rightButton:UIButton = {
         let button = UIButton()

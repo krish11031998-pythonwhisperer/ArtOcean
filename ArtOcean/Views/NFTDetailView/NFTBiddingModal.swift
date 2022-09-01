@@ -85,7 +85,7 @@ class NFTBiddingModal:UIView{
         
         self.addSubview(self.closeButton)
         
-        self.backgroundColor = .white
+        self.backgroundColor = .surfaceBackground
         self.layer.borderColor = UIColor.appBlackColor.withAlphaComponent(0.3).cgColor
         self.layer.borderWidth = 1
         self.layer.cornerRadius = 16

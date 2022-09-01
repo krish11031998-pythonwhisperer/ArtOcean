@@ -17,8 +17,8 @@ class MainTabController: UITabBarController {
         tabBar.layer.cornerRadius = 10
 
         let appearance = UITabBarAppearance()
-        appearance.backgroundColor = .appWhiteBackgroundColor
-        appearance.selectionIndicatorTintColor = .appBlueColor
+        appearance.backgroundColor = .surfaceBackground
+        appearance.selectionIndicatorTintColor = .purple900
         
         tabBar.standardAppearance = appearance
         tabBar.scrollEdgeAppearance = appearance

@@ -51,7 +51,7 @@ class CustomLabelButton:UIButton{
 			configuration?.image = configuration?.image?.withTintColor(color)
 			updateTitle(color: color)
 			if isSelected {
-				backgroundColor = .white
+				backgroundColor = .surfaceBackground
 				cornerRadius = 15
 			} else {
 				backgroundColor = .clear

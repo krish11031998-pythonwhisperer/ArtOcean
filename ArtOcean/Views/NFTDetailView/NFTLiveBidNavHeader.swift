@@ -19,7 +19,7 @@ class NFTDetailNavHeader: UIView {
 	}()
 	
 	private lazy var titleView: UILabel = {
-		let label = CustomLabel(text: "", size: 18, weight: .bold, color: .appBlackColor, numOfLines: 1)
+		let label = CustomLabel(text: "", size: 18, weight: .bold, color: .textColor, numOfLines: 1)
 		return label
 	}()
 	

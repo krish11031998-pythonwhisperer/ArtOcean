@@ -52,7 +52,7 @@ class ProfileAssetCollectionViewController:UIViewController{
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = .white
+        self.view.backgroundColor = .surfaceBackground
 		showNavBar()
         setupNavBar()
 		view.addSubview(mainStack)

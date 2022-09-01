@@ -46,12 +46,12 @@ class NFTAttributeCell:UIView{
 		stackView.translatesAutoresizingMaskIntoConstraints = false
 		stackView.spacing = 8
 		
-		trait_type = CustomLabel(text: "", size: 14, weight: .medium, color: .appGrayColor, numOfLines: 1, adjustFontSize: false)
+		trait_type = CustomLabel(text: "", size: 14, weight: .medium, color: .subtitleColor, numOfLines: 1, adjustFontSize: false)
 		stackView.addArrangedSubview(trait_type!)
 		
 		stackView.addArrangedSubview(.spacer())
 		
-		value_label = CustomLabel(text: "" , size: 14, weight: .bold, color: .appBlackColor, numOfLines: 1, adjustFontSize: false)
+		value_label = CustomLabel(text: "" , size: 14, weight: .bold, color: .textColor, numOfLines: 1, adjustFontSize: false)
 		stackView.addArrangedSubview(value_label!)
 		
 	

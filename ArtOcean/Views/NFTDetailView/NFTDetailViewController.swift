@@ -23,10 +23,14 @@ class NFTDetailArtViewController:UIViewController{
     private var prices:[Double]? = []
 	private var offers:NFTArtOffers = .init(repeating: .init(name: "John Doe", percent: "5.93", price: 12.03, time: 5), count: 5)
 	private var navHeader: NFTDetailNavHeader = { NFTDetailNavHeader() }()
-	private lazy var backButton:CustomButton = {
-		let button = CustomButton.backButton
+	
+	private lazy var backButton:CustomImageButton = {
+		let button: CustomImageButton = .backButton { [weak self] in
+			self?.navigationController?.popViewController(animated: true)
+		}
 		return button
 	}()
+	
 	private var tableView:UITableView = {
 		let tableView = UITableView(frame: .zero, style: .grouped)
 		tableView.backgroundColor = .clear
@@ -64,7 +68,6 @@ class NFTDetailArtViewController:UIViewController{
 		return view
 	}()
 	
-
 	private lazy var biddingController:Container = {
 		let container:Container = .init(innerView: NFTBiddingController(), innerViewSize: .init(width:.zero,height: 82))
 		return container
@@ -114,18 +117,13 @@ class NFTDetailArtViewController:UIViewController{
 		setupStatusBar()
 		navHeader.configureHeader(imageUrl: nftArt?.metadata?.image , title: nftArt?.Title ?? "")
         self.navigationItem.titleView = navHeader
-        self.navigationItem.leftBarButtonItem = self.backBarButton
+        self.navigationItem.leftBarButtonItem = backBarButton
     }
     
     private lazy var backBarButton:UIBarButtonItem = {
         let barButton = UIBarButtonItem()
-        
-        let backButton = CustomButton(systemName: "chevron.left", handler: {
-            self.navigationController?.popViewController(animated: true)
-        }, autolayout: true)
-        backButton.handler = {
-            self.navigationController?.popViewController(animated: true)
-        }
+		
+		let backButton = CustomImageButton.backButton { self.navigationController?.popViewController(animated: true) }
         
         barButton.customView = backButton
         
@@ -148,8 +146,9 @@ class NFTDetailArtViewController:UIViewController{
 			self?.showBiddingView()
 		}
 		view.setHeightWithPriority(50, priority: .required)
-		let result = view.embedInView(edges: .init(top: 12, left: 24, bottom: Self.safeAreaInset.bottom.ifZero(val: 12), right: 24)).background(.Catalogue.greyscale50.color)
-		return result
+		let result = view.embedInView(edges: .init(top: 12, left: 24, bottom: Self.safeAreaInset.bottom.ifZero(val: 12), right: 24))
+
+		return result.background(.surfaceBackground)
 	}()
 	
 	private func showFooter() {
@@ -210,16 +209,15 @@ class NFTDetailArtViewController:UIViewController{
 //
 //    }()
     
-   
-	
 	func buildTable(){
 		view.addSubview(tableView)
 		buildTableHeaderView()
 		tableView.reload(with: buildDataSource())
+		view.setConstraintsToChild(tableView, edgeInsets: .init(top: 0, left: 0, bottom: Self.safeAreaInset.bottom, right: 0))
 	}
 	
 	func buildDataSource() -> TableViewDataSource{
-		.init(section: [artIntroduction, priceHistorySection, attributeSection, offerSection, modalButton].compactMap{ $0 })
+		.init(section: [artIntroduction, priceHistorySection, attributeSection, offerSection].compactMap{ $0 })
 	}
 	
 	private var artIntroduction:TableSection? {
@@ -242,12 +240,6 @@ class NFTDetailArtViewController:UIViewController{
 		return .init(title:"Offers",rows: offers.rows)
 	}
 	
-	private var modalButton: TableSection? {
-		return .init(rows: [TableRow<CustomTableWrapperView<ButtonViewCell>>(.init(title:"Bid".styled(font: .medium, color: .white, size: 15)) { [weak self] in
-			self?.showBiddingView()
-		})])
-	}
-
 	private func showBiddingView() {
 		let target = UINavigationController(rootViewController: NFTBiddingViewController(nftArtModel: self.nftArt))
 		let presentationController = PresentationViewController(target: target, from: self, clickOnDismiss: true)
@@ -270,9 +262,7 @@ class NFTDetailArtViewController:UIViewController{
 		tableHeaderView = UIView(frame: .init(origin: .zero, size: .init(width: UIScreen.main.bounds.width, height: headerHeight)))
 		tableHeaderView!.backgroundColor = .clear
 		tableHeaderView!.isUserInteractionEnabled = true
-		backButton.handler = { [weak self] in
-			self?.navigationController?.popViewController(animated: true)
-		}
+		backButton.handler = { [weak self] in self?.navigationController?.popViewController(animated: true) }
 		tableHeaderView!.addSubview(backButton)
 		tableHeaderView!.setFrameLayout(childView: backButton, alignment: .topLeading, paddingFactor: .init(vertical: 56, horizontal: 16))
 		tableView.tableHeaderView = tableHeaderView
@@ -288,16 +278,14 @@ class NFTDetailArtViewController:UIViewController{
     //MARK: - View Setups
     
     func setupView(){
-        view.backgroundColor = .white
+        view.backgroundColor = .surfaceBackground
         navigationController?.isNavigationBarHidden = true
         navigationController?.navigationBar.isTranslucent = false
     }
     
-    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
 }
 
 //MARK: - ViewBuilder Helpers
@@ -307,7 +295,6 @@ extension NFTDetailArtViewController{
     func closeDetailView(){
         self.navigationController?.popViewController(animated: true)
     }
-
 }
 
 

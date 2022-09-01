@@ -11,7 +11,7 @@ import UIKit
 class NFTHeroHeaderView:UIView{
     
     //MARK: - View Properties
-	//    private var onCloseHandler:(() -> Void)
+	
 	private var height:CGFloat
 	private var imageScale:CGFloat = 1
 	private let originalImageWidth:CGFloat = UIScreen.main.bounds.width - 32
@@ -50,7 +50,6 @@ class NFTHeroHeaderView:UIView{
     
     private func setupViews(){
 		addSubview(backdropImage)
-//		addSubview(backButton)
 		addSubview(imageView)
 		imageView.updateImageView(url: nftArt.metadata?.image)
     }

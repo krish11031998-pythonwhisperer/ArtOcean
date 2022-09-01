@@ -56,8 +56,8 @@ typealias NFTArtOffers = [NFTArtOffer]
 
 extension NFTArtOffer {
 	
-	var tableCell: CellProvider { TableRow<CustomInfoButtonCell>(.init(self, withArtImage: true)) }
-	var collectionCell: CollectionCellProvider { CollectionColumn<CustomInfoButtonCollectionCell>(.init(self, withArtImage: true)) }
+	var tableCell: CellProvider { TableRow<CustomInfoButtonCell>(.init(self, withArtImage: false)) }
+	var collectionCell: CollectionCellProvider { CollectionColumn<CustomInfoButtonCollectionCell>(.init(self, withArtImage: false)) }
 	var buttonView: CustomInfoButton {
 		let button = CustomInfoButton()
 		button.updateUIButton(.init(self, withArtImage: true, action: {

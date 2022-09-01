@@ -28,27 +28,33 @@ class TopSellerCollectionViewCell:UICollectionViewCell{
     
     private var seller:SellerData? = nil
     
+	private lazy var mainStack: UIStackView = { .HStack(views: [imageView, namePercentLabel], spacing: 12, aligmment: .center) }()
+	
     private lazy var imageView:CustomImageView = {
         let imageView = CustomImageView(cornerRadius: 15)
-        imageView.backgroundColor = .black
-        imageView.translatesAutoresizingMaskIntoConstraints = false
+		imageView.image = .loadingBackgroundImage
         return imageView
     }()
     
-    private lazy var nameLabel:UILabel = self.labelBuilder(text: "", size: 14, weight: .medium, color: .black, numOfLines: 1)
+    private lazy var nameLabel:UILabel = self.labelBuilder(text: "", size: 14, weight: .medium, color: .textColor, numOfLines: 1)
     
     private lazy var percentLabel:UILabel = self.labelBuilder(text: "23.5", size: 12, weight: .medium, color: .appGreenColor, numOfLines: 1, adjustFontSize: true)
     
+	private lazy var namePercentLabel: HeaderCaptionLabel = {
+		let label: HeaderCaptionLabel = .init()
+		return label
+	}()
+	
     private lazy var namePercentLabelStack:UIStackView = {
-        let stack = UIView.StackBuilder(views: [self.nameLabel,self.percentLabel], ratios: [0.5,0.5], spacing: 2, axis: .vertical)
+		let stack: UIStackView = .VStack(views: [nameLabel, percentLabel], spacing: 2) //UIView.StackBuilder(views: [self.nameLabel,self.percentLabel], ratios: [0.5,0.5], spacing: 2, axis: .vertical)
         return stack
     }()
     
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        addSubview(self.imageView)
-        addSubview(self.namePercentLabelStack)
+		addSubview(mainStack)
+		setConstraintsToChild(mainStack, edgeInsets: .zero)
         setupLayout()
     }
     
@@ -63,23 +69,16 @@ class TopSellerCollectionViewCell:UICollectionViewCell{
             self.imageView.updateImageView(url: seller.image)
         }
         
-        DispatchQueue.main.async {
-            self.nameLabel.text = seller.name
-        }
+//        DispatchQueue.main.async {
+//            self.nameLabel.text = seller.name
+//        }
+		namePercentLabel.configureLabel(title: seller.name.body2Medium(), subTitle: "23.5".body3Medium(color: .appGreen))
     
     }
     
     func setupLayout(){
-        self.imageView.leadingAnchor.constraint(equalTo: self.leadingAnchor).isActive = true
-        self.imageView.widthAnchor.constraint(equalToConstant: 32).isActive = true
-        self.imageView.heightAnchor.constraint(equalToConstant: 32).isActive = true
-        self.imageView.layer.cornerRadius = 16
-        self.imageView.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
-        
-        self.namePercentLabelStack.leadingAnchor.constraint(equalTo: self.imageView.trailingAnchor, constant: 12).isActive = true
-        self.namePercentLabelStack.trailingAnchor.constraint(equalTo: self.trailingAnchor).isActive = true
-        self.namePercentLabelStack.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
-        self.namePercentLabelStack.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
+		imageView.setFrameConstraints(size: .squared(32), withPriority: .required)
+		imageView.cornerRadius(16, at: .all)
     }
     
 }

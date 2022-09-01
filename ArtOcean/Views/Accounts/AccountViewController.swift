@@ -32,7 +32,7 @@ class AccountViewController: UIViewController {
 	private lazy var tableView: UITableView = {
 		let table: UITableView = .init(frame: .zero, style: .grouped)
 		table.separatorStyle = .none
-		table.backgroundColor = .white
+		table.backgroundColor = .surfaceBackground
 		table.separatorStyle = .none
 		table.separatorInset = .init(vertical: 0, horizontal: 16)
 		table.separatorColor = .appGrayColor.withAlphaComponent(0.45)

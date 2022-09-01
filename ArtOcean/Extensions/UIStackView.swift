@@ -18,7 +18,7 @@ extension UIStackView {
 		return stack
 	}
 	
-	static func HStack(views:[UIView] = [],spacing: CGFloat = .zero, aligmment: Alignment) -> UIStackView {
+	static func HStack(views:[UIView] = [],spacing: CGFloat = .zero, aligmment: Alignment = .fill) -> UIStackView {
 		let stack = UIStackView(arrangedSubviews: views)
 		stack.axis = .horizontal
 		stack.spacing = spacing

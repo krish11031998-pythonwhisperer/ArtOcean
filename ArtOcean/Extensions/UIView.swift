@@ -134,7 +134,7 @@ extension UIView{
 	
     
     func addShadow(){
-        self.layer.shadowColor = UIColor.black.cgColor
+        self.layer.shadowColor = UIColor.surfaceBackgroundInverse.cgColor
         self.layer.shadowOpacity = 0.2
         self.layer.shadowOffset = .zero
         self.layer.shadowRadius = 2.5
@@ -147,7 +147,7 @@ extension UIView{
 		self.layer.shadowRadius = 0
 	}
 	
-	func addGradientView(colors: [UIColor] = [.clear,.white,.white], size: CGSize) {
+	func addGradientView(colors: [UIColor] = [.clear,.surfaceBackground,.surfaceBackground], size: CGSize) {
 		let gradient = CAGradientLayer()
 		gradient.colors = colors.map { $0.cgColor }
 		gradient.frame = .init(origin: .zero, size: .init(width:size.width,height:size.height))
@@ -240,6 +240,10 @@ extension UIView{
 		}
 		return view
 	}
+	
+	var interface: UIUserInterfaceStyle { traitCollection.userInterfaceStyle }
+	
+	var inverseInterface: UIUserInterfaceStyle { traitCollection.userInterfaceStyle == .light ? .dark : .light }
 	
 }
 

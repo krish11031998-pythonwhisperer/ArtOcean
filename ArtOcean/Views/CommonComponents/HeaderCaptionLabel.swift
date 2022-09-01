@@ -37,6 +37,9 @@ class HeaderCaptionLabel: UIView {
 	}()
 	
 	private func leadingStack(title: RenderableText? = nil, subTitle: RenderableText? = nil) -> UIStackView? {
+		
+		guard title != nil, subTitle != nil else { return nil }
+		
 		let leadingStack: UIStackView = .init()
 		leadingStack.axis = .vertical
 		leadingStack.spacing = 10
@@ -44,17 +47,24 @@ class HeaderCaptionLabel: UIView {
 		if let validTitle = title {
 			validTitle.renderInto(target: leadingTopLabel)
 			leadingStack.addArrangedSubview(leadingTopLabel)
+		} else {
+			leadingTopLabel.isHidden = true
 		}
 		
 		if let validSubtitle = subTitle {
 			validSubtitle.renderInto(target: leadingBottomLabel)
 			leadingStack.addArrangedSubview(leadingBottomLabel)
+		} else {
+			leadingBottomLabel.isHidden = true
 		}
 		
 		return leadingStack
 	}
 	
 	private func trailingStack(info: RenderableText? = nil, footer: RenderableText? = nil) -> UIStackView? {
+		
+		guard info != nil, footer != nil else { return nil }
+		
 		let trailingStack: UIStackView = .init()
 		trailingStack.axis = .vertical
 		trailingStack.spacing = 10
@@ -62,11 +72,15 @@ class HeaderCaptionLabel: UIView {
 		if let validTitle = info {
 			validTitle.renderInto(target: trailingTopLabel)
 			trailingStack.addArrangedSubview(trailingTopLabel)
+		} else {
+			trailingTopLabel.isHidden = true
 		}
 		
 		if let validSubtitle = footer {
 			validSubtitle.renderInto(target: trailingBottomLabel)
 			trailingStack.addArrangedSubview(trailingBottomLabel)
+		} else {
+			trailingBottomLabel.isHidden = true
 		}
 		
 		return trailingStack
@@ -85,7 +99,7 @@ class HeaderCaptionLabel: UIView {
 			imageView?.setFrameConstraints(size: .squared(64))
 		}
 		
-		let views = [imageView,leadingStack(title: title, subTitle: subTitle),.spacer(width: .zero),trailingStack(info: info, footer: footer)]
+		let views = [imageView,leadingStack(title: title, subTitle: subTitle),trailingStack(info: info, footer: footer)]
 		views.compactMap { $0 }.forEach {
 			mainStack.addArrangedSubview($0)
 		}

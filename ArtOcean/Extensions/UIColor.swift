@@ -71,9 +71,42 @@ extension UIColor {
 		case appGreen
 		case appRed
 		case appOrange
+		case surfaceBackground
+		case surfaceBackgroundInverse
+		case subtitleColor
+		case textColor
 		
 		var color: UIColor {
 			.init(named: self.rawValue) ?? .black
 		}
 	}
+	
+	static var greyscale50 : UIColor { Catalogue.greyscale50.color }
+	static var greyscale100 : UIColor { Catalogue.greyscale100.color }
+	static var greyscale200 : UIColor { Catalogue.greyscale200.color }
+	static var greyscale300 : UIColor { Catalogue.greyscale300.color }
+	static var greyscale400 : UIColor { Catalogue.greyscale400.color }
+	static var greyscale500 : UIColor { Catalogue.greyscale500.color }
+	static var greyscale600 : UIColor { Catalogue.greyscale600.color }
+	static var greyscale700 : UIColor { Catalogue.greyscale700.color }
+	static var greyscale800 : UIColor { Catalogue.greyscale800.color }
+	static var greyscale900 : UIColor { Catalogue.greyscale900.color }
+	static var purple50 : UIColor { Catalogue.purple50.color }
+	static var purple100 : UIColor { Catalogue.purple100.color }
+	static var purple200 : UIColor { Catalogue.purple200.color }
+	static var purple300 : UIColor { Catalogue.purple300.color }
+	static var purple400 : UIColor { Catalogue.purple400.color }
+	static var purple500 : UIColor { Catalogue.purple500.color }
+	static var purple600 : UIColor { Catalogue.purple600.color }
+	static var purple700 : UIColor { Catalogue.purple700.color }
+	static var purple800 : UIColor { Catalogue.purple800.color }
+	static var purple900 : UIColor { Catalogue.purple900.color }
+	static var appBlue : UIColor { Catalogue.appBlue.color }
+	static var appGreen : UIColor { Catalogue.appGreen.color }
+	static var appRed : UIColor { Catalogue.appRed.color }
+	static var appOrange : UIColor { Catalogue.appOrange.color }
+	static var surfaceBackground : UIColor { Catalogue.surfaceBackground.color }
+	static var surfaceBackgroundInverse : UIColor { Catalogue.surfaceBackgroundInverse.color }
+	static var subtitleColor : UIColor { Catalogue.subtitleColor.color }
+	static var textColor : UIColor { Catalogue.textColor.color }
 }

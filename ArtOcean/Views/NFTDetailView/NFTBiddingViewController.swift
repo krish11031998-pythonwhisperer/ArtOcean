@@ -76,11 +76,11 @@ class NFTBiddingViewController: UIViewController {
 	}()
 	
 	private lazy var plusButton: CustomImageButton = {
-		.init(name: .plus, addBG: false, tintColor: .appBlackColor, bgColor: .clear)
+		.init(name: .plus, addBG: false, tintColor: .surfaceBackgroundInverse, bgColor: .clear)
 	}()
 	
 	private lazy var minusButton: CustomImageButton = {
-		.init(name: .minus, addBG: false, tintColor: .appBlackColor, bgColor: .clear)
+		.init(name: .minus, addBG: false, tintColor: .surfaceBackgroundInverse, bgColor: .clear)
 	}()
 	
 	private lazy var imageView: CustomImageView = {
@@ -105,7 +105,7 @@ class NFTBiddingViewController: UIViewController {
 			self?.presentingViewController?.dismiss(animated: true)
 		}
 		
-		"Place A Bid".styled(font: .bold, color: .appBlackColor, size: 22.5).renderInto(target: title)
+		"Place A Bid".heading3().renderInto(target: title)
 		
 		navigationItem.leftBarButtonItem = .init(customView: title)
 		navigationItem.rightBarButtonItem = .init(customView: closeButton)
@@ -114,7 +114,7 @@ class NFTBiddingViewController: UIViewController {
 	}
 	
 	override func viewDidLoad() {
-		view.backgroundColor = .white
+		view.backgroundColor = .surfaceBackground
 		view.cornerRadius(32, at: .top)
 		
 		setupNavBar()
@@ -137,8 +137,8 @@ class NFTBiddingViewController: UIViewController {
 		
 		guard let validNFT = nftArt else { return }
 		
-		let title: RenderableText = validNFT.Title.styled(font: .medium, color: .appBlackColor, size: 20)
-		let subTitle: RenderableText = (validNFT.id?.tokenId ?? "").styled(font: .regular, color: .appGrayColor, size: 13)
+		let title: RenderableText = validNFT.Title.heading3()
+		let subTitle: RenderableText = (validNFT.id?.tokenId ?? "").body2Regular()
 		headerInfoLabel.configureLabel(title: title, subTitle: subTitle)
 		let stack: UIStackView = .HStack(views:[imageView, headerInfoLabel], spacing: 8,aligmment: .top)
 		
@@ -151,8 +151,8 @@ class NFTBiddingViewController: UIViewController {
 		
 		guard let validNFT = nftArt else { return nil }
 		
-		let title: RenderableText = validNFT.Title.styled(font: .medium, color: .appBlackColor, size: 20)
-		let subTitle: RenderableText = (validNFT.id?.tokenId ?? "").styled(font: .regular, color: .appGrayColor, size: 13)
+		let title: RenderableText = validNFT.Title.replace(val: "XXXX").heading3()
+		let subTitle: RenderableText = (validNFT.id?.tokenId ?? "").body2Regular(color: .subtitleColor)
 		headerInfoLabel.configureLabel(title: title, subTitle: subTitle)
 		let stack: UIStackView = .HStack(views:[imageView, headerInfoLabel], spacing: 8,aligmment: .top)
 		
@@ -164,8 +164,8 @@ class NFTBiddingViewController: UIViewController {
 	private var priceIndicator: TableSection? {
 		let stack: UIStackView = .HStack(spacing: 8,aligmment: .fill)
 
-		"0.038 ETH".styled(font: .bold, color: .appBlackColor, size: 24).renderInto(target: priceLabel)
-		"Balance: {} ETH".replace(val: "0.045").styled(font: .medium, color: .appGrayColor, size: 14).renderInto(target: balanceLabel)
+		"0.038 ETH".heading2().renderInto(target: priceLabel)
+		"Balance: {} ETH".replace(val: "0.045").body2Medium(color: .subtitleColor).renderInto(target: balanceLabel)
 		
 		let img = UIImageView(image: UIImage.Catalogue.eth.image.resized(.init(width: 12, height: 20)))
 		img.contentMode = .scaleAspectFit

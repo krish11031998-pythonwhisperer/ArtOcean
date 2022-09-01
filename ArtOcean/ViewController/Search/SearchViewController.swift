@@ -51,7 +51,7 @@ class SearchViewController:UIViewController{
 		let collection = UICollectionView(frame: .zero, collectionViewLayout: .init())
 		collection.showsVerticalScrollIndicator = false
 		collection.showsHorizontalScrollIndicator = false
-		collection.backgroundColor = .white
+		collection.backgroundColor = .surfaceBackground
 		return collection
 	}()
 	

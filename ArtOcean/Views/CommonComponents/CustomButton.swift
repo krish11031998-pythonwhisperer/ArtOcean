@@ -115,8 +115,8 @@ class CustomImageButton: UIButton {
 		name:UIImage.Catalogue?,
 		frame:CGSize = .squared(32),
 		addBG: Bool = true,
-		tintColor: UIColor = .black,
-		bgColor: UIColor = .appWhiteBackgroundColor,
+		tintColor: UIColor = .surfaceBackgroundInverse,
+		bgColor: UIColor = .surfaceBackground,
 		bordered: Bool = true,
 		handler:(() -> Void)? = nil) {
 		self.init(name: name, systemName: nil,url: nil, frame: frame, addBG: addBG,tintColor: tintColor,bgColor: bgColor,bordered: bordered, handler: handler)
@@ -126,8 +126,8 @@ class CustomImageButton: UIButton {
 		systemName:String?,
 		frame:CGSize = .squared(32),
 		addBG: Bool = true,
-		tintColor: UIColor = .black,
-		bgColor: UIColor = .appWhiteBackgroundColor,
+		tintColor: UIColor = .surfaceBackgroundInverse,
+		bgColor: UIColor = .surfaceBackground,
 		bordered: Bool = true,
 		handler:(() -> Void)? = nil) {
 		self.init(name: nil, systemName: systemName,url: nil, frame: frame, addBG: addBG,tintColor: tintColor,bgColor: bgColor,bordered: bordered, handler: handler)
@@ -137,8 +137,8 @@ class CustomImageButton: UIButton {
 		url:String?,
 		frame:CGSize = .squared(32),
 		addBG: Bool = true,
-		tintColor: UIColor = .black,
-		bgColor: UIColor = .appWhiteBackgroundColor,
+		tintColor: UIColor = .surfaceBackgroundInverse,
+		bgColor: UIColor = .surfaceBackground,
 		bordered: Bool = true,
 		handler:(() -> Void)? = nil) {
 		self.init(name: nil, systemName: nil,url: url, frame: frame, addBG: addBG,tintColor: tintColor,bgColor: bgColor,bordered: bordered, handler: handler)

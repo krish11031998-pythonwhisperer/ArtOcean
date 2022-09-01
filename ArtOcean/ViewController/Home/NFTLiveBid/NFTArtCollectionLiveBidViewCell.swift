@@ -30,7 +30,7 @@ class NFTArtCollectionLiveBidViewCell: UICollectionViewCell {
         
         self.addShadow()
         
-        self.backgroundColor = .white
+        self.backgroundColor = .surfaceBackground
         self.layer.cornerRadius = 16
 
     }

@@ -102,7 +102,7 @@ class NFTChartView:UIView{
 		let loadingLabel = CustomLabel(text: "Loading...", size: 15, weight: .medium, color: .black, numOfLines: 1)
 		view.addSubview(loadingLabel)
 		view.setCentralizedChild(loadingLabel)
-		view.backgroundColor = .white
+		view.backgroundColor = .surfaceBackground
 		return view
 	}()
 		

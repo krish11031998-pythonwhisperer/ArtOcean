@@ -26,7 +26,7 @@ extension UIImageView {
 	}
 	
 	func blurGradientBackDrop(size: CGSize) {
-		let blurEffect = UIBlurEffect(style: .light)
+		let blurEffect = UIBlurEffect(style: traitCollection.userInterfaceStyle == .light ? .light : .dark)
 		let blurEffectView = UIVisualEffectView(effect: blurEffect)
 		blurEffectView.frame = .init(origin: .zero, size: size)
 		blurEffectView.autoresizingMask = [.flexibleWidth,.flexibleHeight]

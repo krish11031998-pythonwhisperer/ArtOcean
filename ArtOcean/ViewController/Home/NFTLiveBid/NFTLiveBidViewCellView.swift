@@ -15,11 +15,11 @@ class NFTLiveBidView : UIView {
     private lazy var imageView:CustomImageView = CustomImageView(cornerRadius: 16, maskedCorners: [.layerMinXMinYCorner,.layerMaxXMinYCorner])
   
     private lazy var title:UILabel = {
-        let label = self.labelBuilder(text: "", size: 14, weight: .bold, color: .appBlackColor, numOfLines: 1)
+        let label = self.labelBuilder(text: "", size: 14, weight: .bold, color: .textColor, numOfLines: 1)
         return label
     }()
     
-    private lazy var owner = self.labelBuilder(text: "", size: 12, weight: .medium, color: .appGrayColor, numOfLines: 1)
+    private lazy var owner = self.labelBuilder(text: "", size: 12, weight: .medium, color: .subtitleColor, numOfLines: 1)
     
     private lazy var price = self.labelBuilder(text: "3 ETH", size: 12, weight: .medium, color: .appGreenColor, numOfLines: 1)
 

@@ -83,7 +83,7 @@ class LiveBidDetailView: UIViewController  {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.addSubview(liveBidTableView)
-        self.view.backgroundColor = .white
+        self.view.backgroundColor = .surfaceBackground
 		liveBidTableView.reload(with: buildDataSource())
     }
     
