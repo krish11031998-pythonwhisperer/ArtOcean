@@ -33,7 +33,7 @@ class SliderSelector:UIView{
         self.tabs = tabs
 		super.init(frame: .init(origin: .zero, size: .init(width: UIScreen.main.bounds.width - 20, height: 50)))
         cornerRadius = 20
-        backgroundColor = UIColor(red: 0.953, green: 0.969, blue: 0.976, alpha: 1)
+		backgroundColor = .surfaceBackgroundInverse.withAlphaComponent(0.5)
         tabStackBuilder()
     }
     
@@ -44,8 +44,8 @@ class SliderSelector:UIView{
     private lazy var tabsIndicators:[UIButton] = {
         let views:[UIButton] = self.tabs.compactMap { tab in
 			let button = CustomLabelButton()
-			button.title = tab.title.heading5()
-			button.image = tab.image?.resized(.squared(15))
+			button.title = tab.title.heading5(color: .textColor)
+			button.image = tab.image?.resized(.squared(15)).withTintColor(.surfaceBackgroundInverse)
 			button.accessibilityIdentifier = tab.title
 			button.handler = { [weak self] in
 				self?.tapHandler(tab.title)

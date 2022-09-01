@@ -43,16 +43,15 @@ class CustomSearchBar:UIView {
 		textField.delegate = self
 		
 		let imageView = UIImageView(frame: .init(origin: .zero, size: .smallestSqaure))
-		imageView.image = .Catalogue.searchOutline.image
+		imageView.image = .Catalogue.searchOutline.image.withTintColor(.surfaceBackgroundInverse)
 		imageView.contentMode = .scaleAspectFit
 		stack.addArrangedSubview(imageView)
 		stack.addArrangedSubview(textField)
 		
 		stack.translatesAutoresizingMaskIntoConstraints = false
-		stack.layer.borderColor = UIColor.appGrayColor.cgColor
 		stack.isLayoutMarginsRelativeArrangement = true
 		stack.layoutMargins = .init(vertical: 10, horizontal: 10)
-		stack.bordered()
+		stack.bordered(borderColor: .surfaceBackgroundInverse)
 		addSubview(stack)
 		
 		setConstraintsToChild(stack, edgeInsets: .init(top: 0, left: 10, bottom: 0, right: 10))

@@ -185,7 +185,6 @@ class WalletDetailView:UIViewController{
     }
     
     func setupViews(){
-//        view.addSubview(currentWalletBalanceView)
         tableView.dataSource = self
         tableView.delegate = self
         view.addSubview(balanceViewStack)

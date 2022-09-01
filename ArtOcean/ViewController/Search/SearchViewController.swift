@@ -44,6 +44,7 @@ class SearchViewController:UIViewController{
 	private lazy var searchBar:CustomSearchBar = {
 		let searchBar = CustomSearchBar()
 		searchBar.delegate = self
+		searchBar.backgroundColor = .surfaceBackground
 		return searchBar
 	}()
 	
@@ -57,18 +58,18 @@ class SearchViewController:UIViewController{
 	
 	func setupCollectionView(){
 		view.addSubview(collectionView)
-		view.setSafeAreaConstraintsToChild(collectionView, edgeInsets: .init(top: searchBar.compressedFittingSize.height + 40, left: 0, bottom: 0, right: 0))
+		view.setSafeAreaConstraintsToChild(collectionView, edgeInsets: .init(top: searchBar.compressedFittingSize.height + 50, left: 0, bottom: 0, right: 0))
 	}
 	
 	//MARK: - Setting Up View
 	
 	func setupNavbar(){
-		let label = CustomLabel(text: "Search", size: 22, weight: .bold, color: .black, numOfLines: 1)
+		let label = UILabel()
+		"Search".heading3().renderInto(target: label)
 		let leftBarItem = UIBarButtonItem(customView: label)
-		
+		setupStatusBar()
 		navigationItem.leftBarButtonItem = leftBarItem
 	}
-	
 	
 	func setupUI(){
 		let stackView: UIStackView = .VStack(views: [.spacer(height: 12).background(.red),searchBar,NFTArtTypeCollectionView()], spacing: 20, aligmment: .center)
@@ -77,6 +78,7 @@ class SearchViewController:UIViewController{
 		scrollView.addSubview(stackView)
 		scrollView.setConstraintsToChild(stackView, edgeInsets: .zero)
 		view.setSafeAreaConstraintsToChild(scrollView, edgeInsets: .zero)
+		view.backgroundColor = .surfaceBackground
 	}
 	
 }

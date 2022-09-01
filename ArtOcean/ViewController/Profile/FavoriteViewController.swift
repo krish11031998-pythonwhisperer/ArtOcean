@@ -70,7 +70,7 @@ class ProfileAssetCollectionViewController:UIViewController{
 		}
 		
 		let label: UILabel = .init()
-		pageName.styled(font: .bold, color: .black, size: 18).renderInto(target: label)
+		pageName.heading4().renderInto(target: label)
 		
         self.navigationItem.leftBarButtonItem = leftBarButton
 		self.navigationItem.titleView = label

@@ -33,11 +33,11 @@ class ProfileHeaderView:UIView {
 	
 	public var delegate:ProfileHeaderEventDelegate?
 	
-	private let name:UILabel = CustomLabel(text: "Krishna Venkat", size: 18, weight: .bold, color: .black, adjustFontSize: false)
+	private let name:UILabel = .init()
 	
-	private let username:UILabel = CustomLabel(text: "@cryptoPython", size: 14, weight: .medium, color: .gray, adjustFontSize: false)
+	private let username:UILabel = .init()
 	
-	private let profileHeader:UILabel =  CustomLabel(text: "Profile", size: 22, weight: .bold, color: .white)
+	private let profileHeader:UILabel = .init()
 	
 	private let settingButton:UIView = { CustomImageButton(name: .userOutline, frame: .squared(40), addBG: true, handler: nil) }()
 	
@@ -68,9 +68,8 @@ class ProfileHeaderView:UIView {
 		setupTopHeaderView()
 		userProfileView()
 		profileOptionsView()
-//		mainStack.addArrangedSubview(.spacer())
 		addViewAndSetConstraints(mainStack, edgeInsets: .zero)
-		
+		updateHeader()
 	}
 	
 //MARK: - Protected Methods
@@ -109,4 +108,13 @@ class ProfileHeaderView:UIView {
 		mainStack.addArrangedSubview(stack)
 		mainStack.setHorizontalConstraintsToChild(stack, edgeInsets: .init(vertical: .zero, horizontal: 20), withPriority: 999)
 	}
+
+//MARK: - Exposed Methods
+	
+	public func updateHeader() {
+		"Krishna Venkat".heading4().renderInto(target: name)
+		"@cryptoPython".body2Medium().renderInto(target: username)
+		"Profile".heading3().renderInto(target: profileHeader)
+	}
+	
 }

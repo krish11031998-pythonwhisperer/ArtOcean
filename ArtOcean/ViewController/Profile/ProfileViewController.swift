@@ -65,6 +65,8 @@ class ProfileViewController: UIViewController {
 		view.addSubview(backdropImage)
 		view.setWidthForChildWithPadding(backdropImage, paddingFactor: .zero)
 		backdropImage.setHeightWithPriority(200)
+		
+		view.backgroundColor = .surfaceBackground
 
 		view.addSubview(tableView)
 		view.setConstraintsToChild(tableView, edgeInsets: .zero)

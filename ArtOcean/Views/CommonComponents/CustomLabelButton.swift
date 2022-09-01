@@ -47,7 +47,7 @@ class CustomLabelButton:UIButton{
 	
 	public override var isSelected: Bool {
 		didSet {
-			let color: UIColor = isSelected ? .appPurpleColor : .black
+			let color: UIColor = isSelected ? .appPurpleColor : .textColor
 			configuration?.image = configuration?.image?.withTintColor(color)
 			updateTitle(color: color)
 			if isSelected {

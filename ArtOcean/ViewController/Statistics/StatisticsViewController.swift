@@ -72,11 +72,13 @@ class StatisticsViewController: UIViewController {
 		customSlideCollectionView.delegate = self
 		view.addSubview(customSlideCollectionView)
 		view.setSafeAreaConstraintsToChild(customSlideCollectionView, edgeInsets: .init(top: 16, left: 8, bottom: 0, right: 8))
+		view.backgroundColor = .surfaceBackground
 	}
 
 	private func configNavbar(){
 		let searchButton = CustomImageButton(name: .searchOutline, frame: .smallestSqaure, addBG: true, handler: nil)
-		let label = CustomLabel(text: "Statistics", size: 22, weight: .bold, color: .appBlackColor, numOfLines: 1,autoLayout: false)
+		let label = UILabel()
+		"Statistics".heading3().renderInto(target: label)
 		navigationItem.leftBarButtonItem = .init(customView: label)
 		navigationItem.rightBarButtonItem = .init(customView: searchButton)
 		setupStatusBar()
