@@ -98,7 +98,12 @@ class WalletDetailView:UIViewController{
     
     private var items:[TransactionModel] = txns
     
-    private let backButton:CustomButton = .backButton
+	private lazy var backButton:CustomImageButton = {
+		let button: CustomImageButton = .backButton { [weak self] in
+			self?.navigationController?.popViewController(animated: true)
+		}
+		return button
+	}()
     
     private let titleView:CustomLabel = .init(text: "Wallet", size: 18, weight: .bold, color: .black, numOfLines: 1, adjustFontSize: true, autoLayout: false)
     
@@ -184,7 +189,6 @@ class WalletDetailView:UIViewController{
     //MARK: - ViewController
     init(){
         super.init(nibName: nil, bundle: nil)
-        backButton.handler = self.popView
     }
     
     required init?(coder: NSCoder) {
@@ -225,23 +229,3 @@ class WalletDetailView:UIViewController{
     }
 }
 
-//MARK: - ViewBuilders
-extension WalletDetailView{
-    
-    func buttonBuilder(label:String,imageName:String,handler:@escaping () -> Void) -> UIStackView{
-        let button = CustomButton(frame: .init(origin: .zero, size: .init(width: 54, height: 54)), cornerRadius: 27, name: imageName, handler: handler, autolayout: false)
-        
-        let buttonName = CustomLabel(text: label, size: 14, weight: .medium, color: .appPurpleColor, numOfLines: 1, adjustFontSize: false, autoLayout: false)
-        
-        buttonName.textAlignment = .center
-        
-        let stack = UIStackView()
-        stack.axis = .vertical
-        
-        stack.addArrangedSubview(button)
-        stack.addArrangedSubview(buttonName)
-        
-        return stack
-    }
-    
-}

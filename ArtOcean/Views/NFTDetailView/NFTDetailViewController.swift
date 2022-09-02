@@ -61,18 +61,6 @@ class NFTDetailArtViewController:UIViewController{
 		return imageView
 	}()
 	
-	private lazy var placeBidModal:NFTBiddingModal = {
-		let view = NFTBiddingModal {
-			self.closeModal()
-		}
-		return view
-	}()
-	
-	private lazy var biddingController:Container = {
-		let container:Container = .init(innerView: NFTBiddingController(), innerViewSize: .init(width:.zero,height: 82))
-		return container
-	}()
-	
 // MARK: -  Constructors
     init(nftArt:NFTModel? = nil) {
 		self.nftArt = nftArt ?? NFTStorage.selectedArt

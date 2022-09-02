@@ -7,7 +7,7 @@
 
 import UIKit
 
-struct styleComponents{
+struct TabItemData {
     var name:String
     var icon:String
 }
@@ -18,11 +18,12 @@ enum Tabs{
     case search
     case statistics
     case profile
+	case add
 }
 
 
 extension Tabs{
-    func tabStyleComponents() -> styleComponents{
+    func tabStyleComponents() -> TabItemData{
         switch self {
         case .home:
             return .init(name: "Home", icon: "home")
@@ -32,6 +33,8 @@ extension Tabs{
             return .init(name: "Statistics", icon: "statistics")
         case .profile:
             return .init(name: "Profile", icon: "profile")
+		default:
+			return .init(name: "", icon: "")
         }
     }
 }
