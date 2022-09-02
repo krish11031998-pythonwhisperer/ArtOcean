@@ -37,7 +37,7 @@ class StatisticsViewController: UIViewController {
 	
 	private let customArtSection: Section = {
 		let section = NFTArtOfferSection
-		section.layout.itemSize = .init(width: .totalWidth, height: 60)
+		section.layout.itemSize = .init(width: .totalWidth - 16, height: 60)
 		section.layout.sectionInset = .zero
 		section.layout.minimumLineSpacing = 0
 		return section
@@ -45,6 +45,7 @@ class StatisticsViewController: UIViewController {
 	
 	private let customUserSection: Section = {
 		let section = UserSection
+		section.layout.itemSize.width -= 16
 		section.layout.sectionInset = .zero
 		section.layout.minimumLineSpacing = 0
 		return section

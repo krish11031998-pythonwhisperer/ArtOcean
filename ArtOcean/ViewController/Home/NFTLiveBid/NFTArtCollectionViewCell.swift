@@ -65,7 +65,7 @@ class NFTArtCollectionViewCell:UICollectionViewCell{
 		stack.distribution = .fill
 		stack.compressVerticalFit()
 		let result = stack.embedInView(edges: .init(top: 12, left: 8, bottom: 16, right: 8))
-		return result.background(.surfaceBackground)
+		return result
 	}()
 	
 	private lazy var infoDetails: UIStackView = {
@@ -78,9 +78,11 @@ class NFTArtCollectionViewCell:UICollectionViewCell{
 		stack.clipsToBounds = true
 		stack.cornerRadius(16, at: .all)
 		addViewAndSetConstraints(stack, edgeInsets: .zero)
-		backgroundColor = .surfaceBackground
+		stack.backgroundColor = interface == .light ? .surfaceBackground : .appIndigo
 		cornerRadius(16, at: .all)
-		addShadow()
+		
+		if !isDark { addShadow() }
+		
 	}
     
     override init(frame: CGRect) {
@@ -101,7 +103,9 @@ class NFTArtCollectionViewCell:UICollectionViewCell{
     }
     
     func resetCell(){
-		self.imageView.image = .loadingBackgroundImage
+		DispatchQueue.main.async {
+			self.imageView.image = .loadingBackgroundImage
+		}
     }
     
     public func updateUIWithNFT(_ nft:NFTModel,idx:Int? = nil){
@@ -119,18 +123,20 @@ class NFTArtCollectionViewCell:UICollectionViewCell{
 		print("(DEBUG) Reusing the cell!")
 		resetCell()
 	}
+	
+	override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+		super.traitCollectionDidChange(previousTraitCollection)
+		removeAllSubViews()
+		setupView()
+	}
     
 }
 
 //MARK: - Configurable Cell
 extension NFTArtCollectionViewCell:ConfirgurableCell{
     func configure(_ data: Item) {
-        switch data{
-        case .artData(let nftModel):
-            self.updateUIWithNFT(nftModel)
-        default:
-            print("(DEBUG) Data in incorrect format is provided!")
-        }
+		guard let nftModel = data.nftArtData else { return }
+		updateUIWithNFT(nftModel)
     }
     
 }

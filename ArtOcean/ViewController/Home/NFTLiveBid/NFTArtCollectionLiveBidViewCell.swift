@@ -25,11 +25,9 @@ class NFTArtCollectionLiveBidViewCell: UICollectionViewCell {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-
 		addViewAndSetConstraints(nftContentViewCell, edgeInsets: .zero)
-        
-        self.addShadow()
-
+		backgroundColor = interface == .light ? .surfaceBackground : .appIndigo
+		cornerRadius = 16
     }
     
     required init?(coder: NSCoder) {

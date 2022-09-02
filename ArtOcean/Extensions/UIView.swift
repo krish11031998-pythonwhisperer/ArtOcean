@@ -245,6 +245,7 @@ extension UIView{
 	
 	var inverseInterface: UIUserInterfaceStyle { traitCollection.userInterfaceStyle == .light ? .dark : .light }
 	
+	var isDark: Bool { interface == .dark }
 }
 
 //MARK: - UIView Constaint Extension

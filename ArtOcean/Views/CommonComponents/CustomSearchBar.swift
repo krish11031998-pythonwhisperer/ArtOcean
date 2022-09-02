@@ -21,7 +21,7 @@ class CustomSearchBar:UIView {
 		textField.backgroundColor = .clear
 		textField.attributedPlaceholder = NSAttributedString(string: "Search For Items", attributes: [NSAttributedString.Key.foregroundColor : UIColor.appGrayColor,NSAttributedString.Key.font : UIFont(name: "Satoshi-Medium", size: 14)!])
 		textField.font = UIFont(name: "Satoshi-Medium", size: 14)!
-		textField.textColor = .black
+		textField.textColor = .textColor
 		textField.setContentHuggingPriority(.init(249), for: .horizontal)
 		textField.setContentCompressionResistancePriority(.init(749), for: .horizontal)
 		return textField
@@ -65,6 +65,11 @@ class CustomSearchBar:UIView {
 		textField.resignFirstResponder()
 	}
 	
+	override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+		super.traitCollectionDidChange(previousTraitCollection)
+		removeAllSubViews()
+		setupUI()
+	}
 }
 
 //MARK: - TextField Delegate

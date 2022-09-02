@@ -202,7 +202,7 @@ class NFTDetailArtViewController:UIViewController{
 	private var attributeSection:TableSection? {
 		guard let attributes = nftArt?.metadata?.Attributes, !attributes.isEmpty else { return nil }
 		let stackView: AccordianStackView = .init(handler: nil)
-		stackView.buildFlexibleGrid(attributes.map(\.attributeBlob), innerSize: .init(width: .totalWidth, height: .zero), with: 10)
+		stackView.buildFlexibleGrid(attributes.map(\.attributeBlob), innerSize: .init(width: .totalWidth - 32, height: .zero), with: 10)
 		stackView.setHeightWithPriority(stackView.compressedFittingSize.height)
 		return .init(title: "Attributes", rows: [TableRow<CustomTableCell>(.init(innerView: stackView, edgeInsets: .init(vertical: 10, horizontal: 16)))])
 	}

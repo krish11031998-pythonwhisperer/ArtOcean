@@ -72,7 +72,7 @@ class SearchViewController:UIViewController{
 	}
 	
 	func setupUI(){
-		let stackView: UIStackView = .VStack(views: [.spacer(height: 12).background(.red),searchBar,NFTArtTypeCollectionView()], spacing: 20, aligmment: .center)
+		let stackView: UIStackView = .VStack(views: [.spacer(height: 12),searchBar,NFTArtTypeCollectionView()], spacing: 20, aligmment: .center)
 		searchBar.setHeightWithPriority(55,priority: .required)
 		view.addSubview(scrollView)
 		scrollView.addSubview(stackView)

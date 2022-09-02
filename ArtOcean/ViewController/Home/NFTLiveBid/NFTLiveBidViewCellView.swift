@@ -108,6 +108,8 @@ class NFTLiveBidView : UIView {
 		shareButton.buttonBackgroundColor = .surfaceBackground
 		
 		addViewAndSetConstraints(view, edgeInsets: .zero)
+		
+		if !isDark { addShadow() }
 	}
     
 	override init(frame: CGRect) {
