@@ -45,6 +45,7 @@ struct CustomInfoButtonModel: ActionProvider {
 	let imgSize: CGSize
 	let style: ImageStyle
 	var action: Callback?
+//	let includeSeperator: Bool
 	
 	init(leadingImg: UIImage? = nil,
 		 title: RenderableText? = nil,
@@ -116,6 +117,7 @@ class CustomInfoButton: UIButton {
 		get { topLeadingLabel.attributedText }
 		set {
 			newValue?.renderInto(target: topLeadingLabel)
+			topLeadingLabel.isHidden = newValue == nil
 		}
 	}
 	
@@ -123,6 +125,7 @@ class CustomInfoButton: UIButton {
 		get { bottomLeadingLabel.attributedText }
 		set {
 			newValue?.renderInto(target: bottomLeadingLabel)
+			bottomLeadingLabel.isHidden = newValue == nil
 		}
 	}
 	
@@ -130,6 +133,7 @@ class CustomInfoButton: UIButton {
 		get { topTrailingLabel.attributedText }
 		set {
 			newValue?.renderInto(target: topTrailingLabel)
+			topLeadingLabel.isHidden = newValue == nil
 		}
 	}
 	
@@ -140,7 +144,7 @@ class CustomInfoButton: UIButton {
 		}
 	}
 	
-	private lazy var mainStack: UIStackView = { .HStack(spacing: 0,aligmment: .center) }()
+	private lazy var mainStack: UIStackView = { .HStack(spacing: 16,aligmment: .center) }()
 	
 //MARK: - Constructors
 	
@@ -209,14 +213,12 @@ class CustomInfoButton: UIButton {
 	}
 	
 	public func setImageSize(size: CGSize = .squared(32)) {
-		leadingImageView.removeAllConstraints()
-		trailingImageView.removeAllConstraints()
-
-		leadingImageView.setFrameLessThanEqualTo(size: leadingImageView.image == nil ? .zero : size)
-		mainStack.setCustomSpacing(leadingImageView.image == nil ? .zero : 16, after: leadingImageView)
-
-		trailingImageView.setFrameConstraints(size: trailingImageView.image == nil ? .zero : size)
-		mainStack.setPaddingAfterViewAt(idx: mainStack.arrangedSubviews.count - 2, with: trailingImageView.image == nil ? .zero : 16)
+		
+		leadingImageView.setFrameConstraints(size: size)
+		trailingImageView.setFrameConstraints(size: size)
+		
+		leadingImageView.isHidden = leadingImage == nil
+		trailingImageView.isHidden = trailingImage == nil
 	}
 	
 	public func loadImageForButton(leading: String? = nil, trailing: String? = nil, style: ImageStyle = .original) {
@@ -255,8 +257,16 @@ class CustomInfoButtonCell: ConfigurableCell {
 	private lazy var button: CustomInfoButton = { .init() }()
 	
 	func configureCell(with model: CustomInfoButtonModel) {
-		contentView.addSubview(button)
-		contentView.setConstraintsToChild(button, edgeInsets: .init(vertical: 10, horizontal: 16))
+		
+		contentView.removeAllSubViews()
+		
+		let line: UIView = .init()
+		line.backgroundColor = .greyscale200
+		line.setHeightWithPriority(1)
+
+		let view: UIStackView = .VStack(views: [button, line], spacing: 18)
+		contentView.addSubview(view)
+		contentView.setConstraintsToChild(view, edgeInsets: .init(vertical: 10, horizontal: 16))
 		
 		button.isUserInteractionEnabled = false
 		button.updateUIButton(model)

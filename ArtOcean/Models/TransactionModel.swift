@@ -19,6 +19,8 @@ struct TransactionModel:Decodable{
     var value:Float
     var dayTimes:String
     var artModel:NFTModel?
+	
+	var day: String { "\(dayTimes) days ago"}
 }
 
 

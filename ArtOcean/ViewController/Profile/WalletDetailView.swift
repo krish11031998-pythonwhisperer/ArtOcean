@@ -33,19 +33,65 @@ fileprivate extension UIImage.Catalogue {
 				return ""
 		}
 	}
-}
-
-fileprivate extension UIStackView {
 	
-	static func walletButton(name: UIImage.Catalogue) -> UIStackView {
-		let button = CustomImageButton.walletButton(name: name)
-		let label = CustomLabel(text: name.buttonName, size: 14, weight: .medium, color: .appPurpleColor, numOfLines: 1)
+	var button: UIView {
+		let button = CustomImageButton.walletButton(name: self)
+		let label = CustomLabel(text: buttonName, size: 14, weight: .medium, color: .appPurpleColor, numOfLines: 1)
 		let stack = UIStackView(arrangedSubviews: [button,label])
 		stack.alignment = .center
 		stack.axis = .vertical
 		stack.spacing = 12
-		return stack
+		return stack.embedInView(edges: .init(vertical: 0, horizontal: 10), priority: .defaultHigh)
 	}
+}
+
+fileprivate extension TransactionModel {
+	
+	var imageButtonInfoModel: CustomInfoButtonModel {
+		.init(title: (artModel?.title ?? "").replace(val: "XXXX").body2Medium(),
+			  subTitle: "Owner".body3Medium(color: .subtitleColor),
+			  infoTitle: type.rawValue.capitalized.body2Medium(),
+			  infoSubTitle: day.body3Medium(color: .subtitleColor),
+			  leadingImageUrl: artModel?.metadata?.image,
+			  style: .rounded(8),
+			  imgSize: .squared(40)
+		) {
+			print("(DEBUG) Clicked !")
+		}
+	}
+	
+	var txnButtonInfoModel: CustomInfoButtonModel {
+		let img: UIImage = type == .send ? .Catalogue.arrowUp.image.withTintColor(.appGreen) : .Catalogue.arrowUpRight.image.withTintColor(.appRed)
+		
+		let imgView: UIImageView = .init(frame: .init(origin: .zero, size: .squared(40)))
+		imgView.image = img.resized(imgView.frame.size * 0.5)
+		imgView.contentMode = .center
+		imgView.backgroundColor = .greyscale200
+		imgView.cornerRadius = 20
+		
+		return .init(leadingImg: imgView.snapshot,
+					 title: "\(String(format: "%.2f", value)) ETH".body3Medium(),
+					 infoTitle: type.rawValue.body2Medium(),
+					 infoSubTitle: day.body3Medium(color: .subtitleColor),
+					 style: .circle(.squared(40).halfed) ,
+					 imgSize: .squared(40)
+		) {
+			print("(DEBUG) Clicked !")
+		}
+	}
+	
+	var tableCell: CellProvider {
+		var model: CustomInfoButtonModel = .init()
+		
+		if type == .buy || type == .sell, let _ = artModel {
+			model = imageButtonInfoModel
+		} else {
+			model = txnButtonInfoModel
+		}
+		
+		return TableRow<CustomInfoButtonCell>(model)
+	}
+	
 }
 
 class WalletDetailView:UIViewController{
@@ -57,19 +103,15 @@ class WalletDetailView:UIViewController{
     private let titleView:CustomLabel = .init(text: "Wallet", size: 18, weight: .bold, color: .black, numOfLines: 1, adjustFontSize: true, autoLayout: false)
     
     private lazy var balanceViewStack:UIView = {
-        let stack = UIStackView()
-        stack.axis = .vertical
-        stack.spacing = 8
-        stack.translatesAutoresizingMaskIntoConstraints = false
+		let stack: UIStackView = .VStack(spacing: 8, aligmment: .center)
         
         let titleView = CustomLabel(text: "CURRENT WALLET VALUE", size: 12, weight: .medium, color: .appGrayColor, numOfLines: 1, adjustFontSize: true, autoLayout: false)
         titleView.textAlignment = .center
         profileValue.textAlignment = .center
         stack.addArrangedSubview(titleView)
-        stack.addArrangedSubview(currentWalletBalanceView)
+        stack.addArrangedSubview(currentWalletBalance)
         stack.addArrangedSubview(profileValue)
-        
-        
+	
         
         return stack
     }()
@@ -79,34 +121,15 @@ class WalletDetailView:UIViewController{
     
     private lazy var walletActionView:UIView = {
 		let images: Array<UIImage.Catalogue> = [.arrowDown,.creditCard,.arrowUpRight,.switchHorizontal]
-		let buttons: [UIStackView] = images.map(UIStackView.walletButton(name:))
+		let buttons: [UIView] = images.map(\.button)
 	
         let stack = UIStackView(arrangedSubviews: buttons)
-		stack.spacing = 20
-		stack.translatesAutoresizingMaskIntoConstraints = false
+		stack.alignment = .center
+		stack.spacing = 0
         return stack
     }()
     
     private let currentWalletBalance:CustomLabel = CustomLabel(text: "0.1345 ETH", size: 32, weight: .medium, color: .black, numOfLines: 1, adjustFontSize: true)
-    
-    private lazy var currentWalletBalanceView:UIView = {
-        let stack = UIStackView()
-        stack.spacing = 16
-        currentWalletBalance.setContentHuggingPriority(.init(249), for: .horizontal)
-        currentWalletBalance.setContentCompressionResistancePriority(.init(749), for: .horizontal)
-        
-        let ethLogo = CustomImageView(named: "largeETHLogo", cornerRadius: 0)
-        ethLogo.contentMode = .scaleAspectFit
-        ethLogo.frame = .init(origin: .zero, size: .init(width:14,height:23))
-        
-        stack.addArrangedSubview(ethLogo)
-        stack.addArrangedSubview(currentWalletBalance)
-        
-        stack.translatesAutoresizingMaskIntoConstraints = false
-
-        
-        return stack
-    }()
 
     
     //MARK: - Recnt Activity Section
@@ -129,21 +152,11 @@ class WalletDetailView:UIViewController{
     }()
     
     private let tableView:UITableView = {
-        let table = UITableView()
-        
-        table.separatorStyle = .singleLine
-        table.separatorColor = .appGrayColor
-        table.separatorInset = .init(top: 0, left: 0, bottom: 0, right: 0)
-        
-        table.contentInset = .init(top: 16, left: 0, bottom: 16, right: 0)
-        
-        table.setContentHuggingPriority(.init(249), for: .vertical)
-        table.setContentCompressionResistancePriority(.init(749), for: .vertical)
+		let table = UITableView(frame: .zero, style: .grouped)
+		table.separatorStyle = .none
         table.showsVerticalScrollIndicator = false
-        
-        table.register(TransactionViewCell.self, forCellReuseIdentifier: TransactionViewCell.identifier)
-        
         table.backgroundColor = .clear
+		
         return table
     }()
     
@@ -157,7 +170,16 @@ class WalletDetailView:UIViewController{
         
         return stack
     }()
+	
+	private func buildDataSource() -> TableViewDataSource {
+		.init(section: [TableSection(title: "Recent Activity", rows: items.map(\.tableCell))])
+	}
     
+	private lazy var walletHeaderView: UIView = {
+		let views: [UIView] = [.spacer(height: 24),balanceViewStack, walletActionView, .spacer(height: 40)]
+		let stack: UIStackView = .VStack(views: views, spacing: 32, aligmment: .center)
+		return stack
+	}()
     
     //MARK: - ViewController
     init(){
@@ -174,7 +196,7 @@ class WalletDetailView:UIViewController{
         view.backgroundColor = .surfaceBackground
         setupNavigationBar()
         setupViews()
-        setupLayout()
+//        setupLayout()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -185,11 +207,12 @@ class WalletDetailView:UIViewController{
     }
     
     func setupViews(){
-        tableView.dataSource = self
-        tableView.delegate = self
-        view.addSubview(balanceViewStack)
-        view.addSubview(walletActionView)
-        view.addSubview(recentActivity)
+		tableView.tableHeaderView = walletHeaderView
+		let headerViewFrame: CGRect = .init(origin: .zero, size: .init(width: .totalWidth, height: walletHeaderView.compressedFittingSize.height))
+		tableView.tableHeaderView?.frame = headerViewFrame
+		view.addSubview(tableView)
+		tableView.reload(with: buildDataSource())
+		view.setConstraintsToChild(tableView, edgeInsets: .zero)
     }
     
     func setupNavigationBar(){
@@ -199,21 +222,6 @@ class WalletDetailView:UIViewController{
     
     func popView(){
         self.navigationController?.popViewController(animated: true)
-    }
-    
-    func setupLayout(){
-        balanceViewStack.topAnchor.constraint(equalToSystemSpacingBelow: view.safeAreaLayoutGuide.topAnchor, multiplier: 5).isActive = true
-        balanceViewStack.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        
-        walletActionView.topAnchor.constraint(equalToSystemSpacingBelow: balanceViewStack.bottomAnchor, multiplier: 3).isActive = true
-		walletActionView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        
-        recentActivity.topAnchor.constraint(equalToSystemSpacingBelow: walletActionView.bottomAnchor, multiplier: 5).isActive = true
-        recentActivity.leadingAnchor.constraint(equalToSystemSpacingAfter: view.safeAreaLayoutGuide.leadingAnchor, multiplier: 3).isActive = true
-        view.safeAreaLayoutGuide.trailingAnchor.constraint(equalToSystemSpacingAfter: recentActivity.trailingAnchor, multiplier: 3).isActive = true
-        view.safeAreaLayoutGuide.bottomAnchor.constraint(equalToSystemSpacingBelow: recentActivity.bottomAnchor,multiplier: 0).isActive = true
-        
-        
     }
 }
 
@@ -236,51 +244,4 @@ extension WalletDetailView{
         return stack
     }
     
-}
-
-//MARK: - TableDelegate
-extension WalletDetailView:UITableViewDelegate,UITableViewDataSource{
-
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
-    }
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return items.count
-    }
-    
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 80
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: TransactionViewCell.identifier, for: indexPath) as? TransactionViewCell else{
-            
-            let cell = UITableViewCell()
-            cell.backgroundColor = .red
-            let label = CustomLabel(text: "Item #\(indexPath.row + 1)", size: 14, weight: .bold, color: .black, numOfLines: 1, adjustFontSize: true, autoLayout: true)
-            cell.addSubview(label)
-            
-            NSLayoutConstraint.activate([
-                label.centerYAnchor.constraint(equalTo: cell.centerYAnchor),
-                label.leadingAnchor.constraint(equalToSystemSpacingAfter: cell.leadingAnchor, multiplier: 1),
-                cell.trailingAnchor.constraint(equalToSystemSpacingAfter: label.trailingAnchor, multiplier: 1)
-            ])
-            
-            return cell
-        }
-        
-        cell.configureCell(txn: self.items[indexPath.row])
-        
-        return cell
-    }
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let data = items[indexPath.row]
-        
-        if let safeArtData = data.artModel{
-            self.navigationController?.pushViewController(NFTDetailArtViewController(nftArt: safeArtData), animated: true)
-        }
-    }
 }
