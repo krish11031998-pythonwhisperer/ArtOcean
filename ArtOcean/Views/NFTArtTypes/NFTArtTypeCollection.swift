@@ -14,96 +14,68 @@ struct NFTArtType{
 	var color:UIColor
 	
 	static var allType:[NFTArtType] = [
-		.init(name: "Art", key: "artType", color: .appOrangeColor.withAlphaComponent(0.17)),
-		.init(name: "Sports", key: "sportsType", color: .appRedColor.withAlphaComponent(0.17)),
-		.init(name: "Music", key: "musicType", color: .appVioletColor.withAlphaComponent(0.17)),
-		.init(name: "Photography", key: "Photography", color: .appDarkGrayColor.withAlphaComponent(0.17))
+		.init(name: "Art", key: "artType", color: .appOrangeColor),
+		.init(name: "Sports", key: "sportsType", color: .appRedColor),
+		.init(name: "Music", key: "musicType", color: .appVioletColor),
+		.init(name: "Photography", key: "Photography", color: .appDarkGrayColor)
 	]
 }
 
-class NFTArtTypeCollectionViewCell:ConfigurableCell{
+extension NFTArtType {
 	
-	private var collection:NFTArtTypeCollectionView?
-	
-	override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-		super.init(style: style, reuseIdentifier: reuseIdentifier)
-	}
-	
-	required init?(coder: NSCoder) {
-		fatalError("init(coder:) has not been implemented")
-	}
-	
-	func configureCell(with model: [NFTArtType]) {
-		collection = NFTArtTypeCollectionView()
-		collection!.configureCollection(model)
-		contentView.addSubview(collection!)
-		contentView.setConstraintsToChild(collection!, edgeInsets: .zero)
-		collection?.heightAnchor.constraint(equalToConstant: 60).isActive = true
+	var collectionCell: CollectionCellProvider {
+		let label: UILabel = .init()
+		name.body3Medium().renderInto(target: label)
+		let image = UIImage.loadingBackgroundImage.imageView(size: .squared(24), cornerRadius: 5)
+		image.setWidthWithPriority(24)
+		let stack: UIStackView = .HStack(views: [image, label].filterEmpty(), spacing: 8, aligmment: .center)
+		let view = stack.embedInView(edges: .init(by: 8)).background(color)
+		stack.setHeightWithPriority(24)
+		view.cornerRadius = 8
+		return CollectionColumn<CustomCollectionCell>(.init(innerView: view, edgeInsets: .zero))
 	}
 	
 }
 
-class NFTArtTypeCollectionView:UICollectionView{
+class NFTArtTypeCollectionView: UIView{
     
     private var nftTypes:[NFTArtType] = []
     
-    init(){
-        let layout =  UICollectionViewFlowLayout()
-        layout.scrollDirection = .horizontal
-        layout.itemSize = .init(width: UIScreen.main.bounds.width * 0.25, height: 40)
-        layout.minimumInteritemSpacing = 12
-        layout.sectionInset = .init(top: 0, left: 10, bottom: 0, right: 10)
-        super.init(frame: .zero, collectionViewLayout: layout)
-        
-        register(NFTTypeCollectionCell.self, forCellWithReuseIdentifier: NFTTypeCollectionCell.identifier)
+	private var collectionlayout: UICollectionViewFlowLayout {
+		let layout =  UICollectionViewFlowLayout()
+		layout.scrollDirection = .horizontal
+		layout.estimatedItemSize = UICollectionViewFlowLayout.automaticSize
+		layout.minimumInteritemSpacing = 12
+		layout.sectionInset = .init(top: 0, left: 10, bottom: 0, right: 10)
+		return layout
+	}
 	
-        delegate = self
-        dataSource = self
-        
-        showsVerticalScrollIndicator = false
-        showsHorizontalScrollIndicator = false
-        backgroundColor = .surfaceBackground
-		heightAnchor.constraint(equalToConstant: layout.itemSize.height + 10).isActive = true
+	private var collection: UICollectionView = {
+		let collection: UICollectionView = .init(frame: .zero, collectionViewLayout: .init())
+		collection.showsVerticalScrollIndicator = false
+		collection.showsHorizontalScrollIndicator = false
+		collection.backgroundColor = .clear
+		return collection
+	}()
+	
+	override init(frame: CGRect){
+		super.init(frame: frame)
+		backgroundColor = .clear
+        addSubview(collection)
+		setConstraintsToChild(collection, edgeInsets: .zero)
+		collection.reload(with: buildCollectionDataSource())
     }
     
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+		super.init(coder: coder)
     }
 	
-
-	public func configureCollection(_ artTypes:[NFTArtType]){
-		self.nftTypes = artTypes
-		reloadData()
+	private func buildCollectionDataSource() -> CollectionDataSource {
+		.init(columns: NFTArtType.allType.map(\.collectionCell), layout: collectionlayout, width: .totalWidth, height: 60)
 	}
-    
+	
 	override var intrinsicContentSize: CGSize{
-		.init(width: UIScreen.main.bounds.width, height: 50)
+		collection.compressedFittingSize
 	}
 }
 
-//MARK: - NFTArtTypeCollectionView UICollectionViewDelegate
-
-extension NFTArtTypeCollectionView:UICollectionViewDataSource,UICollectionViewDelegate{
-    
-    func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 1
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return self.nftTypes.count
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: NFTTypeCollectionCell.identifier, for: indexPath) as? NFTTypeCollectionCell else{
-            return UICollectionViewCell()
-        }
-        
-        let artType = self.nftTypes[indexPath.row]
-        
-		cell.updateTypeCell(img: artType.key, type: artType.name, color: artType.color)
-        
-        return cell
-    }
-    
-}

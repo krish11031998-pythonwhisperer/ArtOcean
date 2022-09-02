@@ -308,7 +308,7 @@ extension UIView {
 			childView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -edgeInsets.right),
 			childView.topAnchor.constraint(equalTo: self.topAnchor, constant: edgeInsets.top),
 			childView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -edgeInsets.bottom)
-		].map { $0.setPriority(priority: withPriority) }
+		].map { $0.setPriority(priority: .init(rawValue: withPriority)) }
 		
 		removeSimilarConstraints(constraints)
 		childView.translatesAutoresizingMaskIntoConstraints = false
@@ -319,7 +319,7 @@ extension UIView {
 		let constraints = [
 			childView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: edgeInsets.left),
 			childView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -edgeInsets.right)
-		].map { $0.setPriority(priority: withPriority) }
+		].map { $0.setPriority(priority: .init(rawValue: withPriority)) }
 		
 		removeSimilarConstraints(constraints)
 		childView.translatesAutoresizingMaskIntoConstraints = false
@@ -330,7 +330,7 @@ extension UIView {
 		let constraints = [
 			childView.topAnchor.constraint(equalTo: self.topAnchor, constant: edgeInsets.top),
 			childView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -edgeInsets.bottom),
-		].map { $0.setPriority(priority: withPriority) }
+		].map { $0.setPriority(priority: .init(rawValue: withPriority)) }
 		
 		removeSimilarConstraints(constraints)
 		childView.translatesAutoresizingMaskIntoConstraints = false
@@ -378,7 +378,7 @@ extension UIView {
 		let constraints: [NSLayoutConstraint] = [
 			widthAnchor.constraint(equalToConstant: size.width),
 			heightAnchor.constraint(equalToConstant: size.height)
-		].map { $0.setPriority(priority: priority.rawValue) } 
+		].map { $0.setPriority(priority: priority) }
 		
 		removeSimilarConstraints(constraints)
 		translatesAutoresizingMaskIntoConstraints = false
@@ -432,9 +432,14 @@ extension UIView {
 	
 //	func findAnchor(firstAnchor: )
 	
-	func setWidthForChildWithPadding(_ childView:UIView,paddingFactor:CGFloat) {
-		childView.leadingAnchor.constraint(equalToSystemSpacingAfter: leadingAnchor, multiplier: paddingFactor).isActive = true
-		trailingAnchor.constraint(equalToSystemSpacingAfter: childView.trailingAnchor, multiplier: paddingFactor).isActive = true
+	func setWidthForChildWithPadding(_ childView:UIView,paddingFactor:CGFloat, withPriority: UILayoutPriority = .required) {
+		let constraints: [NSLayoutConstraint] = [
+			childView.leadingAnchor.constraint(equalToSystemSpacingAfter: leadingAnchor, multiplier: paddingFactor),
+			trailingAnchor.constraint(equalToSystemSpacingAfter: childView.trailingAnchor, multiplier: paddingFactor)
+		].map { $0.setPriority(priority: withPriority) }
+		removeSimilarConstraints(constraints)
+		childView.translatesAutoresizingMaskIntoConstraints = false
+		NSLayoutConstraint.activate(constraints)
 	}
 	
 	func setEqualWidth(_ childView: UIView, padding constant: CGFloat = .zero) {
@@ -595,11 +600,21 @@ extension NSLayoutConstraint{
 			secondAnchor === other.secondAnchor
 	}
 	
-	func setPriority(priority: Float) -> Self {
+//	func setPriority(priority: Float) -> Self {
+//		let constraintWithPriority = self
+//		constraintWithPriority.priority = .init(rawValue: priority)
+//		return constraintWithPriority
+//	}
+	
+	func setPriority(priority: UILayoutPriority) -> Self {
 		let constraintWithPriority = self
-		constraintWithPriority.priority = .init(rawValue: priority)
+		constraintWithPriority.priority = priority
 		return constraintWithPriority
 	}
+}
+
+extension UILayoutPriority {
 	
+	static var needed: Self { .init(rawValue: 999) }
 }
 

@@ -62,9 +62,27 @@ struct CustomTableCellModel: ActionProvider {
 class CustomTableCell: ConfigurableCell {
 	
 	func configureCell(with model: CustomTableCellModel) {
-		
 		contentView.removeAllSubViews()
 		backgroundColor = .surfaceBackground
+		isUserInteractionEnabled = model.action != nil
+		contentView.addSubview(model.innerView)
+		contentView.setConstraintsToChild(model.innerView, edgeInsets: model.edgeInsets)
+	}
+}
+
+//MARK: - CustomCollectionCell
+
+struct CustomCollectionCellModel: ActionProvider {
+	var innerView: UIView
+	var edgeInsets: UIEdgeInsets
+	var action: Callback?
+}
+
+class CustomCollectionCell: ConfigurableCollectionCell {
+	
+	func configureCell(with model: CustomCollectionCellModel) {
+		contentView.removeAllSubViews()
+		backgroundColor = .clear
 		isUserInteractionEnabled = model.action != nil
 		contentView.addSubview(model.innerView)
 		contentView.setConstraintsToChild(model.innerView, edgeInsets: model.edgeInsets)

@@ -16,7 +16,7 @@ protocol CollectionCellProvider{
     func didSelect(_ collectionView: UICollectionView)
 }
 
-class CollectionColumn<Cell:ConfigurableCollectionCell>:CollectionCellProvider{
+class CollectionColumn<Cell:ConfigurableCollectionCell>: CollectionCellProvider{
 	
     var cellModel: Any { model }
     

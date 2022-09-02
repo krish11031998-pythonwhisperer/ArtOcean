@@ -14,6 +14,10 @@ extension Array {
 		return count <= to ? self : Array(self[0..<to])
 	}
 	
+	func filterEmpty() -> [Self.Element] {
+		compactMap { $0 }
+	}
+	
 }
 
 //MARK: - Element == CGPoint

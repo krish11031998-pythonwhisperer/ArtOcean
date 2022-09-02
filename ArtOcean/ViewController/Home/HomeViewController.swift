@@ -62,9 +62,9 @@ class HomeViewController: UIViewController {
 		return .init(headerView: headerView, rows: Array(repeating: TopCollectionData.test, count: 5).compactMap{ TableRow<TopCollectionTableCell>($0) })
 	}
 	
-    private lazy var artTypes:TableSection? = {
-		return .init(rows: [TableRow<NFTArtTypeCollectionViewCell>(NFTArtType.allType)])
-    }()
+//    private lazy var artTypes:TableSection? = {
+//		return .init(rows: [TableRow<NFTArtTypeCollectionViewCell>(NFTArtType.allType)])
+//    }()
 	
 	private var topSeller:TableCollectionSection?{
 		let colsData:[TopSellerCollectionViewData] = Array(repeating: SellerData.test, count: 15).map {seller in .init(seller: seller) { print("(DEBUG) Clicked on ",seller.name) } }
@@ -94,7 +94,7 @@ class HomeViewController: UIViewController {
 	func buildTableView(){
 		tableView = UITableView(frame: .zero, style: .grouped)
 		tableView?.backgroundColor = .clear
-		tableView?.tableHeaderView = tableHeaderView
+		tableView?.setHeaderView(tableHeaderView)
 		tableView?.separatorStyle = .none
 		view.addSubview(tableView!)
 		view.setConstraintsToChild(tableView!, edgeInsets: .zero)
@@ -125,32 +125,21 @@ class HomeViewController: UIViewController {
     
 	private var tableHeaderView:UIView {
 		
-		let view  = UIView(frame: .init(origin: .zero, size: .init(width: UIScreen.main.bounds.width, height: 206)))
+//		let view  = UIView(frame: .init(origin: .zero, size: .init(width: UIScreen.main.bounds.width, height: 206)))
 		let stackView = UIStackView()
 		stackView.axis = .vertical
 		stackView.alignment = .center
 		stackView.spacing = 24
 		
 		let artTypeCollection = NFTArtTypeCollectionView()
-		artTypeCollection.configureCollection(NFTArtType.allType)
+		//artTypeCollection.configureCollection(NFTArtType.allType)
 		
 		stackView.addArrangedSubview(artTypeCollection)
 		stackView.addArrangedSubview(bannerImageView)
 		
-		let imageleading = bannerImageView.leadingAnchor.constraint(equalTo: stackView.leadingAnchor, constant: 10)
-		imageleading.priority = .init(rawValue: 750)
-		let imagetrailing = bannerImageView.trailingAnchor.constraint(equalTo: stackView.trailingAnchor, constant: -10)
-		imagetrailing.priority = .init(rawValue: 750)
+		stackView.setWidthForChildWithPadding(bannerImageView, paddingFactor: 1.25, withPriority: .needed)
 		
-		NSLayoutConstraint.activate([
-			imageleading,
-			imagetrailing
-		])
-		
-		view.addSubview(stackView)
-		view.setConstraintsToChild(stackView, edgeInsets: .zero)
-		
-		return view
+		return stackView
 	}
 	
     func popLivBidVC(){

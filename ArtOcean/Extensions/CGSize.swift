@@ -20,5 +20,7 @@ extension CGSize {
 
 	var halfed: CGSize { self * 0.5 }
 	
+	var frame: CGRect { .init(origin: .zero, size: self) }
+	
 	static var smallestSqaure: CGSize { .squared(32) }
 }

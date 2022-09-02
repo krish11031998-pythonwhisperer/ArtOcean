@@ -345,6 +345,15 @@ extension UIImage {
 	static var loadingBackgroundImage: UIImage {
 		.solid(color: .appGrayColor.withAlphaComponent(0.15),frame: .squared(40))
 	}
+	
+	func imageView(size: CGSize = .smallestSqaure, cornerRadius: CGFloat = .zero) -> UIImageView {
+		let view = UIImageView(frame: size.frame)
+		view.image = self
+		view.contentMode = .scaleAspectFit
+		view.clipsToBounds = true
+		view.cornerRadius = cornerRadius
+		return view
+	}
 }
 
 //MARK: - UIImageStylist

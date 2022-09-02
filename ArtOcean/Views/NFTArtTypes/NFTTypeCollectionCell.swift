@@ -30,11 +30,12 @@ class NFTTypeCollectionCell:UICollectionViewCell{
     override init(frame:CGRect){
         super.init(frame: frame)
         
-//        self.addSubview(self.stackView)
-        self.addSubview(self.imgView)
-        self.addSubview(self.typeLabel)
-        self.layer.cornerRadius = 8
-        self.setupLayout()
+        addSubview(stackView)
+		setConstraintsToChild(stackView, edgeInsets: .init(by: 8))
+//        self.addSubview(self.imgView)
+//        self.addSubview(self.typeLabel)
+        cornerRadius = 8
+        //self.setupLayout()
     }
     
     required init?(coder: NSCoder) {
@@ -57,16 +58,16 @@ class NFTTypeCollectionCell:UICollectionViewCell{
         
     }
     
-    func setupLayout(){
-        self.imgView.leadingAnchor.constraint(equalTo: self.leadingAnchor,constant: 16).isActive = true
-        self.imgView.topAnchor.constraint(equalTo: self.topAnchor,constant: 12).isActive = true
-        self.imgView.heightAnchor.constraint(equalToConstant:16).isActive = true
-        self.imgView.widthAnchor.constraint(equalToConstant: 16).isActive = true
-        
-        self.typeLabel.leadingAnchor.constraint(equalTo: self.imgView.trailingAnchor, constant: 8).isActive = true
-        self.typeLabel.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
-        self.typeLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16).isActive = true
-    }
+//    func setupLayout(){
+//        self.imgView.leadingAnchor.constraint(equalTo: self.leadingAnchor,constant: 16).isActive = true
+//        self.imgView.topAnchor.constraint(equalTo: self.topAnchor,constant: 12).isActive = true
+//        self.imgView.heightAnchor.constraint(equalToConstant:16).isActive = true
+//        self.imgView.widthAnchor.constraint(equalToConstant: 16).isActive = true
+//
+//        self.typeLabel.leadingAnchor.constraint(equalTo: self.imgView.trailingAnchor, constant: 8).isActive = true
+//        self.typeLabel.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
+//        self.typeLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16).isActive = true
+//    }
     
 	override func prepareForReuse() {
 		super.prepareForReuse()

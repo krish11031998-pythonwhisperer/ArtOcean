@@ -55,6 +55,7 @@
 		EF527496284C0608008C77EC /* CustomComplexCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF527495284C0608008C77EC /* CustomComplexCollectionView.swift */; };
 		EF527498284C1E5B008C77EC /* NSCollectionLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF527497284C1E5B008C77EC /* NSCollectionLayout.swift */; };
 		EF674D2C28C1F10B002D6C18 /* StickyFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF674D2B28C1F10B002D6C18 /* StickyFooterView.swift */; };
+		EF674D2E28C26325002D6C18 /* UITableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF674D2D28C26325002D6C18 /* UITableView.swift */; };
 		EF69B6AD28529FD000ABDADA /* FavoriteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF69B6AC28529FD000ABDADA /* FavoriteViewController.swift */; };
 		EF69B6AF2854965400ABDADA /* WalletDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF69B6AE2854965400ABDADA /* WalletDetailView.swift */; };
 		EF69B6B12854C11E00ABDADA /* StackedButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF69B6B02854C11E00ABDADA /* StackedButtons.swift */; };
@@ -236,6 +237,7 @@
 		EF527495284C0608008C77EC /* CustomComplexCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomComplexCollectionView.swift; sourceTree = "<group>"; };
 		EF527497284C1E5B008C77EC /* NSCollectionLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSCollectionLayout.swift; sourceTree = "<group>"; };
 		EF674D2B28C1F10B002D6C18 /* StickyFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StickyFooterView.swift; sourceTree = "<group>"; };
+		EF674D2D28C26325002D6C18 /* UITableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITableView.swift; sourceTree = "<group>"; };
 		EF69B6AC28529FD000ABDADA /* FavoriteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteViewController.swift; sourceTree = "<group>"; };
 		EF69B6AE2854965400ABDADA /* WalletDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletDetailView.swift; sourceTree = "<group>"; };
 		EF69B6B02854C11E00ABDADA /* StackedButtons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StackedButtons.swift; sourceTree = "<group>"; };
@@ -587,6 +589,7 @@
 				EF12304D28B3EAB6000DCAB2 /* ClosedRange.swift */,
 				EF35CD7628BD366100DE1872 /* CGRect.swift */,
 				EF35CD7828BF3FB300DE1872 /* UIBarButton.swift */,
+				EF674D2D28C26325002D6C18 /* UITableView.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -914,6 +917,7 @@
 				EF8B0631283BEAC10050E726 /* AppDelegate.swift in Sources */,
 				EF8B067A283C26120050E726 /* ImageDownloader.swift in Sources */,
 				EF8B06DA283E77AA0050E726 /* ContainerHeaderView.swift in Sources */,
+				EF674D2E28C26325002D6C18 /* UITableView.swift in Sources */,
 				EFD13C292844CF80000E422E /* NFTOfferModel.swift in Sources */,
 				EF7E59F928B2372E008C7EC6 /* UserStorage.swift in Sources */,
 				EF8B07462840A8150050E726 /* UIViewController.swift in Sources */,

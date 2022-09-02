@@ -36,7 +36,11 @@ extension UICollectionView{
 		showsHorizontalScrollIndicator = source.layout.scrollDirection != .horizontal
 		
 		if let validHeight = source.collectionHeight {
-			heightAnchor.constraint(equalToConstant: validHeight).isActive = true
+			setHeightWithPriority(validHeight, priority: .required)
+		}
+		
+		if let validWidth = source.collectionWidth {
+			setWidthWithPriority(validWidth)
 		}
 		
         reloadData()
