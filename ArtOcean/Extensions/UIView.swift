@@ -147,7 +147,7 @@ extension UIView{
 		self.layer.shadowRadius = 0
 	}
 	
-	func addGradientView(colors: [UIColor] = [.clear,.surfaceBackground,.surfaceBackground], size: CGSize) {
+	func addGradientLayer(colors: [UIColor] = [.clear,.surfaceBackground,.surfaceBackground], size: CGSize) {
 		let gradient = CAGradientLayer()
 		gradient.colors = colors.map { $0.cgColor }
 		gradient.frame = .init(origin: .zero, size: .init(width:size.width,height:size.height))

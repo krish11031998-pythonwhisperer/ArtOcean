@@ -63,7 +63,7 @@ class NFTHeroHeaderView:UIView{
 		animateImageView(scrollView)
     }
 	
-	private lazy var backdropImage: UIView = {
+	private lazy var backdropImage: UIImageView = {
 		let image:CustomImageView = .init(cornerRadius: 0)
 		image.updateImageView(url: nftArt.metadata?.image)
 		image.setFrameConstraints(width: UIScreen.main.bounds.width, height: 200)
@@ -95,5 +95,13 @@ class NFTHeroHeaderView:UIView{
 		topAnchorPaddingConstraint?.isActive = true
     }
 	    
+	
+	override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+		super.traitCollectionDidChange(previousTraitCollection)
+		removeAllSubViews()
+		setupViews()
+		setupLayout()
+		backdropImage.blurGradientBackDrop(size: backdropImage.compressedFittingSize)
+	}
     
 }

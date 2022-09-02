@@ -54,7 +54,7 @@ class StreachyHeaderView:UIView{
         viewHeightConstraint?.isActive = true
 		
 		gradientView.setConstraintsWithParent(edgeInsets: .zero)
-		gradientView.addGradientView(colors: gradientColors, size: viewSize)
+		gradientView.addGradientLayer(colors: gradientColors, size: viewSize)
 		
 		setFrameConstraints(size: viewSize)
     }

@@ -30,9 +30,14 @@ extension UIImageView {
 		let blurEffectView = UIVisualEffectView(effect: blurEffect)
 		blurEffectView.frame = .init(origin: .zero, size: size)
 		blurEffectView.autoresizingMask = [.flexibleWidth,.flexibleHeight]
-		insertSubview(blurEffectView, at: 0)
+//		insertSubview(blurEffectView, at: 0)
+		addSubview(blurEffectView)
 		
-		addGradientView(size: size)
+		let gradientView: UIView = .init()
+		gradientView.addGradientLayer(size: size)
+		gradientView.autoresizingMask = [.flexibleWidth,.flexibleHeight]
+		addSubview(gradientView)
+		//addGradientLayer(size: size)
 	}
 
 	static func buildCatalogueImageView(name: UIImage.Catalogue, size: CGSize) -> UIImageView {
