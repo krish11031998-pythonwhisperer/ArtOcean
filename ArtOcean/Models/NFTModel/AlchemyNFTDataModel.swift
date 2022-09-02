@@ -193,6 +193,14 @@ struct Attribute:Codable,Hashable{
 	var Value:String?{
 		return str_value != nil ? str_value! : int_value != nil ? "\(int_value!)" : nil
 	}
+	
+	var AttributeSnipperView: UIView {
+		let label: UILabel = .init()
+		"\(trait_type ?? "") : \(Value)".body2Medium(color: .purple400).renderInto(target: label)
+		label.backgroundColor = .purple200
+		label.bordered(cornerRadius: label.compressedFittingSize.height * 0.1, borderWidth: 1, borderColor: .purple600)
+		return label
+	}
     
 }
 

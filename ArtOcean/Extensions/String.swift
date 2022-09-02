@@ -11,6 +11,7 @@ import UIKit
 protocol RenderableText {
 	func styled(font: CustomFonts, color: UIColor, size: CGFloat) -> NSAttributedString
 	func renderInto(target: Any?)
+	var attributedString: NSAttributedString { get }
 }
 
 extension RenderableText {
@@ -80,6 +81,10 @@ extension String: RenderableText {
 	func replace(val: String) -> String {
 		return replacingOccurrences(of: "{}", with: val)
 	}
+	
+	var attributedString: NSAttributedString {
+		NSAttributedString(string: self)
+	}
 }
 
 
@@ -113,4 +118,6 @@ extension NSAttributedString: RenderableText {
 		renderInto(target: label)
 		return label
 	}
+	
+	var attributedString: NSAttributedString { self }
 }

@@ -91,7 +91,7 @@ class AccordianStackView: UIStackView {
 	
 //MARK: Exposed Methods
 	
-	public func configureAccordian(_ views: [UIView], innerSize: CGSize, with: CGFloat, limit: Int = 2) {
+	public func configureAccordian(_ views: [UIView], innerSize: CGSize, with: CGFloat) {
 		buildFlexibleGrid(views, innerSize: innerSize, with: with)
 	}
 	

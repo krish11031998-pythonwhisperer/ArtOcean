@@ -47,9 +47,7 @@ class AccountHeaderView: UIView {
 		return imageView
 	}()
 	
-	private var nameUsernamelabel: HeaderCaptionLabel = {
-		.init()
-	}()
+	private var nameUsernamelabel: HeaderCaptionLabel = { .init() }()
 	
 	private lazy var userHeader: UIStackView = {
 		let stack: UIStackView = .HStack(views: [userProfileImage, nameUsernamelabel], spacing: 12, aligmment: .center)
@@ -86,7 +84,7 @@ class AccountHeaderView: UIView {
 	func buildUI(){
 		UIImage.loadImage(url: .testBackdropImage, for: headerImageView, at: \.image)
 		UIImage.loadImage(url: .testProfileImage, for: userProfileImage, at: \.image)
-		nameUsernamelabel.configureLabel(title: currentUser?.name?.heading3(color: .black), subTitle: currentUser?.username?.body1Medium())
+		nameUsernamelabel.configureLabel(title: currentUser?.name?.heading3(), subTitle: currentUser?.username?.body1Medium())
 	}
     
     func setupLayout(){

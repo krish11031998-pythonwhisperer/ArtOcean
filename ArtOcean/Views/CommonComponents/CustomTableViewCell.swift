@@ -50,3 +50,23 @@ class CustomCollectionWrapperView<Cell: InnerConfigurableView> : ConfigurableCol
 		cell.prepareCellForReuse()
 	}
 }
+
+//MARK: - CustomTableCell
+
+struct CustomTableCellModel: ActionProvider {
+	var innerView: UIView
+	var edgeInsets: UIEdgeInsets
+	var action: Callback?
+}
+
+class CustomTableCell: ConfigurableCell {
+	
+	func configureCell(with model: CustomTableCellModel) {
+		
+		contentView.removeAllSubViews()
+		backgroundColor = .surfaceBackground
+		isUserInteractionEnabled = model.action != nil
+		contentView.addSubview(model.innerView)
+		contentView.setConstraintsToChild(model.innerView, edgeInsets: model.edgeInsets)
+	}
+}

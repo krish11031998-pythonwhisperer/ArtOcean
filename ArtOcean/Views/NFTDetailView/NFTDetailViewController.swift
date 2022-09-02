@@ -90,13 +90,13 @@ class NFTDetailArtViewController:UIViewController{
 		tableObserver = tableView.observe(\.contentOffset, changeHandler: {[weak self] target, _ in self?.updateOnScroll(target) })
 		navbarObserver = navigationController?.navigationBar.observe(\.frame) {[weak self] target,_ in self?.updateNavBarOnTransformation(target)}
 		loadChartData()
-		showFooter()
+		placeBidButtonFooter.showFooter()
 	}
 	
 	override func viewWillDisappear(_ animated: Bool) {
 		super.viewWillDisappear(animated)
 		navigationController?.navigationBar.transform = .init(translationX: 0, y: 0)
-		hideFooter()
+		placeBidButtonFooter.hideFooter()
 	}
 	
     
@@ -126,7 +126,7 @@ class NFTDetailArtViewController:UIViewController{
 		view.insertSubview(heroHeaderView!, at: 0)
 	}
 	
-	private lazy var placeBidButtonFooter: UIView = {
+	private lazy var placeBidButtonFooter: StickyFooterView = {
 		let view: CustomLabelButton = .init(title: "Place a bid",
 											font: .bold, size: 14,
 											color: .Catalogue.greyscale50.color,
@@ -134,40 +134,9 @@ class NFTDetailArtViewController:UIViewController{
 			self?.showBiddingView()
 		}
 		view.setHeightWithPriority(50, priority: .required)
-		let result = view.embedInView(edges: .init(top: 12, left: 24, bottom: Self.safeAreaInset.bottom.ifZero(val: 12), right: 24))
-
-		return result.background(.surfaceBackground)
+		
+		return StickyFooterView(innerView: view)
 	}()
-	
-	private func showFooter() {
-		guard let window = UIWindow.key else { return }
-		
-		window.addSubview(placeBidButtonFooter)
-		window.setWidthForChildWithPadding(placeBidButtonFooter, paddingFactor: 0)
-		window.setFrameLayout(childView: placeBidButtonFooter, alignment: .bottom)
-		
-		placeBidButtonFooter.transform = .init(translationX: 0, y: placeBidButtonFooter.compressedFittingSize.height)
-		
-		UIView.animate(withDuration: 0.25, delay: 0, options: .curveEaseInOut) {
-			self.placeBidButtonFooter.transform = .init(translationX: 0, y: 0)
-		} completion: { isFinished in
-			if isFinished { NotificationCenter.default.post(name: .stickyFooterShown, object: nil) }
-		}
-	}
-	
-	private func hideFooter() {
-		
-		UIView.animate(withDuration: 0.25, delay: 0, options: .curveEaseInOut) {
-			self.placeBidButtonFooter.transform = .init(translationX: 0, y: self.placeBidButtonFooter.compressedFittingSize.height)
-		} completion: { isFinished in
-			if isFinished {
-				self.placeBidButtonFooter.removeFromSuperview()
-				NotificationCenter.default.post(name: .stickyFooterHidden, object: nil)
-			}
-		}
-
-		
-	}
         
 //    private var creatorLabel:UILabel = {
 //        return CustomLabel(text: "Pablo", size: 14, weight: .bold, color: .appBlueColor, numOfLines: 1,adjustFontSize: false)
@@ -225,7 +194,10 @@ class NFTDetailArtViewController:UIViewController{
 	
 	private var attributeSection:TableSection? {
 		guard let attributes = nftArt?.metadata?.Attributes, !attributes.isEmpty else { return nil }
-		return .init(title: "Attributes", rows: [TableRow<NFTAttributeView>(attributes.compactMap { $0 })])
+		let stackView: AccordianStackView = .init(handler: nil)
+		stackView.buildFlexibleGrid(attributes.map(\.attributeBlob), innerSize: .init(width: .totalWidth, height: .zero), with: 10)
+		stackView.setHeightWithPriority(stackView.compressedFittingSize.height)
+		return .init(title: "Attributes", rows: [TableRow<CustomTableCell>(.init(innerView: stackView, edgeInsets: .init(vertical: 10, horizontal: 16)))])
 	}
 	
 	private var offerSection:TableSection? {
