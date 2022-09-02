@@ -99,12 +99,19 @@ class NFTDetailArtViewController:UIViewController{
 		placeBidButtonFooter.hideFooter()
 	}
 	
+	override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+		super.traitCollectionDidChange(previousTraitCollection)
+		tableView.reload(with: buildDataSource())
+		configNavigationBar()
+	}
+	
     
     //MARK: -  NavigationItem
     private func configNavigationBar(){
 		setupStatusBar()
 		navHeader.configureHeader(imageUrl: nftArt?.metadata?.image , title: nftArt?.Title ?? "")
         self.navigationItem.titleView = navHeader
+		backButton.buttonBackgroundColor = .surfaceBackground
         self.navigationItem.leftBarButtonItem = backBarButton
     }
     

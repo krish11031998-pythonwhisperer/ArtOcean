@@ -53,10 +53,8 @@ class ProfileViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    
     override func viewDidLoad() {
         self.setupViews()
-		//tableView.reload(with: buildDataSource())
 		selectedTab = tabs.first?.title
 		self.observer = tableView.observe(\.contentOffset) { [weak self] scrollView, _ in self?.scrollViewObserver(scrollView) }
     }

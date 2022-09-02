@@ -93,17 +93,26 @@ class NFTLiveBidView : UIView {
         return view
     }()
     
-    private lazy var card:UIStackView = {
-        let view = UIStackView(arrangedSubviews: [imageView,NFTInfo])
-        view.axis = .vertical
-        view.spacing = 5
+	
+	private func buildCard() {
+		removeAllSubViews()
+		
+		let view = UIStackView(arrangedSubviews: [imageView,NFTInfo])
+		view.axis = .vertical
+		view.spacing = 5
 		imageView.heightAnchor.constraint(equalTo: view.heightAnchor, constant: -117).isActive = true
-        return view
-    }()
+		view.backgroundColor = interface == .light ? .surfaceBackground : .appIndigo
+		view.cornerRadius = 16
+		
+		loveButton.buttonBackgroundColor = .surfaceBackground
+		shareButton.buttonBackgroundColor = .surfaceBackground
+		
+		addViewAndSetConstraints(view, edgeInsets: .zero)
+	}
     
 	override init(frame: CGRect) {
 		super.init(frame: frame)
-		addViewAndSetConstraints(card, edgeInsets: .zero)
+		buildCard()
 	}
 	
 	required init?(coder: NSCoder) {
@@ -137,6 +146,11 @@ class NFTLiveBidView : UIView {
        
 	public func prepareForReuse() {
 		imageView.image = .loadingBackgroundImage
+	}
+	
+	override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+		super.traitCollectionDidChange(previousTraitCollection)
+		buildCard()
 	}
 }
 

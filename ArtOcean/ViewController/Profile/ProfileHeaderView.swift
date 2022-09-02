@@ -11,7 +11,7 @@ import UIKit
 fileprivate extension UIView {
 	static func buttonBuilder(_ buttonName:UIImage.Catalogue, _ buttonTitle:String, handler: @escaping () -> Void) -> UIView {
 		let button = CustomImageButton(name: buttonName, frame: .squared(40), addBG: true, handler: nil)
-		let label = CustomLabel(text: buttonTitle, size: 12, weight: .medium, color: .gray,numOfLines: 1,adjustFontSize: false)
+		let label =  CustomLabel(text: buttonTitle, size: 12, weight: .medium, color: .gray,numOfLines: 1,adjustFontSize: false)
 		label.textAlignment = .center
 		let stack = UIStackView(arrangedSubviews: [button,label])
 		stack.axis = .vertical
@@ -51,17 +51,15 @@ class ProfileHeaderView:UIView {
 	}()
 	
 	
-	private lazy var mainStack: UIStackView = {
-		.VStack(aligmment: .center)
-	}()
+	private lazy var mainStack: UIStackView = { .VStack(aligmment: .center) }()
 	
 	override init(frame: CGRect) {
 		super.init(frame: frame)
 		setupView()
 	}
 	
-	required init(coder: NSCoder) {
-		fatalError("init(coder:) has not been implemented")
+	required init?(coder: NSCoder) {
+		super.init(coder: coder)
 	}
 	
 	func setupView() {
@@ -103,10 +101,9 @@ class ProfileHeaderView:UIView {
 	private func profileOptionsView() {
 		let stack = UIStackView(arrangedSubviews: buttons)
 		stack.alignment = .center
-		stack.distribution = .fillEqually
-		stack.spacing = 0
+		stack.distribution = .fill
+		stack.spacing = 24
 		mainStack.addArrangedSubview(stack)
-		mainStack.setHorizontalConstraintsToChild(stack, edgeInsets: .init(vertical: .zero, horizontal: 20), withPriority: 999)
 	}
 
 //MARK: - Exposed Methods

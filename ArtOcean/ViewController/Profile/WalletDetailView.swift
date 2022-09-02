@@ -70,14 +70,12 @@ fileprivate extension TransactionModel {
 		imgView.cornerRadius = 20
 		
 		return .init(leadingImg: imgView.snapshot,
-					 title: "\(String(format: "%.2f", value)) ETH".body3Medium(),
+					 title: "\(String(format: "%.2f", value)) ETH".body2Medium(),
 					 infoTitle: type.rawValue.body2Medium(),
 					 infoSubTitle: day.body3Medium(color: .subtitleColor),
 					 style: .circle(.squared(40).halfed) ,
 					 imgSize: .squared(40)
-		) {
-			print("(DEBUG) Clicked !")
-		}
+		) { print("(DEBUG) Clicked !") }
 	}
 	
 	var tableCell: CellProvider {
@@ -121,7 +119,6 @@ class WalletDetailView:UIViewController{
         stack.addArrangedSubview(currentWalletBalance)
         stack.addArrangedSubview(profileValue)
 	
-        
         return stack
     }()
     

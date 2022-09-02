@@ -41,6 +41,10 @@ class CustomImageButton: UIButton {
 	private let rescaleFactor: CGFloat = 0.375
 	var buttonStyle: ButtonStyle
 	
+	var buttonBackgroundColor: UIColor = .clear {
+		didSet { setupButton() }
+	}
+	
 	public var hideButton: Bool {
 		get { isHidden }
 		set {

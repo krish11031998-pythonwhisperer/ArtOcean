@@ -83,6 +83,7 @@ class NFTHeroHeaderView:UIView{
 			self.topAnchorPaddingConstraint?.constant = scaleFactor * self.imageViewTopPadding
 			self.imageView.alpha = self.imageScale < 0.35 ? 0 : self.imageScale > 0.85 ? 1 : self.imageScale
 			self.backdropImage.alpha = self.imageScale
+			self.setNeedsLayout()
 		}.startAnimation()
     }
     
@@ -92,7 +93,6 @@ class NFTHeroHeaderView:UIView{
 		
 		topAnchorPaddingConstraint = imageView.topAnchor.constraint(equalTo: topAnchor,constant: 132)
 		topAnchorPaddingConstraint?.isActive = true
-		
     }
 	    
     

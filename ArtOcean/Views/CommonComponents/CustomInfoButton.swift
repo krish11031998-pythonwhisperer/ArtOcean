@@ -261,7 +261,7 @@ class CustomInfoButtonCell: ConfigurableCell {
 		contentView.removeAllSubViews()
 		
 		let line: UIView = .init()
-		line.backgroundColor = .greyscale200
+		line.backgroundColor = interface == .light ? .greyscale200 : .appIndigoFadeLight
 		line.setHeightWithPriority(1)
 
 		let view: UIStackView = .VStack(views: [button, line], spacing: 18)

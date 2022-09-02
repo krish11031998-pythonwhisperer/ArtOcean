@@ -29,9 +29,6 @@ class NFTArtCollectionLiveBidViewCell: UICollectionViewCell {
 		addViewAndSetConstraints(nftContentViewCell, edgeInsets: .zero)
         
         self.addShadow()
-        
-        self.backgroundColor = .surfaceBackground
-        self.layer.cornerRadius = 16
 
     }
     

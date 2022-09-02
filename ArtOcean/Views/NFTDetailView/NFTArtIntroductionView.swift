@@ -12,18 +12,14 @@ class NFTArtIntroduction:ConfigurableCell{
 	
 	private var interactiveView:NFTArtInteractiveInfoView?
 	
-	private var titleView:UILabel?
-	
-	private var descriptionView:UILabel?
+	private let titleView: UILabel = .init()
+	private let descriptionView: UILabel = .init()
 	
 	private lazy var titleDescriptionView:UIStackView = {
 		let stack = UIStackView(arrangedSubviews: [titleView,descriptionView].compactMap{ $0 })
 		stack.axis = .vertical
 		stack.spacing = 8
 		
-		descriptionView?.setContentHuggingPriority(.init(249), for: .vertical)
-		descriptionView?.setContentCompressionResistancePriority(.init(749), for: .vertical)
-				
 		return stack
 	}()
 	
@@ -36,8 +32,9 @@ class NFTArtIntroduction:ConfigurableCell{
 	}
 	
 	func configureCell(with model: NFTModel) {
-		titleView = CustomLabel(text: model.Title, size: 18, weight: .bold, color: .appBlackColor, numOfLines: 1, adjustFontSize: true)
-		descriptionView = CustomLabel(text: model.Description, size: 14, weight: .medium, color: .appGrayColor, numOfLines: 3, adjustFontSize: false)
+		model.Title.replace().heading4().renderInto(target: titleView)
+		descriptionView.numberOfLines = 0
+		model.Description.body2Medium(color: .subtitleColor).renderInto(target: descriptionView)
 		interactiveView = .init()
 		backgroundColor = .clear
 		buildContentView()
