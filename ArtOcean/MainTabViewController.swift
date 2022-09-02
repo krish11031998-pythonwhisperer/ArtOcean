@@ -11,11 +11,11 @@ class MainTabController: UITabBarController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        view.backgroundColor = .init(hexString: "FFFFFF")
+		
         setViewControllers(self.tabs.compactMap({self.tabViewBuilder(tab: $0)}), animated: true)
-        tabBar.layer.cornerRadius = 10
-
+		tabBar.cornerRadius(12, at: .top)
+		tabBar.tintColor = .purple800
+		
         let appearance = UITabBarAppearance()
         appearance.backgroundColor = .surfaceBackground
         appearance.selectionIndicatorTintColor = .purple900
