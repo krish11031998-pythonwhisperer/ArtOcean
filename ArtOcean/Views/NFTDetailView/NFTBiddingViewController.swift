@@ -177,18 +177,6 @@ class NFTBiddingViewController: UIViewController {
 
 		return .init(rows: [holderStack.TableRowBuilder(edges: edges)])
 	}
-
-//	private var attributes: TableSection? {
-//
-//		guard let validAttributes = nftArt?.metadata?.attributes else { return nil }
-//
-//		let labels: [UIView] = validAttributes.filter { $0.trait_type != nil && $0.Value != nil }.map(\.attributeBlob)
-//		accordian.configureAccordian(labels, innerSize: .init(width: preferredContentSize.width - 32, height: .zero), with: 10)
-//		return .init(rows: [accordian.TableRowBuilder(edges: edges, action: {
-//			self.accordian.handleTap()
-//		})])
-//	}
-	
 	private var placeBidButton: TableSection? {
 		let button = CustomLabelButton(title: "Place a bid", font: .medium, size: 14, color: .white, backgroundColor: .appBlueColor, handler: nil)
 		button.setHeightWithPriority(40, priority: .required)

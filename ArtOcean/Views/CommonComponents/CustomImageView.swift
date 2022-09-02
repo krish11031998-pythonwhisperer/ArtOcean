@@ -62,8 +62,9 @@ class CustomImageView:UIImageView{
     
     private func setupImageView(){
         if let safeNamed = self.named{
-            self.image = .init(named: safeNamed)
+            image = .init(named: safeNamed)
 		} else if let validUrl = url {
+			image = .loadingBackgroundImage
 			UIImage.loadImage(url: validUrl, for: self, at: \.image)
 		} else {
 			backgroundColor = .appGrayColor.withAlphaComponent(0.15)
