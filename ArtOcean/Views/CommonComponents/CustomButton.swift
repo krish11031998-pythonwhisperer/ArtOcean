@@ -41,6 +41,16 @@ class CustomImageButton: UIButton {
 	private let rescaleFactor: CGFloat = 0.375
 	var buttonStyle: ButtonStyle
 	
+	public var hideButton: Bool {
+		get { isHidden }
+		set {
+			UIView.animate(withDuration: 0.5, delay: 0, options: .curveEaseInOut) {
+				self.isHidden = newValue
+				self.layoutIfNeeded()
+			}
+		}
+	}
+	
 	init(
 		name:UIImage.Catalogue?,
 		systemName:String?,

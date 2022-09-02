@@ -9,6 +9,15 @@ import UIKit
 
 class MainTabController: UITabBarController {
 
+	private lazy var plusButton: CustomImageButton = {
+		let plusButton = CustomImageButton(name: .plus, frame: .squared(46), tintColor: .greyscale50, bgColor: .purple900, bordered: true) {
+			print("(DEBUG) clicked on Plus!")
+		}
+		let compactSize = plusButton.compressedFittingSize.halfed
+		plusButton.frame.origin = .init(x: .totalWidth.half - compactSize.width , y: -compactSize.height)
+		return plusButton
+	}()
+	
     override func viewDidLoad() {
         super.viewDidLoad()
 		
@@ -29,11 +38,6 @@ class MainTabController: UITabBarController {
     }
     
 	private func mainTab() {
-		let plusButton = CustomImageButton(name: .plus, frame: .squared(46), tintColor: .greyscale50, bgColor: .purple900, bordered: true, buttonStyle: .circle(.squared(16))) {
-			print("(DEBUG) clicked on Plus!")
-		}
-		plusButton.frame.origin = .init(x: (.totalWidth - plusButton.compressedFittingSize.width).half, y: -20)
-		plusButton.cornerRadius(16, at: .all)
 		tabBar.addSubview(plusButton)
 	}
 	
@@ -70,19 +74,32 @@ class MainTabController: UITabBarController {
 	func addObservers() {
 		NotificationCenter.default.addObserver(self, selector: #selector(showArt), name: .showArt, object: nil)
 		NotificationCenter.default.addObserver(self, selector: #selector(showAccount), name: .showAccount, object: nil)
+		NotificationCenter.default.addObserver(self, selector: #selector(showStickyFooter), name: .stickyFooterShown, object: nil)
+		NotificationCenter.default.addObserver(self, selector: #selector(hideStickyFooter), name: .stickyFooterHidden, object: nil)
 	}
 	
 	@objc
 	func showArt() {
-		print("(DEBUG) showArt is called!")
 		UIWindow.topMostNavigation?.pushViewController(NFTDetailArtViewController(), animated: true)
 	}
 
 	
 	@objc
 	func showAccount() {
-		print("(DEBUG) showArt is called!")
 		UIWindow.topMostNavigation?.pushViewController(AccountViewController(), animated: true)
+	}
+	
+	@objc
+	func showStickyFooter() {
+		print("(DEBUG) showStickyFooter is called!")
+		plusButton.hideButton = true
+	}
+
+	
+	@objc
+	func hideStickyFooter() {
+		print("(DEBUG) hideStickyFooter is called!")
+		plusButton.hideButton = false
 	}
 
 }

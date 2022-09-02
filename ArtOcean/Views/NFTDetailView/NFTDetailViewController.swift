@@ -150,6 +150,8 @@ class NFTDetailArtViewController:UIViewController{
 		
 		UIView.animate(withDuration: 0.25, delay: 0, options: .curveEaseInOut) {
 			self.placeBidButtonFooter.transform = .init(translationX: 0, y: 0)
+		} completion: { isFinished in
+			if isFinished { NotificationCenter.default.post(name: .stickyFooterShown, object: nil) }
 		}
 	}
 	
@@ -158,7 +160,10 @@ class NFTDetailArtViewController:UIViewController{
 		UIView.animate(withDuration: 0.25, delay: 0, options: .curveEaseInOut) {
 			self.placeBidButtonFooter.transform = .init(translationX: 0, y: self.placeBidButtonFooter.compressedFittingSize.height)
 		} completion: { isFinished in
-			if isFinished { self.placeBidButtonFooter.removeFromSuperview() }
+			if isFinished {
+				self.placeBidButtonFooter.removeFromSuperview()
+				NotificationCenter.default.post(name: .stickyFooterHidden, object: nil)
+			}
 		}
 
 		
