@@ -105,7 +105,11 @@ class WalletDetailView:UIViewController{
 		return button
 	}()
     
-    private let titleView:CustomLabel = .init(text: "Wallet", size: 18, weight: .bold, color: .black, numOfLines: 1, adjustFontSize: true, autoLayout: false)
+	private lazy var titleView:UILabel = {
+		let label = UILabel()
+		"Wallet".heading4().renderInto(target: label)
+		return label
+	}()
     
     private lazy var balanceViewStack:UIView = {
 		let stack: UIStackView = .VStack(spacing: 8, aligmment: .center)
@@ -121,7 +125,11 @@ class WalletDetailView:UIViewController{
         return stack
     }()
     
-    private let profileValue:CustomLabel = .init(text: "0.0295 (1.34%)", size: 14, weight:.medium, color: .black, numOfLines: 1, adjustFontSize: true, autoLayout: false)
+    private let profileValue: UILabel = {
+		let label: UILabel = .init()
+		"0.0295 (1.34%)".body2Medium(color: .appGreen).renderInto(target: label)
+		return label
+	}()
     
     
     private lazy var walletActionView:UIView = {
@@ -134,7 +142,11 @@ class WalletDetailView:UIViewController{
         return stack
     }()
     
-    private let currentWalletBalance:CustomLabel = CustomLabel(text: "0.1345 ETH", size: 32, weight: .medium, color: .black, numOfLines: 1, adjustFontSize: true)
+	private let currentWalletBalance: UILabel = {
+		let label: UILabel = .init()
+		"0.12345 ETH".heading1().renderInto(target: label)
+		return label
+	}()
 
     
     //MARK: - Recnt Activity Section

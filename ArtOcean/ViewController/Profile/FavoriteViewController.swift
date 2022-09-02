@@ -52,11 +52,12 @@ class ProfileAssetCollectionViewController:UIViewController{
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = .surfaceBackground
+        view.backgroundColor = .surfaceBackground
 		showNavBar()
         setupNavBar()
 		view.addSubview(mainStack)
 		view.setSafeAreaConstraintsToChild(mainStack, edgeInsets: .init(top: 12, left: 0, bottom: 0, right: 0))
+		collection.backgroundColor = .surfaceBackground
 		collection.reload(with: buildCollectionDataSource())
     }
     
