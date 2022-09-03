@@ -46,19 +46,7 @@ class CustomLabelButton:UIButton{
 	
 	
 	public override var isSelected: Bool {
-		didSet {
-			let color: UIColor = isSelected ? .appPurpleColor : .textColor
-			configuration?.image = configuration?.image?.withTintColor(color)
-			updateTitle(color: color)
-			if isSelected {
-				backgroundColor = interface == .dark ? .appIndigoFade : .surfaceBackground
-				cornerRadius = 15
-			} else {
-				backgroundColor = .clear
-				cornerRadius = 0
-			}
-			
-		}
+		didSet { updateUI() }
 	}
     
 	init(
@@ -105,6 +93,23 @@ class CustomLabelButton:UIButton{
 		}
 	}
 	
+	private func updateUI() {
+		let color: UIColor = isSelected ? .appPurpleColor : .textColor
+		configuration?.image = configuration?.image?.withTintColor(color)
+		updateTitle(color: color)
+		if isSelected {
+			backgroundColor = interface == .dark ? .appIndigoFade : .surfaceBackground
+			cornerRadius = 15
+		} else {
+			backgroundColor = .clear
+			cornerRadius = 0
+		}
+	}
+	
+	override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+		super.traitCollectionDidChange(previousTraitCollection)
+		updateUI()
+	}
 }
 
 extension UIButton.Configuration {

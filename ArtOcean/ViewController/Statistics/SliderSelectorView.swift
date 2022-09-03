@@ -42,7 +42,7 @@ class SliderSelector:UIView{
     
 	private func setupUI() {
 		cornerRadius = 20
-		backgroundColor = interface == .dark ? .appIndigo : .surfaceBackgroundInverse.withAlphaComponent(0.5)
+		backgroundColor = interface == .dark ? .appIndigo : .greyscale200
 		tabStackBuilder()
 	}
 	

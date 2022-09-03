@@ -15,25 +15,33 @@ struct Section {
     let type: SectionType?
     let items: [Item]?
 	let layout: UICollectionViewFlowLayout
+	let tableCellProvider: [CellProvider]?
+	let collectionCellProvider: [CellProvider]?
 	let selectorItem: SlideSelectorItem?
 	
 	init(
 		type: SectionType?,
 		items: [Item]?,
 		layout: UICollectionViewFlowLayout = .standardFlow,
-		selectorItem: SlideSelectorItem? = nil
+		selectorItem: SlideSelectorItem? = nil,
+		tableCellProvider: [CellProvider]? = nil,
+		collectionCellProvider: [CellProvider]? = nil
 	) {
 		self.type = type
 		self.items = items
 		self.layout = layout
 		self.selectorItem = selectorItem
+		self.tableCellProvider = tableCellProvider
+		self.collectionCellProvider = collectionCellProvider
 	}
 }
 
 //MARK: - Hashable
 
 extension Section: Hashable {
-	
+	static func == (lhs: Section, rhs: Section) -> Bool {
+		lhs.type == rhs.type
+	}
 	func hash(into hasher: inout Hasher) {
 		hasher.combine(type)
 	}

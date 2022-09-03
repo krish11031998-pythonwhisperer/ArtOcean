@@ -45,7 +45,9 @@ struct CustomInfoButtonModel: ActionProvider {
 	let leadingImgSize: CGSize
 	let trailingImgSize: CGSize
 	let style: ImageStyle
+	let edges: UIEdgeInsets
 	var action: Callback?
+	
 //	let includeSeperator: Bool
 	
 	init(leadingImg: UIImage? = nil,
@@ -59,6 +61,7 @@ struct CustomInfoButtonModel: ActionProvider {
 		 style: ImageStyle = .original,
 		 leadingImgSize: CGSize = .smallestSqaure,
 		 trailingImgSize: CGSize = .smallestSqaure,
+		 edges: UIEdgeInsets = .init(vertical: 10, horizontal: 16),
 		 action: Callback? = nil
 	) {
 		self.leadingImage = leadingImg
@@ -72,6 +75,7 @@ struct CustomInfoButtonModel: ActionProvider {
 		self.style = style
 		self.leadingImgSize = leadingImgSize
 		self.trailingImgSize = trailingImgSize
+		self.edges = edges
 		self.action = action
 	}
 }
@@ -273,7 +277,7 @@ class CustomInfoButtonCell: ConfigurableCell {
 
 		let view: UIStackView = .VStack(views: [button, line], spacing: 18)
 		contentView.addSubview(view)
-		contentView.setConstraintsToChild(view, edgeInsets: .init(vertical: 10, horizontal: 16))
+		contentView.setConstraintsToChild(view, edgeInsets: model.edges)
 		
 		button.isUserInteractionEnabled = false
 		button.updateUIButton(model)
@@ -289,7 +293,7 @@ class CustomInfoButtonCollectionCell: ConfigurableCollectionCell {
 	
 	func configureCell(with model: CustomInfoButtonModel) {
 		contentView.addSubview(button)
-		contentView.setConstraintsToChild(button, edgeInsets: .init(vertical: 10, horizontal: 16))
+		contentView.setConstraintsToChild(button, edgeInsets: model.edges)
 		
 		button.isUserInteractionEnabled = false
 		button.updateUIButton(model)

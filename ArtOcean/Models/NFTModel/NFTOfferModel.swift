@@ -75,7 +75,7 @@ extension NFTArtOffers {
 
 extension CustomInfoButtonModel {
 	
-	init(_ offer: NFTArtOffer, withArtImage: Bool = false, action: Callback? = nil) {
+	init(_ offer: NFTArtOffer, withArtImage: Bool = false, edges: UIEdgeInsets = .init(vertical: 10, horizontal: 16), action: Callback? = nil) {
 		var img: UIImage? = nil
 		var style: ImageStyle
 		var url: String? = nil
@@ -100,7 +100,9 @@ extension CustomInfoButtonModel {
 			infoSubTitle: offer.percent?.body3Regular(),
 			leadingImageUrl: url,
 			style: style,
-			leadingImgSize: .squared(40)) {
+			leadingImgSize: .squared(40),
+			edges: edges
+		) {
 				NFTStorage.selectedArt = offer.nft
 				NotificationCenter.default.post(name: .showArt, object: nil)
 			}

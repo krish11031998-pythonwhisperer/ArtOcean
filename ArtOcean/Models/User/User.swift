@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 struct User:Codable,Hashable{
     var name:String?
     var username:String?
@@ -44,7 +45,7 @@ let testUser:[User] = {
 
 extension CustomInfoButtonModel {
 	
-	init(_ user: User) {
+	init(_ user: User, edges: UIEdgeInsets = .init(vertical: 10, horizontal: 16)) {
 		self.init(
 			title: user.name?.body2Medium(),
 			subTitle: user.username?.body3Medium(),
@@ -52,7 +53,8 @@ extension CustomInfoButtonModel {
 			infoSubTitle: (user.profit?.toString() ?? "0").body3Medium(),
 			leadingImageUrl: user.image,
 			style: .circle(.squared(40)),
-			leadingImgSize: .squared(40)) {
+			leadingImgSize: .squared(40),
+			edges: edges) {
 				UserStorage.selectedUser = user
 				NotificationCenter.default.post(name: .showAccount, object: nil)
 			}
@@ -62,7 +64,6 @@ extension CustomInfoButtonModel {
 extension User {
 	
 	var row: CellProvider { TableRow<CustomInfoButtonCell>(.init(self)) }
-	
 	var collectionCell: CollectionCellProvider { CollectionColumn<CustomInfoButtonCollectionCell>(.init(self)) }
 	
 	static func decodeFromItem(_ item: Item) -> User? {

@@ -24,9 +24,16 @@ enum Sections: String {
 	
 }
 
+extension User {
+	var userCollectionCell: CollectionCellProvider {
+		CollectionColumn<CustomInfoButtonCollectionCell>(.init(self, edges: .init(vertical: 10, horizontal: 5)))
+	}
+}
+
 extension NFTArtOffer {
-	
-	var artCollectionCell: CollectionCellProvider { CollectionColumn<CustomInfoButtonCollectionCell>(.init(self, withArtImage: true))}
+	var artCollectionCell: CollectionCellProvider {
+		CollectionColumn<CustomInfoButtonCollectionCell>(.init(self, withArtImage: true, edges: .init(vertical: 10, horizontal: 5)))
+	}
 }
 
 //MARK: - Type
@@ -97,7 +104,7 @@ extension StatisticsViewController: CustomSelectorDynamicCollectionDelegate {
 	func collectionSection(_ section: Section) -> CollectionSection? {
 		guard let validItems = section.items else { return nil }
 		if section == UserSection {
-			return .init(cells: validItems.compactMap(\.nftUser?.collectionCell))
+			return .init(cells: validItems.compactMap(\.nftUser?.userCollectionCell))
 		} else if section == NFTArtOfferSection {
 			return .init(cells: validItems.compactMap(\.nftOffer?.artCollectionCell))
 		}
