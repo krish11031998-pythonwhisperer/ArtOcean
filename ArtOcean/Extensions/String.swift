@@ -85,6 +85,10 @@ extension String: RenderableText {
 	var attributedString: NSAttributedString {
 		NSAttributedString(string: self)
 	}
+	
+	func isValidURL() -> Bool { URL(string: self) == nil }
+	
+	func isImageURL() -> Bool { self.contains("jpg") || self.contains("png") }
 }
 
 

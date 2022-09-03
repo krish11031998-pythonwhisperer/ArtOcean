@@ -46,8 +46,8 @@ class StreachyHeaderView:UIView{
 	}
 	
     func setupLayout(){
+		innerView.removeAllConstraints()
 		setWidthForChildWithPadding(innerView, paddingFactor: 0)
-		
         viewTopConstraint = innerView.topAnchor.constraint(equalTo: topAnchor)
         viewTopConstraint?.isActive = true
         viewHeightConstraint =  innerView.heightAnchor.constraint(equalToConstant: height)

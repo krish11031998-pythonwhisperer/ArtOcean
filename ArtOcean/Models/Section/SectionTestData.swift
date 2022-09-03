@@ -15,8 +15,7 @@ let NFTArtSection: Section = {
 		switch result{
 		case .success(let data):
 			if let ownedNfts = data.ownedNfts{
-				let items = ownedNfts.compactMap({Item.artData($0)})
-				artItems = items.count < 50 ? items : Array(items[0..<50])
+				artItems = ownedNfts.filter { $0.metadata?.image?.isImageURL() ?? false }.compactMap{ Item.artData($0) }.limit(to: 50)
 			}
 			
 		case .failure(let err):
