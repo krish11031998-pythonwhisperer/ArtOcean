@@ -25,7 +25,7 @@ class HomeViewController: UIViewController {
 		let cols = data.map { CollectionColumn<NFTArtCollectionLiveBidViewCell>($0) }
 		let size: CGSize = NFTArtCollectionLiveBidViewCell.itemSize
  		return .init(
-			title:"Hot Items",
+			title:"Live Bid",
 			rightTitle: "View All",
 			columns: cols,
 			layout: .standardFlowWithSize(size)

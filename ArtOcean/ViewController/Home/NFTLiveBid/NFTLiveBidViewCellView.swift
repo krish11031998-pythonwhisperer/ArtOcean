@@ -15,11 +15,11 @@ class NFTLiveBidView : UIView {
     private lazy var imageView:CustomImageView = CustomImageView(cornerRadius: 16, maskedCorners: [.layerMinXMinYCorner,.layerMaxXMinYCorner])
   
     private lazy var title:UILabel = {
-        let label = self.labelBuilder(text: "", size: 14, weight: .bold, color: .textColor, numOfLines: 1)
+        let label = self.labelBuilder(text: "Title", size: 14, weight: .bold, color: .textColor, numOfLines: 1)
         return label
     }()
     
-    private lazy var owner = self.labelBuilder(text: "", size: 12, weight: .medium, color: .subtitleColor, numOfLines: 1)
+    private lazy var owner = self.labelBuilder(text: "Owner", size: 12, weight: .medium, color: .subtitleColor, numOfLines: 1)
     
     private lazy var price = self.labelBuilder(text: "3 ETH", size: 12, weight: .medium, color: .appGreenColor, numOfLines: 1)
 
@@ -93,6 +93,15 @@ class NFTLiveBidView : UIView {
         return view
     }()
     
+	private func loadRedactedView() {
+		let gradientLayer: CAGradientLayer = .init()
+		gradientLayer.colors = [UIColor.greyscale500.cgColor,UIColor.greyscale600.cgColor]
+		
+		gradientLayer.frame = title.compressedFittingSize.frame
+		gradientLayer.cornerRadius = 8
+		title.layer.sublayers?.last?.removeFromSuperlayer()
+		title.layer.addSublayer(gradientLayer)
+	}
 	
 	private func buildCard() {
 		removeAllSubViews()
@@ -115,6 +124,7 @@ class NFTLiveBidView : UIView {
 	override init(frame: CGRect) {
 		super.init(frame: frame)
 		buildCard()
+		//loadRedactedView()
 	}
 	
 	required init?(coder: NSCoder) {

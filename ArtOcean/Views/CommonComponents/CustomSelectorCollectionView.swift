@@ -16,7 +16,6 @@ class CustomSelectorCollectionView:UIView{
     
     private let sections:[Section]
     private let layoutForSection:[SectionType:NSCollectionLayoutSection]
-//    private let cellForSections:[Section:T.Type] = [:]
     public var collectionDelegate:CustomComplexCollectionViewDelegate? = nil{
         didSet{
             self.customCollectionView.configurationDelegate = self.collectionDelegate
