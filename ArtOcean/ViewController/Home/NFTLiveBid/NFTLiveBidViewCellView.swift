@@ -161,7 +161,6 @@ class NFTLiveBidView : UIView {
 extension NFTLiveBidView: ConfigurableStyling {
 	
 	func configureView(with model: NFTArtCollectionViewCellData) {
-		backgroundColor = .appWhiteBackgroundColor
 		self.updateUIWithNFT(model.nft)
 	}
 	
