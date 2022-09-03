@@ -56,16 +56,11 @@ class HomeViewController: UIViewController {
 		) { [weak self] in self?.pushSeeAllArtVC() }
 	}
 
-	
 	private var topCollection:TableSection{
 		let headerView = ContainerHeaderView(title: "Top Collection", rightButtonTitle: "View All") { [weak self] in self?.pushSeeAllArtVC() }
 		return .init(headerView: headerView, rows: Array(repeating: TopCollectionData.test, count: 5).compactMap{ TableRow<TopCollectionTableCell>($0) })
 	}
-	
-//    private lazy var artTypes:TableSection? = {
-//		return .init(rows: [TableRow<NFTArtTypeCollectionViewCell>(NFTArtType.allType)])
-//    }()
-	
+		
 	private var topSeller:TableCollectionSection?{
 		let colsData:[TopSellerCollectionViewData] = Array(repeating: SellerData.test, count: 15).map {seller in .init(seller: seller) { print("(DEBUG) Clicked on ",seller.name) } }
 		let cols = colsData.map { CollectionColumn<TopSellerCollectionViewCell>($0) }
@@ -124,15 +119,13 @@ class HomeViewController: UIViewController {
 	
     
 	private var tableHeaderView:UIView {
-		
-//		let view  = UIView(frame: .init(origin: .zero, size: .init(width: UIScreen.main.bounds.width, height: 206)))
+	
 		let stackView = UIStackView()
 		stackView.axis = .vertical
 		stackView.alignment = .center
 		stackView.spacing = 24
 		
 		let artTypeCollection = NFTArtTypeCollectionView()
-		//artTypeCollection.configureCollection(NFTArtType.allType)
 		
 		stackView.addArrangedSubview(artTypeCollection)
 		stackView.addArrangedSubview(bannerImageView)
@@ -184,7 +177,6 @@ class HomeViewController: UIViewController {
         bannerTitle.bottomAnchor.constraint(equalTo: learnMoreBannerImage.topAnchor, constant: -24).isActive = true
         bannerTitle.widthAnchor.constraint(equalToConstant: 185).isActive = true
         
-//		view.heightAnchor.constraint(equalToConstant: 132).isActive = true
 		
         return imageView
     }()
