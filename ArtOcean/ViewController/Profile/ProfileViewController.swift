@@ -28,9 +28,9 @@ class ProfileViewController: UIViewController {
 	}()
 
 	private lazy var backdropImage: UIImageView = {
-		let imageView = UIImageView(frame: .init(origin: .zero, size: .init(width: UIScreen.main.bounds.width, height: 200)))
+		let imageView = UIImageView(frame: .init(origin: .zero, size: .init(width: .totalWidth, height: 200)))
 		imageView.updateImageView(url: "https://gutterart.blob.core.windows.net/metadata/image/3.jpeg")
-		imageView.blurGradientBackDrop(size: .init(width: UIScreen.main.bounds.width, height: 200))
+		imageView.blurGradientBackDrop(size: .init(width: .totalWidth, height: 200))
 		return imageView
 	}()
 	
@@ -80,6 +80,12 @@ class ProfileViewController: UIViewController {
         super.viewWillAppear(animated)
         self.navigationController?.setNavigationBarHidden(true, animated: animated)
     }
+	
+	override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+		super.traitCollectionDidChange(previousTraitCollection)
+		backdropImage.removeAllSubViews()
+		backdropImage.blurGradientBackDrop(size: backdropImage.compressedFittingSize)
+	}
 	
 //MARK: Protected Methods
 		

@@ -8,26 +8,31 @@
 import Foundation
 import UIKit
 
-fileprivate extension UIView {
-	static func buttonBuilder(_ buttonName:UIImage.Catalogue, _ buttonTitle:String, handler: @escaping () -> Void) -> UIView {
-		let button = CustomImageButton(name: buttonName, frame: .squared(40), addBG: true, handler: nil)
-		let label =  CustomLabel(text: buttonTitle, size: 12, weight: .medium, color: .gray,numOfLines: 1,adjustFontSize: false)
+protocol ProfileHeaderEventDelegate {
+	func clickedOnProfileButton(_ identifier: String)
+}
+
+struct ProfileButton {
+	var imageName: UIImage.Catalogue
+	var name: String
+	
+	init(imageName: UIImage.Catalogue, name: String) {
+		self.imageName = imageName
+		self.name = name
+	}
+	
+	func buildView(handler: @escaping () -> Void) -> UIView {
+		let button = CustomImageButton(name: imageName, frame: .squared(40), addBG: true, handler: handler)
+		let label =  CustomLabel(text: name, size: 12, weight: .medium, color: .gray,numOfLines: 1,adjustFontSize: false)
 		label.textAlignment = .center
 		let stack = UIStackView(arrangedSubviews: [button,label])
 		stack.axis = .vertical
 		stack.spacing = 12
 		stack.distribution = .fill
 		stack.alignment = .center
-		stack.accessibilityIdentifier = buttonTitle
-		button.handler = handler
 		return stack.embedInView(edges: .init(vertical: 0, horizontal: 10), priority: .needed)
 	}
 }
-
-protocol ProfileHeaderEventDelegate {
-	func clickedOnProfileButton(_ identifier: String)
-}
-
 
 class ProfileHeaderView:UIView {
 	
@@ -39,15 +44,15 @@ class ProfileHeaderView:UIView {
 	
 	private let profileHeader:UILabel = .init()
 	
-	private let settingButton:UIView = { CustomImageButton(name: .userOutline, frame: .squared(40), addBG: true, handler: nil) }()
+	private let profileButtons: [ProfileButton] = [
+		.init(imageName: .heartOutline, name: "Favorites"),
+		.init(imageName: .creditCardOutline, name: "Wallet"),
+		.init(imageName: .pencil, name: "Draft"),
+		.init(imageName: .userOutline, name: "Profile")
+	]
 	
 	private lazy var buttons: [UIView] = {
-		[(UIImage.Catalogue.heartOutline,"Favorites"),
-		 (UIImage.Catalogue.creditCardOutline, "Wallet"),
-		 (UIImage.Catalogue.pencil, "Draft"),
-		 (UIImage.Catalogue.userOutline, "Profile")
-		].map { (img,title) in .buttonBuilder(img, title) { [weak self] in self?.delegate?.clickedOnProfileButton(title)} }
-
+		profileButtons.map { button in button.buildView { [weak self] in self?.delegate?.clickedOnProfileButton(button.name)  } }
 	}()
 	
 	
@@ -68,6 +73,14 @@ class ProfileHeaderView:UIView {
 		profileOptionsView()
 		addViewAndSetConstraints(mainStack, edgeInsets: .zero)
 		updateHeader()
+	}
+
+//MARK: - Overriden Methods
+	
+	override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+		super.traitCollectionDidChange(previousTraitCollection)
+		mainStack.removeAllSubViews()
+		setupView()
 	}
 	
 //MARK: - Protected Methods
@@ -91,15 +104,18 @@ class ProfileHeaderView:UIView {
 	}
 	
 	private func setupTopHeaderView() {
+		let settingButton = CustomImageButton(name: .userOutline, frame: .squared(40), addBG: true, handler: nil)
 		let stack: UIStackView = .init(arrangedSubviews: [profileHeader,.spacer(),settingButton])
 		settingButton.setFrameConstraints(size: .squared(40), withPriority: .defaultHigh)
+		stack.setHeightWithPriority(stack.compressedFittingSize.height)
 		mainStack.addArrangedSubview(stack)
 		mainStack.setHorizontalConstraintsToChild(stack, edgeInsets: .init(vertical: .zero, horizontal: 20), withPriority: 999)
 		mainStack.setCustomSpacing(46, after: stack)
 	}
 	
 	private func profileOptionsView() {
-		let stack = UIStackView(arrangedSubviews: buttons)
+		let arrangedViews = profileButtons.map { button in button.buildView { [weak self] in self?.delegate?.clickedOnProfileButton(button.name)  } }
+		let stack = UIStackView(arrangedSubviews: arrangedViews)
 		stack.alignment = .center
 		stack.distribution = .fill
 		stack.spacing = 0

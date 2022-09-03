@@ -32,26 +32,30 @@ class SliderSelector:UIView{
     init(tabs:[SlideSelectorItem]){
         self.tabs = tabs
 		super.init(frame: .init(origin: .zero, size: .init(width: UIScreen.main.bounds.width - 20, height: 50)))
-        cornerRadius = 20
-		backgroundColor = .surfaceBackgroundInverse.withAlphaComponent(0.5)
-        tabStackBuilder()
+		setupUI()
     }
     
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+		self.tabs = []
+		super.init(coder: coder)
     }
     
+	private func setupUI() {
+		cornerRadius = 20
+		backgroundColor = interface == .dark ? .appIndigo : .surfaceBackgroundInverse.withAlphaComponent(0.5)
+		tabStackBuilder()
+	}
+	
     private lazy var tabsIndicators:[UIButton] = {
         let views:[UIButton] = self.tabs.compactMap { tab in
 			let button = CustomLabelButton()
 			button.title = tab.title.heading5(color: .textColor)
 			button.image = tab.image?.resized(.squared(15)).withTintColor(.surfaceBackgroundInverse)
 			button.accessibilityIdentifier = tab.title
-			button.handler = { [weak self] in
-				self?.tapHandler(tab.title)
-			}
+			button.handler = { [weak self] in self?.tapHandler(tab.title) }
             return button
         }
+		
 		if let first = views.first(where: tabs.first?.title) as? CustomLabelButton {
 			first.isSelected = true
 		}
@@ -69,8 +73,6 @@ class SliderSelector:UIView{
 
     
     func tabStackBuilder(){
-        let ratios = Array(repeating: CGFloat(1)/CGFloat(tabsIndicators.count), count: tabsIndicators.count)
-        print("(DEBUG) ratios : ",ratios)
         let stackView = UIView.StackBuilder(views: tabsIndicators, ratios: [0.5,0.5], spacing: 10, axis: .horizontal)
         addSubview(stackView)
 		setConstraintsToChild(stackView, edgeInsets: .init(vertical: 5, horizontal: 5))
@@ -80,5 +82,11 @@ class SliderSelector:UIView{
     override var intrinsicContentSize: CGSize{
         return .init(width: UIScreen.main.bounds.width - 20, height: 50)
     }
+	
+	override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+		super.traitCollectionDidChange(previousTraitCollection)
+		removeAllSubViews()
+		setupUI()
+	}
     
 }

@@ -310,8 +310,6 @@ extension UIImage {
 		case viewGridAdd = "view-grid-add"
 		case viewGrid = "view-grid"
 		case xMark = "x"
-		
-		var image: UIImage { .init(named: self.rawValue) ?? .solid(color: .appBlackColor.withAlphaComponent(0.125), frame: .smallestSqaure) }
 	}
 	
 	static func buildCatalogueImage(name: Catalogue, size: CGSize) -> UIImage {
@@ -356,6 +354,14 @@ extension UIImage {
 	}
 }
 
+//MARK: - UIImage.Catalogue Extension 
+extension UIImage.Catalogue {
+	
+	var image: UIImage { .init(named: self.rawValue) ?? .solid(color: .appBlackColor.withAlphaComponent(0.125), frame: .smallestSqaure) }
+	
+	func generateView(size: CGSize = .smallestSqaure) -> UIView { image.imageView(size: size) }
+	
+}
 //MARK: - UIImageStylist
 
 enum ImageStyle {
