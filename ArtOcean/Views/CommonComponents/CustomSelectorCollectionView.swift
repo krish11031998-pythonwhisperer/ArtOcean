@@ -79,11 +79,6 @@ extension CustomSelectorCollectionView:SlideSelectorDelegate{
 
 //MARK: - Defination
 
-protocol CustomSelectorDynamicCollectionDelegate {
-	
-	func collectionSection(_ section: Section) -> CollectionSection?
-}
-
 //MARK: - Type
 
 class CustomSelectorDynamicCollectionView: UIView {
@@ -92,14 +87,8 @@ class CustomSelectorDynamicCollectionView: UIView {
 	
 	private let sections: [Section]
 	
-	public var delegate: CustomSelectorDynamicCollectionDelegate? {
-		didSet { reloadCollection() }
-	}
-	
 	private var selectedSection: Section? {
-		didSet {
-			reloadCollection()
-		}
+		didSet { reloadCollection() }
 	}
 	
 	private lazy var collectionView: UICollectionView = {
@@ -121,6 +110,7 @@ class CustomSelectorDynamicCollectionView: UIView {
 		super.init(frame: .zero)
 		selectedSection = sections.first
 		setupUI()
+		reloadCollection()
 	}
 	
 	required init?(coder: NSCoder) {
@@ -142,9 +132,11 @@ class CustomSelectorDynamicCollectionView: UIView {
 	private func reloadCollection() {
 		guard
 			let validSelectedSection = selectedSection,
-			let validCollectionSection = delegate?.collectionSection(validSelectedSection)
+			let validCollectionProvider = validSelectedSection.collectionCellProvider
 		else { return }
-		collectionView.reload(with: .init(sections: [validCollectionSection], layout: validSelectedSection.layout,height: .infinity))
+		collectionView.reload(with: .init(sections: [.init(cells: validCollectionProvider)],
+										  layout: validSelectedSection.layout,
+										  height: .infinity))
 	}
 }
 

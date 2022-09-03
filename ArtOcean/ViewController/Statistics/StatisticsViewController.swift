@@ -47,18 +47,20 @@ class StatisticsViewController: UIViewController {
 	}()
 	
 	private let customArtSection: Section = {
-		let section = NFTArtOfferSection
+		var section = NFTArtOfferSection
 		section.layout.itemSize = .init(width: .totalWidth - 16, height: 60)
 		section.layout.sectionInset = .zero
 		section.layout.minimumLineSpacing = 0
+		section.collectionCellProvider = section.items?.compactMap(\.nftOffer?.artCollectionCell)
 		return section
 	}()
 	
 	private let customUserSection: Section = {
-		let section = UserSection
+		var section = UserSection
 		section.layout.itemSize.width -= 16
 		section.layout.sectionInset = .zero
 		section.layout.minimumLineSpacing = 0
+		section.collectionCellProvider = section.items?.compactMap(\.nftUser?.userCollectionCell)
 		return section
 	}()
 
@@ -81,7 +83,6 @@ class StatisticsViewController: UIViewController {
 //MARK: - Protected Methods
 
 	private func setupUI() {
-		customSlideCollectionView.delegate = self
 		view.addSubview(customSlideCollectionView)
 		view.setSafeAreaConstraintsToChild(customSlideCollectionView, edgeInsets: .init(top: 16, left: 8, bottom: 0, right: 8))
 		view.backgroundColor = .surfaceBackground
@@ -94,20 +95,5 @@ class StatisticsViewController: UIViewController {
 		navigationItem.leftBarButtonItem = .init(customView: label)
 		navigationItem.rightBarButtonItem = .init(customView: searchButton)
 		setupStatusBar()
-	}
-}
-
-//MARK: - StatisticViewControllerWithDynamic
-
-extension StatisticsViewController: CustomSelectorDynamicCollectionDelegate {
-
-	func collectionSection(_ section: Section) -> CollectionSection? {
-		guard let validItems = section.items else { return nil }
-		if section == UserSection {
-			return .init(cells: validItems.compactMap(\.nftUser?.userCollectionCell))
-		} else if section == NFTArtOfferSection {
-			return .init(cells: validItems.compactMap(\.nftOffer?.artCollectionCell))
-		}
-		return nil
 	}
 }

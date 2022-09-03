@@ -27,7 +27,9 @@ let NFTArtSection: Section = {
 	layout.itemSize.width = (.totalWidth - 28).half - layout.minimumInteritemSpacing
 	layout.sectionInset = .init(vertical: 10)
 	
-	return .init(type: "ART", items: artItems, layout: layout, selectorItem: .init(title: "Items", image: .Catalogue.viewGrid.image))
+	let collectionProvider = artItems?.compactMap(\.nftArtData?.collectionCell)
+	let selectorItem: SlideSelectorItem = .init(title: "Items", image: .Catalogue.viewGrid.image)
+	return .init(type: "ART", items: artItems, layout: layout, selectorItem: selectorItem, collectionCellProvider: collectionProvider)
 }()
 
 //MARK: - NFTArtOfferSection Section
@@ -51,11 +53,15 @@ let NFTArtOfferSection:Section = {
 	layout.minimumInteritemSpacing = 12
 	layout.minimumLineSpacing = 12
 	
+	let collectionProvider = items?.compactMap(\.nftOffer?.collectionCell)
+	let selectorItem: SlideSelectorItem = .init(title: "Offers", image: .Catalogue.user.image)
+	
 	return .init(
 		type: "OFFER",
 		items: items,
 		layout: layout,
-		selectorItem: .init(title: "Offers", image: .Catalogue.user.image)
+		selectorItem: selectorItem,
+		collectionCellProvider: collectionProvider
 	)
 }()
 
@@ -70,5 +76,11 @@ let UserSection:Section = {
 	layout.minimumInteritemSpacing = 12
 	layout.minimumLineSpacing = 12
 	
-	return Section(type: "USER", items: testUser.compactMap{ Item.user($0) },layout: layout, selectorItem: .init(title: "User", image: .Catalogue.user.image))
+	let selectorItem: SlideSelectorItem = .init(title: "User", image: .Catalogue.user.image)
+	let items: [Item] = testUser.compactMap{ Item.user($0) }
+	return Section(type: "USER",
+				   items: items,
+				   layout: layout,
+				   selectorItem: selectorItem,
+				   collectionCellProvider: items.compactMap(\.nftUser?.collectionCell))
 }()

@@ -16,7 +16,7 @@ struct Section {
     let items: [Item]?
 	let layout: UICollectionViewFlowLayout
 	let tableCellProvider: [CellProvider]?
-	let collectionCellProvider: [CellProvider]?
+	var collectionCellProvider: [CollectionCellProvider]?
 	let selectorItem: SlideSelectorItem?
 	
 	init(
@@ -25,7 +25,7 @@ struct Section {
 		layout: UICollectionViewFlowLayout = .standardFlow,
 		selectorItem: SlideSelectorItem? = nil,
 		tableCellProvider: [CellProvider]? = nil,
-		collectionCellProvider: [CellProvider]? = nil
+		collectionCellProvider: [CollectionCellProvider]? = nil
 	) {
 		self.type = type
 		self.items = items
