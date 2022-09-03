@@ -32,14 +32,15 @@ class LiveBidDetailView: UIViewController  {
 		tableView.contentInsetAdjustmentBehavior = .never
         tableView.separatorStyle = .none
         tableView.showsVerticalScrollIndicator = false
-        tableView.tableHeaderView = tableHeaderView
+        tableView.setHeaderView(tableHeaderView)
         return tableView
     }()
     
     private lazy var tableHeaderView:UIView = {
-		let view = UIView(frame: .init(origin: .zero, size: .init(width: .totalWidth, height: 250)))
+		let view = UIView(frame: .zero)
 		
-        let label = CustomLabel(text: "Live\nBid", size: 50, weight: .bold, color: .black, numOfLines: 2, adjustFontSize: false)
+        let label = UILabel()
+		label.numberOfLines = 2
         
 		let backButton = CustomImageButton.backButton {
 			self.navigationController?.popViewController(animated: true)
@@ -48,17 +49,12 @@ class LiveBidDetailView: UIViewController  {
         var rootAttributedString:NSMutableAttributedString = .init(string:"Live", attributes: [NSAttributedString.Key.font:UIFont(name: CustomFonts.black.rawValue, size: 50)!])
         rootAttributedString.append(.init(string: "\nBid", attributes: [NSAttributedString.Key.font:UIFont(name: CustomFonts.medium.rawValue, size: 50)!]))
         
-        label.attributedText = NSMutableAttributedString(attributedString: rootAttributedString)
-		let stack = UIStackView(arrangedSubviews: [backButton,label,.spacer()])
-		
-		stack.axis = .vertical
-		stack.alignment = .leading
-		stack.distribution = .fill
-		stack.spacing = 12
+		NSMutableAttributedString(attributedString: rootAttributedString).renderInto(target: label)
+		let stack: UIStackView = .VStack(views: [backButton, label], spacing: 12, aligmment: .leading)
+		stack.setWidthForChildWithPadding(label, paddingFactor: 0, withPriority: .needed)
 		
 		view.addSubview(stack)
-		
-		view.setConstraintsToChild(stack, edgeInsets: .init(top: 65, left: 24, bottom: 0, right: 10),withPriority: 750)
+		view.setConstraintsToChild(stack, edgeInsets: .init(top: UIWindow.safeAreaInset.top, left: 24, bottom: 0, right: 24), withPriority: UILayoutPriority.needed.rawValue)
 		
         return view
     }()
@@ -110,7 +106,9 @@ class LiveBidDetailView: UIViewController  {
 			navigationController?.setNavigationBarHidden(false, animated: true)
 			scrollViewDidScroll(liveBidTableView)
 		}
-        self.navigationItem.titleView = CustomLabel(text: "Live Bid", size: 18, weight: .bold, color: .appBlackColor, numOfLines: 1)
+		let label: UILabel = .init()
+		"Live Bid".heading3().renderInto(target: label)
+		self.navigationItem.titleView = label
         self.navigationItem.leftBarButtonItem = self.backBarButton
     }
     

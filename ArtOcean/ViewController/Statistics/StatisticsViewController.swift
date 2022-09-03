@@ -24,6 +24,10 @@ enum Sections: String {
 	
 }
 
+extension NFTArtOffer {
+	
+	var artCollectionCell: CollectionCellProvider { CollectionColumn<CustomInfoButtonCollectionCell>(.init(self, withArtImage: true))}
+}
 
 //MARK: - Type
 
@@ -95,7 +99,7 @@ extension StatisticsViewController: CustomSelectorDynamicCollectionDelegate {
 		if section == UserSection {
 			return .init(cells: validItems.compactMap(\.nftUser?.collectionCell))
 		} else if section == NFTArtOfferSection {
-			return .init(cells: validItems.compactMap(\.nftOffer?.collectionCell))
+			return .init(cells: validItems.compactMap(\.nftOffer?.artCollectionCell))
 		}
 		return nil
 	}
