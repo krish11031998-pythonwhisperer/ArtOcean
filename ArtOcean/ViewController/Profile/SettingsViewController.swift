@@ -24,7 +24,7 @@ enum SettingRowModel {
 
 extension SettingRowModel {
 	
-	var title: RenderableText {
+	var title: String {
 		switch self {
 		case .editProfile:
 			return "Edit profile"
@@ -42,25 +42,28 @@ extension SettingRowModel {
 	}
 	
 	var leadingImage: UIImage? {
+		let image: UIImage?
 		switch self {
 		case .editProfile:
-			return .customButtonImage(name: .user)?.roundedImage(cornerRadius: 32)
+			image = .customButtonImage(name: .user)
 		case .changePassword:
-			return .customButtonImage(name: .shieldCheck)?.roundedImage(cornerRadius: 32)
+			image = .customButtonImage(name: .shieldCheck)
 		case .favorites:
-			return .customButtonImage(name: .heart)?.roundedImage(cornerRadius: 32)
+			image = .customButtonImage(name: .heart)
 		case .draft:
-			return .customButtonImage(name: .pencil)?.roundedImage(cornerRadius: 32)
+			image = .customButtonImage(name: .pencil)
 		case .wallet:
-			return .customButtonImage(name: .creditCard)?.roundedImage(cornerRadius: 32)
+			image = .customButtonImage(name: .creditCard)
 		case .logOut:
-			return .customButtonImage(name: .lockClosed, tintColor: .appRedColor, bgColor: .appRedColor.withAlphaComponent(0.15))?.roundedImage(cornerRadius: 32)
+			image = .customButtonImage(name: .lockClosed, tintColor: .appRed, bgColor: .appRed.withAlphaComponent(0.15))
 		}
+		return image?.roundedImage(cornerRadius: 32)
 	}
 	
 	var customInfoModel: CustomInfoButtonModel {
-		let trailingImage: UIImage = .Catalogue.chevronRight.image.resized(.squared(16))
-		return .init(leadingImg: leadingImage, title: title.styled(font: .medium, color: .appBlackColor, size: 14), trailingImage: trailingImage)
+		let trailingImage: UIImage = .Catalogue.chevronRight.image.resized(.squared(16)).withTintColor(.surfaceBackgroundInverse)
+		let labelText = title.body3Medium()
+		return .init(leadingImg: leadingImage,title: labelText, trailingImage: trailingImage)
 	}
 }
 
@@ -76,9 +79,7 @@ class SettingViewController: UIViewController {
 		return headerCaptionLabel
 	}()
 	
-	private lazy var tableView: UITableView = {
-		.init(frame: .zero, style: .grouped)
-	}()
+	private lazy var tableView: UITableView = { .init(frame: .zero, style: .grouped) }()
 	
 	
 	override func viewDidLoad() {
@@ -90,6 +91,7 @@ class SettingViewController: UIViewController {
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
 		showNavBar()
+		setupStatusBar()
 		configNavbar()
 	}
 	
@@ -102,11 +104,11 @@ class SettingViewController: UIViewController {
 		let leftBarItem = UIBarButtonItem(customView: CustomImageButton.backButton { [weak self] in
 			self?.navigationController?.popViewController(animated: true)
 		})
-		let titleView =  CustomLabel(text: "Settings", size: 22, weight: .bold, color: .black, numOfLines: 1)
+		let titleLabel =  UILabel()
+		"Settings".heading4().renderInto(target: titleLabel)
 		
-		navigationItem.titleView = titleView
+		navigationItem.titleView = titleLabel
 		navigationItem.leftBarButtonItem = leftBarItem
-		
 	}
 	
 	private var accountSettings: TableSection? {
@@ -129,7 +131,11 @@ class SettingViewController: UIViewController {
 		view.setSafeAreaConstraintsToChild(tableView, edgeInsets: .zero)
 		tableView.tableHeaderView = headerView
 		tableView.separatorStyle = .none
-		tableView.backgroundColor = .appWhiteBackgroundColor
+		tableView.backgroundColor = .surfaceBackground
 	}
 	
+//	override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+//		super.traitCollectionDidChange(previousTraitCollection)
+//		tableView.reload(with: buildDataSource())
+//	}
 }

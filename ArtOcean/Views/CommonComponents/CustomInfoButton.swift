@@ -133,7 +133,7 @@ class CustomInfoButton: UIButton {
 		get { topTrailingLabel.attributedText }
 		set {
 			newValue?.renderInto(target: topTrailingLabel)
-			topLeadingLabel.isHidden = newValue == nil
+			topTrailingLabel.isHidden = newValue == nil
 		}
 	}
 	
@@ -141,6 +141,7 @@ class CustomInfoButton: UIButton {
 		get { bottomTrailingLabel.attributedText }
 		set {
 			newValue?.renderInto(target: bottomTrailingLabel)
+			bottomTrailingLabel.isHidden = newValue == nil
 		}
 	}
 	
