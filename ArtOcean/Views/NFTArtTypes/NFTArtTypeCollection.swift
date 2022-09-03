@@ -25,7 +25,7 @@ extension NFTArtType {
 	
 	var collectionCell: CollectionCellProvider {
 		let label: UILabel = .init()
-		name.body3Medium().renderInto(target: label)
+		name.body3Medium(color: .greyscale50).renderInto(target: label)
 		let image = UIImage.loadingBackgroundImage.imageView(size: .squared(24), cornerRadius: 5)
 		image.setWidthWithPriority(24)
 		let stack: UIStackView = .HStack(views: [image, label].filterEmpty(), spacing: 8, aligmment: .center)
