@@ -7,6 +7,11 @@
 
 import UIKit
 
+extension NFTArtOffer {
+	
+	var offerCell: CellProvider { return TableRow<CustomInfoButtonCell>(.init(self, withArtImage: true)) }
+}
+
 class ProfileViewController: UIViewController {
 	
 	private lazy var tableView: UITableView = {
@@ -101,7 +106,7 @@ class ProfileViewController: UIViewController {
 
 	private var offers: TableSection? {
 		guard let items = NFTArtOfferSection.items else { return nil }
-		let stackedCells: [CellProvider] = items.compactMap(\.nftOffer?.tableCell)
+		let stackedCells: [CellProvider] = items.compactMap(\.nftOffer?.offerCell)
 		return .init(headerView: segmentedControl, rows: stackedCells)
 	}
 	
@@ -116,22 +121,6 @@ class ProfileViewController: UIViewController {
 			return TableCollectionSection(headerView: headerView, columns: columns, layout: layout, enableScroll: false)
 		}
 		return rowViews
-	}
-}
-
-//MARK: - CustomSelectorDynamicCollection Delegate
-
-extension ProfileViewController: CustomSelectorDynamicCollectionDelegate {
-	
-	func collectionSection(_ section: Section) -> CollectionSection? {
-		guard let validItems = section.items else { return nil }
-		if section == NFTArtSection {
-			return .init(cells: validItems.compactMap(\.nftArtData?.collectionCell))
-		} else if section == NFTArtOfferSection {
-			return .init(cells: validItems.compactMap(\.nftOffer?.collectionCell))
-		} else {
-			return nil
-		}
 	}
 }
 

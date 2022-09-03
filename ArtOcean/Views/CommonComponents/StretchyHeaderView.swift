@@ -10,7 +10,7 @@ import UIKit
 
 extension Array where Element == UIColor {
 	
-	static var gradientColors: [UIColor] =  [.clear, .white.withAlphaComponent(0.5), .white]
+	static var gradientColors: [UIColor] =  [.clear, .surfaceBackground.withAlphaComponent(0.5), .surfaceBackground]
 	
 }
 
@@ -59,6 +59,12 @@ class StreachyHeaderView:UIView{
 		setFrameConstraints(size: viewSize)
     }
     
+	override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+		super.traitCollectionDidChange(previousTraitCollection)
+		removeAllSubViews()
+		setupView()
+		setupLayout()
+	}
     
     //MARK: - StretchOnScroll
     

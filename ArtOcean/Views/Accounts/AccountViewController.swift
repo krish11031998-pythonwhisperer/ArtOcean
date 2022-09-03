@@ -43,9 +43,7 @@ class AccountViewController: UIViewController {
 	private var tabs: [SlideSelectorItem] { [NFTArtOfferSection.selectorItem, NFTArtSection.selectorItem].reversed().compactMap {$0} }
 	
 	private var selectedTab: String? = nil {
-		didSet {
-			tableView.reload(with: buildDataSource())
-		}
+		didSet { tableView.reload(with: buildDataSource()) }
 	}
 	
 	private lazy var tableHeaderView: AccountHeaderView = {

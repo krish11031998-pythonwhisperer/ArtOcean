@@ -20,7 +20,7 @@ fileprivate extension UIView {
 		stack.alignment = .center
 		stack.accessibilityIdentifier = buttonTitle
 		button.handler = handler
-		return stack
+		return stack.embedInView(edges: .init(vertical: 0, horizontal: 10), priority: .needed)
 	}
 }
 
@@ -102,7 +102,7 @@ class ProfileHeaderView:UIView {
 		let stack = UIStackView(arrangedSubviews: buttons)
 		stack.alignment = .center
 		stack.distribution = .fill
-		stack.spacing = 24
+		stack.spacing = 0
 		mainStack.addArrangedSubview(stack)
 	}
 

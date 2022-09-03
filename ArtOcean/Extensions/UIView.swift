@@ -151,6 +151,7 @@ extension UIView{
 		let gradient = CAGradientLayer()
 		gradient.colors = colors.map { $0.cgColor }
 		gradient.frame = .init(origin: .zero, size: .init(width:size.width,height:size.height))
+		layer.sublayers?.forEach { $0.removeFromSuperlayer() }
 		layer.insertSublayer(gradient, at: 0)
 	}
 	
