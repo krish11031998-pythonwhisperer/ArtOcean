@@ -29,9 +29,8 @@ extension NFTArtType {
 		let image = UIImage.loadingBackgroundImage.imageView(size: .squared(24), cornerRadius: 5)
 		image.setWidthWithPriority(24)
 		let stack: UIStackView = .HStack(views: [image, label].filterEmpty(), spacing: 8, aligmment: .center)
-		let view = stack.embedInView(edges: .init(by: 8)).background(color)
+		let view = stack.background(bgColor: color, edgeInsets: .init(by: 8), cornerRadius: 8)
 		stack.setHeightWithPriority(24)
-		view.cornerRadius = 8
 		return CollectionColumn<CustomCollectionCell>(.init(innerView: view, edgeInsets: .zero))
 	}
 	

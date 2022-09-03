@@ -54,7 +54,7 @@ fileprivate extension TransactionModel {
 			  infoSubTitle: day.body3Medium(color: .subtitleColor),
 			  leadingImageUrl: artModel?.metadata?.image,
 			  style: .rounded(8),
-			  imgSize: .squared(40)
+			  leadingImgSize: .squared(40)
 		) {
 			print("(DEBUG) Clicked !")
 		}
@@ -74,7 +74,7 @@ fileprivate extension TransactionModel {
 					 infoTitle: type.rawValue.body2Medium(),
 					 infoSubTitle: day.body3Medium(color: .subtitleColor),
 					 style: .circle(.squared(40).halfed) ,
-					 imgSize: .squared(40)
+					 leadingImgSize: .squared(40)
 		) { print("(DEBUG) Clicked !") }
 	}
 	

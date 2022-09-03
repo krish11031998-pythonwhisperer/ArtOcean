@@ -42,7 +42,8 @@ struct CustomInfoButtonModel: ActionProvider {
 	let trailingImage: UIImage?
 	let leadingImageUrl: String?
 	let trailingImageUrl: String?
-	let imgSize: CGSize
+	let leadingImgSize: CGSize
+	let trailingImgSize: CGSize
 	let style: ImageStyle
 	var action: Callback?
 //	let includeSeperator: Bool
@@ -56,7 +57,8 @@ struct CustomInfoButtonModel: ActionProvider {
 		 leadingImageUrl: String? = nil,
 		 trailingImageUrl: String? = nil,
 		 style: ImageStyle = .original,
-		 imgSize: CGSize = .squared(32),
+		 leadingImgSize: CGSize = .smallestSqaure,
+		 trailingImgSize: CGSize = .smallestSqaure,
 		 action: Callback? = nil
 	) {
 		self.leadingImage = leadingImg
@@ -68,7 +70,8 @@ struct CustomInfoButtonModel: ActionProvider {
 		self.leadingImageUrl = leadingImageUrl
 		self.trailingImageUrl = trailingImageUrl
 		self.style = style
-		self.imgSize = imgSize
+		self.leadingImgSize = leadingImgSize
+		self.trailingImgSize = trailingImgSize
 		self.action = action
 	}
 }
@@ -244,8 +247,11 @@ class CustomInfoButton: UIButton {
 
 		trailingImageView.updateImage(url: buttonInfo.trailingImageUrl, img: buttonInfo.trailingImage, cornerRadius: buttonInfo.style.cornerRadius)
 
-		setImageSize(size: buttonInfo.imgSize)
-
+		leadingImageView.setFrameConstraints(size: buttonInfo.leadingImgSize)
+		trailingImageView.setFrameConstraints(size: buttonInfo.trailingImgSize)
+		
+		leadingImageView.isHidden = leadingImage == nil
+		trailingImageView.isHidden = trailingImage == nil
 	}
 	
 //MARK: - Exposed Methods

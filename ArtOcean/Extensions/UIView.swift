@@ -232,13 +232,16 @@ extension UIView{
 		return self
 	}
 	
-	func background(_ view: UIView,edgeInsets: UIEdgeInsets?) -> UIView {
+	func background(_ innerView: UIView? = nil, bgColor color: UIColor = .clear, edgeInsets: UIEdgeInsets?, cornerRadius: CGFloat = .zero) -> UIView {
+		let view = innerView ?? .init()
 		view.addSubview(self)
 		if let validEdgeInsets = edgeInsets {
 			view.setConstraintsToChild(self, edgeInsets: validEdgeInsets)
 		} else {
 			view.setCentralizedChild(self)
 		}
+		view.backgroundColor = color
+		view.cornerRadius = cornerRadius
 		return view
 	}
 	

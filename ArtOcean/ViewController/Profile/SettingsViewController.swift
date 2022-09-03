@@ -62,21 +62,23 @@ extension SettingRowModel {
 	
 	var customInfoModel: CustomInfoButtonModel {
 		let trailingImage: UIImage = .Catalogue.chevronRight.image.resized(.squared(16)).withTintColor(.surfaceBackgroundInverse)
-		let labelText = title.body3Medium()
-		return .init(leadingImg: leadingImage,title: labelText, trailingImage: trailingImage)
+		let labelText = title.body2Medium()
+		return .init(leadingImg: leadingImage,title: labelText, trailingImage: trailingImage, trailingImgSize: .squared(16))
 	}
+	
+	var tableCell: CellProvider { TableRow<CustomInfoButtonCell>(customInfoModel) }
 }
 
 class SettingViewController: UIViewController {
 	
 	private lazy var headerView: UIView = {
-		let headerCaptionLabel = HeaderCaptionLabel(frame: .init(origin: .zero, size: .init(width: .totalWidth, height: 100)))
+		let headerCaptionLabel = HeaderCaptionLabel()
 		headerCaptionLabel.configureLabel(
 			img: .loadCache(.testUserImg)?.roundedImage(),
-			title: "Krishna Venkatramani",
-			subTitle: "@cryptoDon"
+			title: "Krishna Venkatramani".body1Medium(),
+			subTitle: "@cryptoDon".body3Medium()
 		)
-		return headerCaptionLabel
+		return headerCaptionLabel.embedInView(edges: .init(vertical: 10, horizontal: 16), priority: .needed)
 	}()
 	
 	private lazy var tableView: UITableView = { .init(frame: .zero, style: .grouped) }()
@@ -113,12 +115,12 @@ class SettingViewController: UIViewController {
 	
 	private var accountSettings: TableSection? {
 		let row: [SettingRowModel] = [.editProfile,.changePassword]
-		return .init(title: "Account Settings", rows: row.map { TableRow<CustomInfoButtonCell>($0.customInfoModel) })
+		return .init(title: "Account Settings", rows: row.map(\.tableCell))
 	}
 	
 	private var preferenceSettings: TableSection? {
 		let row: [SettingRowModel] = [.favorites,.draft,.wallet,.logOut]
-		return .init(title: "Preferences", rows: row.map { TableRow<CustomInfoButtonCell>($0.customInfoModel) })
+		return .init(title: "Preferences", rows: row.map(\.tableCell))
 	}
 	
 	private func buildDataSource() -> TableViewDataSource {
@@ -129,7 +131,7 @@ class SettingViewController: UIViewController {
 		view.backgroundColor = .appWhiteBackgroundColor
 		view.addSubview(tableView)
 		view.setSafeAreaConstraintsToChild(tableView, edgeInsets: .zero)
-		tableView.tableHeaderView = headerView
+		tableView.setHeaderView(headerView)
 		tableView.separatorStyle = .none
 		tableView.backgroundColor = .surfaceBackground
 	}

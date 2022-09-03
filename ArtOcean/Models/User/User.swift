@@ -52,7 +52,7 @@ extension CustomInfoButtonModel {
 			infoSubTitle: (user.profit?.toString() ?? "0").body3Medium(),
 			leadingImageUrl: user.image,
 			style: .circle(.squared(40)),
-			imgSize: .squared(40)) {
+			leadingImgSize: .squared(40)) {
 				UserStorage.selectedUser = user
 				NotificationCenter.default.post(name: .showAccount, object: nil)
 			}

@@ -100,7 +100,7 @@ extension CustomInfoButtonModel {
 			infoSubTitle: offer.percent?.body3Regular(),
 			leadingImageUrl: url,
 			style: style,
-			imgSize: .squared(40)) {
+			leadingImgSize: .squared(40)) {
 				NFTStorage.selectedArt = offer.nft
 				NotificationCenter.default.post(name: .showArt, object: nil)
 			}
