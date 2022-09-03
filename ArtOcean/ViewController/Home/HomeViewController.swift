@@ -89,7 +89,7 @@ class HomeViewController: UIViewController {
 	func buildTableView(){
 		tableView = UITableView(frame: .zero, style: .grouped)
 		tableView?.backgroundColor = .clear
-		tableView?.setHeaderView(tableHeaderView)
+		tableView?.setHeaderView(NFTArtTypeCollectionView())
 		tableView?.separatorStyle = .none
 		view.addSubview(tableView!)
 		view.setConstraintsToChild(tableView!, edgeInsets: .zero)
@@ -118,22 +118,7 @@ class HomeViewController: UIViewController {
 	}
 	
     
-	private var tableHeaderView:UIView {
-	
-		let stackView = UIStackView()
-		stackView.axis = .vertical
-		stackView.alignment = .center
-		stackView.spacing = 24
-		
-		let artTypeCollection = NFTArtTypeCollectionView()
-		
-		stackView.addArrangedSubview(artTypeCollection)
-		stackView.addArrangedSubview(bannerImageView)
-		
-		stackView.setWidthForChildWithPadding(bannerImageView, paddingFactor: 1.25, withPriority: .needed)
-		
-		return stackView
-	}
+	private var tableHeaderView:UIView { NFTArtTypeCollectionView() }
 	
     func popLivBidVC(){
         self.navigationController?.popViewController(animated: true)
@@ -144,42 +129,6 @@ class HomeViewController: UIViewController {
         let liveBidVC = LiveBidDetailView()
         self.navigationController?.pushViewController(liveBidVC, animated: true)
     }
-    
-    private lazy var bannerImageView:UIView = {
-        let imageView = UIImageView()
-        if let safeImg = UIImage(named: "BannerSkeleton"){
-            imageView.image = safeImg
-		}else{
-			imageView.backgroundColor = .black
-		}
-        imageView.contentMode = .scaleAspectFill
-        imageView.clipsToBounds = true
-        imageView.layer.cornerRadius = 16
-        
-        
-        //LearnMoreImage
-        let learnMoreBannerImage = UIImageView()
-        learnMoreBannerImage.translatesAutoresizingMaskIntoConstraints = false
-        learnMoreBannerImage.contentMode = .scaleAspectFit
-        learnMoreBannerImage.image = .init(named: "LearnMoreBannerImage")
-        imageView.addSubview(learnMoreBannerImage)
-        
-        learnMoreBannerImage.bottomAnchor.constraint(equalTo: imageView.bottomAnchor,constant: -20).isActive = true
-        learnMoreBannerImage.leadingAnchor.constraint(equalTo: imageView.leadingAnchor, constant: 24).isActive = true
-        learnMoreBannerImage.widthAnchor.constraint(equalToConstant: 100).isActive = true
-        learnMoreBannerImage.heightAnchor.constraint(equalToConstant: 20).isActive = true
-        
-        //titlView
-        let bannerTitle = self.view.labelBuilder(text: "Collect and Sell extraordinary NFTs", size: 18, weight: .bold, color: .appWhiteBackgroundColor, numOfLines: 2, adjustFontSize: false)
-        imageView.addSubview(bannerTitle)
-        bannerTitle.leadingAnchor.constraint(equalTo: imageView.leadingAnchor,constant: 24).isActive = true
-        bannerTitle.topAnchor.constraint(equalTo: imageView.topAnchor,constant:20).isActive = true
-        bannerTitle.bottomAnchor.constraint(equalTo: learnMoreBannerImage.topAnchor, constant: -24).isActive = true
-        bannerTitle.widthAnchor.constraint(equalToConstant: 185).isActive = true
-        
-		
-        return imageView
-    }()
     
     private var stackView:UIStackView = {
         let stackView = UIStackView()

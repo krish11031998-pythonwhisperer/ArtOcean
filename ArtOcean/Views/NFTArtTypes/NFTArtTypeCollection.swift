@@ -10,14 +10,14 @@ import UIKit
 
 struct NFTArtType{
 	var name:String
-	var key:String
+	var key:UIImage.Emojicons
 	var color:UIColor
 	
 	static var allType:[NFTArtType] = [
-		.init(name: "Art", key: "artType", color: .appOrangeColor),
-		.init(name: "Sports", key: "sportsType", color: .appRedColor),
-		.init(name: "Music", key: "musicType", color: .appVioletColor),
-		.init(name: "Photography", key: "Photography", color: .appDarkGrayColor)
+		.init(name: "Art", key: .art, color: .appOrangeColor),
+		.init(name: "Sports", key: .sport, color: .appRedColor),
+		.init(name: "Music", key: .music, color: .appVioletColor),
+		.init(name: "Photography", key: .photography, color: .appDarkGrayColor)
 	]
 }
 
@@ -26,14 +26,13 @@ extension NFTArtType {
 	var collectionCell: CollectionCellProvider {
 		let label: UILabel = .init()
 		name.body3Medium(color: .greyscale50).renderInto(target: label)
-		let image = UIImage.loadingBackgroundImage.imageView(size: .squared(24), cornerRadius: 5)
+		let image = key.generateView(size: .squared(24))
 		image.setWidthWithPriority(24)
 		let stack: UIStackView = .HStack(views: [image, label].filterEmpty(), spacing: 8, aligmment: .center)
 		let view = stack.background(bgColor: color, edgeInsets: .init(by: 8), cornerRadius: 8)
 		stack.setHeightWithPriority(24)
 		return CollectionColumn<CustomCollectionCell>(.init(innerView: view, edgeInsets: .zero))
 	}
-	
 }
 
 class NFTArtTypeCollectionView: UIView{

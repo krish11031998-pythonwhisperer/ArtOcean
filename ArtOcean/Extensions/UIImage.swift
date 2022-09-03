@@ -312,6 +312,19 @@ extension UIImage {
 		case xMark = "x"
 	}
 	
+	enum Emojicons: String {
+		case art
+		case card
+		case computer
+		case geolocation
+		case music
+		case photography
+		case robot
+		case sparkle
+		case sport
+		case utility
+	}
+	
 	static func buildCatalogueImage(name: Catalogue, size: CGSize) -> UIImage {
 		let imageView = UIImageView(frame: .init(origin: .zero, size: size))
 		imageView.image = name.image
@@ -361,6 +374,12 @@ extension UIImage.Catalogue {
 	
 	func generateView(size: CGSize = .smallestSqaure) -> UIView { image.imageView(size: size) }
 	
+}
+
+extension UIImage.Emojicons {
+	var image: UIImage { .init(named: self.rawValue) ?? .solid(color: .appBlackColor.withAlphaComponent(0.125), frame: .smallestSqaure) }
+	
+	func generateView(size: CGSize = .smallestSqaure) -> UIView { image.imageView(size: size) }
 }
 //MARK: - UIImageStylist
 
