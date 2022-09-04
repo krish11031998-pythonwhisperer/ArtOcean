@@ -216,7 +216,6 @@ extension UIView{
 	static func solidColorView(color: UIColor = .appGrayColor, size: CGSize = .smallestSqaure) -> UIView {
 		let view = UIView(frame: .init(origin: .zero, size: size))
 		view.backgroundColor = color
-//		view.setFrameConstraints(size: size)
 		return view
 	}
 	
@@ -250,6 +249,17 @@ extension UIView{
 	var inverseInterface: UIUserInterfaceStyle { traitCollection.userInterfaceStyle == .light ? .dark : .light }
 	
 	var isDark: Bool { interface == .dark }
+	
+	func toggleOpacity() { alpha = alpha == 1 ? 0 : 1}
+	
+	var viewIsFaded: Bool { alpha == 0 && isHidden }
+	
+	func toggleFade() {
+//		let isHidden = layer.opacity == 0
+//		let off: CGFloat = !isHidden ? -15 : 15
+//		animate(.slideY(offset: off, isHidden: !isHidden))
+		isHidden = !isHidden
+	}
 }
 
 //MARK: - UIView Constaint Extension

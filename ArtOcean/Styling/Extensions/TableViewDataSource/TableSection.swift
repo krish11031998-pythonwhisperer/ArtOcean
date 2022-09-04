@@ -47,7 +47,7 @@ class TableSection: TableSectionDataSource{
 	
 	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 		let row = rows[indexPath.row]
-		row.didSelect(tableView)
+		row.didSelect(tableView, indexPath: indexPath)
 	}
 	
 	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int { rows.count }
@@ -128,6 +128,19 @@ class TableViewDataSource:NSObject{
 	init(section:[TableSectionDataSource]){
 		self.section = section
 	}
+	
+	public lazy var indexPath: [IndexPath] = {
+		var indexPaths: [IndexPath] = .init()
+		section.enumerated().forEach { section in
+			guard let tableSection = section.element as? TableSection else { return }
+			var indexPath: IndexPath = .init()
+			tableSection.rows.enumerated().forEach { row in
+				indexPath.append(.init(row: row.offset, section: section.offset))
+			}
+			indexPaths.append(indexPath)
+		}
+		return indexPaths
+	}()
 	
 }
 

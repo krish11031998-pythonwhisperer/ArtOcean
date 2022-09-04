@@ -191,7 +191,12 @@ class NFTDetailArtViewController:UIViewController{
 	
 	private var artIntroduction:TableSection? {
 		guard let safeNFT = nftArt else { return nil }
-		return .init(rows: [TableRow<NFTArtIntroduction>(safeNFT)])
+		let cellView = NFTArtIntroduction()
+		let data: NFTArtSectionData = .init(nft: safeNFT, action: nil)
+		
+		cellView.configureCell(with: data)
+		let viewModel: CustomTableCellModel = .init(innerView: cellView, edgeInsets: .zero, reload: true, action: cellView.resizeDescription)
+		return .init(rows: [TableRow<CustomTableCell>(viewModel)])
 	}
 	
 	private var priceHistorySection:TableSection? {

@@ -18,6 +18,18 @@ extension Array {
 		compactMap { $0 }
 	}
 	
+	func multiDimension(dim: Int) -> [[Self.Element]] {
+		var result: [[Self.Element]] = []
+		var row: [Self.Element] = []
+		for el in self.enumerated() {
+			if el.offset != 0 && el.offset % dim == 0 {
+				result.append(row)
+				row.removeAll()
+			}
+			row.append(el.element)
+		}
+		return result
+	}
 }
 
 //MARK: - Element == CGPoint
@@ -54,7 +66,6 @@ extension Array where Element:Numeric{
 		guard let safeFirst = self.first,let safeLast = self.last else {return nil}
 		return (safeLast - safeFirst)
 	}
-    
 }
 
 

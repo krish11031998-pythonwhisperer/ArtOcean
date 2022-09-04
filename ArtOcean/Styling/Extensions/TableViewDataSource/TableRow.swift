@@ -38,7 +38,7 @@ protocol CellProvider{
 	var cellModel: Any { get }
 	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell
 	func tableView(_ tableView: UITableView, updateRowAt indexPath: IndexPath)
-	func didSelect(_ tableView: UITableView)
+	func didSelect(_ tableView: UITableView, indexPath: IndexPath)
 }
 
 
@@ -46,9 +46,13 @@ protocol CellProvider{
 //MARK: - ActionProvider
 typealias Callback = () -> Void
 protocol ActionProvider{
-	var action:Callback? {get}
+	var action:Callback? { get }
+	var update: Bool { get }
 }
 
+extension ActionProvider {
+	var update: Bool { false }
+}
 
 //MARK: -  TableRow
 class TableRow<Cell : ConfigurableCell> : CellProvider{
@@ -73,11 +77,18 @@ class TableRow<Cell : ConfigurableCell> : CellProvider{
 		cell?.configureCell(with: model)
 	}
 	
-	func didSelect(_ tableView: UITableView) {
+	func didSelect(_ tableView: UITableView, indexPath: IndexPath) {
 		guard let model = model as? ActionProvider else {
 			return
 		}
-		model.action?()
+		if model.update {
+			tableView.deselectRow(at: indexPath, animated: false)
+			tableView.beginUpdates()
+			model.action?()
+			tableView.endUpdates()
+		}else {
+			model.action?()
+		}
 	}
     
 }

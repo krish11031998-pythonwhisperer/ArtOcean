@@ -23,4 +23,5 @@ extension CGSize {
 	var frame: CGRect { .init(origin: .zero, size: self) }
 	
 	static var smallestSqaure: CGSize { .squared(32) }
+	
 }

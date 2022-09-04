@@ -54,9 +54,19 @@ class CustomCollectionWrapperView<Cell: InnerConfigurableView> : ConfigurableCol
 //MARK: - CustomTableCell
 
 struct CustomTableCellModel: ActionProvider {
-	var innerView: UIView
-	var edgeInsets: UIEdgeInsets
+	let innerView: UIView
+	let edgeInsets: UIEdgeInsets
+	let reload: Bool
 	var action: Callback?
+	
+	var update: Bool { reload }
+	
+	init(innerView: UIView, edgeInsets: UIEdgeInsets, reload: Bool = false, action: Callback? = nil) {
+		self.innerView = innerView
+		self.edgeInsets = edgeInsets
+		self.reload = reload
+		self.action = action
+	}
 }
 
 class CustomTableCell: ConfigurableCell {
@@ -66,7 +76,7 @@ class CustomTableCell: ConfigurableCell {
 		backgroundColor = .surfaceBackground
 		isUserInteractionEnabled = model.action != nil
 		contentView.addSubview(model.innerView)
-		contentView.setConstraintsToChild(model.innerView, edgeInsets: model.edgeInsets)
+		contentView.setConstraintsToChild(model.innerView, edgeInsets: model.edgeInsets, withPriority: UILayoutPriority.needed.rawValue)
 	}
 }
 

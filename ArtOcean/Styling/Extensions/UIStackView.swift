@@ -34,8 +34,7 @@ extension UIStackView {
 	func hideStackElements(limit: Int) {
 		guard arrangedSubviews.count > limit else { return }
 		Array(arrangedSubviews[(limit - 1)...]).forEach {
-//			$0.isHidden = true
-			$0.hideView()
+			$0.isHidden = true
 			$0.alpha = 0
 		}
 	}
@@ -43,8 +42,7 @@ extension UIStackView {
 	func unHideStackElements(limit: Int) {
 		guard arrangedSubviews.count > limit else { return }
 		Array(arrangedSubviews[(limit - 1)...]).forEach {
-//			$0.isHidden = false
-			$0.showView()
+			$0.isHidden = false
 			$0.alpha = 1
 		}
 	}
@@ -91,7 +89,7 @@ extension UIStackView {
 			stack.addArrangedSubview(.spacer())
 			
 			addArrangedSubview(stack)
-			setWidthForChildWithPadding(stack, paddingFactor: .zero)
+			setWidthForChildWithPadding(stack, paddingFactor: .zero, withPriority: .needed)
 		}
 	}
 	

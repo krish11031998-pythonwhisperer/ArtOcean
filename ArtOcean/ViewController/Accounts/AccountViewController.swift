@@ -8,23 +8,6 @@
 import Foundation
 import UIKit
 
-extension Array {
-	
-	func multiDimension(dim: Int) -> [[Self.Element]] {
-		var result: [[Self.Element]] = []
-		var row: [Self.Element] = []
-		for el in self.enumerated() {
-			if el.offset != 0 && el.offset % dim == 0 {
-				result.append(row)
-				row.removeAll()
-			}
-			row.append(el.element)
-		}
-		return result
-	}
-	
-}
-
 class AccountViewController: UIViewController {
 	
 	//MARK: -  Properties
