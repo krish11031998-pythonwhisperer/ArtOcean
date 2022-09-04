@@ -73,7 +73,7 @@ extension UIView {
 
 enum Animation {
 	case slideY(offset: CGFloat, isHidden: Bool)
-	case scaleInOut
+	case scaleInOut(duration: CFTimeInterval = 0.15)
 }
 
 extension Animation {
@@ -101,11 +101,11 @@ extension Animation {
 			let group: CAAnimationGroup = .groupAnimation([slide, fade])
 			
 			return group
-		case .scaleInOut:
+		case .scaleInOut(let duration):
 			let scale = CAAnimation.basicAnimation(key: .transform, path: .scale)
 			scale.fromValue = 1
 			scale.toValue = 0.95
-			scale.duration = 0.15
+			scale.duration = duration
 			
 			return scale
 		}

@@ -56,7 +56,7 @@ extension CollectionDataSource:UICollectionViewDataSource,UICollectionViewDelega
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-		sections[indexPath.section].cells[indexPath.row].didSelect(collectionView)
+		sections[indexPath.section].cells[indexPath.row].didSelect(collectionView, indexPath: indexPath)
     }
 }
 

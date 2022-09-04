@@ -30,7 +30,7 @@ class CollectionSection: CollectionSectionDataSource {
 	
 	func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 		let cell = cells[indexPath.row]
-		cell.didSelect(collectionView)
+		cell.didSelect(collectionView, indexPath: indexPath)
 	}
 	
 }

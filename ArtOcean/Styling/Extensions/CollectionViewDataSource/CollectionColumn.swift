@@ -13,7 +13,7 @@ typealias ConfigurableCollectionCell = UICollectionViewCell & Configurable
 protocol CollectionCellProvider{
     var cellModel: Any { get }
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell
-    func didSelect(_ collectionView: UICollectionView)
+	func didSelect(_ collectionView: UICollectionView, indexPath: IndexPath)
 }
 
 class CollectionColumn<Cell:ConfigurableCollectionCell>: CollectionCellProvider{
@@ -32,9 +32,12 @@ class CollectionColumn<Cell:ConfigurableCollectionCell>: CollectionCellProvider{
         return cell
     }
     
-    func didSelect(_ collectionView: UICollectionView) {
+    func didSelect(_ collectionView: UICollectionView, indexPath: IndexPath) {
         guard let actionableModel = model as? ActionProvider else {return}
-        actionableModel.action?()
+		let cell = collectionView.cellForItem(at: indexPath)
+		cell?.animate(.scaleInOut(duration: 0.075),completion: {
+			actionableModel.action?()
+		})
     }
 }
 
