@@ -87,7 +87,11 @@ class TableRow<Cell : ConfigurableCell> : CellProvider{
 			model.action?()
 			tableView.endUpdates()
 		}else {
-			model.action?()
+			let cell = tableView.cellForRow(at: indexPath)
+			cell?.animate(.scaleInOut, completion: {
+				model.action?()
+			})
+			
 		}
 	}
     

@@ -20,11 +20,13 @@ extension CAAnimation {
 		case x
 		case y
 		case none = ""
+		case scale
 	}
 	
 	enum Key: String {
 		case position
 		case opacity
+		case transform
 	}
 	
 	static func basicAnimation(key: Key, path: Path = .none) -> CABasicAnimation {
@@ -71,13 +73,13 @@ extension UIView {
 
 enum Animation {
 	case slideY(offset: CGFloat, isHidden: Bool)
+	case scaleInOut
 }
 
 extension Animation {
 	func data(_ layer: CALayer, position: CGPoint, completion: Callback? = nil) -> CAAnimation {
 		switch self {
 		case .slideY(let offset, let isHidden):
-			
 			let from = position
 			var to = position
 			to.y += offset
@@ -99,6 +101,13 @@ extension Animation {
 			let group: CAAnimationGroup = .groupAnimation([slide, fade])
 			
 			return group
+		case .scaleInOut:
+			let scale = CAAnimation.basicAnimation(key: .transform, path: .scale)
+			scale.fromValue = 1
+			scale.toValue = 0.95
+			scale.duration = 0.15
+			
+			return scale
 		}
 	}
 }
