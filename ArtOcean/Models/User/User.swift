@@ -49,7 +49,7 @@ extension CustomInfoButtonModel {
 		self.init(
 			title: user.name?.body2Medium(),
 			subTitle: user.username?.body3Medium(),
-			infoTitle: (user.profit?.toString() ?? "" + NSAttributedString(string: "ETH")).body2Medium(),
+			infoTitle: (user.profit?.toString() ?? "" + " ETH").body2Medium(),
 			infoSubTitle: (user.profit?.toString() ?? "0").body3Medium(),
 			leadingImageUrl: user.image,
 			style: .circle(.squared(40)),

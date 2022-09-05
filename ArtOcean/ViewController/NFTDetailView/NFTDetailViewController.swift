@@ -136,7 +136,7 @@ class NFTDetailArtViewController:UIViewController{
 	private lazy var placeBidButtonFooter: StickyFooterView = {
 		let view: CustomLabelButton = .init(title: "Place a bid",
 											font: .bold, size: 14,
-											color: .Catalogue.greyscale50.color,
+											color: .white,
 											backgroundColor: .Catalogue.purple900.color) { [weak self] in
 			self?.showBiddingView()
 		}
@@ -208,8 +208,11 @@ class NFTDetailArtViewController:UIViewController{
 		guard let attributes = nftArt?.metadata?.Attributes, !attributes.isEmpty else { return nil }
 		let stackView: AccordianStackView = .init(handler: nil)
 		stackView.buildFlexibleGrid(attributes.map(\.attributeBlob), innerSize: .init(width: .totalWidth - 32, height: .zero), with: 10)
-		stackView.setHeightWithPriority(stackView.compressedFittingSize.height)
-		return .init(title: "Attributes", rows: [TableRow<CustomTableCell>(.init(innerView: stackView, edgeInsets: .init(vertical: 10, horizontal: 16)))])
+//		stackView.hideElement(2)
+		//stackView.setHeightWithPriority(stackView.compressedFittingSize.height)
+		return .init(title: "Attributes", rows: [TableRow<CustomTableCell>(.init(innerView: stackView, edgeInsets: .init(vertical: 10, horizontal: 16), reload: true, action: {
+			stackView.animateAccordian()
+		}))])
 	}
 	
 	private var offerSection:TableSection? {

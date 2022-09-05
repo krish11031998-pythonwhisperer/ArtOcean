@@ -43,7 +43,7 @@ extension String {
 	func largeBodyRegular(color: UIColor = .textColor) -> RenderableText { styled(font: .regular, color: color, size: 16) }
 	
 	static var testProfileImage: String = "https://weathereport.mypinata.cloud/ipfs/QmZJ56QmQpXQJamofJJYbR5T1gQTxVMhN5uHYfhvAmdFr8/85.png"
-	static var testBackdropImage: String = "https://gutterart.blob.core.windows.net/metadata/image/3.jpeg"
+	static var testBackdropImage: String = "https://ikzttp.mypinata.cloud/ipfs/QmYDvPAXtiJg7s8JdRBSLWdgSphQdac8j1YuQNNxcGE1hg/40.png"
 }
 
 extension Array where Element == Character {
