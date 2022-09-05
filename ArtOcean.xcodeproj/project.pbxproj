@@ -501,9 +501,7 @@
 				EF7A575B28C4AA95004510EF /* Styling */,
 				EF8B0686283CCD3D0050E726 /* StaticFiles */,
 				EF8B0678283C26060050E726 /* Network */,
-				EF8B0663283BECEE0050E726 /* ViewModels */,
 				EF8B0662283BECE80050E726 /* Models */,
-				EF8B0661283BECE10050E726 /* Views */,
 				EF8B0660283BECD60050E726 /* ViewController */,
 				EF8B0630283BEAC10050E726 /* AppDelegate.swift */,
 				EF8B0634283BEAC10050E726 /* MainTabViewController.swift */,
@@ -545,14 +543,6 @@
 			path = ViewController;
 			sourceTree = "<group>";
 		};
-		EF8B0661283BECE10050E726 /* Views */ = {
-			isa = PBXGroup;
-			children = (
-				EF00F5BA2845398C003D8683 /* NFTArtTypes */,
-			);
-			path = Views;
-			sourceTree = "<group>";
-		};
 		EF8B0662283BECE80050E726 /* Models */ = {
 			isa = PBXGroup;
 			children = (
@@ -560,16 +550,9 @@
 				EF7E59F728B2371F008C7EC6 /* User */,
 				EF3C9A7628A01E3E007F5200 /* Section */,
 				EF69B6B628550E3C00ABDADA /* TransactionModel.swift */,
-			);
-			path = Models;
-			sourceTree = "<group>";
-		};
-		EF8B0663283BECEE0050E726 /* ViewModels */ = {
-			isa = PBXGroup;
-			children = (
 				EF8B0669283BEFB90050E726 /* TabBarModel.swift */,
 			);
-			path = ViewModels;
+			path = Models;
 			sourceTree = "<group>";
 		};
 		EF8B0666283BEF190050E726 /* Extensions */ = {
@@ -680,6 +663,7 @@
 		EF8B06D3283E3A1F0050E726 /* Home */ = {
 			isa = PBXGroup;
 			children = (
+				EF00F5BA2845398C003D8683 /* NFTArtTypes */,
 				EF00F5C828465B5A003D8683 /* TopSeller */,
 				EF8B06CA283D58F80050E726 /* TopCollection */,
 				EF8B0673283BFA740050E726 /* NFTLiveBid */,
