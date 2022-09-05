@@ -32,7 +32,7 @@ class AccordianStackView: UIStackView {
 //MARK: Properties
 	
 	private var showAll: Bool = false
-	private var limit: Int = 0
+	private var limit: Int = 2
 	private var handler: ((Bool) -> Void)?
 //MARK: Constructors
 	
@@ -53,40 +53,43 @@ class AccordianStackView: UIStackView {
 		axis = .vertical
 		distribution = .fill
 		spacing = 12
-		addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleTap)))
+		//addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleTap)))
 	}
 	
 	@objc
 	public func handleTap() {
 		showAll.toggle()
 		
-		let opacity: CGFloat = showAll ? 1 : 0
+		//let opacity: CGFloat = showAll ? 1 : 0
+		//
+		//let opacityDuration: TimeInterval = 0.4
+		//
+		let animatableViews = arrangedSubviews.lastNViews(limit)
 		
-		let opacityDuration: TimeInterval = 0.4
-		
-		let animatableViews = self.arrangedSubviews.lastNViews(self.limit)
-		
-		UIView.viewAnimation {
-			if self.showAll {
-				animatableViews.forEach { $0.showView() }
-			} else {
-				animatableViews.forEach { $0.alpha = opacity }
-			}
-			self.layoutIfNeeded()
-		} completion: { [weak self] _ in
-			DispatchQueue.main.async {
-				self?.handler?(self?.showAll ?? false)
-			}
+//		UIView.viewAnimation {
+//			if self.showAll {
+//				animatableViews.forEach { $0.showView() }
+//			} else {
+//				animatableViews.forEach { $0.alpha = opacity }
+//			}
+//			self.layoutIfNeeded()
+//		} completion: { [weak self] _ in
+//			DispatchQueue.main.async {
+//				self?.handler?(self?.showAll ?? false)
+//			}
+//		}
+		arrangedSubviews.lastNViews(limit).forEach { view in
+			view.toggleFade()
 		}
 		
-		UIView.viewAnimation(duration: opacityDuration, delay: .defaultAnimationDuration * 0.25) {
-			if self.showAll {
-				animatableViews.forEach { $0.alpha = opacity }
-			} else {
-				animatableViews.forEach { $0.hideView() }
-			}
-			self.layoutIfNeeded()
-		}
+//		UIView.viewAnimation(duration: opacityDuration, delay: .defaultAnimationDuration * 0.25) {
+//			if self.showAll {
+//				animatableViews.forEach { $0.alpha = opacity }
+//			} else {
+//				animatableViews.forEach { $0.hideView() }
+//			}
+//			self.layoutIfNeeded()
+//		}
 	}
 	
 //MARK: Exposed Methods
@@ -98,5 +101,12 @@ class AccordianStackView: UIStackView {
 	public func hideElement(_ limit: Int) {
 		self.limit = limit
 		hideStackElements(limit: limit)
+	}
+	
+	public func animateAccordian() {
+		handleTap()
+		DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+			self.setNeedsLayout()
+		}
 	}
 }

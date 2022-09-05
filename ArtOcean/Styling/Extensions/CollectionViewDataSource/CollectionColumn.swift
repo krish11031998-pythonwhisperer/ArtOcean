@@ -35,7 +35,7 @@ class CollectionColumn<Cell:ConfigurableCollectionCell>: CollectionCellProvider{
     func didSelect(_ collectionView: UICollectionView, indexPath: IndexPath) {
         guard let actionableModel = model as? ActionProvider else {return}
 		let cell = collectionView.cellForItem(at: indexPath)
-		cell?.animate(.scaleInOut(duration: 0.075),completion: {
+		cell?.animate(.scaleInOut(duration: 0.1),completion: {
 			actionableModel.action?()
 		})
     }

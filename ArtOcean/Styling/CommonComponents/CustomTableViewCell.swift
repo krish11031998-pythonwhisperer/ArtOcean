@@ -77,6 +77,7 @@ class CustomTableCell: ConfigurableCell {
 		isUserInteractionEnabled = model.action != nil
 		contentView.addSubview(model.innerView)
 		contentView.setConstraintsToChild(model.innerView, edgeInsets: model.edgeInsets, withPriority: UILayoutPriority.needed.rawValue)
+		clipsToBounds = true
 	}
 }
 

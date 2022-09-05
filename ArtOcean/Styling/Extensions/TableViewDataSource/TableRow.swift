@@ -81,6 +81,7 @@ class TableRow<Cell : ConfigurableCell> : CellProvider{
 		guard let model = model as? ActionProvider else {
 			return
 		}
+		
 		if model.update {
 			tableView.deselectRow(at: indexPath, animated: false)
 			tableView.beginUpdates()
@@ -88,7 +89,7 @@ class TableRow<Cell : ConfigurableCell> : CellProvider{
 			tableView.endUpdates()
 		}else {
 			let cell = tableView.cellForRow(at: indexPath)
-			cell?.animate(.scaleInOut(duration: 0.075), completion: {
+			cell?.animate(.scaleInOut(duration: 0.1), completion: {
 				model.action?()
 			})
 		}

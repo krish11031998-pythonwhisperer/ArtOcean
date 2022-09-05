@@ -255,10 +255,10 @@ extension UIView{
 	var viewIsFaded: Bool { alpha == 0 && isHidden }
 	
 	func toggleFade() {
-//		let isHidden = layer.opacity == 0
-//		let off: CGFloat = !isHidden ? -15 : 15
-//		animate(.slideY(offset: off, isHidden: !isHidden))
-		isHidden = !isHidden
+		let isHidden = layer.opacity == 0
+		let off: CGFloat = !isHidden ? -15 : 15
+		animate(.slideY(offset: off, isHidden: !isHidden))
+//		isHidden = !isHidden
 	}
 }
 
