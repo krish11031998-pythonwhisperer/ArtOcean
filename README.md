@@ -111,6 +111,8 @@ Profile Actions
 This app is design-study therefore there isn't any active Services that retrieve Live NFT data and all the data seen in
 the app is static data 
 
+as seen in the screenshot , the app had some trouble loading IPFS images, this is being currenlty investigated and being fixed!
+
 ## Future Works
 
 The following will be implemented in the next version of the App
