@@ -411,7 +411,6 @@
 				EF3259F52880925E001B0CA6 /* TableRow.swift */,
 				EF3259F72880925E001B0CA6 /* TableSection.swift */,
 				EF3259F82880925E001B0CA6 /* TableView.swift */,
-				EF7EAFB928A5956000FDFFD3 /* Float.swift */,
 			);
 			path = TableViewDataSource;
 			sourceTree = "<group>";
@@ -562,6 +561,7 @@
 				EF3259EF2880925E001B0CA6 /* CollectionViewDataSource */,
 				EF3259F42880925E001B0CA6 /* TableViewDataSource */,
 				EF8B0667283BEF250050E726 /* UIColor.swift */,
+				EF7EAFB928A5956000FDFFD3 /* Float.swift */,
 				EF3C9A70289B0E3D007F5200 /* UIImage.swift */,
 				EF8B0676283C20820050E726 /* UIImageView.swift */,
 				EF8B0684283C31560050E726 /* UIView.swift */,

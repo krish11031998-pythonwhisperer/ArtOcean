@@ -94,10 +94,10 @@ class PresentationViewController: UIPresentationController {
 	override func preferredContentSizeDidChange(forChildContentContainer container: UIContentContainer) {
 		super.preferredContentSizeDidChange(forChildContentContainer: container)
 		print("(DEBUG) called the preferredContentSizeDidChange")
-		guard let containerView = containerView else { return }
-//		UIView.animate(withDuration: .defaultAnimationDuration, delay: 0, options: .curveEaseInOut) {
-		containerView.setNeedsLayout()
-		containerView.layoutIfNeeded()
+//		guard let containerView = containerView else { return }
+////		UIView.animate(withDuration: .defaultAnimationDuration, delay: 0, options: .curveEaseInOut) {
+//		containerView.setNeedsLayout()
+//		containerView.layoutIfNeeded()
 //		}
 	}
 }
